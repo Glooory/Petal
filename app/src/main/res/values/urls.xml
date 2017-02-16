@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="url_regist">http://huaban.com/signup</string>
+    <string name="url_api_base">http://api.huaban.com/</string>
+    <string name="url_api_base_https">https://api.huaban.com/</string>
+    <string name="url_image_root">http://img.hb.aicdn.com</string>
+
+    // 图片的尺寸后缀
+    <string name="image_suffix_size_general">_fw320</string>//普通浏览的图
+    <string name="image_suffix_size_big">_fw658</string>//大图
+    <string name="image_suffix_size_small">_sq75</string>//小图（方形）
+
+    <string name="url_image_general_format">http://img.hb.aicdn.com/%s_fw320sf</string>
+    <string name="url_image_big_format">http://img.hb.aicdn.com/%s_fw658</string>
+    <string name="url_image_small_format">http://img.hb.aicdn.com/%s_sq75sf</string>
+</resources>
