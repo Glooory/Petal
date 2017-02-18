@@ -7,6 +7,9 @@ import android.view.MenuItem;
 
 import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.view.DraweeTransition;
+import com.glooory.petal.app.Constants;
+import com.glooory.petal.app.util.BaseClientInfo;
+import com.glooory.petal.app.util.SPUtils;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.mvp.Presenter;
 
@@ -34,17 +37,22 @@ public abstract class PEActivity<P extends Presenter> extends BaseActivity<P> {
     protected void onResume() {
         super.onResume();
         isLogin = isLogin();
-        mAuthorization = getAuthorization(isLogin);
+        mAuthorization = getAuthorization();
     }
 
     public boolean isLogin() {
-        // TODO: 17/2/18 Check login state from shared preference
-        return false;
+        return (boolean) SPUtils.get(Constants.PREF_IS_LOGIN, false);
     }
 
-    public String getAuthorization(boolean isLogin) {
-        // TODO: 17/2/18 Get the authorization from shared preference file.
-        return "";
+    public String getAuthorization() {
+        if (isLogin()) {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(SPUtils.get(Constants.PREF_TOKEN_TYPE, " "))
+                    .append(" ")
+                    .append(SPUtils.get(Constants.PREF_TOKEN_ACCESS, " "));
+            return stringBuilder.toString();
+        }
+        return BaseClientInfo.CLIENT_INFO_DEFAULT;
     }
 
     //Fresco shared element transition 已经解决的bug 调用以下方法
