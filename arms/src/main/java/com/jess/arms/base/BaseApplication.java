@@ -23,7 +23,7 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  * +butterknife组成
  */
 public abstract class BaseApplication extends Application {
-    static private BaseApplication mApplication;
+    protected static BaseApplication mApplication;
     private ClientModule mClientModule;
     private AppModule mAppModule;
     private ImageModule mImagerModule;

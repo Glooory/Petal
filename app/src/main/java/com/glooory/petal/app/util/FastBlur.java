@@ -1,4 +1,4 @@
-package com.glooory.petal.app.utils;
+package com.glooory.petal.app.util;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

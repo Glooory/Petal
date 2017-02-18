@@ -7,11 +7,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 
 import com.glooory.petal.R;
-import com.glooory.petal.di.component.DaggerUserComponent;
-import com.glooory.petal.di.module.UserModule;
 import com.glooory.petal.mvp.presenter.UserPresenter;
 import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.utils.UiUtils;
@@ -24,7 +21,6 @@ import common.PEActivity;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-
 
 
 public class UserActivity extends PEActivity<UserPresenter> implements com.glooory.petal.mvp.contract.UserContract.View, SwipeRefreshLayout.OnRefreshListener {
@@ -43,17 +39,17 @@ public class UserActivity extends PEActivity<UserPresenter> implements com.glooo
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
         this.mRxPermissions = new RxPermissions(this);
-        DaggerUserComponent
-                .builder()
-                .appComponent(appComponent)
-                .userModule(new UserModule(this))
-                .build()
-                .inject(this);
+//        DaggerUserComponent
+//                .builder()
+//                .appComponent(appComponent)
+//                .userModule(new UserModule(this))
+//                .build()
+//                .inject(this);
     }
 
     @Override
-    protected View initView() {
-        return LayoutInflater.from(this).inflate(R.layout.activity_user, null, false);
+    protected void initView() {
+        LayoutInflater.from(this).inflate(R.layout.activity_user, null, false);
     }
 
     @Override
@@ -185,5 +181,10 @@ public class UserActivity extends PEActivity<UserPresenter> implements com.glooo
         super.onDestroy();
         this.mRxPermissions = null;
         this.mPaginate = null;
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return 0;
     }
 }
