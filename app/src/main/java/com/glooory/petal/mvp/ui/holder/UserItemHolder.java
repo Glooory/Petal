@@ -5,15 +5,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.glooory.petal.R;
+import com.glooory.petal.mvp.model.entity.User;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.jess.arms.base.BaseHolder;
 import com.jess.arms.widget.imageloader.ImageLoader;
 import com.jess.arms.widget.imageloader.glide.GlideImageConfig;
 
 import butterknife.BindView;
-import com.glooory.petal.R;
 import common.WEApplication;
-import com.glooory.petal.mvp.model.entity.User;
 import rx.Observable;
 
 /**
@@ -48,5 +48,6 @@ public class UserItemHolder extends BaseHolder<User> {
                 .url(data.getAvatarUrl())
                 .imagerView(mAvater)
                 .build());
+
     }
 }

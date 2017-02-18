@@ -59,6 +59,7 @@ dependencies {
     compile rootProject.ext.dependencies["okhttp3"]
     compile rootProject.ext.dependencies["timber"]
     compile rootProject.ext.dependencies["glide"]
+    compile rootProject.ext.dependencies["fresco"]
     apt rootProject.ext.dependencies["dagger2-apt-compiler"]
     compile project(':rxerrorhandler')
 }
