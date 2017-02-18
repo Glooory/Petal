@@ -3,10 +3,16 @@ package common;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.glooory.petal.BuildConfig;
+import com.glooory.petal.di.module.CacheModule;
+import com.glooory.petal.di.module.ServiceModule;
+import com.glooory.petal.mvp.model.api.Api;
 import com.jess.arms.base.BaseApplication;
 import com.jess.arms.di.module.GlobeConfigModule;
 import com.jess.arms.http.GlobeHttpHandler;
 import com.jess.arms.utils.UiUtils;
+import com.orhanobut.logger.LogLevel;
+import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
@@ -14,10 +20,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.glooory.petal.BuildConfig;
-import com.glooory.petal.di.module.CacheModule;
-import com.glooory.petal.di.module.ServiceModule;
-import com.glooory.petal.mvp.model.api.Api;
 import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -45,9 +47,9 @@ public class WEApplication extends BaseApplication {
                 .cacheModule(new CacheModule())//需自行创建
                 .build();
 
-        if (BuildConfig.LOG_DEBUG) {//Timber日志打印
-            Timber.plant(new Timber.DebugTree());
-        }
+        //init Logger
+        Logger.init(TAG)
+                .logLevel(BuildConfig.DEBUG ? LogLevel.FULL : LogLevel.NONE);
 
         installLeakCanary();//leakCanary内存泄露检查
     }
