@@ -24,7 +24,6 @@ import common.WEActivity;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import timber.log.Timber;
 
 
 
@@ -94,7 +93,6 @@ public class UserActivity extends WEActivity<UserPresenter> implements com.glooo
 
     @Override
     public void showLoading() {
-        Timber.tag(TAG).w("showLoading");
         Observable.just(1)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Integer>() {
@@ -107,7 +105,6 @@ public class UserActivity extends WEActivity<UserPresenter> implements com.glooo
 
     @Override
     public void hideLoading() {
-        Timber.tag(TAG).w("hideLoading");
         mSwipeRefreshLayout.setRefreshing(false);
     }
 

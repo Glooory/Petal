@@ -24,7 +24,6 @@ import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
-import timber.log.Timber;
 
 /**
  * Created by jess on 8/5/16 11:07
@@ -114,7 +113,7 @@ public class WEApplication extends BaseApplication {
                                 JSONObject object = (JSONObject) array.get(0);
                                 String login = object.getString("login");
                                 String avatar_url = object.getString("avatar_url");
-                                Timber.tag(TAG).w("result ------>" + login + "    ||   avatar_url------>" + avatar_url);
+                                Logger.d("result ------>" + login + "    ||   avatar_url------>" + avatar_url);
                             }
 
                         } catch (JSONException e) {
@@ -153,7 +152,7 @@ public class WEApplication extends BaseApplication {
                     //     rxjava必要要使用ErrorHandleSubscriber(默认实现Subscriber的onError方法),此监听才生效
                     @Override
                     public void handleResponseError(Context context, Exception e) {
-                        Timber.tag(TAG).w("------------>" + e.getMessage());
+                        Logger.d("------------>" + e.getMessage());
                         UiUtils.SnackbarText("net error");
                     }
                 }).build();

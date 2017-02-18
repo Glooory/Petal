@@ -3,11 +3,13 @@ package com.jess.arms.utils;
 import android.Manifest;
 
 import com.jess.arms.mvp.BaseView;
+import com.orhanobut.logger.Logger;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
-import timber.log.Timber;
+
+import static com.orhanobut.logger.Logger.d;
 
 /**
  * 如果申请权限无效,请把每个方法中的「compose(PermissionUtil.<Boolean>bindToLifecycle(view))」删掉
@@ -46,7 +48,7 @@ public class PermissionUtil {
                         @Override
                         public void onNext(Boolean granted) {
                             if (granted) {
-                                Timber.tag(TAG).d("request WRITE_EXTERNAL_STORAGE and CAMERA success");
+                                d("request WRITE_EXTERNAL_STORAGE and CAMERA success");
                                 requestPermission.onRequestPermissionSuccess();
                             } else {
                                 view.showMessage("request permissons failure");
@@ -76,7 +78,7 @@ public class PermissionUtil {
                         @Override
                         public void onNext(Boolean granted) {
                             if (granted) {
-                                Timber.tag(TAG).d("request WRITE_EXTERNAL_STORAGE and CAMERA success");
+                                Logger.d("request WRITE_EXTERNAL_STORAGE and CAMERA success");
                                 requestPermission.onRequestPermissionSuccess();
                             } else {
                                 view.showMessage("request permissons failure");
@@ -106,7 +108,7 @@ public class PermissionUtil {
                         @Override
                         public void onNext(Boolean granted) {
                             if (granted) {
-                                Timber.tag(TAG).d("request SEND_SMS success");
+                                Logger.d("request SEND_SMS success");
                                 requestPermission.onRequestPermissionSuccess();
                             } else {
                                 view.showMessage("request permissons failure");
@@ -135,7 +137,7 @@ public class PermissionUtil {
                         @Override
                         public void onNext(Boolean granted) {
                             if (granted) {
-                                Timber.tag(TAG).d("request SEND_SMS success");
+                                Logger.d("request SEND_SMS success");
                                 requestPermission.onRequestPermissionSuccess();
                             } else {
                                 view.showMessage("request permissons failure");
@@ -164,10 +166,10 @@ public class PermissionUtil {
                         @Override
                         public void onNext(Boolean granted) {
                             if (granted) {
-                                Timber.tag(TAG).d("request SEND_SMS success");
+                                Logger.d("request SEND_SMS success");
                                 requestPermission.onRequestPermissionSuccess();
                             } else {
-                                Timber.tag(TAG).e("request permissons failure");
+                                Logger.d("request permissons failure");
                             }
                         }
                     });
