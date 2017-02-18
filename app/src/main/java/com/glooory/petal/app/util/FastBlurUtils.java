@@ -14,7 +14,7 @@ import com.jess.arms.utils.UiUtils;
  * 使图片高斯模糊
  * Created by paveld on 3/6/14.
  */
-public class FastBlur {
+public class FastBlurUtils {
 
     public static Bitmap doBlur(Bitmap sentBitmap, int radius, boolean canReuseInBitmap) {
 
@@ -266,7 +266,7 @@ public class FastBlur {
         Paint paint = new Paint();
         paint.setFlags(Paint.FILTER_BITMAP_FLAG);
         canvas.drawBitmap(bkg, 0, 0, paint);
-        overlay = FastBlur.doBlur(overlay, (int) radius, true);
+        overlay = FastBlurUtils.doBlur(overlay, (int) radius, true);
         view.setBackgroundDrawable(new BitmapDrawable(UiUtils.getResources(), overlay));
         Log.w("test", "cost " + (System.currentTimeMillis() - startMs) + "ms");
     }
@@ -284,7 +284,7 @@ public class FastBlur {
         Paint paint = new Paint();
         paint.setFlags(Paint.FILTER_BITMAP_FLAG);
         canvas.drawBitmap(bkg, 0, 0, paint);
-        overlay = FastBlur.doBlur(overlay, (int) radius, true);
+        overlay = FastBlurUtils.doBlur(overlay, (int) radius, true);
         Log.w("test", "cost " + (System.currentTimeMillis() - startMs) + "ms");
         return overlay;
     }
