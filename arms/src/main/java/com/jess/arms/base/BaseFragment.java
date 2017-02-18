@@ -40,8 +40,9 @@ public abstract class BaseFragment<P extends Presenter> extends RxFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mActivity = (BaseActivity) getActivity();
-        if (useEventBus())//如果要使用eventbus请将此方法返回true
+        if (useEventBus()) {
             EventBus.getDefault().register(this);//注册到事件主线
+        }
         ComponentInject();
         initData();
     }
@@ -51,11 +52,12 @@ public abstract class BaseFragment<P extends Presenter> extends RxFragment {
      */
     protected abstract void ComponentInject();
 
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (mUnbinder != Unbinder.EMPTY) mUnbinder.unbind();
+        if (mUnbinder != Unbinder.EMPTY) {
+            mUnbinder.unbind();
+        }
     }
 
     @Override

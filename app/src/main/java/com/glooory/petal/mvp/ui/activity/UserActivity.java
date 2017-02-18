@@ -20,14 +20,14 @@ import com.tbruyelle.rxpermissions.RxPermissions;
 
 import butterknife.BindView;
 import common.AppComponent;
-import common.WEActivity;
+import common.PEActivity;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 
 
-public class UserActivity extends WEActivity<UserPresenter> implements com.glooory.petal.mvp.contract.UserContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class UserActivity extends PEActivity<UserPresenter> implements com.glooory.petal.mvp.contract.UserContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     @Nullable
     @BindView(R.id.recyclerView)
