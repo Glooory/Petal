@@ -1,10 +1,9 @@
 package com.glooory.petal.mvp.model.api;
 
 /**
- * Created by jess on 8/5/16 11:25
- * contact with jess.yan.effort@gmail.com
+ * Created by Glooory on 20/2/17
  */
 public interface Api {
-    String APP_DOMAIN = "https://api.github.com";
+    String APP_DOMAIN = "https://api.huaban.com/";
     String RequestSuccess = "0";
 }
