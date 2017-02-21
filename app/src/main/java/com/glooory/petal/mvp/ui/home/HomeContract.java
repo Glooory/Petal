@@ -2,6 +2,7 @@ package com.glooory.petal.mvp.ui.home;
 
 import com.glooory.petal.mvp.model.entity.ListPinsBean;
 import com.glooory.petal.mvp.model.entity.PinsListBean;
+import com.jess.arms.mvp.BaseView;
 import com.jess.arms.mvp.IModel;
 
 import rx.Observable;
@@ -12,6 +13,10 @@ import rx.Observable;
 
 public interface HomeContract {
 
+    interface View extends BaseView{
+
+
+    }
 
     interface Model extends IModel{
 

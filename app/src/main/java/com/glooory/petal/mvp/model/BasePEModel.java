@@ -5,7 +5,6 @@ import com.glooory.petal.app.util.BaseClientInfo;
 import com.glooory.petal.app.util.SPUtils;
 import com.jess.arms.http.BaseCacheManager;
 import com.jess.arms.http.BaseServiceManager;
-import com.jess.arms.mvp.BaseModel;
 import com.jess.arms.mvp.IModel;
 
 /**
@@ -13,10 +12,24 @@ import com.jess.arms.mvp.IModel;
  */
 
 public class BasePEModel<S extends BaseServiceManager, C extends BaseCacheManager>
-        extends BaseModel implements IModel {
+        implements IModel {
 
-    public BasePEModel(BaseServiceManager serviceManager, BaseCacheManager cacheManager) {
-        super(serviceManager, cacheManager);
+    protected S mServiceManager;//服务管理类,用于网络请求
+    protected C mCacheManager;//缓存管理类,用于管理本地或者内存缓存
+
+    public BasePEModel(S serviceManager, C cacheManager) {
+        this.mServiceManager = serviceManager;
+        this.mCacheManager = cacheManager;
+    }
+
+    @Override
+    public void onDestory() {
+        if (mServiceManager != null) {
+            mServiceManager = null;
+        }
+        if (mCacheManager != null) {
+            mCacheManager = null;
+        }
     }
 
     public String getAuthorization() {

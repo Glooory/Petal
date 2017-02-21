@@ -28,5 +28,6 @@ public class Constants {
     public static final String HTTP_HEADER_AUTHORIZATION = "Authorization";
     public static final String HTTP_QUERY_LIMIT = "limit";
     public static final String HTTP_QUERY_MAX = "max";
+    public static final int PER_PAGE_LIMIT = 20;
 
 }
