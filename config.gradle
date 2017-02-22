@@ -55,6 +55,7 @@ ext {
             "nineoldandroids"          : "com.nineoldandroids:library:2.4.0",
             "paginate"                 : "com.github.markomilos:paginate:0.5.1",
             "logger"                   : "com.orhanobut:logger:1.15",
+            "baserecyclerviewadapterhelper" : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.8.1",
             //test
             "runner"                   : 'com.android.support.test:runner:0.5',
             "espresso-core"            : "com.android.support.test.espresso:espresso-core:${android["espressoSdkVersion"]}",

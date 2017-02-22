@@ -1,5 +1,6 @@
 package com.glooory.petal.mvp.ui.home;
 
+import common.AppComponent;
 import common.PEActivity;
 
 /**
@@ -7,4 +8,25 @@ import common.PEActivity;
  */
 
 public class HomeActivity extends PEActivity {
+
+
+    @Override
+    protected void setupActivityComponent(AppComponent appComponent) {
+
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return 0;
+    }
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
 }

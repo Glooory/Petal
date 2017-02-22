@@ -8,4 +8,24 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="HomePinCardViewCustom">
+        <item name="android:layout_marginLeft">@dimen/quarter_activity_default_margin</item>
+        <item name="android:layout_marginTop">@dimen/quarter_activity_default_margin</item>
+        <item name="android:layout_marginRight">@dimen/quarter_activity_default_margin</item>
+    </style>
+
+    <style name="TextAppearancePinLikeCount">
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textColor">@color/secondary_text</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
 </resources>

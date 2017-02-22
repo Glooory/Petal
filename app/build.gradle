@@ -61,4 +61,5 @@ dependencies {
     debugCompile rootProject.ext.dependencies["canary-debug"]
     releaseCompile rootProject.ext.dependencies["canary-release"]
     testCompile rootProject.ext.dependencies["canary-release"]
+    compile rootProject.ext.dependencies["baserecyclerviewadapterhelper"]
 }
