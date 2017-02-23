@@ -3,6 +3,8 @@ package com.glooory.petal.mvp.model.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 /**
  * Created by Glooory on 2016/8/27 0027.
  */
@@ -29,6 +31,7 @@ public class PinsFileBean implements Parcelable {
     private int height;
     private int width;
     private String frames;
+    private List<ColorsBean> colors;
 
     public int getId() {
         return id;
@@ -94,6 +97,13 @@ public class PinsFileBean implements Parcelable {
         this.frames = frames;
     }
 
+    public List<ColorsBean> getColors() {
+        return colors;
+    }
+
+    public void setColors(List<ColorsBean> colors) {
+        this.colors = colors;
+    }
 
     @Override
     public int describeContents() {
@@ -110,6 +120,7 @@ public class PinsFileBean implements Parcelable {
         dest.writeInt(this.height);
         dest.writeInt(this.width);
         dest.writeString(this.frames);
+        dest.writeTypedList(this.colors);
     }
 
     public PinsFileBean() {
@@ -124,9 +135,10 @@ public class PinsFileBean implements Parcelable {
         this.height = in.readInt();
         this.width = in.readInt();
         this.frames = in.readString();
+        this.colors = in.createTypedArrayList(ColorsBean.CREATOR);
     }
 
-    public static final Parcelable.Creator<PinsFileBean> CREATOR = new Parcelable.Creator<PinsFileBean>() {
+    public static final Creator<PinsFileBean> CREATOR = new Creator<PinsFileBean>() {
         @Override
         public PinsFileBean createFromParcel(Parcel source) {
             return new PinsFileBean(source);

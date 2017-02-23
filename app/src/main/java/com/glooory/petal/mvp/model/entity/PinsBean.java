@@ -102,51 +102,35 @@ public class PinsBean implements Parcelable {
 
     private PinsBoardBean board;
 
-    public int getSeq() {
-        return seq;
-    }
-
-    public void setSeq(int seq) {
-        this.seq = seq;
-    }
-
-    public boolean isLiked() {
-        return liked;
-    }
-
-    public void setLiked(boolean liked) {
-        this.liked = liked;
-    }
-
-    public int getPin_id() {
+    public int getPinId() {
         return pin_id;
     }
 
-    public void setPin_id(int pin_id) {
+    public void setPinId(int pinId) {
         this.pin_id = pin_id;
     }
 
-    public int getUser_id() {
+    public int getUserId() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUserId(int userId) {
         this.user_id = user_id;
     }
 
-    public int getBoard_id() {
+    public int getBoardId() {
         return board_id;
     }
 
-    public void setBoard_id(int board_id) {
+    public void setBoardId(int boardId) {
         this.board_id = board_id;
     }
 
-    public int getFile_id() {
+    public int getFileId() {
         return file_id;
     }
 
-    public void setFile_id(int file_id) {
+    public void setFileId(int fileId) {
         this.file_id = file_id;
     }
 
@@ -158,11 +142,11 @@ public class PinsBean implements Parcelable {
         this.file = file;
     }
 
-    public int getMedia_type() {
+    public int getMediaType() {
         return media_type;
     }
 
-    public void setMedia_type(int media_type) {
+    public void setMediaType(int mediaType) {
         this.media_type = media_type;
     }
 
@@ -182,11 +166,11 @@ public class PinsBean implements Parcelable {
         this.link = link;
     }
 
-    public String getRaw_text() {
+    public String getRawText() {
         return raw_text;
     }
 
-    public void setRaw_text(String raw_text) {
+    public void setRawText(String rawText) {
         this.raw_text = raw_text;
     }
 
@@ -198,11 +182,11 @@ public class PinsBean implements Parcelable {
         this.via = via;
     }
 
-    public int getVia_user_id() {
+    public int getViaUserId() {
         return via_user_id;
     }
 
-    public void setVia_user_id(int via_user_id) {
+    public void setViaUserId(int viaUserId) {
         this.via_user_id = via_user_id;
     }
 
@@ -214,52 +198,68 @@ public class PinsBean implements Parcelable {
         this.original = original;
     }
 
-    public int getCreated_at() {
+    public int getCreatedAt() {
         return created_at;
     }
 
-    public void setCreated_at(int created_at) {
+    public void setCreatedAt(int createdAt) {
         this.created_at = created_at;
     }
 
-    public int getLike_count() {
+    public int getLikeCount() {
         return like_count;
     }
 
-    public void setLike_count(int like_count) {
+    public void setLikeCount(int likeCount) {
         this.like_count = like_count;
     }
 
-    public int getComment_count() {
+    public int getSeq() {
+        return seq;
+    }
+
+    public void setSeq(int seq) {
+        this.seq = seq;
+    }
+
+    public int getCommentCount() {
         return comment_count;
     }
 
-    public void setComment_count(int comment_count) {
+    public void setCommentCount(int commentCount) {
         this.comment_count = comment_count;
     }
 
-    public int getRepin_count() {
+    public int getRepinCount() {
         return repin_count;
     }
 
-    public void setRepin_count(int repin_count) {
+    public void setRepinCount(int repinCount) {
         this.repin_count = repin_count;
     }
 
-    public int getIs_private() {
+    public int getIsPrivate() {
         return is_private;
     }
 
-    public void setIs_private(int is_private) {
+    public void setIsPrivate(int isPrivate) {
         this.is_private = is_private;
     }
 
-    public String getOrig_source() {
+    public String getOrigSource() {
         return orig_source;
     }
 
-    public void setOrig_source(String orig_source) {
+    public void setOrigSource(String origSource) {
         this.orig_source = orig_source;
+    }
+
+    public boolean isLiked() {
+        return liked;
+    }
+
+    public void setLiked(boolean liked) {
+        this.liked = liked;
     }
 
     public PinsUserBean getUser() {
@@ -337,7 +337,7 @@ public class PinsBean implements Parcelable {
         this.board = in.readParcelable(PinsBoardBean.class.getClassLoader());
     }
 
-    public static final Creator<PinsBean> CREATOR = new Creator<PinsBean>() {
+    public static final Parcelable.Creator<PinsBean> CREATOR = new Parcelable.Creator<PinsBean>() {
         @Override
         public PinsBean createFromParcel(Parcel source) {
             return new PinsBean(source);
@@ -348,5 +348,4 @@ public class PinsBean implements Parcelable {
             return new PinsBean[size];
         }
     };
-
 }

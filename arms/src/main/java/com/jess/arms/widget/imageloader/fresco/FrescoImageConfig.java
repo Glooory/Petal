@@ -223,6 +223,12 @@ public class FrescoImageConfig extends ImageConfig {
             return this;
         }
 
+        public Builder isRadius(boolean isRadius, float radius) {
+            this.mIsRadius = isRadius;
+            this.mRadius = radius;
+            return this;
+        }
+
         public Builder setRadius(float radius) {
             mRadius = radius;
             return this;

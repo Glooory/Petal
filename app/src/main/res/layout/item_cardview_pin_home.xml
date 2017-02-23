@@ -86,7 +86,7 @@
             android:padding="@dimen/quarter_activity_default_margin">
 
             <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/simple_drawee_view_pin_avater"
+                android:id="@+id/simple_drawee_view_pin_avatar"
                 android:layout_width="@dimen/pin_user_avatar_size"
                 android:layout_height="@dimen/pin_user_avatar_size"
                 fresco:actualImageScaleType="centerCrop"/>
