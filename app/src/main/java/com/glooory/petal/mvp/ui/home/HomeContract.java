@@ -1,7 +1,6 @@
 package com.glooory.petal.mvp.ui.home;
 
-import com.glooory.petal.mvp.model.entity.ListPinsBean;
-import com.glooory.petal.mvp.model.entity.PinsListBean;
+import com.glooory.petal.mvp.model.entity.PinListBean;
 import com.jess.arms.mvp.BaseView;
 import com.jess.arms.mvp.IModel;
 
@@ -24,13 +23,13 @@ public interface HomeContract {
 
         Observable<PinsListBean> getLatestAllPinsNext(int maxPinId, boolean update);
 
-        Observable<ListPinsBean> getLatestFollowingPins(boolean update);
+        Observable<PinListBean> getLatestFollowingPins(boolean update);
 
-        Observable<ListPinsBean> getLatestFollowingPinsNext(int maxPinId,boolean update);
+        Observable<PinListBean> getLatestFollowingPinsNext(int maxPinId,boolean update);
 
-        Observable<ListPinsBean> getLatestPopularPins(boolean update);
+        Observable<PinListBean> getLatestPopularPins(boolean update);
 
-        Observable<ListPinsBean> getLatestPopularPinsNext(int maxPinId, boolean update);
+        Observable<PinListBean> getLatestPopularPinsNext(int maxPinId, boolean update);
 
     }
 }

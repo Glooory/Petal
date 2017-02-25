@@ -4,8 +4,7 @@ import com.glooory.petal.app.Constants;
 import com.glooory.petal.mvp.model.BasePEModel;
 import com.glooory.petal.mvp.model.api.cache.CacheManager;
 import com.glooory.petal.mvp.model.api.service.ServiceManager;
-import com.glooory.petal.mvp.model.entity.ListPinsBean;
-import com.glooory.petal.mvp.model.entity.PinsListBean;
+import com.glooory.petal.mvp.model.entity.PinListBean;
 import com.jess.arms.di.scope.ActivityScope;
 
 import javax.inject.Inject;
@@ -59,61 +58,61 @@ public class HomeModel extends BasePEModel<ServiceManager, CacheManager>
     }
 
     @Override
-    public Observable<ListPinsBean> getLatestFollowingPins(boolean update) {
-        Observable<ListPinsBean> observableListPins = mServiceManager.getHomeService()
+    public Observable<PinListBean> getLatestFollowingPins(boolean update) {
+        Observable<PinListBean> observableListPins = mServiceManager.getHomeService()
                 .getLatestFollowingPins(getAuthorization(), Constants.PER_PAGE_LIMIT);
         return mCacheManager.getHomeCache()
                 .getLatestFollowingPins(observableListPins, new EvictDynamicKey(update))
-                .flatMap(new Func1<Reply<ListPinsBean>, Observable<ListPinsBean>>() {
+                .flatMap(new Func1<Reply<PinListBean>, Observable<PinListBean>>() {
                     @Override
-                    public Observable<ListPinsBean> call(Reply<ListPinsBean> listPinsBeanReply) {
+                    public Observable<PinListBean> call(Reply<PinListBean> listPinsBeanReply) {
                         return Observable.just(listPinsBeanReply.getData());
                     }
                 });
     }
 
     @Override
-    public Observable<ListPinsBean> getLatestFollowingPinsNext(int maxPinId, boolean update) {
-        Observable<ListPinsBean> observableListPins = mServiceManager.getHomeService()
+    public Observable<PinListBean> getLatestFollowingPinsNext(int maxPinId, boolean update) {
+        Observable<PinListBean> observableListPins = mServiceManager.getHomeService()
                 .getLatestFollowingPinsNext(getAuthorization(), maxPinId, Constants.PER_PAGE_LIMIT);
         return mCacheManager.getHomeCache()
                 .getLatestFollowingPinsNext(observableListPins,
                         new DynamicKey(maxPinId),
                         new EvictDynamicKey(update))
-                .flatMap(new Func1<Reply<ListPinsBean>, Observable<ListPinsBean>>() {
+                .flatMap(new Func1<Reply<PinListBean>, Observable<PinListBean>>() {
                     @Override
-                    public Observable<ListPinsBean> call(Reply<ListPinsBean> listPinsBeanReply) {
+                    public Observable<PinListBean> call(Reply<PinListBean> listPinsBeanReply) {
                         return Observable.just(listPinsBeanReply.getData());
                     }
                 });
     }
 
     @Override
-    public Observable<ListPinsBean> getLatestPopularPins(boolean update) {
-        Observable<ListPinsBean> observableListPins = mServiceManager.getHomeService()
+    public Observable<PinListBean> getLatestPopularPins(boolean update) {
+        Observable<PinListBean> observableListPins = mServiceManager.getHomeService()
                 .getLatestPopularPins(getAuthorization(), Constants.PER_PAGE_LIMIT);
         return mCacheManager.getHomeCache()
                 .getLatestPopularPins(observableListPins,
                         new EvictDynamicKey(update))
-                .flatMap(new Func1<Reply<ListPinsBean>, Observable<ListPinsBean>>() {
+                .flatMap(new Func1<Reply<PinListBean>, Observable<PinListBean>>() {
                     @Override
-                    public Observable<ListPinsBean> call(Reply<ListPinsBean> listPinsBeanReply) {
+                    public Observable<PinListBean> call(Reply<PinListBean> listPinsBeanReply) {
                         return Observable.just(listPinsBeanReply.getData());
                     }
                 });
     }
 
     @Override
-    public Observable<ListPinsBean> getLatestPopularPinsNext(int maxPinId, boolean update) {
-        Observable<ListPinsBean> observableListPins = mServiceManager.getHomeService()
+    public Observable<PinListBean> getLatestPopularPinsNext(int maxPinId, boolean update) {
+        Observable<PinListBean> observableListPins = mServiceManager.getHomeService()
                 .getLatestPopularPinsNext(getAuthorization(), maxPinId, Constants.PER_PAGE_LIMIT);
         return mCacheManager.getHomeCache()
                 .getLatestPopularPinsNext(observableListPins,
                         new DynamicKey(maxPinId),
                         new EvictDynamicKey(update))
-                .flatMap(new Func1<Reply<ListPinsBean>, Observable<ListPinsBean>>() {
+                .flatMap(new Func1<Reply<PinListBean>, Observable<PinListBean>>() {
                     @Override
-                    public Observable<ListPinsBean> call(Reply<ListPinsBean> listPinsBeanReply) {
+                    public Observable<PinListBean> call(Reply<PinListBean> listPinsBeanReply) {
                         return Observable.just(listPinsBeanReply.getData());
                     }
                 });

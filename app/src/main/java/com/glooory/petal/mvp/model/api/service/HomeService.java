@@ -1,8 +1,7 @@
 package com.glooory.petal.mvp.model.api.service;
 
 import com.glooory.petal.app.Constants;
-import com.glooory.petal.mvp.model.entity.ListPinsBean;
-import com.glooory.petal.mvp.model.entity.PinsListBean;
+import com.glooory.petal.mvp.model.entity.PinListBean;
 
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -35,14 +34,14 @@ public interface HomeService {
     //获取用户关注的用户和花瓣更新
     //https:api.huaban.com/following?limit=20
     @GET("following")
-    Observable<ListPinsBean> getLatestFollowingPins(
+    Observable<PinListBean> getLatestFollowingPins(
             @Header(Constants.HTTP_HEADER_AUTHORIZATION) String authorization,
             @Query(Constants.HTTP_QUERY_LIMIT) int limit);
 
     //获取用户关注的用户和花瓣更新
     //https:api.huaban.com/following?max={pinId}&limit=20
     @GET("following")
-    Observable<ListPinsBean> getLatestFollowingPinsNext(
+    Observable<PinListBean> getLatestFollowingPinsNext(
             @Header(Constants.HTTP_HEADER_AUTHORIZATION) String authorization,
             @Query(Constants.HTTP_QUERY_MAX) int maxPinId,
             @Query(Constants.HTTP_QUERY_LIMIT) int limit);
@@ -50,14 +49,14 @@ public interface HomeService {
     //获取热门采集
     //https://api.huaban.com/popular?limit=20
     @GET("popular")
-    Observable<ListPinsBean> getLatestPopularPins(
+    Observable<PinListBean> getLatestPopularPins(
             @Header(Constants.HTTP_HEADER_AUTHORIZATION) String authorizaion,
             @Query(Constants.HTTP_QUERY_LIMIT) int limit);
 
     //获取热门采集
     //https://api.huaban.com/popular?max={pinId}&limit=20
     @GET("popular")
-    Observable<ListPinsBean> getLatestPopularPinsNext(
+    Observable<PinListBean> getLatestPopularPinsNext(
             @Header(Constants.HTTP_HEADER_AUTHORIZATION) String authorizaion,
             @Query(Constants.HTTP_QUERY_MAX) int maxPinId,
             @Query(Constants.HTTP_QUERY_LIMIT) int limit);

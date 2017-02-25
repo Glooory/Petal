@@ -3,10 +3,12 @@ package com.glooory.petal.mvp.model.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.Gson;
+
 /**
  * Created by Glooory on 2016/8/27 0027.
  */
-public class PinsBean implements Parcelable {
+public class PinBean implements Parcelable {
 
     /*
     PinBean
@@ -15,7 +17,7 @@ public class PinsBean implements Parcelable {
         "user_id":17368129,
         "board_id":31489038,
         "file_id":112862047,
-        "file":{                PinsFileBean
+        "file":{
             "id":112862047,
             "farm":"farm1",
             "bucket":"hbimg",
@@ -39,7 +41,7 @@ public class PinsBean implements Parcelable {
         "repin_count":0,
         "is_private":0,
         "orig_source":"http://ww2.sinaimg.cn/mw690/e75a115bgw1f6b56oisbdg207m07nb29.gif",
-        "user":{            PinsUserBean
+        "user":{
             "user_id":17368129,
             "username":"hbk112",
             "urlname":"gain1123",
@@ -56,7 +58,7 @@ public class PinsBean implements Parcelable {
                 },
             "extra":null
             },
-        "board":{           PinsBoardBean
+        "board":{
             "board_id":31489038,
             "user_id":17368129,
             "title":"美女gif",
@@ -81,14 +83,14 @@ public class PinsBean implements Parcelable {
     private int board_id;
     private int file_id;
 
-    private PinsFileBean file;
+    private FileBean file;
     private int media_type;
     private String source;
     private String link;
     private String raw_text;
     private int via;
     private int via_user_id;
-    private int original;
+    private String original;
     private int created_at;
     private int like_count;
     private int seq;
@@ -98,9 +100,14 @@ public class PinsBean implements Parcelable {
     private String orig_source;
     private boolean liked;
 
-    private PinsUserBean user;
+    private UserBean user;
+    private BoardBean board;
 
-    private PinsBoardBean board;
+    private TextMetaBean text_meta;
+    private boolean is_shiji;
+    private String share_button;
+
+    private UserBean via_user;
 
     public int getPinId() {
         return pin_id;
@@ -134,11 +141,11 @@ public class PinsBean implements Parcelable {
         this.file_id = file_id;
     }
 
-    public PinsFileBean getFile() {
+    public FileBean getFile() {
         return file;
     }
 
-    public void setFile(PinsFileBean file) {
+    public void setFile(FileBean file) {
         this.file = file;
     }
 
@@ -190,11 +197,11 @@ public class PinsBean implements Parcelable {
         this.via_user_id = via_user_id;
     }
 
-    public int getOriginal() {
+    public String getOriginal() {
         return original;
     }
 
-    public void setOriginal(int original) {
+    public void setOriginal(String original) {
         this.original = original;
     }
 
@@ -262,20 +269,59 @@ public class PinsBean implements Parcelable {
         this.liked = liked;
     }
 
-    public PinsUserBean getUser() {
+    public UserBean getUser() {
         return user;
     }
 
-    public void setUser(PinsUserBean user) {
+    public void setUser(UserBean user) {
         this.user = user;
     }
 
-    public PinsBoardBean getBoard() {
+    public BoardBean getBoard() {
         return board;
     }
 
-    public void setBoard(PinsBoardBean board) {
+    public void setBoard(BoardBean board) {
         this.board = board;
+    }
+
+    public TextMetaBean getTextMeta() {
+        return text_meta;
+    }
+
+    public void setTextMeta(TextMetaBean textMeta) {
+        this.text_meta = text_meta;
+    }
+
+    public boolean isShiji() {
+        return is_shiji;
+    }
+
+    public void setIsShiji(boolean isShiji) {
+        this.is_shiji = is_shiji;
+    }
+
+    public String getShareButton() {
+        return share_button;
+    }
+
+    public void setShareButton(String shareButton) {
+        this.share_button = share_button;
+    }
+
+    public UserBean getViaUser() {
+        return via_user;
+    }
+
+    public void setViaUser(UserBean viaUser) {
+        this.via_user = via_user;
+    }
+
+    public static class TextMetaBean {
+        public static TextMetaBean objectFromData(String str) {
+
+            return new Gson().fromJson(str, TextMetaBean.class);
+        }
     }
 
     @Override
@@ -296,7 +342,7 @@ public class PinsBean implements Parcelable {
         dest.writeString(this.raw_text);
         dest.writeInt(this.via);
         dest.writeInt(this.via_user_id);
-        dest.writeInt(this.original);
+        dest.writeString(this.original);
         dest.writeInt(this.created_at);
         dest.writeInt(this.like_count);
         dest.writeInt(this.seq);
@@ -307,24 +353,27 @@ public class PinsBean implements Parcelable {
         dest.writeByte(this.liked ? (byte) 1 : (byte) 0);
         dest.writeParcelable(this.user, flags);
         dest.writeParcelable(this.board, flags);
+        dest.writeByte(this.is_shiji ? (byte) 1 : (byte) 0);
+        dest.writeString(this.share_button);
+        dest.writeParcelable(this.via_user, flags);
     }
 
-    public PinsBean() {
+    public PinBean() {
     }
 
-    protected PinsBean(Parcel in) {
+    protected PinBean(Parcel in) {
         this.pin_id = in.readInt();
         this.user_id = in.readInt();
         this.board_id = in.readInt();
         this.file_id = in.readInt();
-        this.file = in.readParcelable(PinsFileBean.class.getClassLoader());
+        this.file = in.readParcelable(FileBean.class.getClassLoader());
         this.media_type = in.readInt();
         this.source = in.readString();
         this.link = in.readString();
         this.raw_text = in.readString();
         this.via = in.readInt();
         this.via_user_id = in.readInt();
-        this.original = in.readInt();
+        this.original = in.readString();
         this.created_at = in.readInt();
         this.like_count = in.readInt();
         this.seq = in.readInt();
@@ -333,19 +382,22 @@ public class PinsBean implements Parcelable {
         this.is_private = in.readInt();
         this.orig_source = in.readString();
         this.liked = in.readByte() != 0;
-        this.user = in.readParcelable(PinsUserBean.class.getClassLoader());
-        this.board = in.readParcelable(PinsBoardBean.class.getClassLoader());
+        this.user = in.readParcelable(UserBean.class.getClassLoader());
+        this.board = in.readParcelable(BoardBean.class.getClassLoader());
+        this.is_shiji = in.readByte() != 0;
+        this.share_button = in.readString();
+        this.via_user = in.readParcelable(UserBean.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<PinsBean> CREATOR = new Parcelable.Creator<PinsBean>() {
+    public static final Creator<PinBean> CREATOR = new Creator<PinBean>() {
         @Override
-        public PinsBean createFromParcel(Parcel source) {
-            return new PinsBean(source);
+        public PinBean createFromParcel(Parcel source) {
+            return new PinBean(source);
         }
 
         @Override
-        public PinsBean[] newArray(int size) {
-            return new PinsBean[size];
+        public PinBean[] newArray(int size) {
+            return new PinBean[size];
         }
     };
 }

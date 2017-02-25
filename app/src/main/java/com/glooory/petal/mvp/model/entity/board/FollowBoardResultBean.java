@@ -3,15 +3,7 @@ package com.glooory.petal.mvp.model.entity.board;
 /**
  * Created by Glooory on 2016/9/14 0014 15:38.
  */
-public class FollowBoardOperateBean {
-
-    /**
-     * board_id : 967118
-     * user_id : 15246080
-     * board_owner_id : 134270
-     * seq : 993083628
-     * followed_at : 1462599833
-     */
+public class FollowBoardResultBean {
 
     private FollowBean follow;
 
@@ -24,33 +16,42 @@ public class FollowBoardOperateBean {
     }
 
     public static class FollowBean {
+
+        /**
+         * board_id : 967118
+         * user_id : 15246080
+         * board_owner_id : 134270
+         * seq : 993083628
+         * followed_at : 1462599833
+         */
+
         private int board_id;
         private int user_id;
         private int board_owner_id;
         private int seq;
         private int followed_at;
 
-        public int getBoard_id() {
+        public int getBoardId() {
             return board_id;
         }
 
-        public void setBoard_id(int board_id) {
+        public void setBoardId(int boardId) {
             this.board_id = board_id;
         }
 
-        public int getUser_id() {
+        public int getUserId() {
             return user_id;
         }
 
-        public void setUser_id(int user_id) {
+        public void setUserId(int userId) {
             this.user_id = user_id;
         }
 
-        public int getBoard_owner_id() {
+        public int getBoardOwnerId() {
             return board_owner_id;
         }
 
-        public void setBoard_owner_id(int board_owner_id) {
+        public void setBoardOwnerId(int boardOwnerId) {
             this.board_owner_id = board_owner_id;
         }
 
@@ -62,13 +63,12 @@ public class FollowBoardOperateBean {
             this.seq = seq;
         }
 
-        public int getFollowed_at() {
+        public int getFollowedAt() {
             return followed_at;
         }
 
-        public void setFollowed_at(int followed_at) {
+        public void setFollowedAt(int followedAt) {
             this.followed_at = followed_at;
         }
     }
-
 }

@@ -1,4 +1,4 @@
-package com.glooory.petal.mvp.model.entity.gather;
+package com.glooory.petal.mvp.model.entity.collect;
 
 import com.glooory.petal.mvp.model.entity.ErrorBaseBean;
 import com.google.gson.Gson;
@@ -8,7 +8,7 @@ import com.google.gson.Gson;
  * 本地图片上传成功后服务器返回的实体类
  */
 
-public class UploadResultBean  extends ErrorBaseBean{
+public class UploadResultBean extends ErrorBaseBean{
 
 
     /**

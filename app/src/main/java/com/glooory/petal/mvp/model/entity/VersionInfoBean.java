@@ -11,9 +11,9 @@ public class VersionInfoBean {
     /**
      * versioncode : 104
      * versionname : 1.0.4
-     * downloadurl : https://github.com/Glooory/Glooory.github.io/blob/master/releases/FlatReader/flatreader_1.0.1_universal.apk?raw=true
-     * filename : flatreader_1.0.4_universal.apk
-     * releaseinfo : 1.加入下载测试链接
+     * downloadurl : https://download.com/release
+     * filename : demo.2.0.apk
+     * releaseinfo : 1.修复 bug
      2.添加更新
      3.优化多处用户体验
      * size : 3.96M

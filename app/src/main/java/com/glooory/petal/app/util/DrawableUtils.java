@@ -9,7 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 
 import com.glooory.petal.R;
-import com.glooory.petal.mvp.model.entity.PinsBean;
+import com.glooory.petal.mvp.model.entity.PinBean;
 
 import common.PEApplication;
 
@@ -36,10 +36,10 @@ public final class DrawableUtils {
         return drawable;
     }
 
-    public static Drawable getColoredPlaceHolderDrawable(PinsBean pinsBean) {
+    public static Drawable getColoredPlaceHolderDrawable(PinBean pinBean) {
         ColorDrawable colorDrawable;
-        if (pinsBean.getFile().getColors() != null && pinsBean.getFile().getColors().size() > 0) {
-            int color = pinsBean.getFile().getColors().get(0).getColor();
+        if (pinBean.getFile().getColors() != null && pinBean.getFile().getColors().size() > 0) {
+            int color = pinBean.getFile().getColors().get(0).getColor();
             if (color == 0) {
                 colorDrawable = new ColorDrawable(ContextCompat.getColor(PEApplication.getContext(),
                         R.color.grey_1000));

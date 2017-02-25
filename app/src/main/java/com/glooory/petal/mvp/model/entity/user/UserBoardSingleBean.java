@@ -1,5 +1,6 @@
 package com.glooory.petal.mvp.model.entity.user;
 
+import com.glooory.petal.mvp.model.entity.BoardBean;
 import com.glooory.petal.mvp.model.entity.ErrorBaseBean;
 
 /**
@@ -7,14 +8,13 @@ import com.glooory.petal.mvp.model.entity.ErrorBaseBean;
  */
 public class UserBoardSingleBean extends ErrorBaseBean {
 
-    private UserBoardItemBean board;
+    private BoardBean board;
 
-    public UserBoardItemBean getBoards() {
+    public BoardBean getBoard() {
         return board;
     }
 
-    public void setBoards(UserBoardItemBean board) {
+    public void setBoard(BoardBean board) {
         this.board = board;
     }
-
 }

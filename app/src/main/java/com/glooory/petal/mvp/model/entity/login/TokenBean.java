@@ -6,10 +6,10 @@ package com.glooory.petal.mvp.model.entity.login;
 public class TokenBean {
 
     /**
-     * access_token : edd1fc77-7d46-4e5c-92b9-3a84a290df0c
+     * access_token : ed77-7d46-4e5c-92b9-f0c
      * token_type : bearer
      * expires_in : 76632
-     * refresh_token : db185b8b-c9ec-4553-a3fb-ff4646dadae1
+     * refresh_token : dbb-c9ec-4553-a3fb-ffae1
      */
 
     private String access_token;
@@ -17,36 +17,36 @@ public class TokenBean {
     private int expires_in;
     private String refresh_token;
 
-    public void setAccess_token(String access_token) {
-        this.access_token = access_token;
-    }
-
-    public void setToken_type(String token_type) {
-        this.token_type = token_type;
-    }
-
-    public void setExpires_in(int expires_in) {
-        this.expires_in = expires_in;
-    }
-
-    public void setRefresh_token(String refresh_token) {
-        this.refresh_token = refresh_token;
-    }
-
-    public String getAccess_token() {
+    public String getAccessToken() {
         return access_token;
     }
 
-    public String getToken_type() {
+    public void setAccessToken(String accessToken) {
+        this.access_token = access_token;
+    }
+
+    public String getTokenType() {
         return token_type;
     }
 
-    public int getExpires_in() {
+    public void setTokenType(String tokenType) {
+        this.token_type = token_type;
+    }
+
+    public int getExpiresIn() {
         return expires_in;
     }
 
-    public String getRefresh_token() {
+    public void setExpiresIn(int expiresIn) {
+        this.expires_in = expires_in;
+    }
+
+    public String getRefreshToken() {
         return refresh_token;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refresh_token = refresh_token;
     }
 
     @Override
@@ -58,5 +58,4 @@ public class TokenBean {
                 ", refresh_token='" + refresh_token + '\'' +
                 '}';
     }
-
 }

@@ -16,7 +16,7 @@ import com.glooory.petal.R;
 import com.glooory.petal.app.util.DrawableUtils;
 import com.glooory.petal.app.util.ImageUtils;
 import com.glooory.petal.app.util.StringUtils;
-import com.glooory.petal.mvp.model.entity.PinsBean;
+import com.glooory.petal.mvp.model.entity.PinBean;
 import com.jess.arms.widget.imageloader.ImageLoader;
 import com.jess.arms.widget.imageloader.fresco.FrescoImageConfig;
 
@@ -26,7 +26,7 @@ import common.PEApplication;
  * Created by Glooory on 17/2/22.
  */
 
-public class HomePinsAdapter extends BaseQuickAdapter<PinsBean, BaseViewHolder> {
+public class HomePinsAdapter extends BaseQuickAdapter<PinBean, BaseViewHolder> {
 
     private final String mGeneralImageUrlFormat;
     private final String mSmallImageUrlFormat;
@@ -44,7 +44,7 @@ public class HomePinsAdapter extends BaseQuickAdapter<PinsBean, BaseViewHolder> 
     }
 
     @Override
-    protected void convert(BaseViewHolder holder, PinsBean item) {
+    protected void convert(BaseViewHolder holder, PinBean item) {
         //采集图片地址
         String pinUrl = String.format(mGeneralImageUrlFormat, item.getFile().getKey());
         //头像图片地址
@@ -108,13 +108,13 @@ public class HomePinsAdapter extends BaseQuickAdapter<PinsBean, BaseViewHolder> 
     }
 
     //将用户名和画板名称颜色加深
-    private SpannableString setViaDesTextStyled(PinsBean pinsBean) {
+    private SpannableString setViaDesTextStyled(PinBean pinBean) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(pinsBean.getUser().getUsername())
+        stringBuilder.append(pinBean.getUser().getUsername())
                 .append(" 采集到")
-                .append(pinsBean.getBoard().getTitle());
-        int userNameLength = pinsBean.getUser().getUsername().length();
-        int boardTitleLength = pinsBean.getBoard().getTitle().length();
+                .append(pinBean.getBoard().getTitle());
+        int userNameLength = pinBean.getUser().getUsername().length();
+        int boardTitleLength = pinBean.getBoard().getTitle().length();
         SpannableString spannableString = new SpannableString(stringBuilder.toString());
         spannableString.setSpan(new ForegroundColorSpan(
                         ContextCompat.getColor(PEApplication.getContext(), R.color.primary_text)),

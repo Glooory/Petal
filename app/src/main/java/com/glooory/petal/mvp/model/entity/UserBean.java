@@ -5,27 +5,19 @@ import android.os.Parcelable;
 
 import com.google.gson.Gson;
 
+import java.util.List;
+
 /**
  * Created by Glooory on 2016/8/27 0027.
  */
-public class PinsUserBean implements Parcelable {
+public class UserBean implements Parcelable {
 
     private int user_id;
     private String username;
     private String urlname;
     private int created_at;
-    /**
-     * id : 112197876
-     * farm : farm1
-     * bucket : hbimg
-     * key : a8954d7a5ee26c34c5313caa542aa361e60bd50530407-9Lnxz5
-     * type : image/jpeg
-     * width : 862
-     * height : 930
-     * frames : 1
-     */
-
     private AvatarBean avatar;
+    private String email;
     private int pin_count;
     private int follower_count;
     private int boards_like_count;
@@ -35,25 +27,28 @@ public class PinsUserBean implements Parcelable {
     private int creations_count;
     private int following_count;
     private ProfileBean profile;
-    /**
-     * newbietask : 0
-     * lr : 1462270759
-     * invites : 0
-     * share : 0
-     */
 
+    //该用户是否已经关注 关注为1 否则没有对应的字段
+    private int following;
     private StatusBean status;
 
-    public static PinsUserBean objectFromData(String str) {
+    private int muse_board_count;
+    private int explore_following_count;
+    private int seq;
+    private List<PinBean> pins;
+    private ExtraBean extra;
+    private List<BoardBean> boards;
 
-        return new Gson().fromJson(str, PinsUserBean.class);
+    public static UserBean objectFromData(String str) {
+
+        return new Gson().fromJson(str, UserBean.class);
     }
 
-    public int getUser_id() {
+    public int getUserId() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUserId(int userId) {
         this.user_id = user_id;
     }
 
@@ -73,11 +68,11 @@ public class PinsUserBean implements Parcelable {
         this.urlname = urlname;
     }
 
-    public int getCreated_at() {
+    public int getCreatedAt() {
         return created_at;
     }
 
-    public void setCreated_at(int created_at) {
+    public void setCreatedAt(int createdAt) {
         this.created_at = created_at;
     }
 
@@ -89,67 +84,75 @@ public class PinsUserBean implements Parcelable {
         this.avatar = avatar;
     }
 
-    public int getPin_count() {
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getPinCount() {
         return pin_count;
     }
 
-    public void setPin_count(int pin_count) {
+    public void setPinCount(int pinCount) {
         this.pin_count = pin_count;
     }
 
-    public int getFollower_count() {
+    public int getFollowerCount() {
         return follower_count;
     }
 
-    public void setFollower_count(int follower_count) {
+    public void setFollowerCount(int followerCount) {
         this.follower_count = follower_count;
     }
 
-    public int getBoards_like_count() {
+    public int getBoardsLikeCount() {
         return boards_like_count;
     }
 
-    public void setBoards_like_count(int boards_like_count) {
+    public void setBoardsLikeCount(int boardsLikeCount) {
         this.boards_like_count = boards_like_count;
     }
 
-    public int getBoard_count() {
+    public int getBoardCount() {
         return board_count;
     }
 
-    public void setBoard_count(int board_count) {
+    public void setBoardCount(int boardCount) {
         this.board_count = board_count;
     }
 
-    public int getCommodity_count() {
+    public int getCommodityCount() {
         return commodity_count;
     }
 
-    public void setCommodity_count(int commodity_count) {
+    public void setCommodityCount(int commodityCount) {
         this.commodity_count = commodity_count;
     }
 
-    public int getLike_count() {
+    public int getLikeCount() {
         return like_count;
     }
 
-    public void setLike_count(int like_count) {
+    public void setLikeCount(int likeCount) {
         this.like_count = like_count;
     }
 
-    public int getCreations_count() {
+    public int getCreationsCount() {
         return creations_count;
     }
 
-    public void setCreations_count(int creations_count) {
+    public void setCreationsCount(int creationsCount) {
         this.creations_count = creations_count;
     }
 
-    public int getFollowing_count() {
+    public int getFollowingCount() {
         return following_count;
     }
 
-    public void setFollowing_count(int following_count) {
+    public void setFollowingCount(int followingCount) {
         this.following_count = following_count;
     }
 
@@ -161,6 +164,14 @@ public class PinsUserBean implements Parcelable {
         this.profile = profile;
     }
 
+    public int getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(int following) {
+        this.following = following;
+    }
+
     public StatusBean getStatus() {
         return status;
     }
@@ -169,135 +180,110 @@ public class PinsUserBean implements Parcelable {
         this.status = status;
     }
 
-    public static class AvatarBean implements Parcelable {
-        private int id;
-        private String farm;
-        private String bucket;
-        private String key;
-        private String type;
-        private String width;
-        private String height;
-        private String frames;
+    public int getMuseBoardCount() {
+        return muse_board_count;
+    }
 
-        public static AvatarBean objectFromData(String str) {
+    public void setMuseBoardCount(int museBoardCount) {
+        this.muse_board_count = muse_board_count;
+    }
 
-            return new Gson().fromJson(str, AvatarBean.class);
-        }
+    public int getExploreFollowingCount() {
+        return explore_following_count;
+    }
 
-        public int getId() {
-            return id;
-        }
+    public void setExploreFollowingCount(int exploreFollowingCount) {
+        this.explore_following_count = explore_following_count;
+    }
 
-        public void setId(int id) {
-            this.id = id;
-        }
+    public int getSeq() {
+        return seq;
+    }
 
-        public String getFarm() {
-            return farm;
-        }
+    public void setSeq(int seq) {
+        this.seq = seq;
+    }
 
-        public void setFarm(String farm) {
-            this.farm = farm;
-        }
+    public List<PinBean> getPins() {
+        return pins;
+    }
 
-        public String getBucket() {
-            return bucket;
-        }
+    public void setPins(List<PinBean> pins) {
+        this.pins = pins;
+    }
 
-        public void setBucket(String bucket) {
-            this.bucket = bucket;
-        }
+    public ExtraBean getExtra() {
+        return extra;
+    }
 
-        public String getKey() {
-            return key;
-        }
+    public void setExtra(ExtraBean extra) {
+        this.extra = extra;
+    }
 
-        public void setKey(String key) {
-            this.key = key;
-        }
+    public List<BoardBean> getBoards() {
+        return boards;
+    }
 
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        public String getWidth() {
-            return width;
-        }
-
-        public void setWidth(String width) {
-            this.width = width;
-        }
-
-        public String getHeight() {
-            return height;
-        }
-
-        public void setHeight(String height) {
-            this.height = height;
-        }
-
-        public String getFrames() {
-            return frames;
-        }
-
-        public void setFrames(String frames) {
-            this.frames = frames;
-        }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(this.id);
-            dest.writeString(this.farm);
-            dest.writeString(this.bucket);
-            dest.writeString(this.key);
-            dest.writeString(this.type);
-            dest.writeString(this.width);
-            dest.writeString(this.height);
-            dest.writeString(this.frames);
-        }
-
-        public AvatarBean() {
-        }
-
-        protected AvatarBean(Parcel in) {
-            this.id = in.readInt();
-            this.farm = in.readString();
-            this.bucket = in.readString();
-            this.key = in.readString();
-            this.type = in.readString();
-            this.width = in.readString();
-            this.height = in.readString();
-            this.frames = in.readString();
-        }
-
-        public static final Parcelable.Creator<AvatarBean> CREATOR = new Parcelable.Creator<AvatarBean>() {
-            @Override
-            public AvatarBean createFromParcel(Parcel source) {
-                return new AvatarBean(source);
-            }
-
-            @Override
-            public AvatarBean[] newArray(int size) {
-                return new AvatarBean[size];
-            }
-        };
+    public void setBoards(List<BoardBean> boards) {
+        this.boards = boards;
     }
 
     public static class ProfileBean implements Parcelable {
+        private String location;
+        private String sex;
+        private String birthday;
+        private String job;
+        private String url;
+        private String about;
 
-        public static ProfileBean objectFromData(String str) {
-
-            return new Gson().fromJson(str, ProfileBean.class);
+        public String getLocation() {
+            return location;
         }
+
+        public void setLocation(String location) {
+            this.location = location;
+        }
+
+        public String getSex() {
+            return sex;
+        }
+
+        public void setSex(String sex) {
+            this.sex = sex;
+        }
+
+        public String getBirthday() {
+            return birthday;
+        }
+
+        public void setBirthday(String birthday) {
+            this.birthday = birthday;
+        }
+
+        public String getJob() {
+            return job;
+        }
+
+        public void setJob(String job) {
+            this.job = job;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public String getAbout() {
+            return about;
+        }
+
+        public void setAbout(String about) {
+            this.about = about;
+        }
+
 
         @Override
         public int describeContents() {
@@ -306,15 +292,27 @@ public class PinsUserBean implements Parcelable {
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.location);
+            dest.writeString(this.sex);
+            dest.writeString(this.birthday);
+            dest.writeString(this.job);
+            dest.writeString(this.url);
+            dest.writeString(this.about);
         }
 
         public ProfileBean() {
         }
 
         protected ProfileBean(Parcel in) {
+            this.location = in.readString();
+            this.sex = in.readString();
+            this.birthday = in.readString();
+            this.job = in.readString();
+            this.url = in.readString();
+            this.about = in.readString();
         }
 
-        public static final Parcelable.Creator<ProfileBean> CREATOR = new Parcelable.Creator<ProfileBean>() {
+        public static final Creator<ProfileBean> CREATOR = new Creator<ProfileBean>() {
             @Override
             public ProfileBean createFromParcel(Parcel source) {
                 return new ProfileBean(source);
@@ -406,6 +404,53 @@ public class PinsUserBean implements Parcelable {
         };
     }
 
+    public static class ExtraBean implements Parcelable {
+        private boolean is_museuser;
+
+        public static ExtraBean objectFromData(String str) {
+
+            return new Gson().fromJson(str, ExtraBean.class);
+        }
+
+        public boolean IsMuseuser() {
+            return is_museuser;
+        }
+
+        public void setIsMuseuser(boolean isMuseuser) {
+            this.is_museuser = is_museuser;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeByte(this.is_museuser ? (byte) 1 : (byte) 0);
+        }
+
+        public ExtraBean() {
+        }
+
+        protected ExtraBean(Parcel in) {
+            this.is_museuser = in.readByte() != 0;
+        }
+
+        public static final Creator<ExtraBean> CREATOR = new Creator<ExtraBean>() {
+            @Override
+            public ExtraBean createFromParcel(Parcel source) {
+                return new ExtraBean(source);
+            }
+
+            @Override
+            public ExtraBean[] newArray(int size) {
+                return new ExtraBean[size];
+            }
+        };
+    }
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -418,6 +463,7 @@ public class PinsUserBean implements Parcelable {
         dest.writeString(this.urlname);
         dest.writeInt(this.created_at);
         dest.writeParcelable(this.avatar, flags);
+        dest.writeString(this.email);
         dest.writeInt(this.pin_count);
         dest.writeInt(this.follower_count);
         dest.writeInt(this.boards_like_count);
@@ -427,18 +473,26 @@ public class PinsUserBean implements Parcelable {
         dest.writeInt(this.creations_count);
         dest.writeInt(this.following_count);
         dest.writeParcelable(this.profile, flags);
+        dest.writeInt(this.following);
         dest.writeParcelable(this.status, flags);
+        dest.writeInt(this.muse_board_count);
+        dest.writeInt(this.explore_following_count);
+        dest.writeInt(this.seq);
+        dest.writeTypedList(this.pins);
+        dest.writeParcelable(this.extra, flags);
+        dest.writeTypedList(this.boards);
     }
 
-    public PinsUserBean() {
+    public UserBean() {
     }
 
-    protected PinsUserBean(Parcel in) {
+    protected UserBean(Parcel in) {
         this.user_id = in.readInt();
         this.username = in.readString();
         this.urlname = in.readString();
         this.created_at = in.readInt();
         this.avatar = in.readParcelable(AvatarBean.class.getClassLoader());
+        this.email = in.readString();
         this.pin_count = in.readInt();
         this.follower_count = in.readInt();
         this.boards_like_count = in.readInt();
@@ -448,18 +502,25 @@ public class PinsUserBean implements Parcelable {
         this.creations_count = in.readInt();
         this.following_count = in.readInt();
         this.profile = in.readParcelable(ProfileBean.class.getClassLoader());
+        this.following = in.readInt();
         this.status = in.readParcelable(StatusBean.class.getClassLoader());
+        this.muse_board_count = in.readInt();
+        this.explore_following_count = in.readInt();
+        this.seq = in.readInt();
+        this.pins = in.createTypedArrayList(PinBean.CREATOR);
+        this.extra = in.readParcelable(ExtraBean.class.getClassLoader());
+        this.boards = in.createTypedArrayList(BoardBean.CREATOR);
     }
 
-    public static final Parcelable.Creator<PinsUserBean> CREATOR = new Parcelable.Creator<PinsUserBean>() {
+    public static final Creator<UserBean> CREATOR = new Creator<UserBean>() {
         @Override
-        public PinsUserBean createFromParcel(Parcel source) {
-            return new PinsUserBean(source);
+        public UserBean createFromParcel(Parcel source) {
+            return new UserBean(source);
         }
 
         @Override
-        public PinsUserBean[] newArray(int size) {
-            return new PinsUserBean[size];
+        public UserBean[] newArray(int size) {
+            return new UserBean[size];
         }
     };
 }

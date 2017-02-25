@@ -8,9 +8,7 @@ import java.util.List;
 /**
  * Created by Glooory on 2016/8/27 0027.
  */
-public class PinsFileBean implements Parcelable {
-
-    // Pins 中的File
+public class FileBean implements Parcelable {
 
     /*"file":{
         "id":112862047,
@@ -31,6 +29,7 @@ public class PinsFileBean implements Parcelable {
     private int height;
     private int width;
     private String frames;
+    private String theme;
     private List<ColorsBean> colors;
 
     public int getId() {
@@ -97,6 +96,14 @@ public class PinsFileBean implements Parcelable {
         this.frames = frames;
     }
 
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
+
     public List<ColorsBean> getColors() {
         return colors;
     }
@@ -120,13 +127,14 @@ public class PinsFileBean implements Parcelable {
         dest.writeInt(this.height);
         dest.writeInt(this.width);
         dest.writeString(this.frames);
+        dest.writeString(this.theme);
         dest.writeTypedList(this.colors);
     }
 
-    public PinsFileBean() {
+    public FileBean() {
     }
 
-    protected PinsFileBean(Parcel in) {
+    protected FileBean(Parcel in) {
         this.id = in.readInt();
         this.farm = in.readString();
         this.bucket = in.readString();
@@ -135,18 +143,19 @@ public class PinsFileBean implements Parcelable {
         this.height = in.readInt();
         this.width = in.readInt();
         this.frames = in.readString();
+        this.theme = in.readString();
         this.colors = in.createTypedArrayList(ColorsBean.CREATOR);
     }
 
-    public static final Creator<PinsFileBean> CREATOR = new Creator<PinsFileBean>() {
+    public static final Creator<FileBean> CREATOR = new Creator<FileBean>() {
         @Override
-        public PinsFileBean createFromParcel(Parcel source) {
-            return new PinsFileBean(source);
+        public FileBean createFromParcel(Parcel source) {
+            return new FileBean(source);
         }
 
         @Override
-        public PinsFileBean[] newArray(int size) {
-            return new PinsFileBean[size];
+        public FileBean[] newArray(int size) {
+            return new FileBean[size];
         }
     };
 }

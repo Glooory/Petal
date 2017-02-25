@@ -1,7 +1,6 @@
 package com.glooory.petal.mvp.model.api.cache;
 
-import com.glooory.petal.mvp.model.entity.ListPinsBean;
-import com.glooory.petal.mvp.model.entity.PinsListBean;
+import com.glooory.petal.mvp.model.entity.PinListBean;
 
 import java.util.concurrent.TimeUnit;
 
@@ -29,24 +28,24 @@ public interface HomeCache {
             EvictProvider evictProvider);
 
     @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
-    Observable<Reply<ListPinsBean>> getLatestFollowingPins(
-            Observable<ListPinsBean> observableListPins,
+    Observable<Reply<PinListBean>> getLatestFollowingPins(
+            Observable<PinListBean> observableListPins,
             EvictProvider evictProvider);
 
     @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
-    Observable<Reply<ListPinsBean>> getLatestFollowingPinsNext(
-            Observable<ListPinsBean> observableListPins,
+    Observable<Reply<PinListBean>> getLatestFollowingPinsNext(
+            Observable<PinListBean> observableListPins,
             DynamicKey maxPinId,
             EvictProvider evictProvider);
 
     @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
-    Observable<Reply<ListPinsBean>> getLatestPopularPins(
-            Observable<ListPinsBean> observableListPins,
+    Observable<Reply<PinListBean>> getLatestPopularPins(
+            Observable<PinListBean> observableListPins,
             EvictProvider evictProvider);
 
     @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
-    Observable<Reply<ListPinsBean>> getLatestPopularPinsNext(
-            Observable<ListPinsBean> observableListPins,
+    Observable<Reply<PinListBean>> getLatestPopularPinsNext(
+            Observable<PinListBean> observableListPins,
             DynamicKey maxPinId,
             EvictProvider evictProvider);
 }

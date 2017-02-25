@@ -2,15 +2,9 @@ package com.glooory.petal.mvp.model.entity.imagedetail;
 
 /**
  * Created by Glooory on 2016/9/12 0012 17:09.
+ * 喜欢某张图片操作后的返回信息
  */
-public class LikePinOperateBean {
-
-    /**
-     * pin_id : 690448610
-     * user_id : 15246080
-     * seq : 52990507
-     * liked_at : 1461060515
-     */
+public class LikeResultBean {
 
     private LikeBean like;
 
@@ -23,24 +17,32 @@ public class LikePinOperateBean {
     }
 
     public static class LikeBean {
+
+        /**
+         * pin_id : 690448610
+         * user_id : 15246080
+         * seq : 52990507
+         * liked_at : 1461060515
+         */
+
         private int pin_id;
         private int user_id;
         private int seq;
         private int liked_at;
 
-        public int getPin_id() {
+        public int getPinId() {
             return pin_id;
         }
 
-        public void setPin_id(int pin_id) {
+        public void setPinId(int pinId) {
             this.pin_id = pin_id;
         }
 
-        public int getUser_id() {
+        public int getUserId() {
             return user_id;
         }
 
-        public void setUser_id(int user_id) {
+        public void setUserId(int userId) {
             this.user_id = user_id;
         }
 
@@ -52,13 +54,12 @@ public class LikePinOperateBean {
             this.seq = seq;
         }
 
-        public int getLiked_at() {
+        public int getLikedAt() {
             return liked_at;
         }
 
-        public void setLiked_at(int liked_at) {
+        public void setLikedAt(int likedAt) {
             this.liked_at = liked_at;
         }
     }
-
 }

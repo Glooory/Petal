@@ -1,6 +1,6 @@
 package com.glooory.petal.mvp.model.entity.searchresult;
 
-import com.glooory.petal.mvp.model.entity.PinsBean;
+import com.glooory.petal.mvp.model.entity.PinBean;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -11,14 +11,6 @@ import java.util.List;
  */
 public class ResultCountInfoBean {
 
-
-    /**
-     * text : coldplay
-     * type : pin
-     * sort : weight
-     */
-
-    private QueryBean query;
     /**
      * query : {"text":"coldplay","type":"pin","sort":"weight"}
      * pin_count : 777
@@ -34,15 +26,16 @@ public class ResultCountInfoBean {
      * target : /search/?q=coldplay
      */
 
+    private QueryBean query;
     private int pin_count;
     private int self_pin_count;
     private int self_board_count;
     private int board_count;
     private int people_count;
     private int page;
-    private Object category;
+    private String category;
     private String target;
-    private List<PinsBean> pins;
+    private List<PinBean> pins;
 
     public static ResultCountInfoBean objectFromData(String str) {
 
@@ -57,43 +50,43 @@ public class ResultCountInfoBean {
         this.query = query;
     }
 
-    public int getPin_count() {
+    public int getPinCount() {
         return pin_count;
     }
 
-    public void setPin_count(int pin_count) {
+    public void setPinCount(int pinCount) {
         this.pin_count = pin_count;
     }
 
-    public int getSelf_pin_count() {
+    public int getSelfPinCount() {
         return self_pin_count;
     }
 
-    public void setSelf_pin_count(int self_pin_count) {
+    public void setSelfPinCount(int selfPinCount) {
         this.self_pin_count = self_pin_count;
     }
 
-    public int getSelf_board_count() {
+    public int getSelfBoardCount() {
         return self_board_count;
     }
 
-    public void setSelf_board_count(int self_board_count) {
+    public void setSelfBoardCount(int selfBoardCount) {
         this.self_board_count = self_board_count;
     }
 
-    public int getBoard_count() {
+    public int getBoardCount() {
         return board_count;
     }
 
-    public void setBoard_count(int board_count) {
+    public void setBoardCount(int boardCount) {
         this.board_count = board_count;
     }
 
-    public int getPeople_count() {
+    public int getPeopleCount() {
         return people_count;
     }
 
-    public void setPeople_count(int people_count) {
+    public void setPeopleCount(int peopleCount) {
         this.people_count = people_count;
     }
 
@@ -105,11 +98,11 @@ public class ResultCountInfoBean {
         this.page = page;
     }
 
-    public Object getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Object category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
@@ -121,46 +114,11 @@ public class ResultCountInfoBean {
         this.target = target;
     }
 
-    public List<PinsBean> getPins() {
+    public List<PinBean> getPins() {
         return pins;
     }
 
-    public void setPins(List<PinsBean> pins) {
+    public void setPins(List<PinBean> pins) {
         this.pins = pins;
-    }
-
-    public static class QueryBean {
-        private String text;
-        private String type;
-        private String sort;
-
-        public static QueryBean objectFromData(String str) {
-
-            return new Gson().fromJson(str, QueryBean.class);
-        }
-
-        public String getText() {
-            return text;
-        }
-
-        public void setText(String text) {
-            this.text = text;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        public String getSort() {
-            return sort;
-        }
-
-        public void setSort(String sort) {
-            this.sort = sort;
-        }
     }
 }
