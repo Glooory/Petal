@@ -2,6 +2,10 @@ package common;
 
 import android.app.Application;
 
+import com.glooory.petal.di.module.CacheModule;
+import com.glooory.petal.di.module.ServiceModule;
+import com.glooory.petal.mvp.model.api.cache.CacheManager;
+import com.glooory.petal.mvp.model.api.service.ServiceManager;
 import com.google.gson.Gson;
 import com.jess.arms.base.AppManager;
 import com.jess.arms.di.module.AppModule;
@@ -13,15 +17,11 @@ import com.jess.arms.widget.imageloader.ImageLoader;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import com.glooory.petal.di.module.CacheModule;
-import com.glooory.petal.di.module.ServiceModule;
-import com.glooory.petal.mvp.model.api.cache.CacheManager;
-import com.glooory.petal.mvp.model.api.service.ServiceManager;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import okhttp3.OkHttpClient;
 
 /**
- * Created by jess on 8/4/16.
+ * Created by Glooory on 17/2/17.
  */
 @Singleton
 @Component(modules = {AppModule.class, ClientModule.class, ServiceModule.class, ImageModule.class,

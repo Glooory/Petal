@@ -17,35 +17,35 @@ import rx.Observable;
 public interface HomeCache {
 
     @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
-    Observable<Reply<PinsListBean>> getLatestAllPins(
-            Observable<PinsListBean> observablePinsList,
+    Observable<Reply<PinListBean>> getLatestAllPins(
+            Observable<PinListBean> observablePinList,
             EvictProvider evictProvider);
 
     @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
-    Observable<Reply<PinsListBean>> getLatestAllPinsNext(
-            Observable<PinsListBean> observablePinsList,
+    Observable<Reply<PinListBean>> getLatestAllPinsNext(
+            Observable<PinListBean> observablePinList,
             DynamicKey maxPinId,
             EvictProvider evictProvider);
 
     @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
     Observable<Reply<PinListBean>> getLatestFollowingPins(
-            Observable<PinListBean> observableListPins,
+            Observable<PinListBean> observablePinList,
             EvictProvider evictProvider);
 
     @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
     Observable<Reply<PinListBean>> getLatestFollowingPinsNext(
-            Observable<PinListBean> observableListPins,
+            Observable<PinListBean> observablePinList,
             DynamicKey maxPinId,
             EvictProvider evictProvider);
 
     @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
     Observable<Reply<PinListBean>> getLatestPopularPins(
-            Observable<PinListBean> observableListPins,
+            Observable<PinListBean> observablePinList,
             EvictProvider evictProvider);
 
     @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
     Observable<Reply<PinListBean>> getLatestPopularPinsNext(
-            Observable<PinListBean> observableListPins,
+            Observable<PinListBean> observablePinList,
             DynamicKey maxPinId,
             EvictProvider evictProvider);
 }

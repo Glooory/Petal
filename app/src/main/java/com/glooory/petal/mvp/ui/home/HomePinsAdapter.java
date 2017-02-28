@@ -20,6 +20,8 @@ import com.glooory.petal.mvp.model.entity.PinBean;
 import com.jess.arms.widget.imageloader.ImageLoader;
 import com.jess.arms.widget.imageloader.fresco.FrescoImageConfig;
 
+import javax.inject.Inject;
+
 import common.PEApplication;
 
 /**
@@ -33,6 +35,7 @@ public class HomePinsAdapter extends BaseQuickAdapter<PinBean, BaseViewHolder> {
     private ImageLoader mImageLoader;
     private Drawable mFailureDrawable;
 
+    @Inject
     public HomePinsAdapter() {
         super(R.layout.item_cardview_pin_home, null);
         Resources resources = PEApplication.getContext().getResources();

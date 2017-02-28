@@ -19,14 +19,14 @@ public interface HomeService {
     //获取最新的采集
     //https://api.huaban.com/all?limit=20
     @GET("all")
-    Observable<PinsListBean> getLatestAllPins(
+    Observable<PinListBean> getLatestAllPins(
             @Header(Constants.HTTP_HEADER_AUTHORIZATION) String authorization,
             @Query(Constants.HTTP_QUERY_LIMIT) int limit);
 
     //获取最新的采集
     //https://api.huaban.com/all?max={pinId}&limit=20
     @GET("all")
-    Observable<PinsListBean> getLatestAllPinsNext(
+    Observable<PinListBean> getLatestAllPinsNext(
             @Header(Constants.HTTP_HEADER_AUTHORIZATION) String authorization,
             @Query(Constants.HTTP_QUERY_MAX) int maxPinId,
             @Query(Constants.HTTP_QUERY_LIMIT) int limit);

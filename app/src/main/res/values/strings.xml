@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">花瓣</string>
+    <string name="msg_loading">正在加载...</string>
+    <string name="msg_load_failed_click_retry">加载失败，点我重试</string>
 </resources>

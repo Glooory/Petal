@@ -14,22 +14,23 @@ public interface HomeContract {
 
     interface View extends BaseView{
 
+        void setAdapter(HomePinsAdapter adapter);
 
     }
 
     interface Model extends IModel{
 
-        Observable<PinsListBean> getLatestAllPins(boolean update);
+        Observable<PinListBean> getLatestAllPins();
 
-        Observable<PinsListBean> getLatestAllPinsNext(int maxPinId, boolean update);
+        Observable<PinListBean> getLatestAllPinsNext(int maxPinId);
 
-        Observable<PinListBean> getLatestFollowingPins(boolean update);
+        Observable<PinListBean> getLatestFollowingPins();
 
-        Observable<PinListBean> getLatestFollowingPinsNext(int maxPinId,boolean update);
+        Observable<PinListBean> getLatestFollowingPinsNext(int maxPinId);
 
-        Observable<PinListBean> getLatestPopularPins(boolean update);
+        Observable<PinListBean> getLatestPopularPins();
 
-        Observable<PinListBean> getLatestPopularPinsNext(int maxPinId, boolean update);
+        Observable<PinListBean> getLatestPopularPinsNext(int maxPinId);
 
     }
 }

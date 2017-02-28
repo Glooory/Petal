@@ -5,14 +5,15 @@ import com.jess.arms.mvp.Presenter;
 import com.squareup.leakcanary.RefWatcher;
 
 /**
- * Created by jess on 8/5/16 14:11
- * contact with jess.yan.effort@gmail.com
+ * Created by Glooory on 17/2/25
  */
+
 public abstract class PEFragment<P extends Presenter> extends BaseFragment<P> {
     protected PEApplication mPEApplication;
+
     @Override
-    protected void ComponentInject() {
-        mPEApplication = (PEApplication)mActivity.getApplication();
+    protected void componentInject() {
+        mPEApplication = (PEApplication) mActivity.getApplication();
         setupFragmentComponent(mPEApplication.getAppComponent());
     }
 

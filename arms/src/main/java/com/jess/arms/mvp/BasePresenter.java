@@ -8,17 +8,17 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * Created by jess on 16/4/28.
  */
-public class BasePresenter<M extends IModel, V extends BaseView> implements Presenter {
+public class BasePresenter<V extends BaseView, M extends IModel> implements Presenter {
     protected final String TAG = this.getClass().getSimpleName();
     protected CompositeSubscription mCompositeSubscription;
 
-    protected M mModel;
     protected V mRootView;
+    protected M mModel;
 
 
-    public BasePresenter(M model, V rootView) {
-        this.mModel = model;
+    public BasePresenter(V rootView, M model) {
         this.mRootView = rootView;
+        this.mModel = model;
         onStart();
     }
 

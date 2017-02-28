@@ -14,9 +14,9 @@ import com.jess.arms.base.BaseActivity;
 import com.jess.arms.mvp.Presenter;
 
 /**
- * Created by jess on 8/5/16 13:13
- * contact with jess.yan.effort@gmail.com
+ * Created by Glooory on 17/2/17
  */
+
 public abstract class PEActivity<P extends Presenter> extends BaseActivity<P> {
 
     protected PEApplication mPEApplication;
@@ -66,7 +66,7 @@ public abstract class PEActivity<P extends Presenter> extends BaseActivity<P> {
     }
 
     @Override
-    protected void ComponentInject() {
+    protected void componentInject() {
         mPEApplication = (PEApplication) getApplication();
         setupActivityComponent(mPEApplication.getAppComponent());
     }

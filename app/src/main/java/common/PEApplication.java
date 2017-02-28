@@ -26,9 +26,9 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Created by jess on 8/5/16 11:07
- * contact with jess.yan.effort@gmail.com
+ * Created by Glooory on 17/2/17
  */
+
 public class PEApplication extends BaseApplication {
     private AppComponent mAppComponent;
     private RefWatcher mRefWatcher;//leakCanary观察器

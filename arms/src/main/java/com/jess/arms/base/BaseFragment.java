@@ -30,7 +30,7 @@ public abstract class BaseFragment<P extends Presenter> extends RxFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRootView = initView();
+        mRootView = initView(container);
         //绑定到butterknife
         mUnbinder = ButterKnife.bind(this, mRootView);
         return mRootView;
@@ -43,14 +43,14 @@ public abstract class BaseFragment<P extends Presenter> extends RxFragment {
         if (useEventBus()) {
             EventBus.getDefault().register(this);//注册到事件主线
         }
-        ComponentInject();
+        componentInject();
         initData();
     }
 
     /**
      * 依赖注入的入口
      */
-    protected abstract void ComponentInject();
+    protected abstract void componentInject();
 
     @Override
     public void onDestroyView() {
@@ -82,7 +82,7 @@ public abstract class BaseFragment<P extends Presenter> extends RxFragment {
     }
 
 
-    protected abstract View initView();
+    protected abstract View initView(ViewGroup container);
 
     protected abstract void initData();
 

@@ -65,16 +65,16 @@ public abstract class BaseActivity<P extends Presenter> extends RxAppCompatActiv
         //绑定到butterknife
         mUnbinder = ButterKnife.bind(this);
         initView();
-        ComponentInject();//依赖注入
+        componentInject();//依赖注入
         initData();
     }
 
     /**
      * 依赖注入的入口
      */
-    protected abstract void ComponentInject();
+    protected abstract void componentInject();
 
-    public void FullScreencall() {
+    public void fullScreencall() {
         if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
             View v = this.getWindow().getDecorView();
             v.setSystemUiVisibility(View.GONE);
