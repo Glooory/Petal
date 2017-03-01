@@ -22,6 +22,9 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import common.AppComponent;
 import common.PEFragment;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * Created by Glooory on 17/2/25.
@@ -82,7 +85,12 @@ public class HomeFragment extends PEFragment<HomePresenter> implements HomeContr
         mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                mPresenter.requestMorePins(mTypeIndex);
+                mRecyclerView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPresenter.requestMorePins(mTypeIndex);
+                    }
+                });
             }
         });
     }
@@ -94,7 +102,14 @@ public class HomeFragment extends PEFragment<HomePresenter> implements HomeContr
 
     @Override
     public void showLoading() {
-        mSwipeRefreshLayout.setRefreshing(true);
+        Observable.just(1)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        mSwipeRefreshLayout.setRefreshing(true);
+                    }
+                });
     }
 
     @Override

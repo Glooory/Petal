@@ -2,4 +2,11 @@
     <string name="app_name">花瓣</string>
     <string name="msg_loading">正在加载...</string>
     <string name="msg_load_failed_click_retry">加载失败，点我重试</string>
+    <string name="nav_title_latest">最新</string>
+    <string name="nav_title_following">关注</string>
+    <string name="nav_title_popular">热门</string>
+    <string name="nav_title_discover">发现</string>
+    <string name="nav_title_settings">设置</string>
+    <string name="nav_title_about">关于</string>
+    <string name="nav_title_logout">退出登录</string>
 </resources>

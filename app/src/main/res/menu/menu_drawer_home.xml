@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_latest"
+            android:icon="@drawable/ic_latest_24dp"
+            android:title="@string/nav_title_latest" />
+        <item
+            android:id="@+id/nav_following"
+            android:icon="@drawable/ic_following_24dp"
+            android:title="@string/nav_title_following" />
+        <item
+            android:id="@+id/nav_popular"
+            android:icon="@drawable/ic_popular_24dp"
+            android:title="@string/nav_title_popular" />
+        <item
+            android:id="@+id/nav_discover"
+            android:icon="@drawable/ic_discover_24dp"
+            android:title="@string/nav_title_discover" />
+    </group>
+
+    <item android:title="@string/app_name">
+        <menu>
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_settings_24dp"
+                android:title="@string/nav_title_settings" />
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_about_24dp"
+                android:title="@string/nav_title_about" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_logout_24dp"
+                android:title="@string/nav_title_logout" />
+        </menu>
+    </item>
+
+</menu>
