@@ -79,16 +79,14 @@ public class HomePinsAdapter extends BaseQuickAdapter<PinBean, BaseViewHolder> {
 
         holder.setText(R.id.textview_collection_count, StringUtils.appenUnit(item.getRepinCount()))
                 .setText(R.id.textview_like_count, StringUtils.appenUnit(item.getLikeCount()))
-                .setText(R.id.textview_pin_des, setViaDesTextStyled(item))
+                .setText(R.id.textview_pin_collection_via, setViaDesTextStyled(item))
                 .addOnClickListener(R.id.ll_pin_img)
                 .addOnClickListener(R.id.ll_pin_via_info);
 
         float aspectRatio = ImageUtils.getAspectRatio(item.getFile().getWidth(),
                 item.getFile().getHeight());
         ((SimpleDraweeView) holder.getView(R.id.simple_drawee_view_pin)).setAspectRatio(aspectRatio);
-
         Drawable placeHolder = DrawableUtils.getColoredPlaceHolderDrawable(item);
-
         mImageLoader.loadImage(PEApplication.getContext(),
                 FrescoImageConfig.builder()
                         .setSimpleDraweeView(
@@ -114,7 +112,7 @@ public class HomePinsAdapter extends BaseQuickAdapter<PinBean, BaseViewHolder> {
     private SpannableString setViaDesTextStyled(PinBean pinBean) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(pinBean.getUser().getUsername())
-                .append(" 采集到")
+                .append(" 采集到 ")
                 .append(pinBean.getBoard().getTitle());
         int userNameLength = pinBean.getUser().getUsername().length();
         int boardTitleLength = pinBean.getBoard().getTitle().length();

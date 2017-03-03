@@ -16,8 +16,7 @@ import com.glooory.petal.app.widget.WindmillLoadMoreFooter;
 import com.glooory.petal.di.component.DaggerHomeComponent;
 import com.glooory.petal.di.module.HomeModule;
 import com.glooory.petal.mvp.presenter.HomePresenter;
-
-import javax.inject.Inject;
+import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import common.AppComponent;
@@ -44,8 +43,6 @@ public class HomeFragment extends PEFragment<HomePresenter> implements HomeContr
 
     private int mTypeIndex;
     HomePinsAdapter mAdapter;
-    @Inject
-    HomePresenter mPresenter;
 
     public static HomeFragment newInstance(int pinTypeIndex) {
         Bundle args = new Bundle();
@@ -63,20 +60,26 @@ public class HomeFragment extends PEFragment<HomePresenter> implements HomeContr
 
     @Override
     protected View initView(ViewGroup container) {
+        Logger.d(mActivity == null);
         mRootView = LayoutInflater.from(mActivity)
                 .inflate(R.layout.view_swiperefreshlayout_recyclerview, container, false);
+        return mRootView;
+    }
+
+
+    @Override
+    protected void setupViews() {
         mSwipeRefreshLayout.setColorSchemeColors(
-                ContextCompat.getColor(mActivity, R.color.blue_g_i),
-                ContextCompat.getColor(mActivity, R.color.red_error),
-                ContextCompat.getColor(mActivity, R.color.yellow_g_i),
-                ContextCompat.getColor(mActivity, R.color.green_g_i)
+                ContextCompat.getColor(mActivity, R.color.blue_google_icon),
+                ContextCompat.getColor(mActivity, R.color.red_google_icon),
+                ContextCompat.getColor(mActivity, R.color.yellow_google_icon),
+                ContextCompat.getColor(mActivity, R.color.green_google_icon)
         );
         mRecyclerView.setLayoutManager(
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         initAdapter();
         mRecyclerView.setAdapter(mAdapter);
         mPresenter.requestPinsFirstTime(mTypeIndex);
-        return mRootView;
     }
 
     private void initAdapter() {

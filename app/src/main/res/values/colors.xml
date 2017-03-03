@@ -43,10 +43,10 @@
 
     <color name="pink_a500">#60E91E63</color>
 
-    <color name="blue_g_i">#4885ed</color>
-    <color name="red_g_i">#db3236</color>
-    <color name="green_g_i">#3cba54</color>
-    <color name="yellow_g_i">#f4c20d</color>
+    <color name="blue_google_icon">#4885ed</color>
+    <color name="red_google_icon">#db3236</color>
+    <color name="green_google_icon">#3cba54</color>
+    <color name="yellow_google_icon">#f4c20d</color>
 
     <color name="blue_normal">#ff33b5e5</color>
     <color name="blue_pressed">#ff0099cc</color>

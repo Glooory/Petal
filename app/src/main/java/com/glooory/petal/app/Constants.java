@@ -30,4 +30,7 @@ public class Constants {
     public static final String HTTP_QUERY_MAX = "max";
     public static final int PER_PAGE_LIMIT = 20;
 
+    //防抖动时间间隔
+    public static final int THROTTLE_DURATION = 300;
+
 }

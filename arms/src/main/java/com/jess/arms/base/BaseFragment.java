@@ -1,5 +1,6 @@
 package com.jess.arms.base;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -33,24 +34,30 @@ public abstract class BaseFragment<P extends Presenter> extends RxFragment {
         mRootView = initView(container);
         //绑定到butterknife
         mUnbinder = ButterKnife.bind(this, mRootView);
+        setupViews();
         return mRootView;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mActivity = (BaseActivity) getActivity();
         if (useEventBus()) {
             EventBus.getDefault().register(this);//注册到事件主线
         }
-        componentInject();
         initData();
     }
 
-    /**
-     * 依赖注入的入口
-     */
-    protected abstract void componentInject();
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mActivity = (BaseActivity) getActivity();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        componentInject();
+    }
 
     @Override
     public void onDestroyView() {
@@ -71,6 +78,16 @@ public abstract class BaseFragment<P extends Presenter> extends RxFragment {
         this.mRootView = null;
         this.mUnbinder = null;
     }
+
+    /**
+     * 初始化 View 相关的状态
+     */
+    protected abstract void setupViews();
+
+    /**
+     * 依赖注入的入口
+     */
+    protected abstract void componentInject();
 
     /**
      * 是否使用eventBus,默认为使用(true)，

@@ -3,6 +3,7 @@ package common;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.glooory.petal.BuildConfig;
 import com.glooory.petal.di.module.CacheModule;
 import com.glooory.petal.di.module.ServiceModule;
@@ -51,6 +52,7 @@ public class PEApplication extends BaseApplication {
                 .logLevel(BuildConfig.DEBUG ? LogLevel.FULL : LogLevel.NONE);
 
         installLeakCanary();//leakCanary内存泄露检查
+        Fresco.initialize(this);
     }
 
 

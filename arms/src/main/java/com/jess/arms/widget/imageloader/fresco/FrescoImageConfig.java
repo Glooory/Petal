@@ -159,7 +159,7 @@ public class FrescoImageConfig extends ImageConfig {
         private boolean mIsBorder;//是否包边
         private float mRadius = 5;//默认的圆角半径
         private ResizeOptions mResizeOptions;
-        private ScalingUtils.ScaleType mScaleType = ScalingUtils.ScaleType.CENTER;
+        private ScalingUtils.ScaleType mScaleType = ScalingUtils.ScaleType.CENTER_CROP;
 
         private ControllerListener mControllerListener;//图片加载的回调
         private BaseBitmapDataSubscriber mBaseBitmapDataSubscriber;

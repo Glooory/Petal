@@ -11,6 +11,7 @@ import com.jess.arms.base.AppManager;
 import com.jess.arms.di.scope.FragmentScope;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.utils.RxUtils;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
@@ -35,17 +36,18 @@ public class HomePresenter extends BasePresenter<HomeContract.View, HomeContract
     private AppManager mAppManager;
     private Application mApplication;
     private int mLastMaxId;
-    @Inject
     HomePinsAdapter mAdapter;
 
     @Inject
     HomePresenter(HomeContract.View view, HomeContract.Model model, RxErrorHandler handler,
-            AppManager appManager, Application application) {
+            AppManager appManager, Application application, HomePinsAdapter homePinsAdapter) {
         super(view, model);
         mRxErrorHandler = handler;
         mAppManager = appManager;
         mApplication = application;
+        mAdapter = homePinsAdapter;
         mRootView.setAdapter(mAdapter);
+        Logger.d(mAdapter == null);
     }
 
     /**

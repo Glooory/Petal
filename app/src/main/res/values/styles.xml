@@ -13,6 +13,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <style name="HomePinCardViewCustom">
         <item name="android:layout_marginLeft">@dimen/quarter_activity_default_margin</item>
         <item name="android:layout_marginTop">@dimen/quarter_activity_default_margin</item>
