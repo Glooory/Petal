@@ -11,11 +11,12 @@
 
     <LinearLayout
         android:id="@+id/ll_drawer_avatar"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="48dp"
+        android:padding="@dimen/half_activity_default_margin"
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
         android:gravity="center_vertical"
@@ -56,6 +57,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
             android:orientation="vertical">
 
             <TextView
@@ -80,6 +83,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
             android:orientation="vertical">
 
             <TextView
@@ -104,6 +109,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
             android:orientation="vertical">
 
             <TextView
@@ -128,6 +135,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
             android:orientation="vertical">
 
             <TextView

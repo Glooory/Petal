@@ -8,6 +8,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +21,6 @@ import com.glooory.petal.app.Constants;
 import com.jakewharton.rxbinding.view.RxView;
 
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +35,6 @@ import rx.functions.Action1;
 public class HomeActivity extends PEActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         View.OnClickListener{
-
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -146,7 +145,34 @@ public class HomeActivity extends PEActivity
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+        int itemId = item.getItemId();
+        if (itemId == R.id.nav_latest) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container, HomeFragment.newInstance(HomeFragment.PIN_TYPE_LATEST))
+                    .commit();
+            getSupportActionBar().setTitle(R.string.nav_title_latest);
+        } else if (itemId == R.id.nav_following) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container, HomeFragment.newInstance(HomeFragment.PIN_TYPE_FOLLOWING))
+                    .commit();
+            getSupportActionBar().setTitle(R.string.nav_title_following);
+        } else if (itemId == R.id.nav_popular) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container, HomeFragment.newInstance(HomeFragment.PIN_TYPE_POPULAR))
+                    .commit();
+            getSupportActionBar().setTitle(R.string.nav_title_popular);
+        } else if (itemId == R.id.nav_about) {
+            // TODO: 17/3/4 About info
+        } else if (itemId == R.id.nav_settings) {
+            // TODO: 17/3/4 Launch SettingsActivity
+        } else if (itemId == R.id.nav_logout) {
+            // TODO: 17/3/4 logout
+        }
+        mDrawerLayout.closeDrawer(Gravity.START);
+        return true;
     }
 
     @Override

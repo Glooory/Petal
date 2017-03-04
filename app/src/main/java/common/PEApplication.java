@@ -1,7 +1,6 @@
 package common;
 
 import android.content.Context;
-import android.text.TextUtils;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.glooory.petal.BuildConfig;
@@ -16,10 +15,6 @@ import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
 import okhttp3.Interceptor;
@@ -109,19 +104,19 @@ public class PEApplication extends BaseApplication {
                     public Response onHttpResultResponse(String httpResult, Interceptor.Chain chain, Response response) {
                         //这里可以先客户端一步拿到每一次http请求的结果,可以解析成json,做一些操作,如检测到token过期后
                         //重新请求token,并重新执行请求
-                        try {
-                            if (!TextUtils.isEmpty(httpResult)) {
-                                JSONArray array = new JSONArray(httpResult);
-                                JSONObject object = (JSONObject) array.get(0);
-                                String login = object.getString("login");
-                                String avatar_url = object.getString("avatar_url");
-                                Logger.d("result ------>" + login + "    ||   avatar_url------>" + avatar_url);
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            return response;
-                        }
+//                        try {
+//                            if (!TextUtils.isEmpty(httpResult)) {
+//                                JSONArray array = new JSONArray(httpResult);
+//                                JSONObject object = (JSONObject) array.get(0);
+//                                String login = object.getString("login");
+//                                String avatar_url = object.getString("avatar_url");
+//                                Logger.d("result ------>" + login + "    ||   avatar_url------>" + avatar_url);
+//                            }
+//
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                            return response;
+//                        }
 
 
                         //这里如果发现token过期,可以先请求最新的token,然后在拿新的token放入request里去重新请求
