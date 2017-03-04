@@ -13,4 +13,6 @@
     <string name="url_image_general_format">http://img.hb.aicdn.com/%s_fw320sf</string>
     <string name="url_image_big_format">http://img.hb.aicdn.com/%s_fw658</string>
     <string name="url_image_small_format">http://img.hb.aicdn.com/%s_sq75sf</string>
+
+    <string name="url_request_token">https://huaban.com/oauth/access_token/</string>
 </resources>

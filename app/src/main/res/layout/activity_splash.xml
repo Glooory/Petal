@@ -23,9 +23,9 @@
             android:layout_width="120dp"
             android:layout_height="60dp"
             android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="48dp"
-            android:layout_marginEnd="48dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="60dp"
             android:alpha="0"
             android:src="@drawable/bg_logo_huaban"/>
 

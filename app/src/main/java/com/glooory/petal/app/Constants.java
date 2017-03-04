@@ -17,6 +17,7 @@ public class Constants {
 
     public static final String PREF_IS_LOGIN = "pref_is_login";
     public static final String PREF_LOGIN_TIME = "pref_login_time";
+    public static final String PREF_IS_SKIP_LOGIN = "pref_is_skip_login";
 
     public static final String PREF_USER_ACCOUNT = "pref_user_account";
     public static final String PREF_USER_PASSWORD = "pref_user_password";
@@ -29,6 +30,7 @@ public class Constants {
     public static final String HTTP_QUERY_LIMIT = "limit";
     public static final String HTTP_QUERY_MAX = "max";
     public static final int PER_PAGE_LIMIT = 20;
+    public static final String HTTP_ARGS_VALUE_PASSWORD = "password";
 
     //防抖动时间间隔
     public static final int THROTTLE_DURATION = 300;
