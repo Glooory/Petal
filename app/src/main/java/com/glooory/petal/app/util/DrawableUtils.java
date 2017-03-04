@@ -45,11 +45,22 @@ public final class DrawableUtils {
                         R.color.grey_1000));
             } else {
                 String hexColor = Integer.toHexString(color);
-                if (hexColor.length() == 4) {
-                    hexColor = "00" + hexColor;
-                }
-                if (hexColor.length() == 5) {
-                    hexColor = "0" + hexColor;
+                if (hexColor.length() < 6) {
+                    if (hexColor.length() == 1) {
+                        hexColor = "00000" + hexColor;
+                    }
+                    if (hexColor.length() == 2) {
+                        hexColor = "0000" + hexColor;
+                    }
+                    if (hexColor.length() == 3) {
+                        hexColor = "000" + hexColor;
+                    }
+                    if (hexColor.length() == 4) {
+                        hexColor = "00" + hexColor;
+                    }
+                    if (hexColor.length() == 5) {
+                        hexColor = "0" + hexColor;
+                    }
                 }
                 colorDrawable = new ColorDrawable(Color.parseColor("#" + hexColor));
             }

@@ -20,6 +20,7 @@ import com.glooory.petal.app.Constants;
 import com.jakewharton.rxbinding.view.RxView;
 
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -97,7 +98,7 @@ public class HomeActivity extends PEActivity
         navigationView.setNavigationItemSelectedListener(this);
         initNavigationView(navigationView);
         Menu menu = navigationView.getMenu();
-        menu.getItem(isLogin() ? 0 : 1).setChecked(true);
+        menu.getItem(isLogin() ? 1 : 0).setChecked(true);
     }
 
     private void initNavigationView(NavigationView navigationView) {

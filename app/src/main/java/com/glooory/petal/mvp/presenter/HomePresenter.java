@@ -2,6 +2,8 @@ package com.glooory.petal.mvp.presenter;
 
 import android.app.Application;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.glooory.petal.app.widget.WindmillLoadMoreFooter;
 import com.glooory.petal.mvp.model.entity.PinBean;
 import com.glooory.petal.mvp.model.entity.PinListBean;
 import com.glooory.petal.mvp.ui.home.HomeContract;
@@ -46,8 +48,19 @@ public class HomePresenter extends BasePresenter<HomeContract.View, HomeContract
         mAppManager = appManager;
         mApplication = application;
         mAdapter = homePinsAdapter;
+        initAdapter();
         mRootView.setAdapter(mAdapter);
-        Logger.d(mAdapter == null);
+    }
+
+    private void initAdapter() {
+        mAdapter.setLoadMoreView(new WindmillLoadMoreFooter());
+        mAdapter.setEnableLoadMore(true);
+        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                mRootView.showLoadingMore();
+            }
+        });
     }
 
     /**
@@ -96,7 +109,6 @@ public class HomePresenter extends BasePresenter<HomeContract.View, HomeContract
 
     /**
      * 加载更多
-     * @param pinTypeIndex
      */
     public void requestMorePins(int pinTypeIndex) {
         getPinListNextObservable(pinTypeIndex)
@@ -122,6 +134,13 @@ public class HomePresenter extends BasePresenter<HomeContract.View, HomeContract
                     public void onNext(List<PinBean> pinsList) {
                         mAdapter.addData(pinsList);
                         saveLastPinMaxId(pinsList);
+                        mAdapter.loadMoreComplete();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        mAdapter.loadMoreFail();
                     }
                 });
     }
@@ -131,7 +150,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View, HomeContract
      * @param pinsList
      */
     private void saveLastPinMaxId(List<PinBean> pinsList) {
-        if (pinsList == null && pinsList.size() > 0) {
+        if (pinsList != null && pinsList.size() > 0) {
             mLastMaxId = pinsList.get(pinsList.size() - 1).getPinId();
         }
     }

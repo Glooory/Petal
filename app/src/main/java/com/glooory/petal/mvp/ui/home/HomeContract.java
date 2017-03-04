@@ -16,6 +16,7 @@ public interface HomeContract {
 
         void setAdapter(HomePinsAdapter adapter);
 
+        void showLoadingMore();
     }
 
     interface Model extends IModel{

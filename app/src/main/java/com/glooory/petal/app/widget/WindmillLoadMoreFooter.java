@@ -15,13 +15,18 @@ public class WindmillLoadMoreFooter extends LoadMoreView {
     }
 
     @Override
+    public boolean isLoadEndGone() {
+        return true;
+    }
+
+    @Override
     protected int getLoadingViewId() {
-        return R.id.progressbar_loadmore;
+        return R.id.ll_loading_more;
     }
 
     @Override
     protected int getLoadFailViewId() {
-        return R.layout.view_footer_load_failed;
+        return R.id.textview_load_more_failed;
     }
 
     @Override

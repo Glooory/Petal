@@ -10,13 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.glooory.petal.R;
-import com.glooory.petal.app.widget.WindmillLoadMoreFooter;
 import com.glooory.petal.di.component.DaggerHomeComponent;
 import com.glooory.petal.di.module.HomeModule;
 import com.glooory.petal.mvp.presenter.HomePresenter;
-import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import common.AppComponent;
@@ -29,7 +26,8 @@ import rx.functions.Action1;
  * Created by Glooory on 17/2/25.
  */
 
-public class HomeFragment extends PEFragment<HomePresenter> implements HomeContract.View {
+public class HomeFragment extends PEFragment<HomePresenter> implements HomeContract.View,
+        SwipeRefreshLayout.OnRefreshListener{
 
     private static final String ARGS_HOME_PIN_TYPE = "pin_type";
     public static final int PIN_TYPE_FOLLOWING = 0;
@@ -60,12 +58,10 @@ public class HomeFragment extends PEFragment<HomePresenter> implements HomeContr
 
     @Override
     protected View initView(ViewGroup container) {
-        Logger.d(mActivity == null);
         mRootView = LayoutInflater.from(mActivity)
                 .inflate(R.layout.view_swiperefreshlayout_recyclerview, container, false);
         return mRootView;
     }
-
 
     @Override
     protected void setupViews() {
@@ -75,27 +71,11 @@ public class HomeFragment extends PEFragment<HomePresenter> implements HomeContr
                 ContextCompat.getColor(mActivity, R.color.yellow_google_icon),
                 ContextCompat.getColor(mActivity, R.color.green_google_icon)
         );
+        mSwipeRefreshLayout.setOnRefreshListener(this);
         mRecyclerView.setLayoutManager(
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        initAdapter();
         mRecyclerView.setAdapter(mAdapter);
         mPresenter.requestPinsFirstTime(mTypeIndex);
-    }
-
-    private void initAdapter() {
-        mAdapter.setLoadMoreView(new WindmillLoadMoreFooter());
-        mAdapter.setEnableLoadMore(true);
-        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                mRecyclerView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mPresenter.requestMorePins(mTypeIndex);
-                    }
-                });
-            }
-        });
     }
 
     @Override
@@ -147,5 +127,20 @@ public class HomeFragment extends PEFragment<HomePresenter> implements HomeContr
     @Override
     public void setAdapter(HomePinsAdapter adapter) {
         this.mAdapter = adapter;
+    }
+
+    @Override
+    public void showLoadingMore() {
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                mPresenter.requestMorePins(mTypeIndex);
+            }
+        });
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.requestPinsFirstTime(mTypeIndex);
     }
 }
