@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.glooory.petal.BuildConfig;
+import com.glooory.petal.app.Constants;
+import com.glooory.petal.app.util.SPUtils;
 import com.glooory.petal.di.module.CacheModule;
 import com.glooory.petal.di.module.ServiceModule;
 import com.glooory.petal.mvp.model.api.Api;
@@ -139,9 +141,11 @@ public class PEApplication extends BaseApplication {
                     public Request onHttpRequestBefore(Interceptor.Chain chain, Request request) {
                         //如果需要再请求服务器之前做一些操作,则重新返回一个做过操作的的requeat如增加header,不做操作则返回request
 
-                        //return chain.request().newBuilder().header("token", tokenId)
-//                .build();
-                        return request;
+                        return chain.request()
+                                .newBuilder()
+                                .header(Constants.HTTP_HEADER_AUTHORIZATION, SPUtils.getAuthorization())
+                                .build();
+//                        return request;
                     }
                 })
                 .responseErroListener(new ResponseErroListener() {

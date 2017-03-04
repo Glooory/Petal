@@ -26,7 +26,7 @@ public class HomeModel extends BasePEModel<ServiceManager, CacheManager>
     @Override
     public Observable<PinListBean> getLatestAllPins() {
         return mServiceManager.getHomeService()
-                .getLatestAllPins(getAuthorization(), Constants.PER_PAGE_LIMIT);
+                .getLatestAllPins(Constants.PER_PAGE_LIMIT);
 //        return mCacheManager.getHomeCache()
 //                .getLatestAllPins(observablePinList, new EvictDynamicKey(update))
 //                .flatMap(new Func1<Reply<PinListBean>, Observable<PinListBean>>() {
@@ -40,7 +40,7 @@ public class HomeModel extends BasePEModel<ServiceManager, CacheManager>
     @Override
     public Observable<PinListBean> getLatestAllPinsNext(int maxPinId) {
         return mServiceManager.getHomeService()
-                .getLatestAllPinsNext(getAuthorization(), maxPinId, Constants.PER_PAGE_LIMIT);
+                .getLatestAllPinsNext(maxPinId, Constants.PER_PAGE_LIMIT);
 //        return mCacheManager.getHomeCache()
 //                .getLatestAllPinsNext(observablePinList,
 //                        new DynamicKey(maxPinId),
@@ -56,7 +56,7 @@ public class HomeModel extends BasePEModel<ServiceManager, CacheManager>
     @Override
     public Observable<PinListBean> getLatestFollowingPins() {
         return mServiceManager.getHomeService()
-                .getLatestFollowingPins(getAuthorization(), Constants.PER_PAGE_LIMIT);
+                .getLatestFollowingPins(Constants.PER_PAGE_LIMIT);
 //        return mCacheManager.getHomeCache()
 //                .getLatestFollowingPins(observablePinList, new EvictDynamicKey(update))
 //                .flatMap(new Func1<Reply<PinListBean>, Observable<PinListBean>>() {
@@ -70,7 +70,7 @@ public class HomeModel extends BasePEModel<ServiceManager, CacheManager>
     @Override
     public Observable<PinListBean> getLatestFollowingPinsNext(int maxPinId) {
         return mServiceManager.getHomeService()
-                .getLatestFollowingPinsNext(getAuthorization(), maxPinId, Constants.PER_PAGE_LIMIT);
+                .getLatestFollowingPinsNext(maxPinId, Constants.PER_PAGE_LIMIT);
 //        return mCacheManager.getHomeCache()
 //                .getLatestFollowingPinsNext(observablePinList,
 //                        new DynamicKey(maxPinId),
@@ -86,7 +86,7 @@ public class HomeModel extends BasePEModel<ServiceManager, CacheManager>
     @Override
     public Observable<PinListBean> getLatestPopularPins() {
         return mServiceManager.getHomeService()
-                .getLatestPopularPins(getAuthorization(), Constants.PER_PAGE_LIMIT);
+                .getLatestPopularPins(Constants.PER_PAGE_LIMIT);
 //        return mCacheManager.getHomeCache()
 //                .getLatestPopularPins(observablePinList,
 //                        new EvictDynamicKey(update))
@@ -101,7 +101,7 @@ public class HomeModel extends BasePEModel<ServiceManager, CacheManager>
     @Override
     public Observable<PinListBean> getLatestPopularPinsNext(int maxPinId) {
         return mServiceManager.getHomeService()
-                .getLatestPopularPinsNext(getAuthorization(), maxPinId, Constants.PER_PAGE_LIMIT);
+                .getLatestPopularPinsNext(maxPinId, Constants.PER_PAGE_LIMIT);
 //        return mCacheManager.getHomeCache()
 //                .getLatestPopularPinsNext(observablePinList,
 //                        new DynamicKey(maxPinId),

@@ -3,6 +3,8 @@ package com.glooory.petal.app.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.glooory.petal.app.Constants;
+
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -179,5 +181,17 @@ public class SPUtils {
         public void build() {
             mEditor.apply();
         }
+    }
+
+    public static String getAuthorization() {
+        boolean isLogin = (boolean) get(Constants.PREF_IS_LOGIN, false);
+        if (isLogin) {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(get(Constants.PREF_TOKEN_TYPE, " "))
+                    .append(" ")
+                    .append(get(Constants.PREF_TOKEN_ACCESS, " "));
+            return stringBuilder.toString();
+        }
+        return BaseClientInfo.CLIENT_INFO_DEFAULT;
     }
 }

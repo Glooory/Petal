@@ -19,6 +19,13 @@
         android:theme="@style/AppTheme">
 
         <activity
+            android:name=".mvp.ui.splash.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
+        <activity
             android:name=".mvp.ui.home.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
