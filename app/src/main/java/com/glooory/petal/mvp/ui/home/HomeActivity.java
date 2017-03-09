@@ -3,6 +3,7 @@ package com.glooory.petal.mvp.ui.home;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
+import com.glooory.petal.mvp.ui.login.LoginActivity;
 import com.jakewharton.rxbinding.view.RxView;
 
 import java.util.concurrent.TimeUnit;
@@ -42,6 +44,8 @@ public class HomeActivity extends PEActivity
     FloatingActionButton mFab;
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
+    @BindView(R.id.appbar_layout)
+    AppBarLayout mAppBar;
 
     //侧滑菜单栏头像
     private SimpleDraweeView mAvatarImg;
@@ -98,6 +102,19 @@ public class HomeActivity extends PEActivity
         initNavigationView(navigationView);
         Menu menu = navigationView.getMenu();
         menu.getItem(isLogin() ? 1 : 0).setChecked(true);
+//        mAppBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+//            @Override
+//            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+//                float off = -verticalOffset;
+//                if (off > appBarLayout.getTotalScrollRange() / 2) {
+//                    mToolbar.setAlpha(0.0f);
+//                } else {
+//                    //当Collapsingtoolbar 滑动到最顶端时，隐藏从通明状态栏能看得见的View，
+//                    // 如果不隐藏，从透明状态栏能看见部分toolbar，影响用户体验
+//                    mToolbar.setAlpha(1.0f);
+//                }
+//            }
+//        });
     }
 
     private void initNavigationView(NavigationView navigationView) {
@@ -177,6 +194,10 @@ public class HomeActivity extends PEActivity
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.ll_drawer_avatar:
+                LoginActivity.launch(this);
+                break;
+        }
     }
 }

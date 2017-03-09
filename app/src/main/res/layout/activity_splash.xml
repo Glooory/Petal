@@ -5,11 +5,6 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-
         <ImageView
             android:id="@+id/imageview_splash"
             android:layout_width="match_parent"
@@ -20,15 +15,15 @@
 
         <ImageView
             android:id="@+id/imageview_splash_logo"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
+            android:layout_width="144dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="60dp"
             android:layout_marginTop="60dp"
+            android:fitsSystemWindows="true"
             android:alpha="0"
-            android:src="@drawable/bg_logo_huaban"/>
-
-    </RelativeLayout>
+            android:src="@drawable/ic_huaban_pink_with_url"/>
 
 </android.support.design.widget.CoordinatorLayout>

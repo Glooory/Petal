@@ -22,4 +22,8 @@
     <string name="search">搜索</string>
     <string name="refresh">刷新</string>
     <string name="settings">设置</string>
+    <string name="msg_petal_slogan">陪你做生活的设计师</string>
+    <string name="msg_hint_user_account">邮箱/手机号</string>
+    <string name="msg_hint_password">密码</string>
+    <string name="msg_login">登录</string>
 </resources>

@@ -8,9 +8,46 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
+    <style name="FrameworkRoot.Theme" parent="Theme.AppCompat.Light.NoActionBar"/>
+
+    <style name="FrameworkRoot.Widget" parent="Theme.AppCompat.NoActionBar"/>
+    
+    <!--Immediate parent theme to specify base values for custom attributes-->
+    <style name="Theme" parent="FrameworkRoot.Theme">
+    </style>
+    
+    <style name="Theme.Petal.Base" parent="Theme">
+        <!--<item name="popupItemBackground">?android:selectableItemBackground</item>-->
+        <!--<item name="popupItemForeground">?android:selectableItemBackground</item>-->
+        <!--<item name="photoItemForegroundBorderless">?android:selectableItemBackground</item>-->
+        
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_white_24dp</item>
+
+        <!--<item name="imageItemBackground">?android:selectableItemBackground</item>-->
+        <item name="android:borderlessButtonStyle">@style/Widget.AppCompat.Button.Borderless</item>
+    </style>
+
+    <style name="Theme.Petal" parent="Theme.Petal.Base"/>
+
+    <style name="Theme.Petal.WithNavDrawer" parent="Theme.Petal"/>
+
+    <style name="Theme.Petal.Light" parent="Theme.Petal.WithNavDrawer"/>
+
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionModeOverlay">true</item>
     </style>
 
     <style name="AppTheme.FullScreen" parent="AppTheme.NoActionBar">
@@ -35,5 +72,45 @@
         <item name="android:textColor">@color/secondary_text</item>
         <item name="android:textSize">10sp</item>
     </style>
+
+    <!--********************************************-->
+
+    <!--<style name="Theme.Photos.Base" parent="@style/Theme.AppCompat.Light">-->
+        <!--<item name="android:icon">@android:color/transparent</item>-->
+        <!--<item name="android:windowBackground">@color/quantum_white_100</item>-->
+        <!--<item name="android:windowContentOverlay">@null</item>-->
+        <!--<item name="android:logo">@android:color/transparent</item>-->
+        <!--<item name="android:actionBarStyle">@style/Widget.Photos.ActionBar</item>-->
+        <!--<item name="android:actionModeCloseDrawable">@drawable/quantum_ic_clear_white_24</item>-->
+        <!--<item name="android:actionOverflowButtonStyle">@style/Widget.Photos.ActionBar.Overflow</item>-->
+        <!--<item name="android:homeAsUpIndicator">@drawable/quantum_ic_arrow_back_grey600_24</item>-->
+        <!--<item name="android:actionModeStyle">@style/Widget.Photos.ActionModeActionBar</item>-->
+        <!--<item name="actionOverflowButtonStyle">@style/Widget.Photos.ActionBar.Overflow</item>-->
+        <!--<item name="actionBarStyle">@style/Widget.Photos.ActionBar</item>-->
+        <!--<item name="actionBarSize">@dimen/photos_theme_actionbar_menuitem_height</item>-->
+        <!--<item name="actionMenuTextColor">?android:textColorPrimaryInverse</item>-->
+        <!--<item name="actionModeStyle">@style/Widget.Photos.ActionModeActionBar</item>-->
+        <!--<item name="actionModeCloseDrawable">@drawable/quantum_ic_clear_white_24</item>-->
+        <!--<item name="homeAsUpIndicator">@drawable/quantum_ic_arrow_back_grey600_24</item>-->
+        <!--<item name="colorPrimary">@color/quantum_white_100</item>-->
+        <!--<item name="colorAccent">@color/quantum_googblue500</item>-->
+    <!--</style>-->
+
+    <!--<style name="Theme.Photos" parent="@style/Theme.Photos.Base" />-->
+
+    <!--<style name="Theme.Photos.Fullscreen.Base" parent="@style/Theme.Photos">-->
+        <!--<item name="android:windowNoTitle">true</item>-->
+        <!--<item name="android:windowActionBar">false</item>-->
+        <!--<item name="windowActionBar">false</item>-->
+        <!--<item name="windowNoTitle">true</item>-->
+        <!--<item name="windowActionModeOverlay">true</item>-->
+    <!--</style>-->
+
+    <!--<style name="Theme.Photos.Fullscreen" parent="@style/Theme.Photos.Fullscreen.Base" />-->
+
+    <!--<style name="Theme.Photos.Splash" parent="@style/Theme.Photos.Fullscreen">-->
+        <!--<item name="android:windowBackground">@drawable/quantum_launchscreen_photos</item>-->
+        <!--<item name="colorPrimaryDark">@color/quantum_grey</item>-->
+    <!--</style>-->
 
 </resources>
