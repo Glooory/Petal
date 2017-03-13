@@ -21,13 +21,13 @@ public class HomeModule {
 
     @FragmentScope
     @Provides
-    HomeContract.View provideHomeView() {
+    HomeContract.View provideHomeContractView() {
         return mView;
     }
 
     @FragmentScope
     @Provides
-    HomeContract.Model provideHomeModel(HomeModel homeModel) {
+    HomeContract.Model provideHomeContractModel(HomeModel homeModel) {
         return homeModel;
     }
 }

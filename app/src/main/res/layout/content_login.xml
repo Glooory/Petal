@@ -38,8 +38,8 @@
                 android:id="@+id/textview_user_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 android:hint="@string/msg_hint_user_account"
-                android:inputType="phone|textEmailAddress"
                 android:maxLines="1"/>
 
         </android.support.design.widget.TextInputLayout>
@@ -54,6 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/msg_hint_password"
+                android:textColor="@color/white"
                 android:imeActionId="@+id/login"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"

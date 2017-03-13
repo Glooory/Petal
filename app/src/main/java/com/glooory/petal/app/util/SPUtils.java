@@ -178,8 +178,8 @@ public class SPUtils {
             return this;
         }
 
-        public void build() {
-            mEditor.apply();
+        public boolean build() {
+            return mEditor.commit();
         }
     }
 

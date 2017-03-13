@@ -23,8 +23,8 @@ public class Constants {
     public static final String PREF_USER_PASSWORD = "pref_user_password";
     public static final String PREF_USER_NAME = "pref_user_name";
     public static final String PREF_USER_ID = "pref_user_id";
-    public static final String PREF_USER_HEAD_KEY = "pref_user_head_key";
     public static final String PREF_USER_EMAIL = "pref_user_email";
+    public static final String PREF_USER_AVATAR_KEY = "pref_user_avatar_key";
 
     public static final String HTTP_HEADER_AUTHORIZATION = "Authorization";
     public static final String HTTP_QUERY_LIMIT = "limit";

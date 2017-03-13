@@ -196,7 +196,7 @@ public class HomeActivity extends PEActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_drawer_avatar:
-                LoginActivity.launch(this);
+                LoginActivity.launch(this, false);
                 break;
         }
     }

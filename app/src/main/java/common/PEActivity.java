@@ -82,9 +82,9 @@ public abstract class PEActivity<P extends Presenter> extends BaseActivity<P> {
 
     public void finishSelf() {
         if (Build.VERSION.SDK_INT >= 21) {
-            finishAfterTransition();
+            this.finishAfterTransition();
         } else {
-            finish();
+            this.finish();
         }
     }
 

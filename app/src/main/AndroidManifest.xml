@@ -37,7 +37,8 @@
         <activity
             android:name=".mvp.ui.login.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Petal.Login"/>
+            android:theme="@style/Theme.Petal.Login"
+            android:windowSoftInputMode="adjustResize"/>
 
     </application>
 

@@ -12,6 +12,7 @@ import com.glooory.petal.app.util.EncrypAES;
 import com.glooory.petal.app.util.SPUtils;
 import com.glooory.petal.mvp.model.entity.login.TokenBean;
 import com.glooory.petal.mvp.ui.home.HomeActivity;
+import com.glooory.petal.mvp.ui.login.LoginActivity;
 import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
@@ -30,7 +31,6 @@ import rx.schedulers.Schedulers;
  */
 
 public class SplashActivity extends PEActivity {
-
 
     @BindView(R.id.imageview_splash)
     ImageView mImgSplash;
@@ -125,8 +125,7 @@ public class SplashActivity extends PEActivity {
                             if (isSkipLogin) {
                                 HomeActivity.launch(SplashActivity.this);
                             } else {
-                                // TODO: 17/3/4 Launch LoginActivity instead of HomeActivity
-                                HomeActivity.launch(SplashActivity.this);
+                                LoginActivity.launch(SplashActivity.this, true);
                             }
                         }
                         finishSelf();
@@ -134,8 +133,7 @@ public class SplashActivity extends PEActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        // TODO: 17/3/4 Lanuch LoginActivity instead of HomeActivity and handle the error
-                        HomeActivity.launch(SplashActivity.this);
+                        LoginActivity.launch(SplashActivity.this, true);
                     }
 
                     @Override
@@ -154,7 +152,6 @@ public class SplashActivity extends PEActivity {
                 .addData(Constants.PREF_TOKEN_EXPIRES_IN, tokenBean.getExpiresIn())
                 .addData(Constants.PREF_TOKEN_REFRESH, tokenBean.getRefreshToken())
                 .build();
-
     }
 
     @Override
