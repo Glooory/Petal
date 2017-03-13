@@ -20,4 +20,8 @@
     <style name="Theme.Petal.Light" parent="Theme.Petal.WithNavDrawer">
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     </style>
+
+    <style name="Theme.Petal.Login" parent="Theme.Petal.Light">
+        <item name="colorPrimaryDark">@color/transparent</item>
+    </style>
 </resources>

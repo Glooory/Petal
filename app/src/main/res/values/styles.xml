@@ -42,6 +42,8 @@
 
     <style name="Theme.Petal.Light" parent="Theme.Petal.WithNavDrawer"/>
 
+    <style name="Theme.Petal.Login" parent="Theme.Petal.Light"/>
+
     <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

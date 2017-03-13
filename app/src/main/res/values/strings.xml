@@ -26,4 +26,5 @@
     <string name="msg_hint_user_account">邮箱/手机号</string>
     <string name="msg_hint_password">密码</string>
     <string name="msg_login">登录</string>
+    <string name="msg_skip_login">跳过登录</string>
 </resources>
