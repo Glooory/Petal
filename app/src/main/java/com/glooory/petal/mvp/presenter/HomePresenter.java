@@ -5,7 +5,6 @@ import android.app.Application;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.glooory.petal.app.widget.WindmillLoadMoreFooter;
 import com.glooory.petal.mvp.model.entity.PinBean;
-import com.glooory.petal.mvp.model.entity.PinListBean;
 import com.glooory.petal.mvp.ui.home.HomeContract;
 import com.glooory.petal.mvp.ui.home.HomeFragment;
 import com.glooory.petal.mvp.ui.home.HomePinsAdapter;
@@ -20,12 +19,8 @@ import javax.inject.Inject;
 
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
-import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Glooory on 17/2/18.
@@ -68,28 +63,6 @@ public class HomePresenter extends BasePresenter<HomeContract.View, HomeContract
      */
     public void requestPinsFirstTime(int pinTypeIndex) {
         getPinListObservable(pinTypeIndex)
-                .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(2, 2))
-                .doOnSubscribe(new Action0() {
-                    @Override
-                    public void call() {
-                        mRootView.showLoading();
-                    }
-                })
-                .map(new Func1<PinListBean, List<PinBean>>() {
-                    @Override
-                    public List<PinBean> call(PinListBean pinListBean) {
-                        return pinListBean.getPins();
-                    }
-                })
-                .filter(new Func1<List<PinBean>, Boolean>() {
-                    @Override
-                    public Boolean call(List<PinBean> pinBeen) {
-                        return pinBeen.size() > 0;
-                    }
-                })
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
                 .doAfterTerminate(new Action0() {
                     @Override
                     public void call() {
@@ -111,22 +84,6 @@ public class HomePresenter extends BasePresenter<HomeContract.View, HomeContract
      */
     public void requestMorePins(int pinTypeIndex) {
         getPinListNextObservable(pinTypeIndex)
-                .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(2, 2))
-                .map(new Func1<PinListBean, List<PinBean>>() {
-                    @Override
-                    public List<PinBean> call(PinListBean pinListBean) {
-                        return pinListBean.getPins();
-                    }
-                })
-                .filter(new Func1<List<PinBean>, Boolean>() {
-                    @Override
-                    public Boolean call(List<PinBean> pinBeen) {
-                        return pinBeen.size() > 0;
-                    }
-                })
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
                 .compose(RxUtils.<List<PinBean>>bindToLifecycle(mRootView))
                 .subscribe(new ErrorHandleSubscriber<List<PinBean>>(mRxErrorHandler) {
                     @Override
@@ -145,7 +102,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View, HomeContract
     }
 
     /**
-     * 保存本次请求到的最后一张图片的 pinId，后湖加载更多数据时会用到
+     * 保存本次请求到的最后一张图片的 pinId，后续加载更多数据时会用到
      * @param pinsList
      */
     private void saveLastPinMaxId(List<PinBean> pinsList) {
@@ -154,7 +111,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View, HomeContract
         }
     }
 
-    private Observable<PinListBean> getPinListObservable(int pinTypeIndex) {
+    private Observable<List<PinBean>> getPinListObservable(int pinTypeIndex) {
         switch (pinTypeIndex) {
             case HomeFragment.PIN_TYPE_LATEST:
                 return mModel.getLatestAllPins();
@@ -167,7 +124,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View, HomeContract
         }
     }
 
-    private Observable<PinListBean> getPinListNextObservable(int pinTypeIndex) {
+    private Observable<List<PinBean>> getPinListNextObservable(int pinTypeIndex) {
         switch (pinTypeIndex) {
             case HomeFragment.PIN_TYPE_LATEST:
                 return mModel.getLatestAllPinsNext(mLastMaxId);

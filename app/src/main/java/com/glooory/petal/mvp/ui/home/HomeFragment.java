@@ -84,6 +84,12 @@ public class HomeFragment extends PEFragment<HomePresenter> implements HomeContr
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
     public void showLoading() {
         Observable.just(1)
                 .observeOn(AndroidSchedulers.mainThread())

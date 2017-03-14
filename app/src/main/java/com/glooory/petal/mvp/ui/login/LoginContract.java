@@ -23,7 +23,7 @@ public interface LoginContract {
 
         void showAccountError(String error);
 
-        void showPasswordError(String error);
+        void showPasswordError(String error, boolean isAccountIllegal);
 
         void showLoginFailed();
 

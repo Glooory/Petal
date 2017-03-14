@@ -14,6 +14,7 @@
 
     <string name="msg_loading">正在加载...</string>
     <string name="msg_load_failed_click_retry">加载失败!</string>
+
     <string name="msg_nav_login_hint">点我登录</string>
     <string name="collection">采集</string>
     <string name="board">画板</string>
@@ -22,6 +23,9 @@
     <string name="search">搜索</string>
     <string name="refresh">刷新</string>
     <string name="settings">设置</string>
+
+    <string name="msg_login_hint">请先登录</string>
+    <string name="msg_go_login">去登录</string>
     <string name="msg_petal_slogan">陪你做生活的设计师</string>
     <string name="msg_hint_user_account">邮箱/手机号</string>
     <string name="msg_hint_password">密码</string>
@@ -30,6 +34,5 @@
     <string name="msg_account_illegal">此栏不能为空</string>
     <string name="msg_password_illegal">密码至少6位！</string>
     <string name="msg_login_failed">用户名或密码错误</string>
-    <string name="msg_login_hint">请先登录</string>
-    <string name="msg_go_login">去登录</string>
+
 </resources>

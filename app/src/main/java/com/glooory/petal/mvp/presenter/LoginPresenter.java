@@ -51,16 +51,18 @@ public class LoginPresenter extends BasePresenter<LoginContract.View, LoginContr
     public void login(String userAccount, String password) {
         mRootView.clearErrorInfo();
         boolean isIllegalParams = false;
+        boolean isAccountIllegal = false;
 
         if (TextUtils.isEmpty(userAccount)) {
             mRootView.showAccountError(
                     PEApplication.getContext().getString(R.string.msg_account_illegal));
             isIllegalParams = true;
+            isAccountIllegal = true;
         }
 
         if (TextUtils.isEmpty(password) || !isPasswordValid(password)) {
             mRootView.showPasswordError(
-                PEApplication.getContext().getString(R.string.msg_password_illegal));
+                    PEApplication.getContext().getString(R.string.msg_password_illegal), isAccountIllegal);
             isIllegalParams = true;
         }
 

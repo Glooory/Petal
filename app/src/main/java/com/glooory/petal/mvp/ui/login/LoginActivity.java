@@ -194,8 +194,10 @@ public class LoginActivity extends PEActivity<LoginPresenter> implements LoginCo
     }
 
     @Override
-    public void showPasswordError(String error) {
-        mEdittextUserPassword.requestFocus();
+    public void showPasswordError(String error, boolean isAccountIllegal) {
+        if (!isAccountIllegal) {
+            mEdittextUserPassword.requestFocus();
+        }
         mEdittextUserPassword.setError(error);
     }
 
