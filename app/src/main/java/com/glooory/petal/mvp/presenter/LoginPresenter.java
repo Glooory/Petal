@@ -52,8 +52,6 @@ public class LoginPresenter extends BasePresenter<LoginContract.View, LoginContr
         mRootView.clearErrorInfo();
         boolean isIllegalParams = false;
 
-        Logger.d("LoginPresenter: login()");
-
         if (TextUtils.isEmpty(userAccount)) {
             mRootView.showAccountError(
                     PEApplication.getContext().getString(R.string.msg_account_illegal));
@@ -67,8 +65,6 @@ public class LoginPresenter extends BasePresenter<LoginContract.View, LoginContr
         }
 
         if (!isIllegalParams) {
-            Logger.d("LoginPresenter: startLogin()");
-
             startLogin(userAccount, password);
         }
     }

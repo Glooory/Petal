@@ -32,6 +32,5 @@ public interface HomeContract {
         Observable<PinListBean> getLatestPopularPins();
 
         Observable<PinListBean> getLatestPopularPinsNext(int maxPinId);
-
     }
 }

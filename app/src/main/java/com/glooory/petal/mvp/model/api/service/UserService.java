@@ -7,6 +7,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Url;
 import rx.Observable;
 
@@ -16,9 +17,9 @@ import rx.Observable;
 
 public interface UserService {
 
-    //这里建议：- Base URL: 总是以/结尾；- @Url: 不要以/开头
+    // 这里建议：- Base URL: 总是以/结尾；- @Url: 不要以/开头
 
-    //https://huaban.com/oauth/access_token/
+    // https://huaban.com/oauth/access_token/
     @FormUrlEncoded
     @POST
     Observable<TokenBean> getToken(
@@ -27,10 +28,12 @@ public interface UserService {
             @Field("username") String username,
             @Field("password") String password);
 
-
-    //获取当前登录用户的信息
+    // 获取当前登录用户的信息
     @GET("users/me")
     Observable<UserBean> getUserMyself();
 
-
+    // https://api.huaban.com/users/15246080
+    // 获取用户的个人信息
+    @GET("users/{userId}")
+    Observable<UserBean> getUser(@Path("userId") String userId);
 }

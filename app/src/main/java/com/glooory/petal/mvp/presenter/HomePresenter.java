@@ -13,7 +13,6 @@ import com.jess.arms.base.AppManager;
 import com.jess.arms.di.scope.FragmentScope;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.utils.RxUtils;
-import com.orhanobut.logger.Logger;
 
 import java.util.List;
 

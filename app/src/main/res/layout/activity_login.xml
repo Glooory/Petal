@@ -5,7 +5,7 @@
     android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue_google_icon"
+    android:background="@drawable/bg_login_petal_720"
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout

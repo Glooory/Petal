@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
+import com.glooory.petal.app.util.SnackbarUtil;
 import com.glooory.petal.mvp.ui.login.LoginActivity;
 import com.jakewharton.rxbinding.view.RxView;
 
@@ -102,19 +104,6 @@ public class HomeActivity extends PEActivity
         initNavigationView(navigationView);
         Menu menu = navigationView.getMenu();
         menu.getItem(isLogin() ? 1 : 0).setChecked(true);
-//        mAppBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-//            @Override
-//            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-//                float off = -verticalOffset;
-//                if (off > appBarLayout.getTotalScrollRange() / 2) {
-//                    mToolbar.setAlpha(0.0f);
-//                } else {
-//                    //当Collapsingtoolbar 滑动到最顶端时，隐藏从通明状态栏能看得见的View，
-//                    // 如果不隐藏，从透明状态栏能看见部分toolbar，影响用户体验
-//                    mToolbar.setAlpha(1.0f);
-//                }
-//            }
-//        });
     }
 
     private void initNavigationView(NavigationView navigationView) {
@@ -133,15 +122,9 @@ public class HomeActivity extends PEActivity
     @Override
     protected void initData() {
         if (isLogin()) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.container, HomeFragment.newInstance(HomeFragment.PIN_TYPE_FOLLOWING))
-                    .commit();
+            createHomeFragment(HomeFragment.PIN_TYPE_FOLLOWING);
         } else {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.container, HomeFragment.newInstance(HomeFragment.PIN_TYPE_LATEST))
-                    .commit();
+            createHomeFragment(HomeFragment.PIN_TYPE_LATEST);
         }
     }
 
@@ -164,22 +147,25 @@ public class HomeActivity extends PEActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.nav_latest) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.container, HomeFragment.newInstance(HomeFragment.PIN_TYPE_LATEST))
-                    .commit();
+            createHomeFragment(HomeFragment.PIN_TYPE_LATEST);
             getSupportActionBar().setTitle(R.string.nav_title_latest);
         } else if (itemId == R.id.nav_following) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.container, HomeFragment.newInstance(HomeFragment.PIN_TYPE_FOLLOWING))
-                    .commit();
-            getSupportActionBar().setTitle(R.string.nav_title_following);
+            if (isLogin()) {
+                createHomeFragment(HomeFragment.PIN_TYPE_FOLLOWING);
+                getSupportActionBar().setTitle(R.string.nav_title_following);
+            } else {
+                SnackbarUtil.showLong(HomeActivity.this, R.string.msg_login_hint,
+                        R.string.msg_go_login, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                LoginActivity.launch(HomeActivity.this, false);
+                            }
+                        });
+                mDrawerLayout.closeDrawer(Gravity.START);
+                return false;
+            }
         } else if (itemId == R.id.nav_popular) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.container, HomeFragment.newInstance(HomeFragment.PIN_TYPE_POPULAR))
-                    .commit();
+            createHomeFragment(HomeFragment.PIN_TYPE_POPULAR);
             getSupportActionBar().setTitle(R.string.nav_title_popular);
         } else if (itemId == R.id.nav_about) {
             // TODO: 17/3/4 About info
@@ -192,6 +178,17 @@ public class HomeActivity extends PEActivity
         return true;
     }
 
+    /**
+     *  根据图集类型显示相应的 Fragment
+     * @param pinType
+     */
+    private void createHomeFragment(int pinType) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, HomeFragment.newInstance(pinType))
+                .commit();
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -199,5 +196,16 @@ public class HomeActivity extends PEActivity
                 LoginActivity.launch(this, false);
                 break;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (mDrawerLayout.isDrawerOpen(Gravity.START)) {
+            if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK) {
+                mDrawerLayout.closeDrawer(Gravity.START);
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
