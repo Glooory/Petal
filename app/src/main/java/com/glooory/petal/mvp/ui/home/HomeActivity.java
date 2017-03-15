@@ -9,6 +9,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -20,9 +21,12 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
+import com.glooory.petal.app.rx.RxBus;
 import com.glooory.petal.app.util.SnackbarUtil;
+import com.glooory.petal.mvp.model.entity.BasicUserInfoBean;
 import com.glooory.petal.mvp.ui.login.LoginActivity;
 import com.jakewharton.rxbinding.view.RxView;
+import com.jess.arms.widget.imageloader.fresco.FrescoImageConfig;
 
 import java.util.concurrent.TimeUnit;
 
@@ -30,7 +34,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import common.AppComponent;
 import common.PEActivity;
+import common.PEApplication;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by Glooory on 17/2/18.
@@ -61,6 +70,7 @@ public class HomeActivity extends PEActivity
     private TextView mTvFollowingCount;
     //侧滑菜单栏粉丝数
     private TextView mTvFollowerCount;
+    private CompositeSubscription mCompositeSubscription;
 
     public static void launch(Activity activity) {
         Intent intent = new Intent(activity, HomeActivity.class);
@@ -129,6 +139,64 @@ public class HomeActivity extends PEActivity
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        registerUserInfoEvent();
+    }
+
+    private void registerUserInfoEvent() {
+        Subscription s = RxBus.getInstance()
+                .toObservable(BasicUserInfoBean.class)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<BasicUserInfoBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(BasicUserInfoBean basicUserInfoBean) {
+                        updateBasicUserInfo(basicUserInfoBean);
+                    }
+                });
+        addSubscription(s);
+    }
+
+    private void updateBasicUserInfo(BasicUserInfoBean basicUserInfoBean) {
+        String avatarKey = basicUserInfoBean.getAvatarKey();
+        if (!TextUtils.isEmpty(avatarKey)) {
+            String avatarUrl = String.format(getString(R.string.url_image_small_format), avatarKey);
+            ((PEApplication) getApplication())
+                    .getAppComponent()
+                    .imageLoader()
+                    .loadImage(this,
+                            FrescoImageConfig.builder()
+                                    .setUrl(avatarUrl)
+                                    .setSimpleDraweeView(mAvatarImg)
+                                    .isBorder(true)
+                                    .isCircle(true).build());
+        }
+        mTvUserName.setText(basicUserInfoBean.getUserName());
+        mTvCollectionCount.setText(basicUserInfoBean.getPinCount());
+        mTvBoardCount.setText(basicUserInfoBean.getBoardCount());
+        mTvFollowingCount.setText(basicUserInfoBean.getFollowingCount());
+        mTvFollowerCount.setText(basicUserInfoBean.getFollowerCount());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mCompositeSubscription != null && !mCompositeSubscription.isUnsubscribed()) {
+            mCompositeSubscription.unsubscribe();
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
@@ -193,7 +261,11 @@ public class HomeActivity extends PEActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_drawer_avatar:
-                LoginActivity.launch(this, false);
+                if (isLogin()) {
+                    // TODO: 17/3/15 Launch UserActivity
+                } else {
+                    LoginActivity.launch(this, false);
+                }
                 break;
         }
     }
@@ -207,5 +279,12 @@ public class HomeActivity extends PEActivity
             }
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    private void addSubscription(Subscription subscription) {
+        if (mCompositeSubscription == null) {
+            mCompositeSubscription = new CompositeSubscription();
+        }
+        mCompositeSubscription.add(subscription);
     }
 }

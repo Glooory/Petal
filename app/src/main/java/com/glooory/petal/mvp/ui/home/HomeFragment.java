@@ -86,7 +86,7 @@ public class HomeFragment extends PEFragment<HomePresenter> implements HomeContr
     @Override
     public void onResume() {
         super.onResume();
-
+        mPresenter.getBasicUserInfo();
     }
 
     @Override

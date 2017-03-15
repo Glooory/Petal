@@ -3,7 +3,9 @@ package com.glooory.petal.mvp.presenter;
 import android.app.Application;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.glooory.petal.app.rx.RxBus;
 import com.glooory.petal.app.widget.WindmillLoadMoreFooter;
+import com.glooory.petal.mvp.model.entity.BasicUserInfoBean;
 import com.glooory.petal.mvp.model.entity.PinBean;
 import com.glooory.petal.mvp.ui.home.HomeContract;
 import com.glooory.petal.mvp.ui.home.HomeFragment;
@@ -20,6 +22,7 @@ import javax.inject.Inject;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import rx.Observable;
+import rx.Subscriber;
 import rx.functions.Action0;
 
 /**
@@ -135,5 +138,29 @@ public class HomePresenter extends BasePresenter<HomeContract.View, HomeContract
             default:
                 return mModel.getLatestAllPinsNext(mLastMaxId);
         }
+    }
+
+    /**
+     * 获取侧滑菜单栏用户的相关信息
+     */
+    public void getBasicUserInfo() {
+        mModel.getMyselfBasicInfo()
+                .compose(RxUtils.<BasicUserInfoBean>bindToLifecycle(mRootView))
+                .subscribe(new Subscriber<BasicUserInfoBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(BasicUserInfoBean basicUserInfoBean) {
+                        RxBus.getInstance().post(basicUserInfoBean);
+                    }
+                });
     }
 }

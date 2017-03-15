@@ -1,5 +1,6 @@
 package com.glooory.petal.mvp.ui.home;
 
+import com.glooory.petal.mvp.model.entity.BasicUserInfoBean;
 import com.glooory.petal.mvp.model.entity.PinBean;
 import com.jess.arms.mvp.BaseView;
 import com.jess.arms.mvp.IModel;
@@ -34,5 +35,7 @@ public interface HomeContract {
         Observable<List<PinBean>> getLatestPopularPins();
 
         Observable<List<PinBean>> getLatestPopularPinsNext(int maxPinId);
+
+        Observable<BasicUserInfoBean> getMyselfBasicInfo();
     }
 }

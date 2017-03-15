@@ -1,10 +1,13 @@
 package com.glooory.petal.mvp.model;
 
 import com.glooory.petal.app.Constants;
+import com.glooory.petal.app.util.SPUtils;
 import com.glooory.petal.mvp.model.api.cache.CacheManager;
 import com.glooory.petal.mvp.model.api.service.ServiceManager;
+import com.glooory.petal.mvp.model.entity.BasicUserInfoBean;
 import com.glooory.petal.mvp.model.entity.PinBean;
 import com.glooory.petal.mvp.model.entity.PinListBean;
+import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.ui.home.HomeContract;
 import com.jess.arms.di.scope.FragmentScope;
 
@@ -155,4 +158,28 @@ public class HomeModel extends BasePEModel<ServiceManager, CacheManager>
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    @Override
+    public Observable<BasicUserInfoBean> getMyselfBasicInfo() {
+        int myselfId = (int) SPUtils.get(Constants.PREF_USER_ID, 0);
+        return mServiceManager.getUserService()
+                .getUser(String.valueOf(myselfId))
+                .retryWhen(new RetryWithDelay(2, 2))
+                .map(new Func1<UserBean, BasicUserInfoBean>() {
+                    @Override
+                    public BasicUserInfoBean call(UserBean userBean) {
+                        BasicUserInfoBean userInfoBean = new BasicUserInfoBean();
+                        userInfoBean.setUserName(userBean.getUsername());
+                        userInfoBean.setAvatarKey(userBean.getAvatar().getKey());
+                        userInfoBean.setPinCount(String.valueOf(userBean.getPinCount()));
+                        userInfoBean.setBoardCount(String.valueOf(userBean.getBoardCount()));
+                        userInfoBean.setFollowingCount(String.valueOf(userBean.getFollowingCount()));
+                        userInfoBean.setFollowerCount(String.valueOf(userBean.getFollowerCount()));
+                        return userInfoBean;
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
 }
