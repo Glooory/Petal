@@ -62,7 +62,7 @@
 
     <style name="HomePinCardViewCustom">
         <item name="android:layout_marginLeft">@dimen/quarter_activity_default_margin</item>
-        <item name="android:layout_marginTop">@dimen/quarter_activity_default_margin</item>
+        <item name="android:layout_marginTop">@dimen/half_activity_default_margin</item>
         <item name="android:layout_marginRight">@dimen/quarter_activity_default_margin</item>
     </style>
 

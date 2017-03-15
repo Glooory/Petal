@@ -12,6 +12,6 @@
         android:paddingLeft="@dimen/quarter_activity_default_margin"
         android:paddingRight="@dimen/quarter_activity_default_margin"
         android:paddingBottom="@dimen/quarter_activity_default_margin"
-        android:clipToPadding="true"/>
+        android:clipToPadding="false"/>
 
 </android.support.v4.widget.SwipeRefreshLayout>
