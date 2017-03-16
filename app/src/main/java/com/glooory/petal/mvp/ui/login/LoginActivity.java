@@ -124,7 +124,7 @@ public class LoginActivity extends PEActivity<LoginPresenter> implements LoginCo
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setCancelable(false);
         mProgressDialog.setIndeterminate(true);
-        mProgressDialog.setTitle("正在登录...");
+        mProgressDialog.setMessage(getString(R.string.msg_logining));
         mPresenter.loadHistoryAccount(this);
         mIsFromSplashActivity = getIntent().getBooleanExtra(BUNDLE_IS_FROM_SPLASH, false);
     }

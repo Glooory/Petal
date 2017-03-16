@@ -251,12 +251,12 @@ public class HomeActivity extends PEActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_drawer_avatar:
+                closeDrawer();
                 if (isLogin()) {
                     // TODO: 17/3/15 Launch UserActivity
                 } else {
                     LoginActivity.launch(this, false);
                 }
-                closeDrawer();
                 break;
         }
     }

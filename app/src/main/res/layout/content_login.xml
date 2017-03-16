@@ -40,6 +40,8 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:hint="@string/msg_hint_user_account"
+                android:inputType="text"
+                android:imeOptions="actionNext"
                 android:maxLines="1"/>
 
         </android.support.design.widget.TextInputLayout>
