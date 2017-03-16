@@ -6,5 +6,8 @@ package com.jess.arms.mvp;
  */
 
 public interface IModel {
+
+    boolean isLogin();
+
     void onDestory();
 }

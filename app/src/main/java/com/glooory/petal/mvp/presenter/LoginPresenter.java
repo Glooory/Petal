@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.adapter.NoFilterringAdapter;
+import com.glooory.petal.app.rx.BaseSubscriber;
 import com.glooory.petal.app.util.EncrypAES;
 import com.glooory.petal.app.util.SPUtils;
 import com.glooory.petal.mvp.model.entity.UserBean;
@@ -22,7 +23,6 @@ import javax.inject.Inject;
 
 import common.PEApplication;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
-import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
@@ -88,22 +88,17 @@ public class LoginPresenter extends BasePresenter<LoginContract.View, LoginContr
                         mRootView.hideLoading();
                     }
                 })
-                .subscribe(new Subscriber<UserBean>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                        mRootView.showLoginFailed();
-                    }
-
+                .subscribe(new BaseSubscriber<UserBean>() {
                     @Override
                     public void onNext(UserBean userBean) {
                         saveUserInfo(userBean, userAccount, password);
                         mRootView.showLoginSuccess();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        mRootView.showLoginFailed();
                     }
                 });
         addSubscrebe(s);

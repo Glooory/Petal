@@ -43,4 +43,9 @@ public class BasePEModel<S extends BaseServiceManager, C extends BaseCacheManage
         }
         return BaseClientInfo.CLIENT_INFO_DEFAULT;
     }
+
+    @Override
+    public boolean isLogin() {
+        return (boolean) SPUtils.get(Constants.PREF_IS_LOGIN, false);
+    }
 }

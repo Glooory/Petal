@@ -12,13 +12,11 @@ import com.glooory.petal.mvp.model.api.Api;
 import com.jess.arms.base.BaseApplication;
 import com.jess.arms.di.module.GlobeConfigModule;
 import com.jess.arms.http.GlobeHttpHandler;
-import com.jess.arms.utils.UiUtils;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
-import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -148,14 +146,15 @@ public class PEApplication extends BaseApplication {
 //                        return request;
                     }
                 })
-                .responseErroListener(new ResponseErroListener() {
-                    //     用来提供处理所有错误的监听
-                    //     rxjava必要要使用ErrorHandleSubscriber(默认实现Subscriber的onError方法),此监听才生效
-                    @Override
-                    public void handleResponseError(Context context, Exception e) {
-                        Logger.d("------------>" + e.getMessage());
-                        UiUtils.SnackbarText("net error");
-                    }
-                }).build();
+//                .responseErroListener(new ResponseErroListener() {
+//                    //     用来提供处理所有错误的监听
+//                    //     rxjava必要要使用ErrorHandleSubscriber(默认实现Subscriber的onError方法),此监听才生效
+//                    @Override
+//                    public void handleResponseError(Exception e) {
+//                        Logger.d("------------>" + e.getMessage());
+//                        SnackbarUtil.showLong(R.string.msg_check_and_retry);
+//                    }
+//                })
+                .build();
     }
 }

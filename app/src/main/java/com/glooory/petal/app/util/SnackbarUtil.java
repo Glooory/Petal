@@ -5,6 +5,9 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.glooory.petal.R;
+import com.jess.arms.base.BaseApplication;
+
+import common.PEApplication;
 
 /**
  * Created by Glooory on 17/3/13.
@@ -13,6 +16,34 @@ import com.glooory.petal.R;
 public class SnackbarUtil {
 
     private SnackbarUtil() {
+    }
+
+    public static void showLong(int message) {
+        showLong(
+                ((BaseApplication) PEApplication.getContext()).getAppManager().getCurrentActivity(),
+                message
+        );
+    }
+
+    public static void showLong(String message) {
+        showLong(
+                ((BaseApplication) PEApplication.getContext()).getAppManager().getCurrentActivity(),
+                message
+        );
+    }
+
+    public static void showShort(int message) {
+        showShort(
+                ((BaseApplication) PEApplication.getContext()).getAppManager().getCurrentActivity(),
+                message
+        );
+    }
+
+    public static void showShort(String message) {
+        showShort(
+                ((BaseApplication) PEApplication.getContext()).getAppManager().getCurrentActivity(),
+                message
+        );
     }
 
     public static void showLong(Activity activity, int messageId) {

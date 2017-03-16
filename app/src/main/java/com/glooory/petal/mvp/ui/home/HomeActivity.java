@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
+import com.glooory.petal.app.rx.BaseSubscriber;
 import com.glooory.petal.app.rx.RxBus;
 import com.glooory.petal.app.util.SnackbarUtil;
 import com.glooory.petal.mvp.model.entity.BasicUserInfoBean;
@@ -35,7 +36,6 @@ import butterknife.ButterKnife;
 import common.AppComponent;
 import common.PEActivity;
 import common.PEApplication;
-import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -148,17 +148,7 @@ public class HomeActivity extends PEActivity
         Subscription s = RxBus.getInstance()
                 .toObservable(BasicUserInfoBean.class)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<BasicUserInfoBean>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
+                .subscribe(new BaseSubscriber<BasicUserInfoBean>() {
                     @Override
                     public void onNext(BasicUserInfoBean basicUserInfoBean) {
                         updateBasicUserInfo(basicUserInfoBean);
@@ -229,7 +219,7 @@ public class HomeActivity extends PEActivity
                                 LoginActivity.launch(HomeActivity.this, false);
                             }
                         });
-                mDrawerLayout.closeDrawer(Gravity.START);
+                closeDrawer();
                 return false;
             }
         } else if (itemId == R.id.nav_popular) {
@@ -242,7 +232,7 @@ public class HomeActivity extends PEActivity
         } else if (itemId == R.id.nav_logout) {
             // TODO: 17/3/4 logout
         }
-        mDrawerLayout.closeDrawer(Gravity.START);
+        closeDrawer();
         return true;
     }
 
@@ -266,7 +256,14 @@ public class HomeActivity extends PEActivity
                 } else {
                     LoginActivity.launch(this, false);
                 }
+                closeDrawer();
                 break;
+        }
+    }
+
+    private void closeDrawer() {
+        if (mDrawerLayout.isDrawerOpen(Gravity.START)) {
+            mDrawerLayout.closeDrawer(Gravity.START);
         }
     }
 

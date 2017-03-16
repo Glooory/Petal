@@ -1,7 +1,5 @@
 package com.jess.arms.di.module;
 
-import android.app.Application;
-
 import com.jess.arms.base.AppManager;
 import com.jess.arms.http.RequestIntercept;
 import com.jess.arms.utils.DataHelper;
@@ -140,10 +138,9 @@ public class ClientModule {
      */
     @Singleton
     @Provides
-    RxErrorHandler proRxErrorHandler(Application application, ResponseErroListener listener) {
+    RxErrorHandler proRxErrorHandler(ResponseErroListener listener) {
         return RxErrorHandler
                 .builder()
-                .with(application)
                 .responseErroListener(listener)
                 .build();
     }
