@@ -6,7 +6,7 @@ ext {
                targetSdkVersion        : 23,
                versionCode             : 200,
                versionName             : "2.0.0",
-               androidSupportSdkVersion: "25.1.1",
+               androidSupportSdkVersion: "25.0.1",
                retrofitSdkVersion      : "2.1.0",
                dagger2SdkVersion       : "2.6",
                rxlifecycleSdkVersion   : "0.6.1",
