@@ -66,6 +66,12 @@ public class HomePresenter extends BasePresenter<HomeContract.View, HomeContract
      */
     public void requestPinsFirstTime(int pinTypeIndex) {
         getPinListObservable(pinTypeIndex)
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mRootView.showLoading();
+                    }
+                })
                 .doAfterTerminate(new Action0() {
                     @Override
                     public void call() {

@@ -17,4 +17,6 @@
     <dimen name="pin_user_avatar_size">40dp</dimen>
     <dimen name="splash_logo_margin_start">48dp</dimen>
     <dimen name="splash_logo_margin_top">72dp</dimen>
+    <dimen name="drawer_avatar_margin_left">40dp</dimen>
+    <dimen name="drawer_avatar_size">60dp</dimen>
 </resources>

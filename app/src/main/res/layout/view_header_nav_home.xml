@@ -14,8 +14,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/drawer_avatar_margin_left"
         android:padding="@dimen/half_activity_default_margin"
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
@@ -24,8 +24,8 @@
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/img_drawer_avatar"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/drawer_avatar_size"
+            android:layout_height="@dimen/drawer_avatar_size"
             android:layout_gravity="center_vertical"
             android:src="@drawable/ic_avatar_24dp"
             android:visibility="visible"/>

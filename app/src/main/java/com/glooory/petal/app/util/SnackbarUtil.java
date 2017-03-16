@@ -16,21 +16,33 @@ public class SnackbarUtil {
     }
 
     public static void showLong(Activity activity, int messageId) {
+        if (activity == null) {
+            return;
+        }
         SnackbarUtil.show(toView(activity), messageId, Snackbar.LENGTH_LONG);
     }
 
     public static void showLong(Activity activity, String message) {
+        if (activity == null) {
+            return;
+        }
         SnackbarUtil.show(toView(activity), message, Snackbar.LENGTH_LONG);
     }
 
     public static void showLong(Activity activity, int messageResId,
             int actionMsgResId, View.OnClickListener onClickListener) {
+        if (activity == null) {
+            return;
+        }
         SnackbarUtil.show(toView(activity), messageResId, Snackbar.LENGTH_LONG,
                 actionMsgResId, onClickListener);
     }
 
     public static void showLong(Activity activity, String message,
             String actionMsg, View.OnClickListener onClickListener) {
+        if (activity == null) {
+            return;
+        }
         SnackbarUtil.show(toView(activity), message, Snackbar.LENGTH_LONG,
                 actionMsg, onClickListener);
     }
@@ -56,10 +68,16 @@ public class SnackbarUtil {
     }
 
     public static void showShort(Activity activity, int messageId) {
+        if (activity == null) {
+            return;
+        }
         SnackbarUtil.show(toView(activity), messageId, Snackbar.LENGTH_SHORT);
     }
 
     public static void showShort(Activity activity, String message) {
+        if (activity == null) {
+            return;
+        }
         SnackbarUtil.show(toView(activity), message, Snackbar.LENGTH_SHORT);
     }
 
@@ -73,12 +91,18 @@ public class SnackbarUtil {
 
     public static void showShort(Activity activity, int messageResId,
             int actionMsgResId, View.OnClickListener onClickListener) {
+        if (activity == null) {
+            return;
+        }
         SnackbarUtil.show(toView(activity), messageResId, Snackbar.LENGTH_SHORT,
                 actionMsgResId, onClickListener);
     }
 
     public static void showShort(Activity activity, String message,
             String actionMsg, View.OnClickListener onClickListener) {
+        if (activity == null) {
+            return;
+        }
         SnackbarUtil.show(toView(activity), message, Snackbar.LENGTH_SHORT,
                 actionMsg, onClickListener);
     }
