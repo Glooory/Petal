@@ -4,7 +4,9 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="half_activity_default_margin">8dp</dimen>
     <dimen name="quarter_activity_default_margin">4dp</dimen>
+    <dimen name="triple_activity_default_margin">48dp</dimen>
 
+    <dimen name="icon_size_default">24dp</dimen>
     <dimen name="card_elevation_static">2dp</dimen>
 
     <dimen name="text_size_10sp">10sp</dimen>
@@ -19,4 +21,9 @@
     <dimen name="splash_logo_margin_top">72dp</dimen>
     <dimen name="drawer_avatar_margin_left">40dp</dimen>
     <dimen name="drawer_avatar_size">60dp</dimen>
+
+    <dimen name="shine_button_pin_operate">16dp</dimen>
+    <dimen name="pin_detail_divider_margin_left">80dp</dimen>
+    <dimen name="pin_detail_divider_height">1dp</dimen>
+    <dimen name="pin_detail_avatar_size">60dp</dimen>
 </resources>

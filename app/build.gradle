@@ -62,4 +62,5 @@ dependencies {
     releaseCompile rootProject.ext.dependencies["canary-release"]
     testCompile rootProject.ext.dependencies["canary-release"]
     compile rootProject.ext.dependencies["baserecyclerviewadapterhelper"]
+    compile rootProject.ext.dependencies["shinebutton"]
 }

@@ -43,4 +43,10 @@
     <string name="msg_error_json_syntax_exception">数据出错</string>
     <string name="msg_error_common_exception">网络错误，请稍后重试</string>
 
+    <string name="image_transition_name">image_transition</string>
+    <string name="collection_count_format">%d 采集</string>
+    <string name="like_count_format">%d 喜欢</string>
+    <string name="msg_collect_to">采集到</string>
+    <string name="msg_related_recommend">相关推荐</string>
+
 </resources>

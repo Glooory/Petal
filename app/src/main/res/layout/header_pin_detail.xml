@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/half_activity_default_margin"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_pin_detail_collect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            style="@style/ButtonPinOperate">
+
+            <com.sackcentury.shinebuttonlib.ShineButton
+                android:id="@+id/shine_button_pin_detail_collect"
+                android:layout_width="@dimen/shine_button_pin_operate"
+                android:layout_height="@dimen/shine_button_pin_operate"
+                app:allow_random_color="false"
+                app:btn_color="@android:color/darker_gray"
+                app:btn_fill_color="@color/colorPrimary"
+                app:siShape="@raw/collect"/>
+
+            <TextView
+                android:id="@+id/tv_pin_detail_collect_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearancePinOperate"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_pin_detail_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            style="@style/ButtonPinOperate">
+
+            <com.sackcentury.shinebuttonlib.ShineButton
+                android:id="@+id/shine_button_pin_detail_like"
+                android:layout_width="@dimen/shine_button_pin_operate"
+                android:layout_height="@dimen/shine_button_pin_operate"
+                app:allow_random_color="false"
+                app:btn_color="@android:color/darker_gray"
+                app:btn_fill_color="@color/colorPrimary"
+                app:siShape="@raw/heart"/>
+
+            <TextView
+                android:id="@+id/tv_pin_detail_like_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearancePinOperate"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_pin_detail_des"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearancePinDetailDes"/>
+
+    <include layout="@layout/divider_pin_detail_grey"/>
+
+    <include layout="@layout/view_pin_detail_user_bar"/>
+
+    <include layout="@layout/divider_pin_detail_grey"/>
+
+    <include layout="@layout/view_pin_detail_board_bar"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/half_activity_default_margin"
+        android:layout_marginBottom="@dimen/half_activity_default_margin"
+        android:text="@string/msg_related_recommend"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/text_size_14sp"/>
+
+</LinearLayout>

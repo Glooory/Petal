@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_pin_detail_board_bar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/ButtonPinDetailUserBar">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/simple_drawee_view_pin_detail_board"
+        android:layout_width="@dimen/pin_detail_avatar_size"
+        android:layout_height="@dimen/pin_detail_avatar_size"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/simple_drawee_view_pin_detail_board"
+        android:layout_marginLeft="@dimen/half_activity_default_margin"
+        android:layout_marginTop="@dimen/quarter_activity_default_margin"
+        android:layout_toRightOf="@id/simple_drawee_view_pin_detail_board"
+        android:text="@string/msg_collect_to"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_size_14sp"/>
+
+    <TextView
+        android:id="@+id/tv_pin_detail_board_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/simple_drawee_view_pin_detail_board"
+        android:layout_marginLeft="@dimen/half_activity_default_margin"
+        android:layout_marginRight="@dimen/triple_activity_default_margin"
+        android:layout_marginBottom="@dimen/quarter_activity_default_margin"
+        android:layout_toRightOf="@id/simple_drawee_view_pin_detail_board"
+        style="@style/TextAppearancePinDetailUser"/>
+
+    <ImageButton
+        android:layout_width="@dimen/icon_size_default"
+        android:layout_height="@dimen/icon_size_default"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_keyboard_arrow_right_grey_700_24dp"/>
+
+</RelativeLayout>

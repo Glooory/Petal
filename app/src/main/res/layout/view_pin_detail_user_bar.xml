@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_pin_detail_user_bar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/ButtonPinDetailUserBar">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/simple_drawee_view_pin_detail_avatar"
+        android:layout_width="@dimen/pin_detail_avatar_size"
+        android:layout_height="@dimen/pin_detail_avatar_size"
+        fresco:backgroundImage="@color/transparent"
+        fresco:placeholderImage="@drawable/ic_avatar_24dp"/>
+
+    <TextView
+        android:id="@+id/tv_pin_detail_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/simple_drawee_view_pin_detail_avatar"
+        android:layout_marginLeft="@dimen/half_activity_default_margin"
+        android:layout_marginTop="@dimen/quarter_activity_default_margin"
+        android:layout_marginRight="@dimen/triple_activity_default_margin"
+        android:layout_toRightOf="@id/simple_drawee_view_pin_detail_avatar"
+        style="@style/TextAppearancePinDetailUser"/>
+
+    <TextView
+        android:id="@+id/tv_pin_detail_collect_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/simple_drawee_view_pin_detail_avatar"
+        android:layout_marginLeft="@dimen/half_activity_default_margin"
+        android:layout_marginRight="@dimen/triple_activity_default_margin"
+        android:layout_marginBottom="@dimen/quarter_activity_default_margin"
+        android:layout_toRightOf="@id/simple_drawee_view_pin_detail_avatar"
+        android:maxLines="1"
+        android:ellipsize="marquee"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_size_14sp"/>
+
+    <ImageButton
+        android:layout_width="@dimen/icon_size_default"
+        android:layout_height="@dimen/icon_size_default"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_keyboard_arrow_right_grey_700_24dp"/>
+
+</RelativeLayout>
