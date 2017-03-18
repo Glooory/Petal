@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.glooory.petal.R;
 import com.glooory.petal.di.component.DaggerHomeComponent;
 import com.glooory.petal.di.module.HomeModule;
@@ -76,6 +78,19 @@ public class HomeFragment extends PEFragment<HomePresenter> implements HomeContr
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mAdapter);
         mPresenter.requestPinsFirstTime(mTypeIndex);
+        mRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
+            @Override
+            public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()) {
+                    case R.id.ll_pin_img:
+                        mPresenter.launchPinDetailActivity(getActivity(), view, position);
+                        break;
+                    case R.id.ll_pin_via_info:
+                        // TODO: 17/3/18 Launch UserActivity
+                        break;
+                }
+            }
+        });
     }
 
     @Override

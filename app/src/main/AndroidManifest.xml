@@ -40,6 +40,11 @@
             android:theme="@style/Theme.Petal.Login"
             android:windowSoftInputMode="adjustResize"/>
 
+        <activity
+            android:name=".mvp.ui.pindetail.PinDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Petal.PinDetail"/>
+
     </application>
 
 </manifest>

@@ -3,5 +3,4 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/pin_detail_divider_height"
     android:layout_marginLeft="@dimen/pin_detail_divider_margin_left"
-    android:layout_marginTop="@dimen/half_activity_default_margin"
     android:background="@color/grey_300"/>

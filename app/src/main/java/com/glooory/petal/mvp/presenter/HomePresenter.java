@@ -1,16 +1,22 @@
 package com.glooory.petal.mvp.presenter;
 
+import android.app.Activity;
+import android.view.View;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.glooory.petal.R;
 import com.glooory.petal.app.rx.BaseSubscriber;
 import com.glooory.petal.app.rx.RxBus;
+import com.glooory.petal.app.util.DrawableUtils;
 import com.glooory.petal.app.widget.WindmillLoadMoreFooter;
 import com.glooory.petal.mvp.model.entity.BasicUserInfoBean;
 import com.glooory.petal.mvp.model.entity.PinBean;
 import com.glooory.petal.mvp.ui.home.HomeContract;
 import com.glooory.petal.mvp.ui.home.HomeFragment;
 import com.glooory.petal.mvp.ui.home.HomePinsAdapter;
+import com.glooory.petal.mvp.ui.pindetail.PinDetailActivity;
 import com.jess.arms.di.scope.FragmentScope;
-import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.utils.RxUtils;
 import com.orhanobut.logger.Logger;
 
@@ -18,6 +24,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import common.PEPresenter;
 import rx.Observable;
 import rx.functions.Action0;
 
@@ -25,7 +32,7 @@ import rx.functions.Action0;
  * Created by Glooory on 17/2/18.
  */
 @FragmentScope
-public class HomePresenter extends BasePresenter<HomeContract.View, HomeContract.Model> {
+public class HomePresenter extends PEPresenter<HomeContract.View, HomeContract.Model> {
 
     private int mLastMaxId;
     HomePinsAdapter mAdapter;
@@ -156,5 +163,19 @@ public class HomePresenter extends BasePresenter<HomeContract.View, HomeContract
                         RxBus.getInstance().post(basicUserInfoBean);
                     }
                 });
+    }
+
+    public void launchPinDetailActivity(Activity activity, View view, int position) {
+        PinBean pinBean = mAdapter.getItem(position);
+        float aspectRatio = pinBean.getFile().getWidth() /
+                (float) pinBean.getFile().getHeight();
+        if (aspectRatio < 0.3) {
+            aspectRatio = 0.3F;
+        }
+        PinDetailActivity.launch(activity,
+                pinBean.getPinId(),
+                aspectRatio,
+                (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_pin),
+                DrawableUtils.getBasicColorStr(mAdapter.getItem(position)));
     }
 }

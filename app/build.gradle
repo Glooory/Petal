@@ -63,4 +63,8 @@ dependencies {
     testCompile rootProject.ext.dependencies["canary-release"]
     compile rootProject.ext.dependencies["baserecyclerviewadapterhelper"]
     compile rootProject.ext.dependencies["shinebutton"]
+    compile rootProject.ext.dependencies["fresco"]
+    compile rootProject.ext.dependencies["fresco-drawee"]
+    compile rootProject.ext.dependencies["fresco-imagepipeline"]
+    compile rootProject.ext.dependencies["fresco-animated-gif"]
 }

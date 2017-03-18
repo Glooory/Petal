@@ -1,4 +1,4 @@
-package com.glooory.petal.mvp.model.entity.imagedetail;
+package com.glooory.petal.mvp.model.entity.pindetail;
 
 /**
  * Created by Glooory on 2016/9/12 0012 17:09.

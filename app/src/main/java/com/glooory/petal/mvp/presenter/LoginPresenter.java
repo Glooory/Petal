@@ -12,7 +12,6 @@ import com.glooory.petal.app.util.SPUtils;
 import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.ui.login.LoginContract;
 import com.jess.arms.di.scope.ActivityScope;
-import com.jess.arms.mvp.BasePresenter;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
@@ -22,6 +21,7 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import common.PEApplication;
+import common.PEPresenter;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -32,7 +32,7 @@ import rx.schedulers.Schedulers;
  * Created by Glooory on 17/3/13.
  */
 @ActivityScope
-public class LoginPresenter extends BasePresenter<LoginContract.View, LoginContract.Model> {
+public class LoginPresenter extends PEPresenter<LoginContract.View, LoginContract.Model> {
 
     @Inject
     public LoginPresenter(LoginContract.View view, LoginContract.Model model) {

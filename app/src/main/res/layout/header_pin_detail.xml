@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/half_activity_default_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:gravity="end"
         android:orientation="horizontal">
 
@@ -70,7 +70,12 @@
         android:layout_height="wrap_content"
         style="@style/TextAppearancePinDetailDes"/>
 
-    <include layout="@layout/divider_pin_detail_grey"/>
+    <View xmlns:android="http://schemas.android.com/apk/res/android"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/pin_detail_divider_height"
+          android:layout_marginLeft="@dimen/pin_detail_divider_margin_left"
+          android:layout_marginTop="@dimen/activity_vertical_margin"
+          android:background="@color/grey_300"/>
 
     <include layout="@layout/view_pin_detail_user_bar"/>
 
@@ -78,11 +83,13 @@
 
     <include layout="@layout/view_pin_detail_board_bar"/>
 
+    <include layout="@layout/divider_pin_detail_grey"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/half_activity_default_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_marginBottom="@dimen/half_activity_default_margin"
         android:text="@string/msg_related_recommend"
         android:textColor="@color/secondary_text"

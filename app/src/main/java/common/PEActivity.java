@@ -11,13 +11,12 @@ import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.util.BaseClientInfo;
 import com.glooory.petal.app.util.SPUtils;
 import com.jess.arms.base.BaseActivity;
-import com.jess.arms.mvp.Presenter;
 
 /**
  * Created by Glooory on 17/2/17
  */
 
-public abstract class PEActivity<P extends Presenter> extends BaseActivity<P> {
+public abstract class PEActivity<P extends PEPresenter> extends BaseActivity<P> {
 
     protected PEApplication mPEApplication;
     protected int mScreenPixelsWidth;

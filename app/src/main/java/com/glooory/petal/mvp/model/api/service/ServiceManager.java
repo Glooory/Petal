@@ -13,6 +13,8 @@ public class ServiceManager implements BaseServiceManager {
 
     private HomeService mHomeService;
     private UserService mUserService;
+    private OperateService mOperateService;
+    private PinBoardService mPinBoardService;
 
     /**
      * 如果需要添加service只需在构造方法中添加对应的service,在提供get方法返回出去,只要在ServiceModule提供了该service
@@ -21,9 +23,12 @@ public class ServiceManager implements BaseServiceManager {
      * @param
      */
     @Inject
-    public ServiceManager(HomeService homeService, UserService userService) {
+    public ServiceManager(HomeService homeService, UserService userService,
+            OperateService operateService, PinBoardService pinBoardService) {
         mHomeService = homeService;
         mUserService = userService;
+        mOperateService = operateService;
+        mPinBoardService = pinBoardService;
     }
 
     /**
@@ -40,5 +45,13 @@ public class ServiceManager implements BaseServiceManager {
 
     public UserService getUserService() {
         return mUserService;
+    }
+
+    public OperateService getOperateService() {
+        return mOperateService;
+    }
+
+    public PinBoardService getPinBoardService() {
+        return mPinBoardService;
     }
 }

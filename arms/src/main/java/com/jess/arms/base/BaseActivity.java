@@ -68,8 +68,8 @@ public abstract class BaseActivity<P extends Presenter> extends RxAppCompatActiv
         setContentView(getLayoutId());
         //绑定到butterknife
         mUnbinder = ButterKnife.bind(this);
-        initView();
         componentInject();//依赖注入
+        initView();
         initData();
     }
 

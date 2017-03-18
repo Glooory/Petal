@@ -24,4 +24,8 @@
     <style name="Theme.Petal.Login" parent="Theme.Petal.Light">
         <item name="colorPrimaryDark">@color/transparent</item>
     </style>
+
+    <style name="Theme.Petal.PinDetail" parent="Theme.Petal.Light">
+        <item name="colorPrimaryDark">@color/transparent</item>
+    </style>
 </resources>

@@ -11,6 +11,7 @@
         android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/transparent"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -19,13 +20,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
-            app:layout_scrollFlags="scroll"
+            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+            app:contentScrim="@color/transparent"
+            app:statusBarScrim="@color/transparent"
             app:titleEnabled="false">
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/simple_drawee_view_pin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingEnd="-2dp"
                 android:fitsSystemWindows="true"
                 android:transitionName="@string/image_transition_name"/>
 

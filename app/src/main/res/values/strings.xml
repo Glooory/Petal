@@ -46,7 +46,9 @@
     <string name="image_transition_name">image_transition</string>
     <string name="collection_count_format">%d 采集</string>
     <string name="like_count_format">%d 喜欢</string>
+    <string name="edit">编辑</string>
     <string name="msg_collect_to">采集到</string>
     <string name="msg_related_recommend">相关推荐</string>
+    <string name="no_more_data">沒有更多了</string>
 
 </resources>

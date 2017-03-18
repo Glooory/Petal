@@ -35,4 +35,5 @@ public class Constants {
     //防抖动时间间隔
     public static final int THROTTLE_DURATION = 300;
 
+    public static final String IMAGE_TRANSITION_NAME = "image_transition";
 }

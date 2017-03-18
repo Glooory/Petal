@@ -1,4 +1,4 @@
-package com.glooory.petal.mvp.model.entity.imagedetail;
+package com.glooory.petal.mvp.model.entity.pindetail;
 
 import com.glooory.petal.mvp.model.entity.BoardBean;
 import com.glooory.petal.mvp.model.entity.FileBean;
