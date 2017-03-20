@@ -4,18 +4,14 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.glooory.petal.R;
-import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.adapter.NoFilterringAdapter;
 import com.glooory.petal.app.rx.BaseSubscriber;
-import com.glooory.petal.app.util.EncrypAES;
-import com.glooory.petal.app.util.SPUtils;
-import com.glooory.petal.mvp.model.entity.UserBean;
+import com.glooory.petal.mvp.model.entity.LatestEditBoardsBean;
 import com.glooory.petal.mvp.ui.login.LoginContract;
 import com.jess.arms.di.scope.ActivityScope;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -88,10 +84,10 @@ public class LoginPresenter extends PEPresenter<LoginContract.View, LoginContrac
                         mRootView.hideLoading();
                     }
                 })
-                .subscribe(new BaseSubscriber<UserBean>() {
+                .subscribe(new BaseSubscriber<LatestEditBoardsBean>() {
                     @Override
-                    public void onNext(UserBean userBean) {
-                        saveUserInfo(userBean, userAccount, password);
+                    public void onNext(LatestEditBoardsBean latestEditBoardsBean) {
+                        mModel.saveUserBoardInfo(latestEditBoardsBean.getBoards());
                         mRootView.showLoginSuccess();
                     }
 
@@ -102,23 +98,6 @@ public class LoginPresenter extends PEPresenter<LoginContract.View, LoginContrac
                     }
                 });
         addSubscrebe(s);
-    }
-
-    private void saveUserInfo(UserBean userBean, String userAccount, String password) {
-        EncrypAES mEncrypAES = new EncrypAES();
-        SPUtils.builder()
-                .addData(Constants.PREF_USER_ACCOUNT, userAccount)
-                .addData(Constants.PREF_USER_PASSWORD, mEncrypAES.EncryptorString(password))
-                .addData(Constants.PREF_USER_NAME, userBean.getUsername())
-                .addData(Constants.PREF_USER_ID, userBean.getUserId())
-                .addData(Constants.PREF_USER_EMAIL, userBean.getEmail())
-                .addData(Constants.PREF_USER_AVATAR_KEY, userBean.getAvatar().getKey())
-                .build();
-
-        Set<String> historyAccounts = SPUtils.getHistoryAccounts();
-        Set<String> newAccouts = new HashSet<>(historyAccounts);
-        newAccouts.add(userAccount);
-        SPUtils.putHistoryAccounts(newAccouts);
     }
 
     public void saveSkipLoginTrue() {

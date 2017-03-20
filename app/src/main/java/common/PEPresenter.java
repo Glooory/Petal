@@ -2,10 +2,13 @@ package common;
 
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
+import android.view.View;
 
 import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.glooory.petal.R;
+import com.glooory.petal.app.util.SnackbarUtil;
+import com.glooory.petal.mvp.ui.login.LoginActivity;
 import com.jess.arms.base.BaseApplication;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.mvp.BaseView;
@@ -95,5 +98,18 @@ public class PEPresenter<V extends BaseView, M extends IModel> extends BasePrese
                         .setSimpleDraweeView(image)
                         .isRadius(true, radius)
                         .build());
+    }
+
+    public void showLoginHintMsg() {
+        SnackbarUtil.showLong(R.string.msg_login_hint, R.string.msg_go_login,
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        LoginActivity.launch(
+                                ((BaseApplication) PEApplication.getContext())
+                                        .getAppManager().getCurrentActivity(),
+                                false);
+                    }
+                });
     }
 }

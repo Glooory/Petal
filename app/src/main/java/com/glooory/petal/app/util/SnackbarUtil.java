@@ -46,6 +46,24 @@ public class SnackbarUtil {
         );
     }
 
+    public static void showLong(int message, int actionResId, View.OnClickListener onClickListener) {
+        showLong(
+                ((BaseApplication) PEApplication.getContext()).getAppManager().getCurrentActivity(),
+                message,
+                actionResId,
+                onClickListener
+        );
+    }
+
+    public static void showLong(String message, String actionMsg, View.OnClickListener onClickListener) {
+        showLong(
+                ((BaseApplication) PEApplication.getContext()).getAppManager().getCurrentActivity(),
+                message,
+                actionMsg,
+                onClickListener
+        );
+    }
+
     public static void showLong(Activity activity, int messageId) {
         if (activity == null) {
             return;

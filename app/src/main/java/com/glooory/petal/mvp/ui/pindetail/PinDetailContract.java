@@ -1,6 +1,7 @@
 package com.glooory.petal.mvp.ui.pindetail;
 
 import com.glooory.petal.mvp.model.entity.PinBean;
+import com.glooory.petal.mvp.model.entity.collect.CollectResultBean;
 import com.glooory.petal.mvp.model.entity.pindetail.CollectionInfoBean;
 import com.glooory.petal.mvp.model.entity.pindetail.PinDetailBean;
 import com.glooory.petal.mvp.ui.home.HomePinsAdapter;
@@ -56,6 +57,10 @@ public interface PinDetailContract {
         void hideLikeSbtn();
 
         void showNoMoreDataFooter(boolean show);
+
+        void showCollectDialog();
+
+        void showEditDialog();
     }
 
     interface Model extends IModel {
@@ -65,6 +70,8 @@ public interface PinDetailContract {
         Observable<CollectionInfoBean> isCollected();
 
         Observable<List<PinBean>> getRecommendedPins(int page);
+
+        Observable<CollectResultBean> collectPin(String boardId, String des);
 
     }
 }

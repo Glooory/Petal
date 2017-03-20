@@ -33,15 +33,16 @@ import butterknife.ButterKnife;
 import common.AppComponent;
 import common.PEActivity;
 
+import static com.glooory.petal.app.Constants.EXTRA_ASPECT_RATIO;
+import static com.glooory.petal.app.Constants.EXTRA_BASIC_COLOR;
+import static com.glooory.petal.app.Constants.EXTRA_PIN_ID;
+
 /**
  * Created by Glooory on 17/3/17.
  */
 
-public class PinDetailActivity extends PEActivity<PinDetailPresenter> implements PinDetailContract.View {
-
-    private static final String EXTRA_PIN_ID = "pin_id";
-    private static final String EXTRA_ASPECT_RATIO = "aspect_ratio";
-    private static final String EXTRA_BASIC_COLOR = "basic_color";
+public class PinDetailActivity extends PEActivity<PinDetailPresenter> implements
+        PinDetailContract.View, View.OnClickListener {
 
     @BindView(R.id.simple_drawee_view_pin)
     SimpleDraweeView mImagePin;
@@ -55,11 +56,8 @@ public class PinDetailActivity extends PEActivity<PinDetailPresenter> implements
     RecyclerView mRecyclerView;
 
     private HomePinsAdapter mAdapter;
-    private boolean mIsMine;
     private int mPinId;
     private float mAspectRatio;
-    private boolean isCollected;
-    private boolean isLiked;
     private String mUserName;
     private int mUserId;
     private LinearLayout mLlCollect;
@@ -86,9 +84,9 @@ public class PinDetailActivity extends PEActivity<PinDetailPresenter> implements
             SimpleDraweeView image, String placeHolderColor) {
 
         Intent intent = new Intent(activity, PinDetailActivity.class);
-        intent.putExtra(EXTRA_PIN_ID, pinId);
-        intent.putExtra(EXTRA_ASPECT_RATIO, aspectRatio);
-        intent.putExtra(EXTRA_BASIC_COLOR, placeHolderColor);
+        intent.putExtra(Constants.EXTRA_PIN_ID, pinId);
+        intent.putExtra(Constants.EXTRA_ASPECT_RATIO, aspectRatio);
+        intent.putExtra(Constants.EXTRA_BASIC_COLOR, placeHolderColor);
 
         // 太长的图使用 Shared Element transition 动画时会 crash
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && aspectRatio > 0.2) {
@@ -175,6 +173,11 @@ public class PinDetailActivity extends PEActivity<PinDetailPresenter> implements
         mImgBoardFourth = ButterKnife.findById(headerView, R.id.simple_drawee_view_pin_detail_board_pin_fourth);
         mTvBoardName = ButterKnife.findById(headerView, R.id.tv_pin_detail_board_name);
         mAdapter.addHeaderView(headerView);
+
+        mLlCollect.setOnClickListener(this);
+        mLlLike.setOnClickListener(this);
+        mRlUserBar.setOnClickListener(this);
+        mRlBoardBar.setOnClickListener(this);
     }
 
     @Override
@@ -184,7 +187,7 @@ public class PinDetailActivity extends PEActivity<PinDetailPresenter> implements
         mBasicColorStr = getIntent().getStringExtra(EXTRA_BASIC_COLOR);
         mImagePin.setAspectRatio(mAspectRatio);
         mPresenter.getPinDetailInfo(mPinId);
-        mPresenter.isCollected();
+        mPresenter.requestForIsCollected();
         mPresenter.requestRecommendedPins();
     }
 
@@ -306,7 +309,7 @@ public class PinDetailActivity extends PEActivity<PinDetailPresenter> implements
 
     @Override
     public void hideLikeSbtn() {
-        mSbtnLike.setVisibility(View.INVISIBLE);
+        mSbtnLike.setVisibility(View.GONE);
     }
 
     @Override
@@ -322,6 +325,43 @@ public class PinDetailActivity extends PEActivity<PinDetailPresenter> implements
                     mAdapter.addFooterView(mNoMoreDataFooter);
                 }
             });
+        }
+    }
+
+    @Override
+    public void showCollectDialog() {
+        CollectDialogFragment collectDialogFragment = CollectDialogFragment
+                .create(mPinId, mTvCollectDes.getText().toString(),
+                        mPresenter.isCollected(), mPresenter.getCollectBelong());
+        collectDialogFragment.setCollectActionListener(new CollectDialogFragment.OnCollectActionListener() {
+            @Override
+            public void onCollectButtonClick(String collectDes, String boardId) {
+                mPresenter.collectPin(boardId, collectDes);
+            }
+        });
+        collectDialogFragment.show(getSupportFragmentManager(), null);
+    }
+
+    @Override
+    public void showEditDialog() {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ll_pin_detail_collect:
+                mPresenter.actionCollect();
+                break;
+            case R.id.ll_pin_detail_like:
+                mPresenter.actionLike();
+                break;
+            case R.id.rl_pin_detail_user_bar:
+                // TODO: 17/3/20 Launch UserActivity
+                break;
+            case R.id.rl_pin_detail_board_bar:
+                // TODO: 17/3/20 Launch BoardActivity
+                break;
         }
     }
 }

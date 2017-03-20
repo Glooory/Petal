@@ -1,5 +1,6 @@
 package com.glooory.petal.mvp.model.api.service;
 
+import com.glooory.petal.mvp.model.entity.LatestEditBoardsBean;
 import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.model.entity.login.TokenBean;
 
@@ -8,6 +9,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import retrofit2.http.Url;
 import rx.Observable;
 
@@ -36,4 +38,9 @@ public interface UserService {
     // 获取用户的个人信息
     @GET("users/{userId}")
     Observable<UserBean> getUser(@Path("userId") String userId);
+
+    // 获取我的画板集合信息
+    // https://api.huaban.com/last_board/?extra=recommend_tags
+    @GET("last_boards/")
+    Observable<LatestEditBoardsBean> requestLatestBoardInfo(@Query("extra") String extra);
 }

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/dialog_margin_default"
+    android:paddingEnd="@dimen/dialog_margin_default"
+    android:paddingTop="@dimen/dialog_margin_default">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/msg_collect_des_hint"/>
+
+    <EditText
+        android:id="@+id/edit_text_collect_dialog_des"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="4"
+        android:gravity="left"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text="@string/msg_collect_to_with_colon"/>
+
+    <Spinner
+        android:id="@+id/spinner_collect_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/triple_activity_default_margin"/>
+
+    <TextView
+        android:id="@+id/text_view_collect_dialog_warning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_info_pink_500_24dp"
+        android:gravity="left|center"
+        android:visibility="invisible"/>
+
+</LinearLayout>

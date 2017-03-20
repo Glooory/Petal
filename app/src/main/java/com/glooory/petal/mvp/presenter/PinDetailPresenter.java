@@ -11,9 +11,11 @@ import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.rx.BaseSubscriber;
 import com.glooory.petal.app.util.DrawableUtils;
 import com.glooory.petal.app.util.SPUtils;
+import com.glooory.petal.app.util.SnackbarUtil;
 import com.glooory.petal.app.util.TimeUtils;
 import com.glooory.petal.app.widget.WindmillLoadMoreFooter;
 import com.glooory.petal.mvp.model.entity.PinBean;
+import com.glooory.petal.mvp.model.entity.collect.CollectResultBean;
 import com.glooory.petal.mvp.model.entity.pindetail.CollectionInfoBean;
 import com.glooory.petal.mvp.model.entity.pindetail.PinDetailBean;
 import com.glooory.petal.mvp.ui.home.HomePinsAdapter;
@@ -84,8 +86,10 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
     }
 
     private void setupPinDetailInfo(PinDetailBean pinDetailBean) {
+        mCollectCount = pinDetailBean.getPin().getRepinCount();
+        mLikeCount = pinDetailBean.getPin().getLikeCount();
         mRootView.showCollectCount(
-                String.format(mCollectCountFormat, pinDetailBean.getPin().getRepinCount()));
+                String.format(mCollectCountFormat, mCollectCount));
         mIsMine = pinDetailBean.getPin().getUser().getUsername()
                 .equals(SPUtils.get(Constants.PREF_USER_NAME, ""));
         if (mIsMine) {
@@ -95,8 +99,7 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
             mIsLiked = pinDetailBean.getPin().isLiked();
             mRootView.showLikeSbtnChecked(mIsLiked);
             mRootView.showLikeCount(
-                    String.format(mLikeCountFormat, pinDetailBean.getPin().getLikeCount())
-            );
+                    String.format(mLikeCountFormat, mLikeCount));
         }
         if (TextUtils.isEmpty(pinDetailBean.getPin().getRawText())) {
             mRootView.hideCollectDes();
@@ -126,7 +129,7 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
         }
     }
 
-    public void isCollected() {
+    public void requestForIsCollected() {
         if (!mModel.isLogin()) {
             updateCollectSbtnStatus(false);
             return;
@@ -147,7 +150,8 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
                     @Override
                     public void onNext(CollectionInfoBean collectionInfoBean) {
                         if (collectionInfoBean.getExistPin() != null) {
-                            updateCollectSbtnStatus(true);
+                            mIsCollected = true;
+                            updateCollectSbtnStatus(mIsCollected);
                             mCollectBelong = collectionInfoBean.getExistPin().getBoard().getTitle();
                         }
                     }
@@ -216,5 +220,70 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
                 aspectRatio,
                 (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_pin),
                 DrawableUtils.getBasicColorStr(mAdapter.getItem(position)));
+    }
+
+    public void actionCollect() {
+        if (!mModel.isLogin()) {
+            showLoginHintMsg();
+            return;
+        }
+        if (mIsCollected) {
+            String pinExistMsg = String.format(
+                    PEApplication.getContext().getString(R.string.msg_collection_exist_format),
+                    mCollectBelong);
+            SnackbarUtil.showLong(pinExistMsg,
+                    PEApplication.getContext().getString(R.string.msg_collect_still),
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            showCollectDialog();
+                        }
+                    });
+        } else {
+            showCollectDialog();
+        }
+    }
+
+    private void showCollectDialog() {
+        mRootView.showCollectDialog();
+    }
+
+    public void collectPin(String boardId, String des) {
+        mModel.collectPin(boardId, des)
+                .compose(RxUtils.<CollectResultBean>bindToLifecycle(mRootView))
+                .subscribe(new BaseSubscriber<CollectResultBean>() {
+                    @Override
+                    public void onNext(CollectResultBean collectResultBean) {
+                        if (collectResultBean.getPin() != null) {
+                            mIsCollected = true;
+                            mCollectCount++;
+                            mRootView.showCollectCount(String.format(mCollectCountFormat, mCollectCount));
+                            mRootView.showCollectSbtnChecked(mIsCollected);
+                        }
+                    }
+                });
+    }
+
+    public void actionLike() {
+        if (!mModel.isLogin()) {
+            showLoginHintMsg();
+            return;
+        }
+    }
+
+    public String getCollectBelong() {
+        return mCollectBelong;
+    }
+
+    public boolean isMine() {
+        return mIsMine;
+    }
+
+    public boolean isLiked() {
+        return mIsLiked;
+    }
+
+    public boolean isCollected() {
+        return mIsCollected;
     }
 }

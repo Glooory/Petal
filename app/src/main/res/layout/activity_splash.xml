@@ -7,13 +7,11 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/imageview_splash"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/bg_splash_screen_bulb"/>
+            android:fitsSystemWindows="true"/>
 
         <ImageView
             android:id="@+id/imageview_splash_logo"

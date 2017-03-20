@@ -26,4 +26,5 @@
     <dimen name="pin_detail_divider_margin_left">80dp</dimen>
     <dimen name="pin_detail_divider_height">1dp</dimen>
     <dimen name="pin_detail_avatar_size">60dp</dimen>
+    <dimen name="dialog_margin_default">24dp</dimen>
 </resources>

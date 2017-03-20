@@ -5,6 +5,7 @@ import android.animation.AnimatorInflater;
 import android.view.KeyEvent;
 import android.widget.ImageView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.rx.AnimOnSubscribe;
@@ -13,6 +14,7 @@ import com.glooory.petal.app.util.SPUtils;
 import com.glooory.petal.mvp.model.entity.login.TokenBean;
 import com.glooory.petal.mvp.ui.home.HomeActivity;
 import com.glooory.petal.mvp.ui.login.LoginActivity;
+import com.jess.arms.widget.imageloader.fresco.FrescoImageConfig;
 import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
@@ -33,7 +35,7 @@ import rx.schedulers.Schedulers;
 public class SplashActivity extends PEActivity {
 
     @BindView(R.id.imageview_splash)
-    ImageView mImgSplash;
+    SimpleDraweeView mImgSplash;
     @BindView(R.id.imageview_splash_logo)
     ImageView mImgLogo;
 
@@ -52,12 +54,18 @@ public class SplashActivity extends PEActivity {
 
     @Override
     protected void initView() {
-
+        mImgSplash.setAspectRatio(0.5625F);
     }
 
     @Override
     protected void initData() {
         mEncrypAES = new EncrypAES();
+        ((PEApplication) PEApplication.getContext()).getAppComponent().imageLoader()
+                .loadImage(SplashActivity.this,
+                        FrescoImageConfig.builder()
+                                .setUrl("res:///" + R.drawable.bg_splash_screen_bulb)
+                                .setSimpleDraweeView(mImgSplash)
+                                .build());
     }
 
     @Override

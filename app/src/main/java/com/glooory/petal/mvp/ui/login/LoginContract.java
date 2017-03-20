@@ -1,10 +1,13 @@
 package com.glooory.petal.mvp.ui.login;
 
 import com.glooory.petal.app.adapter.NoFilterringAdapter;
+import com.glooory.petal.mvp.model.entity.BoardBean;
+import com.glooory.petal.mvp.model.entity.LatestEditBoardsBean;
 import com.glooory.petal.mvp.model.entity.UserBean;
 import com.jess.arms.mvp.BaseView;
 import com.jess.arms.mvp.IModel;
 
+import java.util.List;
 import java.util.Set;
 
 import rx.Observable;
@@ -36,7 +39,13 @@ public interface LoginContract {
 
         Set<String> loadHistoryAccounts();
 
-        Observable<UserBean> requestToken(String userAccount, String password);
+        Observable<LatestEditBoardsBean> requestToken(String userAccount, String password);
+
+        Observable<LatestEditBoardsBean> requestBoardsInfo();
+
+        void saveUserInfo(UserBean userBean, String userAccount, String password);
+
+        void saveUserBoardInfo(List<BoardBean> boardList);
     }
 
 }

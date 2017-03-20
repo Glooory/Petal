@@ -39,7 +39,7 @@ public interface OperateService {
     //https://api.huaban.com/pins/ body=board_id=17891564&text=描述内容&via=707423726
     @FormUrlEncoded
     @POST("pins/")
-    Observable<CollectResultBean> collect(
+    Observable<CollectResultBean> collectPin(
             @Field("board_id") String boardId,
             @Field("text") String des,
             @Field("via") String pinsId
