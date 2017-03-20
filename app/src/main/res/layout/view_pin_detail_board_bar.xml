@@ -8,18 +8,52 @@
     android:layout_height="match_parent"
     style="@style/ButtonPinDetailUserBar">
 
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/simple_drawee_view_pin_detail_board"
+    <RelativeLayout
+        android:id="@+id/rl_pin_detail_board_pins"
         android:layout_width="@dimen/pin_detail_avatar_size"
-        android:layout_height="@dimen/pin_detail_avatar_size"/>
+        android:layout_height="@dimen/pin_detail_avatar_size">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/simple_drawee_view_pin_detail_board_pin_first"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="1dp"/>
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/simple_drawee_view_pin_detail_board_pin_second"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="1dp"/>
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/simple_drawee_view_pin_detail_board_pin_third"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="1dp"/>
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/simple_drawee_view_pin_detail_board_pin_fourth"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="1dp"/>
+
+    </RelativeLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/simple_drawee_view_pin_detail_board"
+        android:layout_alignTop="@id/rl_pin_detail_board_pins"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/quarter_activity_default_margin"
-        android:layout_toRightOf="@id/simple_drawee_view_pin_detail_board"
+        android:layout_toRightOf="@id/rl_pin_detail_board_pins"
         android:text="@string/msg_collect_to"
         android:textColor="@color/secondary_text"
         android:textSize="@dimen/text_size_14sp"/>
@@ -28,11 +62,11 @@
         android:id="@+id/tv_pin_detail_board_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/simple_drawee_view_pin_detail_board"
+        android:layout_alignBottom="@id/rl_pin_detail_board_pins"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/triple_activity_default_margin"
         android:layout_marginBottom="@dimen/quarter_activity_default_margin"
-        android:layout_toRightOf="@id/simple_drawee_view_pin_detail_board"
+        android:layout_toRightOf="@id/rl_pin_detail_board_pins"
         style="@style/TextAppearancePinDetailUser"/>
 
     <ImageButton

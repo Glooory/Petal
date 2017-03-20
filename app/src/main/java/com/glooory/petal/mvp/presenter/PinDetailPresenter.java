@@ -109,9 +109,20 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
         mRootView.showBoardName(pinDetailBean.getPin().getBoard().getTitle());
         mRootView.showPinImage(pinDetailBean.getPin().getFile().getKey());
         mRootView.showAvatarImage(pinDetailBean.getPin().getUser().getAvatar().getKey());
-        if (pinDetailBean.getPin().getBoard().getPins() != null &&
-                pinDetailBean.getPin().getBoard().getPins().size() > 0) {
-            mRootView.showBoardImage(pinDetailBean.getPin().getBoard().getPins().get(0).getFile().getKey());
+        List<PinBean> pinList = pinDetailBean.getPin().getBoard().getPins();
+        if (pinList != null) {
+            if (pinList.size() > 0) {
+                mRootView.showBoardImgFirst(pinList.get(0).getFile().getKey());
+            }
+            if (pinList.size() > 1) {
+                mRootView.showBoardImgSecond(pinList.get(1).getFile().getKey());
+            }
+            if (pinList.size() > 2) {
+                mRootView.showBoardImgThird(pinList.get(2).getFile().getKey());
+            }
+            if (pinList.size() > 3) {
+                mRootView.showBoardImgFourth(pinList.get(3).getFile().getKey());
+            }
         }
     }
 

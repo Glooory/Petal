@@ -60,14 +60,10 @@ public class PEPresenter<V extends BaseView, M extends IModel> extends BasePrese
                         .setControlListener(new BaseControllerListener() {
                             @Override
                             public void onFinalImageSet(String id, Object imageInfo, Animatable animatable) {
-                                Logger.d("onFinalImageSet()");
-                                Logger.d(animatable == null);
                                 if (animatable != null) {
                                     animatable.start();
                                 }
                             }
-
-
                         })
                         .build());
     }

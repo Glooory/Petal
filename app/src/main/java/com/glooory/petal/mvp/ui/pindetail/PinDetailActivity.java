@@ -74,7 +74,10 @@ public class PinDetailActivity extends PEActivity<PinDetailPresenter> implements
     private TextView mTvUserName;
     private TextView mTvCollectTime;
     private RelativeLayout mRlBoardBar;
-    private SimpleDraweeView mImgBoard;
+    private SimpleDraweeView mImgBoardFirst;
+    private SimpleDraweeView mImgBoardSecond;
+    private SimpleDraweeView mImgBoardThird;
+    private SimpleDraweeView mImgBoardFourth;
     private TextView mTvBoardName;
     private View mNoMoreDataFooter;
     private String mBasicColorStr;
@@ -166,7 +169,10 @@ public class PinDetailActivity extends PEActivity<PinDetailPresenter> implements
         mTvUserName = ButterKnife.findById(headerView, R.id.tv_pin_detail_user_name);
         mTvCollectTime = ButterKnife.findById(headerView, R.id.tv_pin_detail_collect_time);
         mRlBoardBar = ButterKnife.findById(headerView, R.id.rl_pin_detail_board_bar);
-        mImgBoard = ButterKnife.findById(headerView, R.id.simple_drawee_view_pin_detail_board);
+        mImgBoardFirst = ButterKnife.findById(headerView, R.id.simple_drawee_view_pin_detail_board_pin_first);
+        mImgBoardSecond = ButterKnife.findById(headerView, R.id.simple_drawee_view_pin_detail_board_pin_second);
+        mImgBoardThird = ButterKnife.findById(headerView, R.id.simple_drawee_view_pin_detail_board_pin_third);
+        mImgBoardFourth = ButterKnife.findById(headerView, R.id.simple_drawee_view_pin_detail_board_pin_fourth);
         mTvBoardName = ButterKnife.findById(headerView, R.id.tv_pin_detail_board_name);
         mAdapter.addHeaderView(headerView);
     }
@@ -269,8 +275,23 @@ public class PinDetailActivity extends PEActivity<PinDetailPresenter> implements
     }
 
     @Override
-    public void showBoardImage(String imageurlKey) {
-        mPresenter.loadSmallImage(imageurlKey, mImgBoard);
+    public void showBoardImgFirst(String imageUrlKey) {
+        mPresenter.loadSmallRadiusImage(imageUrlKey, mImgBoardFirst, 4);
+    }
+
+    @Override
+    public void showBoardImgSecond(String imageUrlKey) {
+        mPresenter.loadSmallRadiusImage(imageUrlKey, mImgBoardSecond, 4);
+    }
+
+    @Override
+    public void showBoardImgThird(String imageUrlKey) {
+        mPresenter.loadSmallRadiusImage(imageUrlKey, mImgBoardThird, 4);
+    }
+
+    @Override
+    public void showBoardImgFourth(String imageUrlKey) {
+        mPresenter.loadSmallRadiusImage(imageUrlKey, mImgBoardFourth, 4);
     }
 
     @Override

@@ -41,7 +41,13 @@ public interface PinDetailContract {
 
         void showAvatarImage(String avatarKey);
 
-        void showBoardImage(String imageurlKey);
+        void showBoardImgFirst(String imageUrlKey);
+
+        void showBoardImgSecond(String imageUrlKey);
+
+        void showBoardImgThird(String imageUrlKey);
+
+        void showBoardImgFourth(String imageUrlKey);
 
         void showCollectSbtnChecked(boolean checked);
 
@@ -60,7 +66,6 @@ public interface PinDetailContract {
 
         Observable<List<PinBean>> getRecommendedPins(int page);
 
-        Observable<List<PinBean>> getMoreRecommendedPins(int page);
     }
 }
 

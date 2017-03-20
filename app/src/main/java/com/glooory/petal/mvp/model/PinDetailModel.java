@@ -33,7 +33,6 @@ public class PinDetailModel extends BasePEModel<ServiceManager, CacheManager>
         super(serviceManager, cacheManager);
     }
 
-
     @Override
     public Observable<PinDetailBean> getPinDetailInfo(int pinId) {
         mPinId = pinId;
@@ -66,10 +65,5 @@ public class PinDetailModel extends BasePEModel<ServiceManager, CacheManager>
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
-    }
-
-    @Override
-    public Observable<List<PinBean>> getMoreRecommendedPins(int page) {
-        return null;
     }
 }
