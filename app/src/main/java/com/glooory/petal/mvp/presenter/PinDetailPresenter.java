@@ -3,6 +3,7 @@ package com.glooory.petal.mvp.presenter;
 import android.app.Activity;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -338,7 +339,8 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
                     @Override
                     public void onNext(Void aVoid) {
                         mRootView.killMyself();
-                        SnackbarUtil.showShort(R.string.msg_delete_success);
+                        Toast.makeText(PEApplication.getContext(), R.string.msg_delete_success,
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -356,7 +358,6 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
     }
 
     private void actionlikeOrUnlikePin() {
-        Logger.d(mLikeCount);
         mModel.likePin(!mIsLiked)
                 .compose(RxUtils.<LikeResultBean>bindToLifecycle(mRootView))
                 .subscribe(new BaseSubscriber<LikeResultBean>() {
@@ -366,7 +367,6 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
                         mIsLiked = !mIsLiked;
                         mRootView.showLikeSbtnChecked(mIsLiked, true);
                         mRootView.showLikeCount(String.format(mLikeCountFormat, mLikeCount));
-                        Logger.d(mLikeCount);
                     }
                 });
     }
