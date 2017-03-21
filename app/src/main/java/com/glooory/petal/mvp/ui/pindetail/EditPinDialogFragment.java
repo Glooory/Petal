@@ -73,7 +73,6 @@ public class EditPinDialogFragment extends PEDialogFragment {
             mBoardId = getArguments().getString(Constants.EXTRA_BOARD_ID);
             mCollectDes = getArguments().getString(Constants.EXTRA_COLLECT_DES);
         }
-        requestBoardsInfo();
     }
 
     @Override
@@ -103,6 +102,8 @@ public class EditPinDialogFragment extends PEDialogFragment {
                         }
                     }
                 });
+
+        requestBoardsInfo();
         return builder.create();
     }
 

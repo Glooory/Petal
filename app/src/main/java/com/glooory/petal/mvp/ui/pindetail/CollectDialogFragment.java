@@ -77,7 +77,50 @@ public class CollectDialogFragment extends PEDialogFragment {
             mIsCollected = getArguments().getBoolean(Constants.EXTRA_IS_COLLECTED);
             mExistInBoardTitle = getArguments().getString(Constants.EXTRA_EXIST_IN);
         }
+    }
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
+        View content = layoutInflater.inflate(R.layout.dialog_collect_pin, null);
+        initContentView(content);
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext)
+                .setTitle(R.string.collection)
+                .setView(content)
+                .setNegativeButton(R.string.msg_cancel, null)
+                .setPositiveButton(R.string.collection, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (mCollectActionListener != null) {
+                            SPUtils.putByApply(Constants.PREF_LAST_SAVE_BOARD, mBoardTitles[mSelection]);
+                            mCollectActionListener.onCollectButtonClick(mEditTextDes.getText().toString(),
+                                    mBoardIds[mSelection]);
+                        }
+                    }
+                });
+
         requestBoardsInfo();
+        return builder.create();
+    }
+
+    private void initContentView(View contentView) {
+        mEditTextDes = ButterKnife.findById(contentView, R.id.edit_text_collect_dialog_des);
+        mSpinnerBoards = ButterKnife.findById(contentView, R.id.spinner_collect_dialog);
+        TextView tvWarning = ButterKnife.findById(contentView, R.id.text_view_collect_dialog_warning);
+
+        if (mIsCollected && !TextUtils.isEmpty(mExistInBoardTitle)) {
+            String warningInfo = String.format(
+                    getString(R.string.msg_collection_exist_format), mExistInBoardTitle);
+            tvWarning.setText(warningInfo);
+            tvWarning.setVisibility(View.VISIBLE);
+        }
+
+        if (TextUtils.isEmpty(mCollectDes)) {
+            mEditTextDes.setHint(R.string.msg_collect_des);
+        } else {
+            mEditTextDes.setText(mCollectDes);
+        }
     }
 
     /**
@@ -156,50 +199,6 @@ public class CollectDialogFragment extends PEDialogFragment {
 
             }
         });
-    }
-
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setTitle(R.string.collection);
-        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-        View content = layoutInflater.inflate(R.layout.dialog_collect_pin, null);
-        initContentView(content);
-        builder.setView(content);
-
-        builder.setNegativeButton(R.string.msg_cancel, null);
-        builder.setPositiveButton(R.string.collection, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (mCollectActionListener != null) {
-                    SPUtils.putByApply(Constants.PREF_LAST_SAVE_BOARD, mBoardTitles[mSelection]);
-                    mCollectActionListener.onCollectButtonClick(mEditTextDes.getText().toString(),
-                            mBoardIds[mSelection]);
-                }
-            }
-        });
-
-        return builder.create();
-    }
-
-    private void initContentView(View contentView) {
-        mEditTextDes = ButterKnife.findById(contentView, R.id.edit_text_collect_dialog_des);
-        mSpinnerBoards = ButterKnife.findById(contentView, R.id.spinner_collect_dialog);
-        TextView tvWarning = ButterKnife.findById(contentView, R.id.text_view_collect_dialog_warning);
-
-        if (mIsCollected && !TextUtils.isEmpty(mExistInBoardTitle)) {
-            String warningInfo = String.format(
-                    getString(R.string.msg_collection_exist_format), mExistInBoardTitle);
-            tvWarning.setText(warningInfo);
-            tvWarning.setVisibility(View.VISIBLE);
-        }
-
-        if (TextUtils.isEmpty(mCollectDes)) {
-            mEditTextDes.setHint(R.string.msg_collect_des);
-        } else {
-            mEditTextDes.setText(mCollectDes);
-        }
     }
 
     public void setCollectActionListener(OnCollectActionListener listener) {
