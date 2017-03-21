@@ -22,7 +22,7 @@ public interface HomeService {
             @Query(Constants.HTTP_QUERY_LIMIT) int limit);
 
     //获取最新的采集
-    //https://api.huaban.com/all?max={pinId}&limit=20
+    //https://api.huaban.com/all?max={pin_id}&limit=20
     @GET("all")
     Observable<PinListBean> getLatestAllPinsNext(
             @Query(Constants.HTTP_QUERY_MAX) int maxPinId,
@@ -35,7 +35,7 @@ public interface HomeService {
             @Query(Constants.HTTP_QUERY_LIMIT) int limit);
 
     //获取用户关注的用户和花瓣更新
-    //https:api.huaban.com/following?max={pinId}&limit=20
+    //https:api.huaban.com/following?max={pin_id}&limit=20
     @GET("following")
     Observable<PinListBean> getLatestFollowingPinsNext(
             @Query(Constants.HTTP_QUERY_MAX) int maxPinId,
@@ -48,7 +48,7 @@ public interface HomeService {
             @Query(Constants.HTTP_QUERY_LIMIT) int limit);
 
     //获取热门采集
-    //https://api.huaban.com/popular?max={pinId}&limit=20
+    //https://api.huaban.com/popular?max={pin_id}&limit=20
     @GET("popular")
     Observable<PinListBean> getLatestPopularPinsNext(
             @Query(Constants.HTTP_QUERY_MAX) int maxPinId,

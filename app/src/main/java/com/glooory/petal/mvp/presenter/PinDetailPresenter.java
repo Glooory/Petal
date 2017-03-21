@@ -17,8 +17,11 @@ import com.glooory.petal.app.widget.WindmillLoadMoreFooter;
 import com.glooory.petal.mvp.model.entity.PinBean;
 import com.glooory.petal.mvp.model.entity.collect.CollectResultBean;
 import com.glooory.petal.mvp.model.entity.pindetail.CollectionInfoBean;
+import com.glooory.petal.mvp.model.entity.pindetail.LikeResultBean;
 import com.glooory.petal.mvp.model.entity.pindetail.PinDetailBean;
 import com.glooory.petal.mvp.ui.home.HomePinsAdapter;
+import com.glooory.petal.mvp.ui.pindetail.CollectDialogFragment;
+import com.glooory.petal.mvp.ui.pindetail.EditPinDialogFragment;
 import com.glooory.petal.mvp.ui.pindetail.PinDetailActivity;
 import com.glooory.petal.mvp.ui.pindetail.PinDetailContract;
 import com.jess.arms.di.scope.ActivityScope;
@@ -40,6 +43,8 @@ import rx.Subscriber;
 public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinDetailContract.Model> {
 
     private HomePinsAdapter mAdapter;
+    private int mPinId;
+    private String mCollectDes;
     private boolean mIsMine;
     private String mCollectCountFormat;
     private String mLikeCountFormat;
@@ -50,6 +55,7 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
     private boolean mIsLiked;
     private String mCollectBelong;
     private int mPage = 1;
+    private String mBoardId;
 
     @Inject
     public PinDetailPresenter(PinDetailContract.View rootView, PinDetailContract.Model model,
@@ -74,7 +80,12 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
         });
     }
 
+    /**
+     * 获取采集的详细信息
+     * @param pinId
+     */
     public void getPinDetailInfo(int pinId) {
+        mPinId = pinId;
         mModel.getPinDetailInfo(pinId)
                 .compose(RxUtils.<PinDetailBean>bindToLifecycle(mRootView))
                 .subscribe(new BaseSubscriber<PinDetailBean>() {
@@ -85,9 +96,15 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
                 });
     }
 
+    /**
+     * 拿到采集的详细信息后更新 UI
+     * @param pinDetailBean
+     */
     private void setupPinDetailInfo(PinDetailBean pinDetailBean) {
         mCollectCount = pinDetailBean.getPin().getRepinCount();
         mLikeCount = pinDetailBean.getPin().getLikeCount();
+        mBoardId = String.valueOf(pinDetailBean.getPin().getBoardId());
+        mCollectDes = pinDetailBean.getPin().getRawText();
         mRootView.showCollectCount(
                 String.format(mCollectCountFormat, mCollectCount));
         mIsMine = pinDetailBean.getPin().getUser().getUsername()
@@ -97,7 +114,7 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
             mRootView.showLikeCount(mStrEdit);
         } else {
             mIsLiked = pinDetailBean.getPin().isLiked();
-            mRootView.showLikeSbtnChecked(mIsLiked);
+            mRootView.showLikeSbtnChecked(mIsLiked, false);
             mRootView.showLikeCount(
                     String.format(mLikeCountFormat, mLikeCount));
         }
@@ -129,9 +146,12 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
         }
     }
 
+    /**
+     * 联网判断是否已经采集过该图片
+     */
     public void requestForIsCollected() {
         if (!mModel.isLogin()) {
-            updateCollectSbtnStatus(false);
+            mRootView.showCollectSbtnChecked(false, false);
             return;
         }
         mModel.isCollected()
@@ -151,23 +171,16 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
                     public void onNext(CollectionInfoBean collectionInfoBean) {
                         if (collectionInfoBean.getExistPin() != null) {
                             mIsCollected = true;
-                            updateCollectSbtnStatus(mIsCollected);
+                            mRootView.showCollectSbtnChecked(mIsCollected, false);
                             mCollectBelong = collectionInfoBean.getExistPin().getBoard().getTitle();
                         }
                     }
                 });
     }
 
-    private void updateCollectSbtnStatus(boolean checked) {
-        mIsCollected = checked;
-        mRootView.showCollectSbtnChecked(mIsCollected);
-    }
-
-    private void updateLikeSbtnStatus(boolean liked) {
-        mIsLiked = liked;
-        mRootView.showLikeSbtnChecked(mIsLiked);
-    }
-
+    /**
+     * 请求相关推荐
+     */
     public void requestRecommendedPins() {
         mPage = 1;
         mModel.getRecommendedPins(mPage)
@@ -222,6 +235,9 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
                 DrawableUtils.getBasicColorStr(mAdapter.getItem(position)));
     }
 
+    /**
+     * 采集操作
+     */
     public void actionCollect() {
         if (!mModel.isLogin()) {
             showLoginHintMsg();
@@ -245,7 +261,53 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
     }
 
     private void showCollectDialog() {
-        mRootView.showCollectDialog();
+        CollectDialogFragment collectDialogFragment = CollectDialogFragment
+                .create(mPinId, mCollectDes, mIsCollected, mCollectBelong);
+        collectDialogFragment.setCollectActionListener(new CollectDialogFragment.OnCollectActionListener() {
+            @Override
+            public void onCollectButtonClick(String collectDes, String boardId) {
+                collectPin(boardId, collectDes);
+            }
+        });
+        mRootView.showCollectDialog(collectDialogFragment);
+    }
+
+    private void showEditDialog() {
+        EditPinDialogFragment editPinDialogFragment = EditPinDialogFragment
+                .create(String.valueOf(mPinId), mBoardId, mCollectDes);
+        editPinDialogFragment.setPinEditedListener(new EditPinDialogFragment.OnPinEditedListener() {
+            @Override
+            public void onDeleteButtonClicked() {
+                mRootView.showDeleteConfirmDialog();
+            }
+
+            @Override
+            public void onCommitButtonClicked(String boardId, String des) {
+                actionEditPin(boardId, des);
+            }
+        });
+        mRootView.showEditDialog(editPinDialogFragment);
+    }
+
+    /**
+     * 编辑完成后提交修改
+     * @param boardId
+     * @param des
+     */
+    private void actionEditPin(String boardId, String des) {
+        mModel.editPin(boardId, des)
+                .compose(RxUtils.<PinBean>bindToLifecycle(mRootView))
+                .subscribe(new BaseSubscriber<PinBean>() {
+                    @Override
+                    public void onNext(PinBean pinBean) {
+                        getPinDetailInfo(mPinId);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                    }
+                });
     }
 
     public void collectPin(String boardId, String des) {
@@ -255,11 +317,28 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
                     @Override
                     public void onNext(CollectResultBean collectResultBean) {
                         if (collectResultBean.getPin() != null) {
+                            mCollectBelong = collectResultBean.getPin().getBoard().getTitle();
                             mIsCollected = true;
                             mCollectCount++;
                             mRootView.showCollectCount(String.format(mCollectCountFormat, mCollectCount));
-                            mRootView.showCollectSbtnChecked(mIsCollected);
+                            mRootView.showCollectSbtnChecked(mIsCollected, true);
+                            SnackbarUtil.showLong(String.format(
+                                    PEApplication.getContext().getString(R.string.msg_collect_success_format),
+                                    collectResultBean.getPin().getBoard().getTitle()
+                            ));
                         }
+                    }
+                });
+    }
+
+    public void deletePin() {
+        mModel.deletePin()
+                .compose(RxUtils.<Void>bindToLifecycle(mRootView))
+                .subscribe(new BaseSubscriber<Void>() {
+                    @Override
+                    public void onNext(Void aVoid) {
+                        mRootView.killMyself();
+                        SnackbarUtil.showShort(R.string.msg_delete_success);
                     }
                 });
     }
@@ -269,21 +348,26 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
             showLoginHintMsg();
             return;
         }
+        if (mIsMine) {
+            showEditDialog();
+        } else {
+            actionlikeOrUnlikePin();
+        }
     }
 
-    public String getCollectBelong() {
-        return mCollectBelong;
-    }
-
-    public boolean isMine() {
-        return mIsMine;
-    }
-
-    public boolean isLiked() {
-        return mIsLiked;
-    }
-
-    public boolean isCollected() {
-        return mIsCollected;
+    private void actionlikeOrUnlikePin() {
+        Logger.d(mLikeCount);
+        mModel.likePin(!mIsLiked)
+                .compose(RxUtils.<LikeResultBean>bindToLifecycle(mRootView))
+                .subscribe(new BaseSubscriber<LikeResultBean>() {
+                    @Override
+                    public void onNext(LikeResultBean likeResultBean) {
+                        mLikeCount = mIsLiked ? --mLikeCount : ++mLikeCount;
+                        mIsLiked = !mIsLiked;
+                        mRootView.showLikeSbtnChecked(mIsLiked, true);
+                        mRootView.showLikeCount(String.format(mLikeCountFormat, mLikeCount));
+                        Logger.d(mLikeCount);
+                    }
+                });
     }
 }

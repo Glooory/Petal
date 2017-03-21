@@ -1,6 +1,7 @@
 package com.glooory.petal.mvp.ui.pindetail;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.support.design.widget.AppBarLayout;
@@ -21,17 +22,22 @@ import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
+import com.glooory.petal.app.util.DialogUtils;
 import com.glooory.petal.app.util.DrawableUtils;
 import com.glooory.petal.di.component.DaggerPinDetailComponent;
 import com.glooory.petal.di.module.PinDetailModule;
 import com.glooory.petal.mvp.presenter.PinDetailPresenter;
 import com.glooory.petal.mvp.ui.home.HomePinsAdapter;
+import com.jakewharton.rxbinding.view.RxView;
 import com.sackcentury.shinebuttonlib.ShineButton;
+
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import common.AppComponent;
 import common.PEActivity;
+import rx.functions.Action1;
 
 import static com.glooory.petal.app.Constants.EXTRA_ASPECT_RATIO;
 import static com.glooory.petal.app.Constants.EXTRA_BASIC_COLOR;
@@ -41,8 +47,7 @@ import static com.glooory.petal.app.Constants.EXTRA_PIN_ID;
  * Created by Glooory on 17/3/17.
  */
 
-public class PinDetailActivity extends PEActivity<PinDetailPresenter> implements
-        PinDetailContract.View, View.OnClickListener {
+public class PinDetailActivity extends PEActivity<PinDetailPresenter> implements PinDetailContract.View {
 
     @BindView(R.id.simple_drawee_view_pin)
     SimpleDraweeView mImagePin;
@@ -174,10 +179,39 @@ public class PinDetailActivity extends PEActivity<PinDetailPresenter> implements
         mTvBoardName = ButterKnife.findById(headerView, R.id.tv_pin_detail_board_name);
         mAdapter.addHeaderView(headerView);
 
-        mLlCollect.setOnClickListener(this);
-        mLlLike.setOnClickListener(this);
-        mRlUserBar.setOnClickListener(this);
-        mRlBoardBar.setOnClickListener(this);
+        RxView.clicks(mLlCollect)
+                .throttleFirst(Constants.THROTTLE_DURATION, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        mPresenter.actionCollect();
+                    }
+                });
+
+        RxView.clicks(mLlLike)
+                .throttleFirst(Constants.THROTTLE_DURATION, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        mPresenter.actionLike();
+                    }
+                });
+        RxView.clicks(mRlUserBar)
+                .throttleFirst(Constants.THROTTLE_DURATION, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        // TODO: 17/3/21 Launch UserActivity
+                    }
+                });
+        RxView.clicks(mRlBoardBar)
+                .throttleFirst(Constants.THROTTLE_DURATION, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        // TODO: 17/3/21 Launch BoardActivity
+                    }
+                });
     }
 
     @Override
@@ -213,7 +247,7 @@ public class PinDetailActivity extends PEActivity<PinDetailPresenter> implements
 
     @Override
     public void killMyself() {
-
+        finishSelf();
     }
 
     @Override
@@ -298,12 +332,18 @@ public class PinDetailActivity extends PEActivity<PinDetailPresenter> implements
     }
 
     @Override
-    public void showCollectSbtnChecked(boolean checked) {
+    public void showCollectSbtnChecked(boolean checked, boolean isPerformClick) {
+        if (isPerformClick) {
+            mSbtnCollect.performClick();
+        }
         mSbtnCollect.setChecked(checked);
     }
 
     @Override
-    public void showLikeSbtnChecked(boolean checked) {
+    public void showLikeSbtnChecked(boolean checked, boolean isPerformClick) {
+        if (isPerformClick) {
+            mSbtnLike.performClick();
+        }
         mSbtnLike.setChecked(checked);
     }
 
@@ -329,39 +369,23 @@ public class PinDetailActivity extends PEActivity<PinDetailPresenter> implements
     }
 
     @Override
-    public void showCollectDialog() {
-        CollectDialogFragment collectDialogFragment = CollectDialogFragment
-                .create(mPinId, mTvCollectDes.getText().toString(),
-                        mPresenter.isCollected(), mPresenter.getCollectBelong());
-        collectDialogFragment.setCollectActionListener(new CollectDialogFragment.OnCollectActionListener() {
-            @Override
-            public void onCollectButtonClick(String collectDes, String boardId) {
-                mPresenter.collectPin(boardId, collectDes);
-            }
-        });
+    public void showCollectDialog(CollectDialogFragment collectDialogFragment) {
         collectDialogFragment.show(getSupportFragmentManager(), null);
     }
 
     @Override
-    public void showEditDialog() {
-
+    public void showEditDialog(EditPinDialogFragment editPinDialogFragment) {
+        editPinDialogFragment.show(getSupportFragmentManager(), null);
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.ll_pin_detail_collect:
-                mPresenter.actionCollect();
-                break;
-            case R.id.ll_pin_detail_like:
-                mPresenter.actionLike();
-                break;
-            case R.id.rl_pin_detail_user_bar:
-                // TODO: 17/3/20 Launch UserActivity
-                break;
-            case R.id.rl_pin_detail_board_bar:
-                // TODO: 17/3/20 Launch BoardActivity
-                break;
-        }
+    public void showDeleteConfirmDialog() {
+        DialogUtils.show(PinDetailActivity.this, R.string.msg_delete_waring, R.string.msg_cancel,
+                R.string.delete, null, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mPresenter.deletePin();
+                    }
+                });
     }
 }

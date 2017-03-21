@@ -1,9 +1,11 @@
 package com.glooory.petal.mvp.model.api.service;
 
+import com.glooory.petal.mvp.model.entity.PinBean;
 import com.glooory.petal.mvp.model.entity.collect.CollectResultBean;
 import com.glooory.petal.mvp.model.entity.pindetail.CollectionInfoBean;
 import com.glooory.petal.mvp.model.entity.pindetail.LikeResultBean;
 
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -21,17 +23,17 @@ public interface OperateService {
     // 对某个采集的喜欢或者取消喜欢的操作
     //https:api.huaban.com/pins/12345664/like
     //https:api.huaban.com/pins/12345664/unlike
-    @POST("pins/{pinId}/{operate}")
+    @POST("pins/{pin_id}/{operate}")
     Observable<LikeResultBean> likePin(
-            @Path("pinId") int pinId,
+            @Path("pin_id") int pinId,
             @Path("operate") String operate
             );
 
     //采集图片前判断是否已经在自己的采集中
     //https:api.huaban.com/pins/134541447/repin?check=true
-    @GET("pins/{viaId}/repin/")
+    @GET("pins/{via_id}/repin/")
     Observable<CollectionInfoBean> isCollected(
-            @Path("viaId") int viaId,
+            @Path("via_id") int pinId,
             @Query("check") boolean check
     );
 
@@ -44,5 +46,20 @@ public interface OperateService {
             @Field("text") String des,
             @Field("via") String pinsId
     );
+
+    // 编辑修改某个采集的信息
+    // https://api.huaban.com/pins/865002387?board_id=32026507&text=%E6%9D%A5%E8%87%AA%E7%9B%B8%E5%86%8C
+    @FormUrlEncoded
+    @POST("pins/{pin_id}")
+    Observable<PinBean> editPin(@Path("pin_id") int pinId,
+            @Field("board_id") String boardId,
+            @Field("text") String des);
+
+    // 删除某个采集
+    // https://api.huaban.com/pins/864657103
+    @DELETE("pins/{pin_id}")
+    Observable<Void> deletePin(@Path("pin_id") int pinId);
+
+
 
 }

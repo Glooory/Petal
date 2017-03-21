@@ -47,6 +47,7 @@
     <string name="collection_count_format">%d 采集</string>
     <string name="like_count_format">%d 喜欢</string>
     <string name="edit">编辑</string>
+    <string name="delete">删除</string>
     <string name="msg_collect_to">采集到</string>
     <string name="msg_related_recommend">相关推荐</string>
     <string name="no_more_data">沒有更多了</string>
@@ -54,7 +55,13 @@
     <string name="msg_collect_still">仍要采集</string>
     <string name="msg_collect_des_hint">文字描述：</string>
     <string name="msg_collect_des">采集描述</string>
+    <string name="msg_collect_des_with_colon">采集描述：</string>
     <string name="msg_collect_to_with_colon">采集到：</string>
     <string name="msg_cancel">取消</string>
+    <string name="msg_confirm">确定</string>
+    <string name="msg_collect_success_format">成功采集到 %s 画板中</string>
+    <string name="msg_delete_waring">确定删除？</string>
+    <string name="msg_delete_success">已删除该采集</string>
+    <string name="board_with_colon">画板：</string>
 
 </resources>

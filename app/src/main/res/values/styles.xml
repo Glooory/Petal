@@ -117,6 +117,8 @@
         <item name="android:textSize">@dimen/text_size_18sp</item>
     </style>
 
+    <style name="SpinderUnderLined" parent="@style/Widget.AppCompat.Spinner.Underlined"/>
+
     <!--********************************************-->
 
     <!--<style name="Theme.Photos.Base" parent="@style/Theme.AppCompat.Light">-->

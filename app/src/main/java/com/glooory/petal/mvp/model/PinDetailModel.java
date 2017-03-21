@@ -5,6 +5,7 @@ import com.glooory.petal.mvp.model.api.service.ServiceManager;
 import com.glooory.petal.mvp.model.entity.PinBean;
 import com.glooory.petal.mvp.model.entity.collect.CollectResultBean;
 import com.glooory.petal.mvp.model.entity.pindetail.CollectionInfoBean;
+import com.glooory.petal.mvp.model.entity.pindetail.LikeResultBean;
 import com.glooory.petal.mvp.model.entity.pindetail.PinDetailBean;
 import com.glooory.petal.mvp.ui.pindetail.PinDetailContract;
 import com.jess.arms.di.scope.ActivityScope;
@@ -72,6 +73,33 @@ public class PinDetailModel extends BasePEModel<ServiceManager, CacheManager>
     public Observable<CollectResultBean> collectPin(String boardId, String des) {
         return mServiceManager.getOperateService()
                 .collectPin(boardId, des, String.valueOf(mPinId))
+                .retryWhen(new RetryWithDelay(1, 1))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<PinBean> editPin(String boardId, String des) {
+        return mServiceManager.getOperateService()
+                .editPin(mPinId, boardId, des)
+                .retryWhen(new RetryWithDelay(1, 1))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<Void> deletePin() {
+        return mServiceManager.getOperateService()
+                .deletePin(mPinId)
+                .retryWhen(new RetryWithDelay(1, 1))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<LikeResultBean> likePin(boolean isLiked) {
+        return mServiceManager.getOperateService()
+                .likePin(mPinId, isLiked ? "like" : "unlike")
                 .retryWhen(new RetryWithDelay(1, 1))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

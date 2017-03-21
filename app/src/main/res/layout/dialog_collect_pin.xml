@@ -29,7 +29,8 @@
     <Spinner
         android:id="@+id/spinner_collect_dialog"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/triple_activity_default_margin"/>
+        android:layout_height="@dimen/triple_activity_default_margin"
+        style="@style/SpinderUnderLined"/>
 
     <TextView
         android:id="@+id/text_view_collect_dialog_warning"

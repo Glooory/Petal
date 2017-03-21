@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/dialog_margin_default"
+    android:paddingEnd="@dimen/dialog_margin_default">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/msg_collect_des_with_colon"/>
+
+    <EditText
+        android:id="@+id/edit_text_eidt_pin_dialog_des"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:maxLines="4"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/half_activity_default_margin"
+        android:text="@string/board_with_colon"/>
+
+    <Spinner
+        android:id="@+id/spinner_edit_pin_dialog_boards"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/triple_activity_default_margin"
+        style="@style/SpinderUnderLined"/>
+
+</LinearLayout>

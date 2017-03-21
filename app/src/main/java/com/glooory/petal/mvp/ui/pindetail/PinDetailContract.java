@@ -3,6 +3,7 @@ package com.glooory.petal.mvp.ui.pindetail;
 import com.glooory.petal.mvp.model.entity.PinBean;
 import com.glooory.petal.mvp.model.entity.collect.CollectResultBean;
 import com.glooory.petal.mvp.model.entity.pindetail.CollectionInfoBean;
+import com.glooory.petal.mvp.model.entity.pindetail.LikeResultBean;
 import com.glooory.petal.mvp.model.entity.pindetail.PinDetailBean;
 import com.glooory.petal.mvp.ui.home.HomePinsAdapter;
 import com.jess.arms.mvp.BaseView;
@@ -50,17 +51,19 @@ public interface PinDetailContract {
 
         void showBoardImgFourth(String imageUrlKey);
 
-        void showCollectSbtnChecked(boolean checked);
+        void showCollectSbtnChecked(boolean checked, boolean isPerformClick);
 
-        void showLikeSbtnChecked(boolean checked);
+        void showLikeSbtnChecked(boolean checked, boolean isPerformClick);
 
         void hideLikeSbtn();
 
         void showNoMoreDataFooter(boolean show);
 
-        void showCollectDialog();
+        void showCollectDialog(CollectDialogFragment collectDialogFragment);
 
-        void showEditDialog();
+        void showEditDialog(EditPinDialogFragment editPinDialogFragment);
+
+        void showDeleteConfirmDialog();
     }
 
     interface Model extends IModel {
@@ -73,6 +76,11 @@ public interface PinDetailContract {
 
         Observable<CollectResultBean> collectPin(String boardId, String des);
 
+        Observable<PinBean> editPin(String boardId, String des);
+
+        Observable<Void> deletePin();
+
+        Observable<LikeResultBean> likePin(boolean isLiked);
     }
 }
 

@@ -36,8 +36,8 @@ public interface UserService {
 
     // https://api.huaban.com/users/15246080
     // 获取用户的个人信息
-    @GET("users/{userId}")
-    Observable<UserBean> getUser(@Path("userId") String userId);
+    @GET("users/{user_id}")
+    Observable<UserBean> getUser(@Path("user_id") String userId);
 
     // 获取我的画板集合信息
     // https://api.huaban.com/last_board/?extra=recommend_tags

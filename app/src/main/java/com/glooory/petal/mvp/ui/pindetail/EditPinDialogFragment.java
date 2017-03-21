@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
@@ -32,34 +31,32 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by Gloooory on 17/3/20.
+ * Created by Glooory on 17/3/21.
  */
 
-public class CollectDialogFragment extends PEDialogFragment {
+public class EditPinDialogFragment extends PEDialogFragment {
 
-    private EditText mEditTextDes;
-    private Spinner mSpinnerBoards;
+    private EditText mEditTextCollectDes;
+    private Spinner mSpinnerBoardTitles;
 
     private Context mContext;
-    private int mPinId;
+    private String mPinId;
+    private String mBoardId;
     private String mCollectDes;
-    private boolean mIsCollected = false;
-    private String mExistInBoardTitle;
     private String[] mBoardTitles;
     private String[] mBoardIds;
     private int mSelection = 0;
-    private OnCollectActionListener mCollectActionListener;
     private HighLightArrayAdapter mSpinnerAdapter;
+    private OnPinEditedListener mPinEditedListener;
 
-    public static CollectDialogFragment create(int pinId, String des, boolean isCollected, String existIn) {
+    public static EditPinDialogFragment create(String pinId, String boardId, String des) {
         Bundle args = new Bundle();
-        args.putInt(Constants.EXTRA_PIN_ID, pinId);
+        args.putString(Constants.EXTRA_PIN_ID, pinId);
+        args.putString(Constants.EXTRA_BOARD_ID, boardId);
         args.putString(Constants.EXTRA_COLLECT_DES, des);
-        args.putBoolean(Constants.EXTRA_IS_COLLECTED, isCollected);
-        args.putString(Constants.EXTRA_EXIST_IN, existIn);
-        CollectDialogFragment collectDialogFragment = new CollectDialogFragment();
-        collectDialogFragment.setArguments(args);
-        return collectDialogFragment;
+        EditPinDialogFragment dialogFragment = new EditPinDialogFragment();
+        dialogFragment.setArguments(args);
+        return dialogFragment;
     }
 
     @Override
@@ -72,12 +69,47 @@ public class CollectDialogFragment extends PEDialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mPinId = getArguments().getInt(Constants.EXTRA_PIN_ID);
+            mPinId = getArguments().getString(Constants.EXTRA_PIN_ID);
+            mBoardId = getArguments().getString(Constants.EXTRA_BOARD_ID);
             mCollectDes = getArguments().getString(Constants.EXTRA_COLLECT_DES);
-            mIsCollected = getArguments().getBoolean(Constants.EXTRA_IS_COLLECTED);
-            mExistInBoardTitle = getArguments().getString(Constants.EXTRA_EXIST_IN);
         }
         requestBoardsInfo();
+    }
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        View contentView = LayoutInflater.from(mContext)
+                .inflate(R.layout.dialog_edit_pin, null);
+        initView(contentView);
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext)
+                .setTitle(R.string.edit)
+                .setView(contentView)
+                .setNeutralButton(R.string.delete, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (mPinEditedListener != null) {
+                            mPinEditedListener.onDeleteButtonClicked();
+                        }
+                    }
+                })
+                .setNegativeButton(R.string.msg_cancel, null)
+                .setPositiveButton(R.string.msg_confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (mPinEditedListener != null) {
+                            SPUtils.putByApply(Constants.PREF_LAST_SAVE_BOARD, mBoardTitles[mSelection]);
+                            mPinEditedListener.onCommitButtonClicked(mBoardIds[mSelection],
+                                    mEditTextCollectDes.getText().toString());
+                        }
+                    }
+                });
+        return builder.create();
+    }
+
+    private void initView(View contentView) {
+        mEditTextCollectDes = ButterKnife.findById(contentView, R.id.edit_text_eidt_pin_dialog_des);
+        mEditTextCollectDes.setText(mCollectDes);
+        mSpinnerBoardTitles = ButterKnife.findById(contentView, R.id.spinner_edit_pin_dialog_boards);
     }
 
     /**
@@ -132,19 +164,16 @@ public class CollectDialogFragment extends PEDialogFragment {
     }
 
     private void initSpinnerAdapter() {
-        if (!TextUtils.isEmpty(mExistInBoardTitle)) {
-            for (int i = 0; i < mBoardIds.length; i++) {
-                if (mExistInBoardTitle.equals(mBoardIds[i])) {
-                    mSelection = i;
-                }
+        for (int i = 0; i < mBoardIds.length; i++) {
+            if (mBoardId.equals(mBoardIds[i])) {
+                mSelection = i;
             }
         }
-
         mSpinnerAdapter = new HighLightArrayAdapter(mContext,
                 R.layout.support_simple_spinner_dropdown_item, mBoardTitles);
-        mSpinnerBoards.setAdapter(mSpinnerAdapter);
-        mSpinnerBoards.setSelection(mSelection);
-        mSpinnerBoards.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mSpinnerBoardTitles.setAdapter(mSpinnerAdapter);
+        mSpinnerBoardTitles.setSelection(mSelection);
+        mSpinnerBoardTitles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mSpinnerAdapter.setSelection(position);
@@ -158,56 +187,14 @@ public class CollectDialogFragment extends PEDialogFragment {
         });
     }
 
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setTitle(R.string.collection);
-        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-        View content = layoutInflater.inflate(R.layout.dialog_collect_pin, null);
-        initContentView(content);
-        builder.setView(content);
-
-        builder.setNegativeButton(R.string.msg_cancel, null);
-        builder.setPositiveButton(R.string.collection, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (mCollectActionListener != null) {
-                    SPUtils.putByApply(Constants.PREF_LAST_SAVE_BOARD, mBoardTitles[mSelection]);
-                    mCollectActionListener.onCollectButtonClick(mEditTextDes.getText().toString(),
-                            mBoardIds[mSelection]);
-                }
-            }
-        });
-
-        return builder.create();
+    public void setPinEditedListener(OnPinEditedListener pinEditedListener) {
+        mPinEditedListener = pinEditedListener;
     }
 
-    private void initContentView(View contentView) {
-        mEditTextDes = ButterKnife.findById(contentView, R.id.edit_text_collect_dialog_des);
-        mSpinnerBoards = ButterKnife.findById(contentView, R.id.spinner_collect_dialog);
-        TextView tvWarning = ButterKnife.findById(contentView, R.id.text_view_collect_dialog_warning);
+    public interface OnPinEditedListener {
 
-        if (mIsCollected && !TextUtils.isEmpty(mExistInBoardTitle)) {
-            String warningInfo = String.format(
-                    getString(R.string.msg_collection_exist_format), mExistInBoardTitle);
-            tvWarning.setText(warningInfo);
-            tvWarning.setVisibility(View.VISIBLE);
-        }
+        void onDeleteButtonClicked();
 
-        if (TextUtils.isEmpty(mCollectDes)) {
-            mEditTextDes.setHint(R.string.msg_collect_des);
-        } else {
-            mEditTextDes.setText(mCollectDes);
-        }
-    }
-
-    public void setCollectActionListener(OnCollectActionListener listener) {
-        mCollectActionListener = listener;
-    }
-
-    public interface OnCollectActionListener {
-
-        void onCollectButtonClick(String collectDes, String boardId);
+        void onCommitButtonClicked(String boardId, String des);
     }
 }

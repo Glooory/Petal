@@ -17,14 +17,14 @@ import rx.Observable;
 public interface PinBoardService {
 
     // 获取某个采集的详细信息
-    // https://api.huaban.com/pins/pinId
-    @GET("pins/{pinId}")
-    Observable<PinDetailBean> getPinDetailInfo(@Path("pinId") int pinId);
+    // https://api.huaban.com/pins/pin_id
+    @GET("pins/{pin_id}")
+    Observable<PinDetailBean> getPinDetailInfo(@Path("pin_id") int pinId);
 
     //根据pinId推荐相似的pin
-    //https:api.huaban.com/pins/{pinId}/recommend/
-    @GET("pins/{pinId}/recommend/")
-    Observable<List<PinBean>> getRecommendedPins(@Path("pinId") int pinId,
+    //https:api.huaban.com/pins/{pin_id}/recommend/
+    @GET("pins/{pin_id}/recommend/")
+    Observable<List<PinBean>> getRecommendedPins(@Path("pin_id") int pinId,
             @Query("page") int page, @Query("per_page") int perPage);
 
 }
