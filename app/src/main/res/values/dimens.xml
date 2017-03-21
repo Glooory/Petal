@@ -27,4 +27,6 @@
     <dimen name="pin_detail_divider_height">1dp</dimen>
     <dimen name="pin_detail_avatar_size">60dp</dimen>
     <dimen name="dialog_margin_default">24dp</dimen>
+
+    <dimen name="appbar_image_backgroud_height">292dp</dimen>
 </resources>
