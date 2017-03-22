@@ -1,6 +1,5 @@
 package com.glooory.petal.mvp.ui.home;
 
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
@@ -9,7 +8,6 @@ import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.glooory.petal.R;
@@ -17,33 +15,22 @@ import com.glooory.petal.app.util.DrawableUtils;
 import com.glooory.petal.app.util.ImageUtils;
 import com.glooory.petal.app.util.StringUtils;
 import com.glooory.petal.mvp.model.entity.PinBean;
-import com.jess.arms.widget.imageloader.ImageLoader;
 import com.jess.arms.widget.imageloader.fresco.FrescoImageConfig;
 
 import javax.inject.Inject;
 
+import common.PEAdapter;
 import common.PEApplication;
 
 /**
  * Created by Glooory on 17/2/22.
  */
 
-public class HomePinsAdapter extends BaseQuickAdapter<PinBean, BaseViewHolder> {
-
-    private final String mGeneralImageUrlFormat;
-    private final String mSmallImageUrlFormat;
-    private ImageLoader mImageLoader;
-    private Drawable mFailureDrawable;
+public class HomePinsAdapter extends PEAdapter<PinBean, BaseViewHolder> {
 
     @Inject
     public HomePinsAdapter() {
         super(R.layout.item_cardview_pin_home, null);
-        Resources resources = PEApplication.getContext().getResources();
-        mGeneralImageUrlFormat = resources.getString(R.string.url_image_general_format);
-        mSmallImageUrlFormat = resources.getString(R.string.url_image_small_format);
-        mImageLoader = ((PEApplication) PEApplication.getContext()).getAppComponent().imageLoader();
-        mFailureDrawable = DrawableUtils.getTintDrawable(PEApplication.getContext(),
-                R.drawable.ic_broken_image_grey_500_36dp, R.color.tint_list_grey);
     }
 
     @Override
@@ -93,7 +80,6 @@ public class HomePinsAdapter extends BaseQuickAdapter<PinBean, BaseViewHolder> {
                                 (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_pin))
                         .setUrl(pinUrl)
                         .setPlaceHolder(placeHolder)
-                        .setErrorImage(mFailureDrawable)
                         .build());
         holder.getView(R.id.simple_drawee_view_pin).setVisibility(View.VISIBLE);
 
@@ -104,7 +90,6 @@ public class HomePinsAdapter extends BaseQuickAdapter<PinBean, BaseViewHolder> {
                         )
                         .setUrl(avatarUrl)
                         .isRadius(true, 10)
-                        .setErrorImage(mFailureDrawable)
                         .build());
     }
 

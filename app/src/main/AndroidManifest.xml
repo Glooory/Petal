@@ -45,6 +45,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Petal.PinDetail"/>
 
+        <activity
+            android:name=".mvp.ui.user.UserActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Petal.Light"/>
+
     </application>
 
 </manifest>

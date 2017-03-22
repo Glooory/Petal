@@ -25,6 +25,7 @@ import com.glooory.petal.mvp.ui.pindetail.CollectDialogFragment;
 import com.glooory.petal.mvp.ui.pindetail.EditPinDialogFragment;
 import com.glooory.petal.mvp.ui.pindetail.PinDetailActivity;
 import com.glooory.petal.mvp.ui.pindetail.PinDetailContract;
+import com.glooory.petal.mvp.ui.user.UserActivity;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.utils.RxUtils;
 import com.orhanobut.logger.Logger;
@@ -57,6 +58,8 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
     private String mCollectBelong;
     private int mPage = 1;
     private String mBoardId;
+    private String mUserId;
+    private String mUserName;
 
     @Inject
     public PinDetailPresenter(PinDetailContract.View rootView, PinDetailContract.Model model,
@@ -65,8 +68,8 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
         mAdapter = adapter;
         initAdaper();
         mRootView.setAdapter(mAdapter);
-        mCollectCountFormat = PEApplication.getContext().getString(R.string.collection_count_format);
-        mLikeCountFormat = PEApplication.getContext().getString(R.string.like_count_format);
+        mCollectCountFormat = PEApplication.getContext().getString(R.string.format_collection_count);
+        mLikeCountFormat = PEApplication.getContext().getString(R.string.format_like_count);
         mStrEdit = PEApplication.getContext().getString(R.string.edit);
     }
 
@@ -105,6 +108,8 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
         mCollectCount = pinDetailBean.getPin().getRepinCount();
         mLikeCount = pinDetailBean.getPin().getLikeCount();
         mBoardId = String.valueOf(pinDetailBean.getPin().getBoardId());
+        mUserId = String.valueOf(pinDetailBean.getPin().getUserId());
+        mUserName = pinDetailBean.getPin().getUser().getUsername();
         mCollectDes = pinDetailBean.getPin().getRawText();
         mRootView.showCollectCount(
                 String.format(mCollectCountFormat, mCollectCount));
@@ -236,6 +241,14 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
                 DrawableUtils.getBasicColorStr(mAdapter.getItem(position)));
     }
 
+    public void launchUserActivity(Activity activity, View view, int position) {
+        PinBean pinBean = mAdapter.getItem(position);
+        String userId = String.valueOf(pinBean.getUser().getUserId());
+        String userName = pinBean.getUser().getUsername();
+        UserActivity.launch(activity, userId, userName,
+                (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_pin_avatar));
+    }
+
     /**
      * 采集操作
      */
@@ -246,7 +259,7 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
         }
         if (mIsCollected) {
             String pinExistMsg = String.format(
-                    PEApplication.getContext().getString(R.string.msg_collection_exist_format),
+                    PEApplication.getContext().getString(R.string.format_collection_exist),
                     mCollectBelong);
             SnackbarUtil.showLong(pinExistMsg,
                     PEApplication.getContext().getString(R.string.msg_collect_still),
@@ -324,7 +337,7 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
                             mRootView.showCollectCount(String.format(mCollectCountFormat, mCollectCount));
                             mRootView.showCollectSbtnChecked(mIsCollected, true);
                             SnackbarUtil.showLong(String.format(
-                                    PEApplication.getContext().getString(R.string.msg_collect_success_format),
+                                    PEApplication.getContext().getString(R.string.format_collect_success),
                                     collectResultBean.getPin().getBoard().getTitle()
                             ));
                         }
@@ -369,5 +382,9 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
                         mRootView.showLikeCount(String.format(mLikeCountFormat, mLikeCount));
                     }
                 });
+    }
+
+    public void launchUserActivity(Activity activity, SimpleDraweeView avatar) {
+        UserActivity.launch(activity, mUserId, mUserName, avatar);
     }
 }

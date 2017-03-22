@@ -186,6 +186,12 @@ public class SPUtils {
     public static String getAuthorization() {
         boolean isLogin = (boolean) get(Constants.PREF_IS_LOGIN, false);
         if (isLogin) {
+            int tokenExpires = (int) SPUtils.get(Constants.PREF_TOKEN_EXPIRES_IN, 0);
+            long lastLoginTime = (long) SPUtils.get(Constants.PREF_LOGIN_TIME, 0L);
+            long loginTimeDiff = (System.currentTimeMillis() - lastLoginTime) / 1000;
+            if (loginTimeDiff > tokenExpires) {
+                return BaseClientInfo.CLIENT_INFO_DEFAULT;
+            }
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(get(Constants.PREF_TOKEN_TYPE, " "))
                     .append(" ")

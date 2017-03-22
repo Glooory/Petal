@@ -111,7 +111,7 @@ public class CollectDialogFragment extends PEDialogFragment {
 
         if (mIsCollected && !TextUtils.isEmpty(mExistInBoardTitle)) {
             String warningInfo = String.format(
-                    getString(R.string.msg_collection_exist_format), mExistInBoardTitle);
+                    getString(R.string.format_collection_exist), mExistInBoardTitle);
             tvWarning.setText(warningInfo);
             tvWarning.setVisibility(View.VISIBLE);
         }

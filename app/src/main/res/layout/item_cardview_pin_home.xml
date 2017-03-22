@@ -28,7 +28,9 @@
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/simple_drawee_view_pin"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    fresco:failureImage="@drawable/ic_broken_image_grey_700_48dp"
+                    fresco:failureImageScaleType="centerInside"/>
 
                 <ImageButton
                     android:id="@+id/imgbtn_gif"
@@ -89,7 +91,9 @@
                 android:id="@+id/simple_drawee_view_pin_avatar"
                 android:layout_width="@dimen/pin_user_avatar_size"
                 android:layout_height="@dimen/pin_user_avatar_size"
-                fresco:actualImageScaleType="centerCrop"/>
+                fresco:actualImageScaleType="centerCrop"
+                fresco:failureImage="@drawable/ic_broken_image_grey_700_48dp"
+                fresco:failureImageScaleType="centerInside"/>
 
             <TextView
                 android:id="@+id/textview_pin_collection_via"

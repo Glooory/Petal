@@ -16,6 +16,7 @@ import com.glooory.petal.mvp.ui.home.HomeContract;
 import com.glooory.petal.mvp.ui.home.HomeFragment;
 import com.glooory.petal.mvp.ui.home.HomePinsAdapter;
 import com.glooory.petal.mvp.ui.pindetail.PinDetailActivity;
+import com.glooory.petal.mvp.ui.user.UserActivity;
 import com.jess.arms.di.scope.FragmentScope;
 import com.jess.arms.utils.RxUtils;
 import com.orhanobut.logger.Logger;
@@ -177,5 +178,13 @@ public class HomePresenter extends PEPresenter<HomeContract.View, HomeContract.M
                 aspectRatio,
                 (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_pin),
                 DrawableUtils.getBasicColorStr(mAdapter.getItem(position)));
+    }
+
+    public void launchUserActivity(Activity activity, View view, int position) {
+        PinBean pinBean = mAdapter.getItem(position);
+        String userId = String.valueOf(pinBean.getUserId());
+        String userName = pinBean.getUser().getUsername();
+        UserActivity.launch(activity, userId, userName,
+                (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_pin_avatar));
     }
 }

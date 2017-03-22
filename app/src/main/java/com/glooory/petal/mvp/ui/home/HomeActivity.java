@@ -23,9 +23,11 @@ import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.rx.BaseSubscriber;
 import com.glooory.petal.app.rx.RxBus;
+import com.glooory.petal.app.util.SPUtils;
 import com.glooory.petal.app.util.SnackbarUtil;
 import com.glooory.petal.mvp.model.entity.BasicUserInfoBean;
 import com.glooory.petal.mvp.ui.login.LoginActivity;
+import com.glooory.petal.mvp.ui.user.UserActivity;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jess.arms.widget.imageloader.fresco.FrescoImageConfig;
 
@@ -253,7 +255,10 @@ public class HomeActivity extends PEActivity
             case R.id.ll_drawer_avatar:
                 closeDrawer();
                 if (isLogin()) {
-                    // TODO: 17/3/15 Launch UserActivity
+                    // TODO: 17/3/15 Launch UserActivit
+                    String userId = String.valueOf(SPUtils.get(Constants.PREF_USER_ID, 0));
+                    String userName = (String) SPUtils.get(Constants.PREF_USER_NAME, "");
+                    UserActivity.launch(HomeActivity.this, userId, userName, mAvatarImg);
                 } else {
                     LoginActivity.launch(this, false);
                 }

@@ -44,6 +44,8 @@ public class Constants {
     public static final String EXTRA_EXIST_IN = "exist_in";
     public static final String EXTRA_ASPECT_RATIO = "aspect_ratio";
     public static final String EXTRA_BASIC_COLOR = "basic_color";
+    public static final String EXTRA_USER_ID = "user_id";
+    public static final String EXTRA_USER_NAME = "user_name";
 
     //防抖动时间间隔
     public static final int THROTTLE_DURATION = 300;

@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
 import com.glooory.petal.R;
 import com.glooory.petal.app.util.SnackbarUtil;
 import com.glooory.petal.mvp.ui.login.LoginActivity;
@@ -71,6 +72,24 @@ public class PEPresenter<V extends BaseView, M extends IModel> extends BasePrese
                         .build());
     }
 
+    public void loadImage(String imageUrlKey, SimpleDraweeView image, BaseBitmapDataSubscriber subscriber) {
+        String imageUrl = String.format(mLargePicUrlFormat, imageUrlKey);
+        mImageLoader.loadImage(((BaseApplication) PEApplication.getContext()).getAppManager().getCurrentActivity(),
+                FrescoImageConfig.builder()
+                        .setUrl(imageUrl)
+                        .setSimpleDraweeView(image)
+                        .setControlListener(new BaseControllerListener() {
+                            @Override
+                            public void onFinalImageSet(String id, Object imageInfo, Animatable animatable) {
+                                if (animatable != null) {
+                                    animatable.start();
+                                }
+                            }
+                        })
+                        .setBitmapDataSubscriber(subscriber)
+                        .build());
+    }
+
     public void loadSmallImage(String imageUrlKey, SimpleDraweeView image) {
         String imageUrl = String.format(mSmallPicUrlFormat, imageUrlKey);
         mImageLoader.loadImage(((BaseApplication) PEApplication.getContext()).getAppManager().getCurrentActivity(),
@@ -87,6 +106,26 @@ public class PEPresenter<V extends BaseView, M extends IModel> extends BasePrese
                         .setUrl(imageUrl)
                         .setSimpleDraweeView(image)
                         .isCircle(true)
+                        .build());
+    }
+
+    public void loadUserAvatar(String imageUrlKey, SimpleDraweeView image, BaseBitmapDataSubscriber subscriber) {
+        String imageUrl = String.format(mSmallPicUrlFormat, imageUrlKey);
+        mImageLoader.loadImage(((BaseApplication) PEApplication.getContext()).getAppManager().getCurrentActivity(),
+                FrescoImageConfig.builder()
+                        .setUrl(imageUrl)
+                        .setSimpleDraweeView(image)
+                        .isCircle(true)
+                        .isBorder(true)
+                        .setControlListener(new BaseControllerListener() {
+                            @Override
+                            public void onFinalImageSet(String id, Object imageInfo, Animatable animatable) {
+                                if (animatable != null) {
+                                    animatable.start();
+                                }
+                            }
+                        })
+                        .setBitmapDataSubscriber(subscriber)
                         .build());
     }
 

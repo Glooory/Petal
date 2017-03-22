@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_user_info"
     android:layout_width="match_parent"
     android:layout_height="244dp"
@@ -12,7 +13,9 @@
         android:id="@+id/simple_drawee_user_avatar"
         android:layout_width="@dimen/drawer_avatar_size"
         android:layout_height="@dimen/drawer_avatar_size"
-        android:transitionName="@string/image_transition_name"/>
+        android:transitionName="@string/image_transition_name"
+        fresco:failureImage="@drawable/ic_broken_image_grey_700_48dp"
+        fresco:failureImageScaleType="centerInside"/>
 
     <TextView
         android:id="@+id/text_view_user_name"
@@ -28,7 +31,9 @@
         android:id="@+id/text_view_user_lacation_job"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/triple_activity_default_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginEnd="@dimen/triple_activity_default_margin"
         android:maxLines="1"
         android:ellipsize="end"
         android:gravity="center"
@@ -39,10 +44,12 @@
         android:id="@+id/text_view_user_des"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/triple_activity_default_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginEnd="@dimen/triple_activity_default_margin"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:gravity="center"
-        android:maxLines="1"
+        android:maxLines="2"
         android:ellipsize="end"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_14sp"/>

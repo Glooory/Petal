@@ -2,6 +2,7 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -31,7 +32,9 @@
                 android:layout_height="wrap_content"
                 android:paddingEnd="-2dp"
                 android:fitsSystemWindows="true"
-                android:transitionName="@string/image_transition_name"/>
+                android:transitionName="@string/image_transition_name"
+                fresco:failureImage="@drawable/ic_broken_image_grey_700_48dp"
+                fresco:failureImageScaleType="centerInside"/>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"

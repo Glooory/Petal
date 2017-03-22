@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.RecyclerView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/recycler_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="@dimen/quarter_activity_default_margin"
+    android:paddingEnd="@dimen/quarter_activity_default_margin"
+    android:paddingBottom="@dimen/quarter_activity_default_margin"
+    android:clipToPadding="false">
+
+</android.support.v7.widget.RecyclerView>

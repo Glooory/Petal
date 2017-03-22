@@ -87,6 +87,7 @@ public class HomeFragment extends PEFragment<HomePresenter> implements HomeContr
                         break;
                     case R.id.ll_pin_via_info:
                         // TODO: 17/3/18 Launch UserActivity
+                        mPresenter.launchUserActivity(getActivity(), view, position);
                         break;
                 }
             }

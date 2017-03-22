@@ -3,6 +3,7 @@ package com.glooory.petal.mvp.model.api.service;
 import com.glooory.petal.mvp.model.entity.LatestEditBoardsBean;
 import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.model.entity.login.TokenBean;
+import com.glooory.petal.mvp.model.entity.user.UserBoardListBean;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -43,4 +44,16 @@ public interface UserService {
     // https://api.huaban.com/last_board/?extra=recommend_tags
     @GET("last_boards/")
     Observable<LatestEditBoardsBean> requestLatestBoardInfo(@Query("extra") String extra);
+
+    // 用户的画板信息
+    // https://api.huaban.com/users/12345678/boards?limit=20
+    @GET("users/{user_id}/boards")
+    Observable<UserBoardListBean> getBoards(@Path("user_id") String userId,
+            @Query("limit") int limit);
+
+    //https://api.huaban.com/users/12345678/boards?max=1123644&limit=20
+    @GET("users/{user_id}/boards")
+    Observable<UserBoardListBean> getBoardsMore(@Path("user_id") String userId,
+            @Query("max") int max,
+            @Query("limit") int limit);
 }

@@ -30,15 +30,20 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textview_load_more_failed"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="@dimen/half_activity_default_margin"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        android:text="@string/msg_load_failed_click_retry"
-        android:textSize="@dimen/text_size_14sp"/>
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textview_load_more_failed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:text="@string/msg_load_failed_click_retry"
+            android:textSize="@dimen/text_size_14sp"/>
+
+    </RelativeLayout>
 
 </FrameLayout>
