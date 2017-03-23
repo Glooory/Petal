@@ -139,7 +139,6 @@ public class PinDetailActivity extends PEActivity<PinDetailPresenter> implements
                         mPresenter.launchPinDetailActivity(PinDetailActivity.this, view, position);
                         break;
                     case R.id.ll_pin_via_info:
-                        // TODO: 17/3/18 Launch UserActivity
                         mPresenter.launchUserActivity(PinDetailActivity.this, view, position);
                         break;
                 }
@@ -202,7 +201,6 @@ public class PinDetailActivity extends PEActivity<PinDetailPresenter> implements
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        // TODO: 17/3/21 Launch UserActivity
                         mPresenter.launchUserActivity(PinDetailActivity.this, mImgAvatar);
                     }
                 });

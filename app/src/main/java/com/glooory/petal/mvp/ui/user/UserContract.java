@@ -17,6 +17,12 @@ public interface UserContract {
 
     interface View extends BaseView {
 
+        void showToolbarAction(int actionResId, int actionDrawableResId);
+
+        void showProcessingbar();
+
+        void hideProcessingbar();
+
         void showTabTitles(String[] titles);
 
         void showUserName(String userName);
@@ -44,5 +50,7 @@ public interface UserContract {
         Observable<List<BoardBean>> getBoards(String userId);
 
         Observable<List<BoardBean>> getBoardsMore(String userId);
+
+        Observable<Void> followUser(String userId, boolean isFollowed);
     }
 }

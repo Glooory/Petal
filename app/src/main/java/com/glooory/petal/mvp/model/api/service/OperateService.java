@@ -60,6 +60,12 @@ public interface OperateService {
     @DELETE("pins/{pin_id}")
     Observable<Void> deletePin(@Path("pin_id") int pinId);
 
+    //关注某个用户的操作
+    //https://api.huaban.com/users/13643543/{follow or unfollow}
+    @POST("users/{user_id}/{operate}")
+    Observable<Void> followUser(@Path("user_id") String userId,
+            @Path("operate") String operate);
+
 
 
 }

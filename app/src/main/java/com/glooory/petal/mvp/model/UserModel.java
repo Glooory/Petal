@@ -81,4 +81,15 @@ public class UserModel extends BasePEModel<ServiceManager, CacheManager> impleme
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    @Override
+    public Observable<Void> followUser(String userId,boolean isFollowed) {
+        String operate = isFollowed ? "unfollow" : "follow";
+        return mServiceManager.getOperateService()
+                .followUser(userId, operate)
+                .retryWhen(new RetryWithDelay(1, 1))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+
 }
