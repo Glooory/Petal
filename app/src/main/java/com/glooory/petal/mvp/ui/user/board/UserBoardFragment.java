@@ -12,12 +12,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
+import com.glooory.petal.app.util.SnackbarUtil;
 import com.glooory.petal.di.component.DaggerUserSectionComponent;
 import com.glooory.petal.di.module.UserSectionModule;
 import com.glooory.petal.mvp.presenter.UserSectionPresenter;
+import com.glooory.petal.mvp.ui.login.LoginActivity;
 import com.glooory.petal.mvp.ui.user.UserActivity;
 import com.glooory.petal.mvp.ui.user.UserContract;
-import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import common.AppComponent;
@@ -147,9 +148,6 @@ public class UserBoardFragment extends PEFragment<UserSectionPresenter>
 
     @Override
     public void showNoMoreDataFooter() {
-        Logger.d(mBoardCount);
-        Logger.d(mAdapter.getData().size());
-
         if (mAdapter.getData().size() >= mBoardCount) {
             if (mNoMoreDataFooter.getParent() != null) {
                 ((ViewGroup) mNoMoreDataFooter.getParent()).removeView(mNoMoreDataFooter);
@@ -162,5 +160,16 @@ public class UserBoardFragment extends PEFragment<UserSectionPresenter>
                 }
             });
         }
+    }
+
+    @Override
+    public void showLoginNav() {
+        SnackbarUtil.showLong(getActivity(), R.string.msg_login_hint, R.string.msg_go_login,
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        LoginActivity.launch(getActivity(), false);
+                    }
+                });
     }
 }

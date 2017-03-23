@@ -35,7 +35,7 @@ public class HomeModel extends BasePEModel<ServiceManager, CacheManager>
 
     @Override
     public Observable<List<PinBean>> getLatestAllPins() {
-        return mServiceManager.getHomeService()
+        return mServiceManager.getPinService()
                 .getLatestAllPins(Constants.PER_PAGE_LIMIT)
                 .retryWhen(new RetryWithDelay(2, 2))
                 .map(new Func1<PinListBean, List<PinBean>>() {
@@ -56,7 +56,7 @@ public class HomeModel extends BasePEModel<ServiceManager, CacheManager>
 
     @Override
     public Observable<List<PinBean>> getLatestAllPinsNext(int maxPinId) {
-        return mServiceManager.getHomeService()
+        return mServiceManager.getPinService()
                 .getLatestAllPinsNext(maxPinId, Constants.PER_PAGE_LIMIT)
                 .retryWhen(new RetryWithDelay(2, 2))
                 .map(new Func1<PinListBean, List<PinBean>>() {
@@ -77,7 +77,7 @@ public class HomeModel extends BasePEModel<ServiceManager, CacheManager>
 
     @Override
     public Observable<List<PinBean>> getLatestFollowingPins() {
-        return mServiceManager.getHomeService()
+        return mServiceManager.getPinService()
                 .getLatestFollowingPins(Constants.PER_PAGE_LIMIT)
                 .retryWhen(new RetryWithDelay(2, 2))
                 .map(new Func1<PinListBean, List<PinBean>>() {
@@ -98,7 +98,7 @@ public class HomeModel extends BasePEModel<ServiceManager, CacheManager>
 
     @Override
     public Observable<List<PinBean>> getLatestFollowingPinsNext(int maxPinId) {
-        return mServiceManager.getHomeService()
+        return mServiceManager.getPinService()
                 .getLatestFollowingPinsNext(maxPinId, Constants.PER_PAGE_LIMIT)
                 .retryWhen(new RetryWithDelay(2, 2))
                 .map(new Func1<PinListBean, List<PinBean>>() {
@@ -119,7 +119,7 @@ public class HomeModel extends BasePEModel<ServiceManager, CacheManager>
 
     @Override
     public Observable<List<PinBean>> getLatestPopularPins() {
-        return mServiceManager.getHomeService()
+        return mServiceManager.getPinService()
                 .getLatestPopularPins(Constants.PER_PAGE_LIMIT)
                 .retryWhen(new RetryWithDelay(2, 2))
                 .map(new Func1<PinListBean, List<PinBean>>() {
@@ -140,7 +140,7 @@ public class HomeModel extends BasePEModel<ServiceManager, CacheManager>
 
     @Override
     public Observable<List<PinBean>> getLatestPopularPinsNext(int maxPinId) {
-        return mServiceManager.getHomeService()
+        return mServiceManager.getPinService()
                 .getLatestPopularPinsNext(maxPinId, Constants.PER_PAGE_LIMIT)
                 .retryWhen(new RetryWithDelay(2, 2))
                 .map(new Func1<PinListBean, List<PinBean>>() {
@@ -181,5 +181,4 @@ public class HomeModel extends BasePEModel<ServiceManager, CacheManager>
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
-
 }

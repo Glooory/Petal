@@ -51,6 +51,8 @@ public interface UserContract {
         void showLoadingMore();
 
         void showNoMoreDataFooter();
+
+        void showLoginNav();
     }
 
     interface SectionModel extends IModel {

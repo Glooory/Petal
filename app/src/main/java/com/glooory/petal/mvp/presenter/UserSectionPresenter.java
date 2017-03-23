@@ -5,6 +5,7 @@ import com.glooory.petal.app.rx.BaseSubscriber;
 import com.glooory.petal.app.widget.WindmillLoadMoreFooter;
 import com.glooory.petal.mvp.model.entity.BoardBean;
 import com.glooory.petal.mvp.ui.user.UserContract;
+import com.glooory.petal.mvp.ui.user.board.UserBoardAdapter;
 import com.jess.arms.di.scope.FragmentScope;
 import com.jess.arms.utils.RxUtils;
 
@@ -81,5 +82,22 @@ public class UserSectionPresenter extends PEPresenter<UserContract.SectionView, 
                         mAdapter.loadMoreFail();
                     }
                 });
+    }
+
+    public void operateBtnClicked(int position) {
+        if (!mModel.isLogin()) {
+            mRootView.showLoginNav();
+            return;
+        }
+        if (mIsMe) {
+            // TODO: 17/3/23 Show edit board Dialog
+        } else {
+            actionFollowBoard(position,
+                    ((UserBoardAdapter) mAdapter).getItem(position).isFollowing());
+        }
+    }
+
+    private void actionFollowBoard(int position, boolean isFollowed) {
+
     }
 }

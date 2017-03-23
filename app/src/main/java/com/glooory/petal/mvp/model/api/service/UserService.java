@@ -56,4 +56,10 @@ public interface UserService {
     Observable<UserBoardListBean> getBoardsMore(@Path("user_id") String userId,
             @Query("max") int max,
             @Query("limit") int limit);
+
+    //关注某个用户的操作
+    //https://api.huaban.com/users/13643543/{follow or unfollow}
+    @POST("users/{user_id}/{operate}")
+    Observable<Void> followUser(@Path("user_id") String userId,
+            @Path("operate") String operate);
 }

@@ -1,5 +1,6 @@
 package com.glooory.petal.mvp.model;
 
+import com.glooory.petal.app.Constants;
 import com.glooory.petal.mvp.model.api.cache.CacheManager;
 import com.glooory.petal.mvp.model.api.service.ServiceManager;
 import com.glooory.petal.mvp.model.entity.PinBean;
@@ -38,7 +39,7 @@ public class PinDetailModel extends BasePEModel<ServiceManager, CacheManager>
     @Override
     public Observable<PinDetailBean> getPinDetailInfo(int pinId) {
         mPinId = pinId;
-        return mServiceManager.getPinBoardService()
+        return mServiceManager.getPinService()
                 .getPinDetailInfo(mPinId)
                 .retryWhen(new RetryWithDelay(2, 2))
                 .subscribeOn(Schedulers.io())
@@ -47,7 +48,7 @@ public class PinDetailModel extends BasePEModel<ServiceManager, CacheManager>
 
     @Override
     public Observable<CollectionInfoBean> isCollected() {
-        return mServiceManager.getOperateService()
+        return mServiceManager.getPinService()
                 .isCollected(mPinId, true)
                 .retryWhen(new RetryWithDelay(1, 1))
                 .subscribeOn(Schedulers.io())
@@ -56,7 +57,7 @@ public class PinDetailModel extends BasePEModel<ServiceManager, CacheManager>
 
     @Override
     public Observable<List<PinBean>> getRecommendedPins(int page) {
-        return mServiceManager.getPinBoardService()
+        return mServiceManager.getPinService()
                 .getRecommendedPins(mPinId, page, PAGE_SIZE)
                 .retryWhen(new RetryWithDelay(2, 2))
                 .filter(new Func1<List<PinBean>, Boolean>() {
@@ -71,7 +72,7 @@ public class PinDetailModel extends BasePEModel<ServiceManager, CacheManager>
 
     @Override
     public Observable<CollectResultBean> collectPin(String boardId, String des) {
-        return mServiceManager.getOperateService()
+        return mServiceManager.getPinService()
                 .collectPin(boardId, des, String.valueOf(mPinId))
                 .retryWhen(new RetryWithDelay(1, 1))
                 .subscribeOn(Schedulers.io())
@@ -80,7 +81,7 @@ public class PinDetailModel extends BasePEModel<ServiceManager, CacheManager>
 
     @Override
     public Observable<PinBean> editPin(String boardId, String des) {
-        return mServiceManager.getOperateService()
+        return mServiceManager.getPinService()
                 .editPin(mPinId, boardId, des)
                 .retryWhen(new RetryWithDelay(1, 1))
                 .subscribeOn(Schedulers.io())
@@ -89,7 +90,7 @@ public class PinDetailModel extends BasePEModel<ServiceManager, CacheManager>
 
     @Override
     public Observable<Void> deletePin() {
-        return mServiceManager.getOperateService()
+        return mServiceManager.getPinService()
                 .deletePin(mPinId)
                 .retryWhen(new RetryWithDelay(1, 1))
                 .subscribeOn(Schedulers.io())
@@ -98,8 +99,8 @@ public class PinDetailModel extends BasePEModel<ServiceManager, CacheManager>
 
     @Override
     public Observable<LikeResultBean> likePin(boolean isLiked) {
-        return mServiceManager.getOperateService()
-                .likePin(mPinId, isLiked ? "like" : "unlike")
+        return mServiceManager.getPinService()
+                .likePin(mPinId, isLiked ? Constants.HTTP_ARGS_LIKE : Constants.HTTP_ARGS_UNLIKE)
                 .retryWhen(new RetryWithDelay(1, 1))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

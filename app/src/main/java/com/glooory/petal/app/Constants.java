@@ -36,6 +36,10 @@ public class Constants {
     public static final int PER_PAGE_LIMIT = 20;
     public static final String HTTP_ARGS_VALUE_PASSWORD = "password";
     public static final String HTTP_RECOMMEND_TAGS = "recommend_tags";
+    public static final String HTTP_ARGS_LIKE = "like";
+    public static final String HTTP_ARGS_UNLIKE = "unlike";
+    public static final String HTTP_ARGS_FOLLOW = "follow";
+    public static final String HTTP_ARGS_UNFOLLOW = "unfollow";
 
     public static final String EXTRA_PIN_ID = "pin_id";
     public static final String EXTRA_COLLECT_DES = "collect_des";

@@ -11,10 +11,9 @@ import javax.inject.Singleton;
 @Singleton
 public class ServiceManager implements BaseServiceManager {
 
-    private HomeService mHomeService;
+    private PinService mPinService;
     private UserService mUserService;
-    private OperateService mOperateService;
-    private PinBoardService mPinBoardService;
+    private BoardService mBoardService;
 
     /**
      * 如果需要添加service只需在构造方法中添加对应的service,在提供get方法返回出去,只要在ServiceModule提供了该service
@@ -23,12 +22,11 @@ public class ServiceManager implements BaseServiceManager {
      * @param
      */
     @Inject
-    public ServiceManager(HomeService homeService, UserService userService,
-            OperateService operateService, PinBoardService pinBoardService) {
-        mHomeService = homeService;
+    public ServiceManager(PinService pinService, UserService userService,
+            BoardService boardService) {
+        mPinService = pinService;
         mUserService = userService;
-        mOperateService = operateService;
-        mPinBoardService = pinBoardService;
+        mBoardService = boardService;
     }
 
     /**
@@ -39,19 +37,15 @@ public class ServiceManager implements BaseServiceManager {
 
     }
 
-    public HomeService getHomeService() {
-        return mHomeService;
+    public PinService getPinService() {
+        return mPinService;
     }
 
     public UserService getUserService() {
         return mUserService;
     }
 
-    public OperateService getOperateService() {
-        return mOperateService;
-    }
-
-    public PinBoardService getPinBoardService() {
-        return mPinBoardService;
+    public BoardService getBoardService() {
+        return mBoardService;
     }
 }
