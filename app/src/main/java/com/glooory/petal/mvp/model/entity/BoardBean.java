@@ -42,7 +42,7 @@ public class BoardBean implements Parcelable {
     private int like_count;
     private int created_at;
     private int updated_at;
-    private int deleting;
+    private int deleting = 1;
     private int is_private;
     private UserBean user;
     private List<PinBean> pins;

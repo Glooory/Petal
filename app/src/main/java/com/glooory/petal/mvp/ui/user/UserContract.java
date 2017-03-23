@@ -17,6 +17,8 @@ public interface UserContract {
 
     interface View extends BaseView {
 
+        void showViewPager();
+
         void showToolbarAction(int actionResId, int actionDrawableResId);
 
         void showProcessingbar();
@@ -35,22 +37,29 @@ public interface UserContract {
 
     }
 
-    interface ChildView extends BaseView {
-
-        void showNoMoreDataFooter();
-    }
-
-
     interface Model extends IModel {
 
         boolean isMe(String userId);
 
         Observable<UserBean> getUser(String userId);
 
+        Observable<Void> followUser(String userId, boolean isFollowed);
+    }
+
+    interface SectionView extends BaseView {
+
+        void showLoadingMore();
+
+        void showNoMoreDataFooter();
+    }
+
+    interface SectionModel extends IModel {
+
+        boolean isMe(String userId);
+
         Observable<List<BoardBean>> getBoards(String userId);
 
         Observable<List<BoardBean>> getBoardsMore(String userId);
-
-        Observable<Void> followUser(String userId, boolean isFollowed);
     }
+
 }

@@ -1,10 +1,13 @@
 package com.glooory.petal.mvp.ui.user.board;
 
 import android.content.res.Resources;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.glooory.petal.R;
 import com.glooory.petal.mvp.model.entity.BoardBean;
@@ -30,6 +33,7 @@ public class UserBoardAdapter extends PEAdapter<BoardBean, BaseViewHolder> {
     private String mEditStr;
     private String mFollowStr;
     private String mFollowedStr;
+    private Drawable mDefaulPlaceHolder;
 
     @Inject
     public UserBoardAdapter(boolean isMe) {
@@ -41,6 +45,7 @@ public class UserBoardAdapter extends PEAdapter<BoardBean, BaseViewHolder> {
         mEditStr = resources.getString(R.string.edit);
         mFollowStr = resources.getString(R.string.nav_title_following);
         mFollowedStr = resources.getString(R.string.followed);
+        mDefaulPlaceHolder = new ColorDrawable(R.color.grey_300);
     }
 
     @Override
@@ -57,24 +62,24 @@ public class UserBoardAdapter extends PEAdapter<BoardBean, BaseViewHolder> {
         if (canOperate) {
             if (mIsMe) {
                 operateText = mEditStr;
-                operateDrawablResId = R.drawable.ic_edit_grey_500_24dp;
+                operateDrawablResId = R.drawable.ic_edit_grey_500_18dp;
             } else {
                 if (isFollowing) {
                     operateText = mFollowedStr;
-                    operateDrawablResId = R.drawable.ic_check_grey_500_24dp;
+                    operateDrawablResId = R.drawable.ic_check_grey_500_18dp;
                 } else {
                     operateText = mFollowStr;
-                    operateDrawablResId = R.drawable.ic_add_grey_500_24dp;
+                    operateDrawablResId = R.drawable.ic_add_grey_500_18dp;
                 }
             }
         } else {
             operateText = "";
-            operateDrawablResId = R.drawable.ic_block_grey_500_24dp;
+            operateDrawablResId = R.drawable.ic_block_grey_500_18dp;
             holder.getView(R.id.ll_user_board_operate).setEnabled(false);
             holder.getView(R.id.text_view_user_board_operate).setEnabled(false);
         }
         ((TextView) holder.getView(R.id.text_view_user_board_operate))
-                .setCompoundDrawablesRelativeWithIntrinsicBounds(
+                .setCompoundDrawablesWithIntrinsicBounds(
                         ContextCompat.getDrawable(PEApplication.getContext(), operateDrawablResId)
                         , null, null, null);
 
@@ -94,36 +99,47 @@ public class UserBoardAdapter extends PEAdapter<BoardBean, BaseViewHolder> {
         }
 
         List<PinBean> pinList = boardBean.getPins();
-
         if (pinList.size() > 0) {
-            mImageLoader.loadImage(PEApplication.getContext(), FrescoImageConfig.builder()
-                    .setSimpleDraweeView((SimpleDraweeView) holder.getView(R.id.simple_drawee_view_user_board_cover))
-                    .setUrl(String.format(mGeneralImageUrlFormat, pinList.get(0).getFile().getKey()))
-                    .build());
+            mImageLoader.loadImage(PEApplication.getContext(),
+                    FrescoImageConfig.builder()
+                            .setSimpleDraweeView(
+                                    (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_user_board_cover))
+                            .setUrl(String.format(mGeneralImageUrlFormat, pinList.get(0).getFile().getKey()))
+                            .setScaleType(ScalingUtils.ScaleType.CENTER_CROP)
+                            .setPlaceHolder(mDefaulPlaceHolder)
+                            .build());
+        }
+
+        if (pinList.size() <= 1) {
+            return;
         }
 
         if (pinList.size() > 1) {
-            mImageLoader.loadImage(PEApplication.getContext(), FrescoImageConfig.builder()
-                    .setSimpleDraweeView((SimpleDraweeView) holder.getView(R.id.simple_drawee_view_pin_detail_board_pin_first))
-                    .setUrl(String.format(mSmallImageUrlFormat, pinList.get(1).getFile().getKey()))
-                    .setRadius(8)
-                    .build());
+            loadSmallBoardCover(
+                    (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_user_board_first),
+                    pinList.get(1).getFile().getKey());
         }
 
         if (pinList.size() > 2) {
-            mImageLoader.loadImage(PEApplication.getContext(), FrescoImageConfig.builder()
-                    .setSimpleDraweeView((SimpleDraweeView) holder.getView(R.id.simple_drawee_view_pin_detail_board_pin_second))
-                    .setUrl(String.format(mSmallImageUrlFormat, pinList.get(2).getFile().getKey()))
-                    .setRadius(8)
-                    .build());
+            loadSmallBoardCover(
+                    (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_user_board_second),
+                    pinList.get(2).getFile().getKey());
         }
 
         if (pinList.size() > 3) {
-            mImageLoader.loadImage(PEApplication.getContext(), FrescoImageConfig.builder()
-                    .setSimpleDraweeView((SimpleDraweeView) holder.getView(R.id.simple_drawee_view_pin_detail_board_pin_third))
-                    .setUrl(String.format(mSmallImageUrlFormat, pinList.get(3).getFile().getKey()))
-                    .setRadius(8)
-                    .build());
+            loadSmallBoardCover(
+                    (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_user_board_third),
+                    pinList.get(3).getFile().getKey());
         }
+    }
+
+    private void loadSmallBoardCover(SimpleDraweeView image, String imageUrlKey) {
+        mImageLoader.loadImage(PEApplication.getContext(),
+                FrescoImageConfig.builder()
+                        .setSimpleDraweeView(image)
+                        .setUrl(String.format(mSmallImageUrlFormat, imageUrlKey))
+                        .isRadius(true, 8)
+                        .setPlaceHolder(mDefaulPlaceHolder)
+                        .build());
     }
 }

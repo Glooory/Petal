@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
-    android:background="?attr/selectableItemBackground"
+    android:foreground="?attr/selectableItemBackground"
     android:orientation="vertical">
 
     <FrameLayout
@@ -17,6 +17,7 @@
             android:id="@+id/simple_drawee_view_user_board_cover"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            fresco:viewAspectRatio="1.0"
             fresco:failureImage="@drawable/ic_broken_image_grey_700_48dp"
             fresco:failureImageScaleType="centerInside"/>
 
@@ -68,6 +69,7 @@
     </FrameLayout>
 
     <LinearLayout
+        android:id="@+id/ll_user_board_images"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"

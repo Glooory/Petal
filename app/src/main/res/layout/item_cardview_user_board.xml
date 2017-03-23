@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/quarter_activity_default_margin"
     android:layout_marginTop="@dimen/half_activity_default_margin"
     android:layout_marginRight="@dimen/quarter_activity_default_margin"
@@ -26,7 +26,7 @@
         <LinearLayout
             android:id="@+id/ll_user_board_operate"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/button_heght_nomal"
             android:gravity="center"
             android:clickable="true"
             android:foreground="?attr/selectableItemBackground">
@@ -35,8 +35,8 @@
                 android:id="@+id/text_view_user_board_operate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:textSize="@dimen/text_size_12sp"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/text_size_14sp"
                 android:textColor="@color/secondary_text"/>
 
         </LinearLayout>

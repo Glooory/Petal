@@ -12,9 +12,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
-import com.glooory.petal.mvp.presenter.UserChildPresenter;
+import com.glooory.petal.di.component.DaggerUserSectionComponent;
+import com.glooory.petal.di.module.UserSectionModule;
+import com.glooory.petal.mvp.presenter.UserSectionPresenter;
 import com.glooory.petal.mvp.ui.user.UserActivity;
 import com.glooory.petal.mvp.ui.user.UserContract;
+import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import common.AppComponent;
@@ -24,8 +27,8 @@ import common.PEFragment;
  * Created by Glooory on 17/3/22.
  */
 
-public class UserBoardFragment extends PEFragment<UserChildPresenter>
-        implements UserContract.ChildView {
+public class UserBoardFragment extends PEFragment<UserSectionPresenter>
+        implements UserContract.SectionView {
 
     private static final String BUNDLE_BOARD_COUNT = "board_count";
 
@@ -62,7 +65,11 @@ public class UserBoardFragment extends PEFragment<UserChildPresenter>
 
     @Override
     protected void setupFragmentComponent(AppComponent appComponent) {
-
+        DaggerUserSectionComponent.builder()
+                .appComponent(appComponent)
+                .userSectionModule(new UserSectionModule(this))
+                .build()
+                .inject(this);
     }
 
     @Override
@@ -125,8 +132,25 @@ public class UserBoardFragment extends PEFragment<UserChildPresenter>
     }
 
     @Override
+    public void showLoadingMore() {
+        if (mAdapter.getData().size() >= mBoardCount) {
+            return;
+        }
+
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                mPresenter.getBoardsMore();
+            }
+        });
+    }
+
+    @Override
     public void showNoMoreDataFooter() {
-        if (mAdapter.getItemCount() >= mBoardCount) {
+        Logger.d(mBoardCount);
+        Logger.d(mAdapter.getData().size());
+
+        if (mAdapter.getData().size() >= mBoardCount) {
             if (mNoMoreDataFooter.getParent() != null) {
                 ((ViewGroup) mNoMoreDataFooter.getParent()).removeView(mNoMoreDataFooter);
             }

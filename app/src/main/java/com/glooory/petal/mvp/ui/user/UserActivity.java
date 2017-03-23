@@ -19,6 +19,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -30,7 +31,6 @@ import com.facebook.imagepipeline.image.CloseableImage;
 import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.util.FastBlurUtils;
-import com.glooory.petal.app.util.SPUtils;
 import com.glooory.petal.di.component.DaggerUserCompoment;
 import com.glooory.petal.di.module.UserModule;
 import com.glooory.petal.mvp.presenter.UserPresenter;
@@ -69,6 +69,8 @@ public class UserActivity extends PEActivity<UserPresenter>
     TextView mTextViewFollowEdit;
     @BindView(R.id.progressbar_user_following)
     ProgressBar mProgressbarFollowing;
+    @BindView(R.id.ll_user_info)
+    LinearLayout mLlUserInfo;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.tablayout)
@@ -158,10 +160,24 @@ public class UserActivity extends PEActivity<UserPresenter>
             }
         });
 
-        mPagerAdapter = new UserSectionPagerAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(mPagerAdapter);
-        mViewPager.setCurrentItem(0, true);
-        mTablayout.setupWithViewPager(mViewPager);
+        mAppbarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                float off = -verticalOffset;
+                float alpha = 1.0f - off / (appBarLayout.getTotalScrollRange() / 2.0f);
+                mLlUserInfo.setAlpha(alpha);
+                if (alpha < 0.3) {
+                    mCollapsingToolbar.setTitle(mUserName);
+                } else {
+                    mCollapsingToolbar.setTitle("");
+                }
+                if (off >= appBarLayout.getTotalScrollRange()) {
+                    mCollapsingToolbar.setAlpha(0);
+                } else {
+                    mCollapsingToolbar.setAlpha(1);
+                }
+            }
+        });
 
         RxView.clicks(mTextViewFollowEdit)
                 .throttleFirst(Constants.THROTTLE_DURATION, TimeUnit.MILLISECONDS)
@@ -173,12 +189,19 @@ public class UserActivity extends PEActivity<UserPresenter>
                 });
     }
 
+    private void initViewPager() {
+        mPagerAdapter = new UserSectionPagerAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(mPagerAdapter);
+        mViewPager.setCurrentItem(0, true);
+        mTablayout.setupWithViewPager(mViewPager);
+    }
+
     @Override
     protected void initData() {
         mUserId = getIntent().getStringExtra(Constants.EXTRA_USER_ID);
         mUserName = getIntent().getStringExtra(Constants.EXTRA_USER_NAME);
-        mIsMe = (String.valueOf(SPUtils.get(Constants.PREF_USER_ID, 0)).equals(mUserId));
-        mPresenter.requestUserInfo(mIsMe, mUserId);
+        mIsMe = mPresenter.isMe(mUserId);
+        mPresenter.requestUserInfo(mUserId);
     }
 
     @Override
@@ -224,6 +247,11 @@ public class UserActivity extends PEActivity<UserPresenter>
     }
 
     @Override
+    public void showViewPager() {
+        initViewPager();
+    }
+
+    @Override
     public void showToolbarAction(int actionResId, int actionDrawableResId) {
         mTextViewFollowEdit.setVisibility(View.VISIBLE);
         mProgressbarFollowing.setVisibility(View.GONE);
@@ -261,11 +289,12 @@ public class UserActivity extends PEActivity<UserPresenter>
     @Override
     public void showTabTitles(String[] titles) {
         mTabTitles = titles;
-//        mViewPager.getAdapter().notifyDataSetChanged();
+        mViewPager.getAdapter().notifyDataSetChanged();
     }
 
     @Override
     public void showUserName(String userName) {
+        mUserName = userName;
         mTextViewUserName.setText(userName);
     }
 

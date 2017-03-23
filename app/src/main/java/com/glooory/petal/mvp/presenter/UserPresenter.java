@@ -36,10 +36,26 @@ public class UserPresenter extends PEPresenter<UserContract.View, UserContract.M
         super(rootView, model);
     }
 
-    public void requestUserInfo(boolean isMe, String userId) {
-        mIsMe = isMe;
+    public boolean isMe(String userId) {
+        mIsMe = mModel.isMe(userId);
+        return mIsMe;
+    }
+
+    public void requestUserInfo(String userId) {
         mUserId = userId;
         mModel.getUser(mUserId)
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mRootView.showLoading();
+                    }
+                })
+                .doOnTerminate(new Action0() {
+                    @Override
+                    public void call() {
+                        mRootView.hideLoading();
+                    }
+                })
                 .compose(RxUtils.<UserBean>bindToLifecycle(mRootView))
                 .subscribe(new BaseSubscriber<UserBean>() {
                     @Override
@@ -57,6 +73,7 @@ public class UserPresenter extends PEPresenter<UserContract.View, UserContract.M
         mFollowingCount = userBean.getFollowingCount();
         mFollowerCount = userBean.getFollowerCount();
 
+        mRootView.showViewPager();
         setupToolbarAction();
         setupTabTitles();
 
