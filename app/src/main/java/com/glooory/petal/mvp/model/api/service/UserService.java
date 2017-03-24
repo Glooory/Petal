@@ -1,6 +1,7 @@
 package com.glooory.petal.mvp.model.api.service;
 
 import com.glooory.petal.mvp.model.entity.LatestEditBoardsBean;
+import com.glooory.petal.mvp.model.entity.PinListBean;
 import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.model.entity.login.TokenBean;
 import com.glooory.petal.mvp.model.entity.user.UserBoardListBean;
@@ -51,15 +52,29 @@ public interface UserService {
     Observable<UserBoardListBean> getBoards(@Path("user_id") String userId,
             @Query("limit") int limit);
 
-    //https://api.huaban.com/users/12345678/boards?max=1123644&limit=20
+    // https://api.huaban.com/users/12345678/boards?max=1123644&limit=20
     @GET("users/{user_id}/boards")
     Observable<UserBoardListBean> getBoardsMore(@Path("user_id") String userId,
             @Query("max") int max,
             @Query("limit") int limit);
 
-    //关注某个用户的操作
-    //https://api.huaban.com/users/13643543/{follow or unfollow}
+    // 关注某个用户的操作
+    // https://api.huaban.com/users/13643543/{follow or unfollow}
     @POST("users/{user_id}/{operate}")
     Observable<Void> followUser(@Path("user_id") String userId,
             @Path("operate") String operate);
+
+    // 用户的所有采集信息
+    // https:api.huaban.com/users/12345678/pins?limit=20
+    @GET("users/{user_id}/pins")
+    Observable<PinListBean> getUserPins(@Path("user_id") String userId,
+            @Query("limit") int limit);
+
+    // 用户的所有采集信息
+    // https:api.huaban.com/users/12345678/pins?max=1234567&limit=20
+    @GET("users/{user_id}/pins")
+    Observable<PinListBean> getUserPinsMore(@Path("user_id") String userId,
+            @Query("max") int maxPinId,
+            @Query("limit") int limit);
+
 }

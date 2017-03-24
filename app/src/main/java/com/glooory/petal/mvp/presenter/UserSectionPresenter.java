@@ -1,12 +1,20 @@
 package com.glooory.petal.mvp.presenter;
 
+import android.app.Activity;
+import android.view.View;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.glooory.petal.R;
 import com.glooory.petal.app.rx.BaseSubscriber;
+import com.glooory.petal.app.util.DrawableUtils;
 import com.glooory.petal.app.widget.WindmillLoadMoreFooter;
 import com.glooory.petal.mvp.model.entity.BoardBean;
+import com.glooory.petal.mvp.model.entity.PinBean;
 import com.glooory.petal.mvp.model.entity.board.FollowBoardResultBean;
 import com.glooory.petal.mvp.model.entity.user.UserBoardSingleBean;
+import com.glooory.petal.mvp.ui.home.HomePinsAdapter;
+import com.glooory.petal.mvp.ui.pindetail.PinDetailActivity;
 import com.glooory.petal.mvp.ui.user.UserContract;
 import com.glooory.petal.mvp.ui.user.board.CreateBoardDialogFragment;
 import com.glooory.petal.mvp.ui.user.board.EditBoardDiglogFragment;
@@ -231,5 +239,64 @@ public class UserSectionPresenter extends PEPresenter<UserContract.SectionView, 
                         }
                     }
                 });
+    }
+
+    public void getUserPins(String userId) {
+        mUserId = userId;
+        mModel.getUserPins(mUserId)
+                .compose(RxUtils.<List<PinBean>>bindToLifecycle(mRootView))
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mRootView.showLoading();
+                    }
+                })
+                .doOnTerminate(new Action0() {
+                    @Override
+                    public void call() {
+                        mRootView.hideLoading();
+                    }
+                })
+                .subscribe(new BaseSubscriber<List<PinBean>>() {
+                    @Override
+                    public void onNext(List<PinBean> pinBeen) {
+                        mAdapter.setNewData(pinBeen);
+                        mRootView.showNoMoreDataFooter();
+                    }
+                });
+    }
+
+    public void getUserPinsMore() {
+        mModel.getUserPinsMore(mUserId)
+                .compose(RxUtils.<List<PinBean>>bindToLifecycle(mRootView))
+                .subscribe(new BaseSubscriber<List<PinBean>>() {
+                    @Override
+                    public void onNext(List<PinBean> pinBeen) {
+                        mAdapter.addData(pinBeen);
+                        mRootView.showNoMoreDataFooter();
+                        mAdapter.loadMoreComplete();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        mAdapter.loadMoreFail();
+                    }
+                });
+
+    }
+
+    public void launchPinDetailActivity(Activity activity, View view, int position) {
+        PinBean pinBean = ((HomePinsAdapter) mAdapter).getItem(position);
+        float aspectRatio = pinBean.getFile().getWidth() /
+                (float) pinBean.getFile().getHeight();
+        if (aspectRatio < 0.3) {
+            aspectRatio = 0.3F;
+        }
+        PinDetailActivity.launch(activity,
+                pinBean.getPinId(),
+                aspectRatio,
+                (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_pin),
+                DrawableUtils.getBasicColorStr(((HomePinsAdapter) mAdapter).getItem(position)));
     }
 }

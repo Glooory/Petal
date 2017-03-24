@@ -1,6 +1,7 @@
 package com.glooory.petal.mvp.ui.user;
 
 import com.glooory.petal.mvp.model.entity.BoardBean;
+import com.glooory.petal.mvp.model.entity.PinBean;
 import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.model.entity.board.FollowBoardResultBean;
 import com.glooory.petal.mvp.model.entity.user.UserBoardSingleBean;
@@ -83,6 +84,10 @@ public interface UserContract {
         Observable<UserBoardSingleBean> createBoard(String boardName, String des, String category);
 
         Observable<UserBoardSingleBean> deleteBoard(String boardId);
+
+        Observable<List<PinBean>> getUserPins(String userId);
+
+        Observable<List<PinBean>> getUserPinsMore(String userId);
     }
 
 }

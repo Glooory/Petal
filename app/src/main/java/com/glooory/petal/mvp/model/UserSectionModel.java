@@ -5,6 +5,8 @@ import com.glooory.petal.app.util.SPUtils;
 import com.glooory.petal.mvp.model.api.cache.CacheManager;
 import com.glooory.petal.mvp.model.api.service.ServiceManager;
 import com.glooory.petal.mvp.model.entity.BoardBean;
+import com.glooory.petal.mvp.model.entity.PinBean;
+import com.glooory.petal.mvp.model.entity.PinListBean;
 import com.glooory.petal.mvp.model.entity.board.FollowBoardResultBean;
 import com.glooory.petal.mvp.model.entity.user.UserBoardListBean;
 import com.glooory.petal.mvp.model.entity.user.UserBoardSingleBean;
@@ -109,6 +111,50 @@ public class UserSectionModel extends BasePEModel<ServiceManager, CacheManager> 
         return mServiceManager.getBoardService()
                 .deleteBoard(boardId, Constants.HTTP_ARGS_DELETE)
                 .retryWhen(new RetryWithDelay(1, 1))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<List<PinBean>> getUserPins(String userId) {
+        return mServiceManager.getUserService()
+                .getUserPins(userId, Constants.PER_PAGE_LIMIT)
+                .retryWhen(new RetryWithDelay(1, 1))
+                .filter(new Func1<PinListBean, Boolean>() {
+                    @Override
+                    public Boolean call(PinListBean pinListBean) {
+                        return pinListBean.getPins() != null && pinListBean.getPins().size() > 0;
+                    }
+                })
+                .map(new Func1<PinListBean, List<PinBean>>() {
+                    @Override
+                    public List<PinBean> call(PinListBean pinListBean) {
+                        mMaxId = pinListBean.getPins().get(pinListBean.getPins().size() - 1).getPinId();
+                        return pinListBean.getPins();
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<List<PinBean>> getUserPinsMore(String userId) {
+        return mServiceManager.getUserService()
+                .getUserPinsMore(userId, mMaxId, Constants.PER_PAGE_LIMIT)
+                .retryWhen(new RetryWithDelay(1, 1))
+                .filter(new Func1<PinListBean, Boolean>() {
+                    @Override
+                    public Boolean call(PinListBean pinListBean) {
+                        return pinListBean.getPins() != null && pinListBean.getPins().size() > 0;
+                    }
+                })
+                .map(new Func1<PinListBean, List<PinBean>>() {
+                    @Override
+                    public List<PinBean> call(PinListBean pinListBean) {
+                        mMaxId = pinListBean.getPins().get(pinListBean.getPins().size() - 1).getPinId();
+                        return pinListBean.getPins();
+                    }
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

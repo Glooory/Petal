@@ -38,6 +38,7 @@ import com.glooory.petal.di.module.UserModule;
 import com.glooory.petal.mvp.presenter.UserPresenter;
 import com.glooory.petal.mvp.ui.login.LoginActivity;
 import com.glooory.petal.mvp.ui.user.board.UserBoardFragment;
+import com.glooory.petal.mvp.ui.user.pin.UserPinFragment;
 import com.jakewharton.rxbinding.view.RxView;
 import com.orhanobut.logger.Logger;
 
@@ -103,6 +104,7 @@ public class UserActivity extends PEActivity<UserPresenter>
     private UserSectionPagerAdapter mPagerAdapter;
 
     private UserBoardFragment mBoardFragment;
+    private UserPinFragment mPinFragment;
 
     public static void launch(Activity activity, String userId, String userName, SimpleDraweeView avatar) {
         Logger.d(userId);
@@ -200,6 +202,9 @@ public class UserActivity extends PEActivity<UserPresenter>
         switch (mViewPager.getCurrentItem()) {
             case 0:
                 mBoardFragment.onRefresh();
+                break;
+            case 1:
+                mPinFragment.onRefresh();
                 break;
         }
     }
@@ -370,6 +375,8 @@ public class UserActivity extends PEActivity<UserPresenter>
             switch (position) {
                 case 0:
                     return UserBoardFragment.newInstance(mUserId, mUserName, mPresenter.getBoardCount());
+                case 1:
+                    return UserPinFragment.newInstance(mUserId, mPresenter.getCollectCount());
             }
             return null;
         }
@@ -381,13 +388,16 @@ public class UserActivity extends PEActivity<UserPresenter>
                 case 0:
                     mBoardFragment = (UserBoardFragment) createdFragment;
                     break;
+                case 1:
+                    mPinFragment = (UserPinFragment) createdFragment;
+                    break;
             }
             return createdFragment;
         }
 
         @Override
         public int getCount() {
-            return 1;
+            return 2;
         }
 
         @Override
