@@ -17,7 +17,8 @@
     <EditText
         android:id="@+id/edit_text_dialog_board_edit_name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:hint="@string/msg_input_board_name"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -31,7 +32,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="left"
-        android:maxLines="4"/>
+        android:maxLines="4"
+        android:hint="@string/msg_input_board_des"/>
 
     <TextView
         android:layout_width="match_parent"

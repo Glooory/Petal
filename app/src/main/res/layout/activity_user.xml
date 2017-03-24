@@ -69,4 +69,15 @@
 
     <include layout="@layout/view_swiperefreshlayout_viewpager"/>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:visibility="gone"
+        android:src="@drawable/ic_add_white_24dp"
+        app:layout_behavior="com.glooory.petal.app.widget.ScrollAwareFABBehavior"
+        app:fabSize="normal"/>
+
 </android.support.design.widget.CoordinatorLayout>

@@ -78,6 +78,8 @@
     <string name="msg_edit_success">修改成功</string>
     <string name="msg_delete_board_success">已删除该画板</string>
     <string name="msg_input_board_des">请输入画板描述</string>
+    <string name="msg_new_board">新建画板</string>
+    <string name="msg_create_board_success">画板创建成功</string>
 
     <string-array name="user_subitem_titles">
         <item>@string/board</item>

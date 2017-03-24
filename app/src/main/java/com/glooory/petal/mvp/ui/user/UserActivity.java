@@ -19,6 +19,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -100,6 +101,8 @@ public class UserActivity extends PEActivity<UserPresenter>
     private String mUserName;
     private boolean mIsMe;
     private UserSectionPagerAdapter mPagerAdapter;
+
+    private UserBoardFragment mBoardFragment;
 
     public static void launch(Activity activity, String userId, String userName, SimpleDraweeView avatar) {
         Logger.d(userId);
@@ -193,7 +196,12 @@ public class UserActivity extends PEActivity<UserPresenter>
 
     @Override
     public void onRefresh() {
-
+        mPresenter.requestUserInfo(mUserId);
+        switch (mViewPager.getCurrentItem()) {
+            case 0:
+                mBoardFragment.onRefresh();
+                break;
+        }
     }
 
     public void showLoading() {
@@ -367,6 +375,17 @@ public class UserActivity extends PEActivity<UserPresenter>
         }
 
         @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            Fragment createdFragment = (Fragment) super.instantiateItem(container, position);
+            switch (position) {
+                case 0:
+                    mBoardFragment = (UserBoardFragment) createdFragment;
+                    break;
+            }
+            return createdFragment;
+        }
+
+        @Override
         public int getCount() {
             return 1;
         }
@@ -375,5 +394,12 @@ public class UserActivity extends PEActivity<UserPresenter>
         public CharSequence getPageTitle(int position) {
             return mTabTitles[position];
         }
+    }
+
+    public interface OnShowLoadingRequestListener {
+
+        void onShowLoadingRequest();
+
+        void onHideLoadingRequest();
     }
 }

@@ -8,6 +8,7 @@ import com.glooory.petal.mvp.model.entity.BoardBean;
 import com.glooory.petal.mvp.model.entity.board.FollowBoardResultBean;
 import com.glooory.petal.mvp.model.entity.user.UserBoardSingleBean;
 import com.glooory.petal.mvp.ui.user.UserContract;
+import com.glooory.petal.mvp.ui.user.board.CreateBoardDialogFragment;
 import com.glooory.petal.mvp.ui.user.board.EditBoardDiglogFragment;
 import com.glooory.petal.mvp.ui.user.board.UserBoardAdapter;
 import com.jess.arms.di.scope.FragmentScope;
@@ -15,12 +16,18 @@ import com.jess.arms.utils.RxUtils;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import common.PEAdapter;
 import common.PEApplication;
 import common.PEPresenter;
+import rx.Observable;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
+import rx.functions.Action1;
 
 /**
  * Created by Glooory on 17/3/21.
@@ -62,6 +69,18 @@ public class UserSectionPresenter extends PEPresenter<UserContract.SectionView, 
         mUserId = userId;
         mModel.getBoards(mUserId)
                 .compose(RxUtils.<List<BoardBean>>bindToLifecycle(mRootView))
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mRootView.showLoading();
+                    }
+                })
+                .doOnTerminate(new Action0() {
+                    @Override
+                    public void call() {
+                        mRootView.hideLoading();
+                    }
+                })
                 .subscribe(new BaseSubscriber<List<BoardBean>>() {
                     @Override
                     public void onNext(List<BoardBean> boardBeanList) {
@@ -167,11 +186,48 @@ public class UserSectionPresenter extends PEPresenter<UserContract.SectionView, 
                 .subscribe(new BaseSubscriber<UserBoardSingleBean>() {
                     @Override
                     public void onNext(UserBoardSingleBean userBoardSingleBean) {
+                        Subscription s = Observable.just(1)
+                                .delay(500, TimeUnit.MILLISECONDS)
+                                .subscribeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Action1<Integer>() {
+                                    @Override
+                                    public void call(Integer integer) {
+                                        mRootView.showMessage(PEApplication.getContext()
+                                                .getString(R.string.msg_delete_board_success));
+                                        mRootView.showLatestUserInfo();
+                                    }
+                                });
+                        addSubscrebe(s);
+                    }
+                });
+    }
+
+    public void onFABClicked() {
+        if (!mModel.isLogin()) {
+            mRootView.showLoginNav();
+            return;
+        }
+
+        CreateBoardDialogFragment createBoardDialogFragment = CreateBoardDialogFragment.newInstance();
+        createBoardDialogFragment.setOnCreateBoardListener(new CreateBoardDialogFragment.OnCreateBoardListener() {
+            @Override
+            public void onBoardCreate(String boardName, String boardDes, String boardType) {
+                createBoard(boardName, boardDes, boardType);
+            }
+        });
+        mRootView.showCreateBoardDialog(createBoardDialogFragment);
+    }
+
+    private void createBoard(String boardName, String boardDes, String boardType) {
+        mModel.createBoard(boardName, boardDes, boardType)
+                .compose(RxUtils.<UserBoardSingleBean>bindToLifecycle(mRootView))
+                .subscribe(new BaseSubscriber<UserBoardSingleBean>() {
+                    @Override
+                    public void onNext(UserBoardSingleBean userBoardSingleBean) {
                         if (userBoardSingleBean.getBoard() != null) {
                             mRootView.showMessage(PEApplication.getContext()
-                                    .getString(R.string.msg_delete_board_success));
-                            mAdapter.getData().remove(position);
-                            mAdapter.notifyDataSetChanged();
+                                    .getString(R.string.msg_create_board_success));
+                            mRootView.showLatestUserInfo();
                         }
                     }
                 });

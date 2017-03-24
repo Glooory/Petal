@@ -130,15 +130,11 @@ public class EditBoardDiglogFragment extends AppCompatDialogFragment {
     }
 
     private void initData() {
-        if (TextUtils.isEmpty(mBoardNameOriginal)) {
-            mEditTextBoardName.setHint(R.string.msg_input_board_name);
-        } else {
+        if (!TextUtils.isEmpty(mBoardNameOriginal)) {
             mEditTextBoardName.setText(mBoardNameOriginal);
         }
 
-        if (TextUtils.isEmpty(mBoardDesOriginal)) {
-            mEditTextBoardDes.setHint(R.string.msg_input_board_des);
-        } else {
+        if (!TextUtils.isEmpty(mBoardDesOriginal)) {
             mEditTextBoardDes.setText(mBoardDesOriginal);
         }
 

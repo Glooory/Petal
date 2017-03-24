@@ -3,6 +3,7 @@ package com.glooory.petal.mvp.ui.user.board;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
@@ -110,6 +111,23 @@ public class UserBoardFragment extends PEFragment<UserSectionPresenter>
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        if (mIsMe) {
+            floatingActionButton.setVisibility(View.VISIBLE);
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mPresenter.onFABClicked();
+                }
+            });
+        } else {
+            floatingActionButton.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
     public void showLoading() {
         ((UserActivity) getActivity()).showLoading();
     }
@@ -189,5 +207,19 @@ public class UserBoardFragment extends PEFragment<UserSectionPresenter>
                         mPresenter.deleteBoard(boardId, position);
                     }
                 });
+    }
+
+    @Override
+    public void showCreateBoardDialog(CreateBoardDialogFragment fragment) {
+        fragment.show(getActivity().getSupportFragmentManager(), null);
+    }
+
+    @Override
+    public void showLatestUserInfo() {
+        ((UserActivity) getActivity()).onRefresh();
+    }
+
+    public void onRefresh() {
+        mPresenter.getBoards(mUserId);
     }
 }

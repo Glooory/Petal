@@ -4,6 +4,7 @@ import com.glooory.petal.mvp.model.entity.BoardBean;
 import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.model.entity.board.FollowBoardResultBean;
 import com.glooory.petal.mvp.model.entity.user.UserBoardSingleBean;
+import com.glooory.petal.mvp.ui.user.board.CreateBoardDialogFragment;
 import com.glooory.petal.mvp.ui.user.board.EditBoardDiglogFragment;
 import com.jess.arms.mvp.BaseView;
 import com.jess.arms.mvp.IModel;
@@ -61,6 +62,10 @@ public interface UserContract {
         void showEditBoardDialog(EditBoardDiglogFragment editBoardDiglogFragment);
 
         void showDeleteBoardConfirmDialog(String boardId, int position);
+
+        void showCreateBoardDialog(CreateBoardDialogFragment fragment);
+
+        void showLatestUserInfo();
     }
 
     interface SectionModel extends IModel {
