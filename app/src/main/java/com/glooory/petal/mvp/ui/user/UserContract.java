@@ -20,6 +20,8 @@ public interface UserContract {
 
     interface View extends BaseView {
 
+        void showLoginHint();
+
         void showViewPager();
 
         void showToolbarAction(int actionResId, int actionDrawableResId);
@@ -37,7 +39,6 @@ public interface UserContract {
         void showUserAbout(String userAbout);
 
         void showUserAvatar(String avatarKey);
-
     }
 
     interface Model extends IModel {

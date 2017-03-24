@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
@@ -127,6 +128,9 @@ public class LoginActivity extends PEActivity<LoginPresenter> implements LoginCo
         mProgressDialog.setMessage(getString(R.string.msg_logining));
         mPresenter.loadHistoryAccount(this);
         mIsFromSplashActivity = getIntent().getBooleanExtra(BUNDLE_IS_FROM_SPLASH, false);
+        if (!mIsFromSplashActivity) {
+            mBtnSkipLogin.setVisibility(View.GONE);
+        }
     }
 
     @Override

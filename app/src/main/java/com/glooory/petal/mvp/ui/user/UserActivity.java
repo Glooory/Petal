@@ -31,9 +31,11 @@ import com.facebook.imagepipeline.image.CloseableImage;
 import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.util.FastBlurUtils;
+import com.glooory.petal.app.util.SnackbarUtil;
 import com.glooory.petal.di.component.DaggerUserCompoment;
 import com.glooory.petal.di.module.UserModule;
 import com.glooory.petal.mvp.presenter.UserPresenter;
+import com.glooory.petal.mvp.ui.login.LoginActivity;
 import com.glooory.petal.mvp.ui.user.board.UserBoardFragment;
 import com.jakewharton.rxbinding.view.RxView;
 import com.orhanobut.logger.Logger;
@@ -55,7 +57,8 @@ import rx.functions.Action1;
  */
 
 public class UserActivity extends PEActivity<UserPresenter>
-        implements SwipeRefreshLayout.OnRefreshListener, UserContract.View{
+        implements SwipeRefreshLayout.OnRefreshListener, UserContract.View,
+        AppBarLayout.OnOffsetChangedListener{
 
     @BindView(R.id.simple_drawee_user_avatar)
     SimpleDraweeView mImgUserAvatar;
@@ -160,27 +163,11 @@ public class UserActivity extends PEActivity<UserPresenter>
             }
         });
 
-        mAppbarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                float off = -verticalOffset;
-                float alpha = 1.0f - off / (appBarLayout.getTotalScrollRange() / 2.0f);
-                mLlUserInfo.setAlpha(alpha);
-                if (alpha < 0.3) {
-                    mCollapsingToolbar.setTitle(mUserName);
-                } else {
-                    mCollapsingToolbar.setTitle("");
-                }
-                if (off >= appBarLayout.getTotalScrollRange()) {
-                    mCollapsingToolbar.setAlpha(0);
-                } else {
-                    mCollapsingToolbar.setAlpha(1);
-                }
-            }
-        });
+        mAppbarLayout.addOnOffsetChangedListener(this);
 
         RxView.clicks(mTextViewFollowEdit)
                 .throttleFirst(Constants.THROTTLE_DURATION, TimeUnit.MILLISECONDS)
+                .delay(200, TimeUnit.MILLISECONDS)
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
@@ -244,6 +231,17 @@ public class UserActivity extends PEActivity<UserPresenter>
     @Override
     public void killMyself() {
 
+    }
+
+    @Override
+    public void showLoginHint() {
+        SnackbarUtil.showLong(this, R.string.msg_login_hint, R.string.msg_go_login,
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        LoginActivity.launch(UserActivity.this, false);
+                    }
+                });
     }
 
     @Override
@@ -334,6 +332,23 @@ public class UserActivity extends PEActivity<UserPresenter>
 
             }
         });
+    }
+
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        float off = -verticalOffset;
+        float alpha = 1.0f - off / (appBarLayout.getTotalScrollRange() / 2.0f);
+        mLlUserInfo.setAlpha(alpha);
+        if (alpha < 0.3) {
+            mCollapsingToolbar.setTitle(mUserName);
+        } else {
+            mCollapsingToolbar.setTitle("");
+        }
+        if (off >= appBarLayout.getTotalScrollRange()) {
+            mCollapsingToolbar.setAlpha(0);
+        } else {
+            mCollapsingToolbar.setAlpha(1);
+        }
     }
 
     class UserSectionPagerAdapter extends FragmentStatePagerAdapter {

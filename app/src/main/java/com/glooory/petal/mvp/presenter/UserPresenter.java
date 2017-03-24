@@ -126,6 +126,10 @@ public class UserPresenter extends PEPresenter<UserContract.View, UserContract.M
 
 
     public void toolbarActinBtnClicked() {
+        if (!mModel.isLogin()) {
+            mRootView.showLoginHint();
+            return;
+        }
         if (mIsMe) {
             // TODO: 17/3/23 Launch EditUserActivity
         } else {

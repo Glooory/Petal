@@ -32,4 +32,7 @@
     <dimen name="card_corner_radius_default">2dp</dimen>
     <dimen name="button_heght_nomal">36dp</dimen>
     <dimen name="progressbar_size_small">24dp</dimen>
+
+    <dimen name="image_width">60dp</dimen>
+    <dimen name="spacing_normal">16dp</dimen>
 </resources>
