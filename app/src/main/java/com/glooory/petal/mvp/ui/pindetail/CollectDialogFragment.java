@@ -48,7 +48,7 @@ public class CollectDialogFragment extends PEDialogFragment {
     private String[] mBoardTitles;
     private String[] mBoardIds;
     private int mSelection = 0;
-    private OnCollectActionListener mCollectActionListener;
+    private OnPinCollectListener mOnPinCollectListener;
     private HighLightArrayAdapter mSpinnerAdapter;
 
     public static CollectDialogFragment create(int pinId, String des, boolean isCollected, String existIn) {
@@ -83,7 +83,7 @@ public class CollectDialogFragment extends PEDialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-        View content = layoutInflater.inflate(R.layout.dialog_collect_pin, null);
+        View content = layoutInflater.inflate(R.layout.dialog_pin_detail_collect, null);
         initContentView(content);
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext)
                 .setTitle(R.string.collection)
@@ -92,9 +92,9 @@ public class CollectDialogFragment extends PEDialogFragment {
                 .setPositiveButton(R.string.collection, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (mCollectActionListener != null) {
+                        if (mOnPinCollectListener != null) {
                             SPUtils.putByApply(Constants.PREF_LAST_SAVE_BOARD, mBoardTitles[mSelection]);
-                            mCollectActionListener.onCollectButtonClick(mEditTextDes.getText().toString(),
+                            mOnPinCollectListener.onPinCollect(mEditTextDes.getText().toString(),
                                     mBoardIds[mSelection]);
                         }
                     }
@@ -201,12 +201,12 @@ public class CollectDialogFragment extends PEDialogFragment {
         });
     }
 
-    public void setCollectActionListener(OnCollectActionListener listener) {
-        mCollectActionListener = listener;
+    public void setOnPinCollectListener(OnPinCollectListener listener) {
+        mOnPinCollectListener = listener;
     }
 
-    public interface OnCollectActionListener {
+    public interface OnPinCollectListener {
 
-        void onCollectButtonClick(String collectDes, String boardId);
+        void onPinCollect(String collectDes, String boardId);
     }
 }

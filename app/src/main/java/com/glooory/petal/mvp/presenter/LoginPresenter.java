@@ -51,7 +51,7 @@ public class LoginPresenter extends PEPresenter<LoginContract.View, LoginContrac
 
         if (TextUtils.isEmpty(userAccount)) {
             mRootView.showAccountError(
-                    PEApplication.getContext().getString(R.string.msg_account_illegal));
+                    PEApplication.getContext().getString(R.string.msg_cannot_be_empty));
             isIllegalParams = true;
             isAccountIllegal = true;
         }

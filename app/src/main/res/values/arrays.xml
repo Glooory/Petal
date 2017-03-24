@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="category_names">
+        <item>UI/UX</item>
+        <item>平面</item>
+        <item>插画/漫画</item>
+        <item>家居/家装</item>
+        <item>女装/搭配</item>
+        <item>男士/风尚</item>
+        <item>婚礼</item>
+        <item>工业设计</item>
+        <item>摄影</item>
+        <item>造型/美妆</item>
+        <item>美食</item>
+        <item>旅行</item>
+        <item>手工/布艺</item>
+        <item>健身/舞蹈</item>
+        <item>儿童</item>
+        <item>宠物</item>
+        <item>美图</item>
+        <item>明星</item>
+        <item>美女</item>
+        <item>礼物</item>
+        <item>极客</item>
+        <item>动漫</item>
+        <item>建筑设计</item>
+        <item>人文艺术</item>
+        <item>数据图</item>
+        <item>游戏</item>
+        <item>汽车/摩托</item>
+        <item>电影/图书</item>
+        <item>生活百科</item>
+        <item>教育</item>
+        <item>运动</item>
+        <item>搞笑</item>
+    </string-array>
+
+    <string-array name="category_value">
+        <item>web_app_icon</item>
+        <item>design</item>
+        <item>illustration</item>
+        <item>home</item>
+        <item>apparel</item>
+        <item>men</item>
+        <item>wedding_events</item>
+        <item>industrial_design</item>
+        <item>photography</item>
+        <item>modeling_hair</item>
+        <item>food_drink</item>
+        <item>travel_places</item>
+        <item>diy_crafts</item>
+        <item>fitness</item>
+        <item>kids</item>
+        <item>pets</item>
+        <item>quotes</item>
+        <item>people</item>
+        <item>beauty</item>
+        <item>desire</item>
+        <item>geek</item>
+        <item>anime</item>
+        <item>architecture</item>
+        <item>art</item>
+        <item>data_presentation</item>
+        <item>games</item>
+        <item>cars_motorcycles</item>
+        <item>film_music_books</item>
+        <item>tips</item>
+        <item>education</item>
+        <item>sports</item>
+        <item>funny</item>
+    </string-array>
+</resources>

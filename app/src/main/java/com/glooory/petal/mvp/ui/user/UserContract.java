@@ -2,6 +2,9 @@ package com.glooory.petal.mvp.ui.user;
 
 import com.glooory.petal.mvp.model.entity.BoardBean;
 import com.glooory.petal.mvp.model.entity.UserBean;
+import com.glooory.petal.mvp.model.entity.board.FollowBoardResultBean;
+import com.glooory.petal.mvp.model.entity.user.UserBoardSingleBean;
+import com.glooory.petal.mvp.ui.user.board.EditBoardDiglogFragment;
 import com.jess.arms.mvp.BaseView;
 import com.jess.arms.mvp.IModel;
 
@@ -53,6 +56,10 @@ public interface UserContract {
         void showNoMoreDataFooter();
 
         void showLoginNav();
+
+        void showEditBoardDialog(EditBoardDiglogFragment editBoardDiglogFragment);
+
+        void showDeleteBoardConfirmDialog(String boardId, int position);
     }
 
     interface SectionModel extends IModel {
@@ -62,6 +69,14 @@ public interface UserContract {
         Observable<List<BoardBean>> getBoards(String userId);
 
         Observable<List<BoardBean>> getBoardsMore(String userId);
+
+        Observable<FollowBoardResultBean> followBoard(String boardId, boolean isFollowed);
+
+        Observable<UserBoardSingleBean> editBoard(String boardId, String boardName, String des, String category);
+
+        Observable<UserBoardSingleBean> createBoard(String boardName, String des, String category);
+
+        Observable<UserBoardSingleBean> deleteBoard(String boardId);
     }
 
 }

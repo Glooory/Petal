@@ -32,7 +32,7 @@
     <string name="msg_login">登录</string>
     <string name="msg_logining">正在登录...</string>
     <string name="msg_skip_login">跳过登录</string>
-    <string name="msg_account_illegal">此栏不能为空</string>
+    <string name="msg_cannot_be_empty">此栏不能为空</string>
     <string name="msg_password_illegal">密码至少6位！</string>
     <string name="msg_login_failed">用户名或密码错误</string>
 
@@ -70,6 +70,14 @@
     <string name="format_follower_count">%d 粉丝</string>
     <string name="followed">已关注</string>
     <string name="msg_empty_user_about">暂无个人介绍</string>
+    <string name="msg_board_name_hint">名称:</string>
+    <string name="msg_board_des">画板描述:</string>
+    <string name="msg_category">分类：</string>
+    <string name="msg_input_board_name">请输入画板名称</string>
+    <string name="msg_delete_board">删除画板</string>
+    <string name="msg_edit_success">修改成功</string>
+    <string name="msg_delete_board_success">已删除该画板</string>
+    <string name="msg_input_board_des">请输入画板描述</string>
 
     <string-array name="user_subitem_titles">
         <item>@string/board</item>

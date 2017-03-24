@@ -55,7 +55,7 @@ public class BoardBean implements Parcelable {
     }
 
     public void setBoardId(int boardId) {
-        this.board_id = board_id;
+        this.board_id = boardId;
     }
 
     public int getUserId() {
@@ -63,7 +63,7 @@ public class BoardBean implements Parcelable {
     }
 
     public void setUserId(int userId) {
-        this.user_id = user_id;
+        this.user_id = userId;
     }
 
     public String getTitle() {
@@ -87,7 +87,7 @@ public class BoardBean implements Parcelable {
     }
 
     public void setCategoryId(String categoryId) {
-        this.category_id = category_id;
+        this.category_id = categoryId;
     }
 
     public int getSeq() {
@@ -103,7 +103,7 @@ public class BoardBean implements Parcelable {
     }
 
     public void setPinCount(int pinCount) {
-        this.pin_count = pin_count;
+        this.pin_count = pinCount;
     }
 
     public int getFollowCount() {
@@ -111,7 +111,7 @@ public class BoardBean implements Parcelable {
     }
 
     public void setFollowCount(int followCount) {
-        this.follow_count = follow_count;
+        this.follow_count = followCount;
     }
 
     public int getLikeCount() {
@@ -119,7 +119,7 @@ public class BoardBean implements Parcelable {
     }
 
     public void setLikeCount(int likeCount) {
-        this.like_count = like_count;
+        this.like_count = likeCount;
     }
 
     public int getCreatedAt() {
@@ -127,7 +127,7 @@ public class BoardBean implements Parcelable {
     }
 
     public void setCreatedAt(int createdAt) {
-        this.created_at = created_at;
+        this.created_at = createdAt;
     }
 
     public int getUpdatedAt() {
@@ -135,7 +135,7 @@ public class BoardBean implements Parcelable {
     }
 
     public void setUpdatedAt(int updatedAt) {
-        this.updated_at = updated_at;
+        this.updated_at = updatedAt;
     }
 
     public int getDeleting() {
@@ -151,7 +151,7 @@ public class BoardBean implements Parcelable {
     }
 
     public void setIsPrivate(int isPrivate) {
-        this.is_private = is_private;
+        this.is_private = isPrivate;
     }
 
     public UserBean getUser() {
@@ -191,7 +191,7 @@ public class BoardBean implements Parcelable {
     }
 
     public void setRecommendTags(List<String> recommendTags) {
-        this.recommend_tags = recommend_tags;
+        this.recommend_tags = recommendTags;
     }
 
     public static class ExtraBean implements Parcelable {
@@ -220,7 +220,7 @@ public class BoardBean implements Parcelable {
         }
 
         public void setIsCreation(boolean isCreation) {
-            this.is_creation = is_creation;
+            this.is_creation = isCreation;
         }
 
         public static class CoverBean implements Parcelable {
@@ -236,7 +236,7 @@ public class BoardBean implements Parcelable {
             }
 
             public void setPinId(String pinId) {
-                this.pin_id = pin_id;
+                this.pin_id = pinId;
             }
 
             @Override

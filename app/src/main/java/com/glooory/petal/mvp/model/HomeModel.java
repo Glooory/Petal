@@ -47,7 +47,7 @@ public class HomeModel extends BasePEModel<ServiceManager, CacheManager>
                 .filter(new Func1<List<PinBean>, Boolean>() {
                     @Override
                     public Boolean call(List<PinBean> pinBeen) {
-                        return pinBeen.size() > 0;
+                        return pinBeen != null && pinBeen.size() > 0;
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -68,7 +68,7 @@ public class HomeModel extends BasePEModel<ServiceManager, CacheManager>
                 .filter(new Func1<List<PinBean>, Boolean>() {
                     @Override
                     public Boolean call(List<PinBean> pinBeen) {
-                        return pinBeen.size() > 0;
+                        return pinBeen != null && pinBeen.size() > 0;
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -89,7 +89,7 @@ public class HomeModel extends BasePEModel<ServiceManager, CacheManager>
                 .filter(new Func1<List<PinBean>, Boolean>() {
                     @Override
                     public Boolean call(List<PinBean> pinBeen) {
-                        return pinBeen.size() > 0;
+                        return pinBeen != null && pinBeen.size() > 0;
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -110,7 +110,7 @@ public class HomeModel extends BasePEModel<ServiceManager, CacheManager>
                 .filter(new Func1<List<PinBean>, Boolean>() {
                     @Override
                     public Boolean call(List<PinBean> pinBeen) {
-                        return pinBeen.size() > 0;
+                        return pinBeen != null && pinBeen.size() > 0;
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -131,7 +131,7 @@ public class HomeModel extends BasePEModel<ServiceManager, CacheManager>
                 .filter(new Func1<List<PinBean>, Boolean>() {
                     @Override
                     public Boolean call(List<PinBean> pinBeen) {
-                        return pinBeen.size() > 0;
+                        return pinBeen != null && pinBeen.size() > 0;
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -152,7 +152,7 @@ public class HomeModel extends BasePEModel<ServiceManager, CacheManager>
                 .filter(new Func1<List<PinBean>, Boolean>() {
                     @Override
                     public Boolean call(List<PinBean> pinBeen) {
-                        return pinBeen.size() > 0;
+                        return pinBeen != null && pinBeen.size() > 0;
                     }
                 })
                 .subscribeOn(Schedulers.io())

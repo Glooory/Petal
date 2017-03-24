@@ -1,5 +1,6 @@
 package com.glooory.petal.mvp.ui.user.board;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
+import com.glooory.petal.app.util.DialogUtils;
 import com.glooory.petal.app.util.SnackbarUtil;
 import com.glooory.petal.di.component.DaggerUserSectionComponent;
 import com.glooory.petal.di.module.UserSectionModule;
@@ -85,7 +87,7 @@ public class UserBoardFragment extends PEFragment<UserSectionPresenter>
                         // TODO: 17/3/22 Launch BoardActivity
                         break;
                     case R.id.ll_user_board_operate:
-                        // TODO: 17/3/22 board operate
+                        mPresenter.operateBtnClicked(position);
                         break;
                 }
             }
@@ -119,7 +121,7 @@ public class UserBoardFragment extends PEFragment<UserSectionPresenter>
 
     @Override
     public void showMessage(String message) {
-
+        SnackbarUtil.showLong(getActivity(), message);
     }
 
     @Override
@@ -169,6 +171,22 @@ public class UserBoardFragment extends PEFragment<UserSectionPresenter>
                     @Override
                     public void onClick(View v) {
                         LoginActivity.launch(getActivity(), false);
+                    }
+                });
+    }
+
+    @Override
+    public void showEditBoardDialog(EditBoardDiglogFragment editBoardDiglogFragment) {
+        editBoardDiglogFragment.show(getActivity().getSupportFragmentManager(), null);
+    }
+
+    @Override
+    public void showDeleteBoardConfirmDialog(final String boardId, final int position) {
+        DialogUtils.show(getActivity(), R.string.msg_delete_waring, R.string.msg_cancel,
+                R.string.msg_confirm, null, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mPresenter.deleteBoard(boardId, position);
                     }
                 });
     }

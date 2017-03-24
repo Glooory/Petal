@@ -5,7 +5,9 @@ import com.glooory.petal.app.util.SPUtils;
 import com.glooory.petal.mvp.model.api.cache.CacheManager;
 import com.glooory.petal.mvp.model.api.service.ServiceManager;
 import com.glooory.petal.mvp.model.entity.BoardBean;
+import com.glooory.petal.mvp.model.entity.board.FollowBoardResultBean;
 import com.glooory.petal.mvp.model.entity.user.UserBoardListBean;
+import com.glooory.petal.mvp.model.entity.user.UserBoardSingleBean;
 import com.glooory.petal.mvp.ui.user.UserContract;
 import com.jess.arms.di.scope.FragmentScope;
 
@@ -68,6 +70,45 @@ public class UserSectionModel extends BasePEModel<ServiceManager, CacheManager> 
                         return userBoardListBean.getBoards();
                     }
                 })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<FollowBoardResultBean> followBoard(String boardId, boolean isFollowed) {
+        String operate = isFollowed ? Constants.HTTP_ARGS_UNFOLLOW : Constants.HTTP_ARGS_FOLLOW;
+        return mServiceManager.getBoardService()
+                .followBoard(boardId, operate)
+                .retryWhen(new RetryWithDelay(1, 1))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<UserBoardSingleBean> editBoard(String boardId, String boardName,
+            String des, String category) {
+        return mServiceManager.getBoardService()
+                .editBoard(boardId, boardName, des, category)
+                .retryWhen(new RetryWithDelay(1, 1))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<UserBoardSingleBean> createBoard(String boardName,
+            String des, String category) {
+        return mServiceManager.getBoardService()
+                .createBoard(boardName, des, category)
+                .retryWhen(new RetryWithDelay(1, 1))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<UserBoardSingleBean> deleteBoard(String boardId) {
+        return mServiceManager.getBoardService()
+                .deleteBoard(boardId, Constants.HTTP_ARGS_DELETE)
+                .retryWhen(new RetryWithDelay(1, 1))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

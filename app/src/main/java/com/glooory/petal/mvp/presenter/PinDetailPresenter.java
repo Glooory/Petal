@@ -277,9 +277,9 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
     private void showCollectDialog() {
         CollectDialogFragment collectDialogFragment = CollectDialogFragment
                 .create(mPinId, mCollectDes, mIsCollected, mCollectBelong);
-        collectDialogFragment.setCollectActionListener(new CollectDialogFragment.OnCollectActionListener() {
+        collectDialogFragment.setOnPinCollectListener(new CollectDialogFragment.OnPinCollectListener() {
             @Override
-            public void onCollectButtonClick(String collectDes, String boardId) {
+            public void onPinCollect(String collectDes, String boardId) {
                 collectPin(boardId, collectDes);
             }
         });
@@ -289,14 +289,14 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
     private void showEditDialog() {
         EditPinDialogFragment editPinDialogFragment = EditPinDialogFragment
                 .create(String.valueOf(mPinId), mBoardId, mCollectDes);
-        editPinDialogFragment.setPinEditedListener(new EditPinDialogFragment.OnPinEditedListener() {
+        editPinDialogFragment.setPinEditListener(new EditPinDialogFragment.OnPinEditListener() {
             @Override
-            public void onDeleteButtonClicked() {
+            public void onPinDelete() {
                 mRootView.showDeleteConfirmDialog();
             }
 
             @Override
-            public void onCommitButtonClicked(String boardId, String des) {
+            public void onPinEdit(String boardId, String des) {
                 actionEditPin(boardId, des);
             }
         });

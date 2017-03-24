@@ -47,7 +47,7 @@ public class EditPinDialogFragment extends PEDialogFragment {
     private String[] mBoardIds;
     private int mSelection = 0;
     private HighLightArrayAdapter mSpinnerAdapter;
-    private OnPinEditedListener mPinEditedListener;
+    private OnPinEditListener mPinEditListener;
 
     public static EditPinDialogFragment create(String pinId, String boardId, String des) {
         Bundle args = new Bundle();
@@ -78,7 +78,7 @@ public class EditPinDialogFragment extends PEDialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View contentView = LayoutInflater.from(mContext)
-                .inflate(R.layout.dialog_edit_pin, null);
+                .inflate(R.layout.dialog_pin_detail_edit, null);
         initView(contentView);
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext)
                 .setTitle(R.string.edit)
@@ -86,8 +86,8 @@ public class EditPinDialogFragment extends PEDialogFragment {
                 .setNeutralButton(R.string.delete, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (mPinEditedListener != null) {
-                            mPinEditedListener.onDeleteButtonClicked();
+                        if (mPinEditListener != null) {
+                            mPinEditListener.onPinDelete();
                         }
                     }
                 })
@@ -95,9 +95,9 @@ public class EditPinDialogFragment extends PEDialogFragment {
                 .setPositiveButton(R.string.msg_confirm, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (mPinEditedListener != null) {
+                        if (mPinEditListener != null) {
                             SPUtils.putByApply(Constants.PREF_LAST_SAVE_BOARD, mBoardTitles[mSelection]);
-                            mPinEditedListener.onCommitButtonClicked(mBoardIds[mSelection],
+                            mPinEditListener.onPinEdit(mBoardIds[mSelection],
                                     mEditTextCollectDes.getText().toString());
                         }
                     }
@@ -188,14 +188,14 @@ public class EditPinDialogFragment extends PEDialogFragment {
         });
     }
 
-    public void setPinEditedListener(OnPinEditedListener pinEditedListener) {
-        mPinEditedListener = pinEditedListener;
+    public void setPinEditListener(OnPinEditListener pinEditListener) {
+        mPinEditListener = pinEditListener;
     }
 
-    public interface OnPinEditedListener {
+    public interface OnPinEditListener {
 
-        void onDeleteButtonClicked();
+        void onPinDelete();
 
-        void onCommitButtonClicked(String boardId, String des);
+        void onPinEdit(String boardId, String des);
     }
 }

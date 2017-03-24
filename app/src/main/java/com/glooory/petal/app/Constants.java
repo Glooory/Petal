@@ -30,16 +30,17 @@ public class Constants {
     public static final String PREF_BOARD_IDS = "board_ids";
     public static final String PREF_LAST_SAVE_BOARD = "last_save_board";
 
+    public static final int PER_PAGE_LIMIT = 20;
     public static final String HTTP_HEADER_AUTHORIZATION = "Authorization";
     public static final String HTTP_QUERY_LIMIT = "limit";
     public static final String HTTP_QUERY_MAX = "max";
-    public static final int PER_PAGE_LIMIT = 20;
     public static final String HTTP_ARGS_VALUE_PASSWORD = "password";
     public static final String HTTP_RECOMMEND_TAGS = "recommend_tags";
     public static final String HTTP_ARGS_LIKE = "like";
     public static final String HTTP_ARGS_UNLIKE = "unlike";
     public static final String HTTP_ARGS_FOLLOW = "follow";
     public static final String HTTP_ARGS_UNFOLLOW = "unfollow";
+    public static final String HTTP_ARGS_DELETE = "DELETE";
 
     public static final String EXTRA_PIN_ID = "pin_id";
     public static final String EXTRA_COLLECT_DES = "collect_des";
