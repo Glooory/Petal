@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
@@ -48,6 +49,7 @@ import butterknife.BindArray;
 import butterknife.BindColor;
 import butterknife.BindString;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import common.AppComponent;
 import common.PEActivity;
 import rx.Observable;
@@ -150,11 +152,17 @@ public class UserActivity extends PEActivity<UserPresenter>
         );
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
+        final FloatingActionButton floatingActionButton = ButterKnife.findById(this, R.id.fab);
         mTablayout.setSelectedTabIndicatorColor(mColorTabIndicator);
         mTablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mViewPager.setCurrentItem(tab.getPosition());
+                if (tab.getPosition() == 0 && mIsMe) {
+                    floatingActionButton.setVisibility(View.VISIBLE);
+                } else {
+                    floatingActionButton.setVisibility(View.GONE);
+                }
             }
 
             @Override

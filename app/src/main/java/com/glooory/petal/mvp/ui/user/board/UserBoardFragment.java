@@ -94,6 +94,15 @@ public class UserBoardFragment extends PEFragment<UserSectionPresenter>
             }
         });
         mPresenter.getBoards(mUserId);
+        FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        if (mIsMe) {
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mPresenter.onFABClicked();
+                }
+            });
+        }
     }
 
     @Override
@@ -106,25 +115,14 @@ public class UserBoardFragment extends PEFragment<UserSectionPresenter>
     }
 
     @Override
-    protected void initData() {
+    public void onResume() {
+        super.onResume();
 
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        if (mIsMe) {
-            floatingActionButton.setVisibility(View.VISIBLE);
-            floatingActionButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mPresenter.onFABClicked();
-                }
-            });
-        } else {
-            floatingActionButton.setVisibility(View.GONE);
-        }
+    protected void initData() {
+
     }
 
     @Override
