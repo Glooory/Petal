@@ -178,7 +178,7 @@ public class PinBean implements Parcelable {
     }
 
     public void setRawText(String rawText) {
-        this.raw_text = raw_text;
+        this.raw_text = rawText;
     }
 
     public int getVia() {

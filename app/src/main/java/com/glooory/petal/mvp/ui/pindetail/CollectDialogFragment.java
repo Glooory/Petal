@@ -51,7 +51,7 @@ public class CollectDialogFragment extends PEDialogFragment {
     private OnPinCollectListener mOnPinCollectListener;
     private HighLightArrayAdapter mSpinnerAdapter;
 
-    public static CollectDialogFragment create(int pinId, String des, boolean isCollected, String existIn) {
+    public static CollectDialogFragment newInstance(int pinId, String des, boolean isCollected, String existIn) {
         Bundle args = new Bundle();
         args.putInt(Constants.EXTRA_PIN_ID, pinId);
         args.putString(Constants.EXTRA_COLLECT_DES, des);

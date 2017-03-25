@@ -1,5 +1,6 @@
 package com.glooory.petal.mvp.ui.user.pin;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -10,12 +11,15 @@ import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
+import com.chad.library.adapter.base.listener.OnItemChildLongClickListener;
 import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
+import com.glooory.petal.app.util.DialogUtils;
 import com.glooory.petal.di.component.DaggerUserSectionComponent;
 import com.glooory.petal.di.module.UserSectionModule;
 import com.glooory.petal.mvp.presenter.UserSectionPresenter;
 import com.glooory.petal.mvp.ui.home.HomePinsAdapter;
+import com.glooory.petal.mvp.ui.pindetail.EditPinDialogFragment;
 import com.glooory.petal.mvp.ui.user.UserActivity;
 import com.glooory.petal.mvp.ui.user.UserContract;
 import com.glooory.petal.mvp.ui.user.board.CreateBoardDialogFragment;
@@ -82,6 +86,14 @@ public class UserPinFragment extends PEFragment<UserSectionPresenter> implements
                 }
             }
         });
+        if (mPresenter.isMe(mUserId)) {
+            mRecyclerView.addOnItemTouchListener(new OnItemChildLongClickListener() {
+                @Override
+                public void onSimpleItemChildLongClick(BaseQuickAdapter adapter, View view, int position) {
+                    mPresenter.onPinLongClick(position);
+                }
+            });
+        }
         mPresenter.getUserPins(mUserId);
     }
 
@@ -177,6 +189,28 @@ public class UserPinFragment extends PEFragment<UserSectionPresenter> implements
     @Override
     public void showLatestUserInfo() {
         ((UserActivity) getActivity()).onRefresh();
+    }
+
+    @Override
+    public void showEditPinDialog(EditPinDialogFragment editPinDialogFragment) {
+        editPinDialogFragment.show(getActivity().getSupportFragmentManager(), null);
+    }
+
+    @Override
+    public void showDeletePinConfirmDialog(final String pinId, final int position) {
+        DialogUtils.show(getActivity(), R.string.msg_delete_waring, R.string.msg_cancel,
+                R.string.msg_confirm, null, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mPresenter.deletePin(pinId, position);
+                    }
+                });
+    }
+
+    @Override
+    public void showDeletePinDataChange() {
+        mPinCount--;
+        ((UserActivity) getActivity()).setPinCountChanged(mPinCount);
     }
 
     public void onRefresh() {

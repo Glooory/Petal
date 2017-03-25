@@ -49,7 +49,7 @@ public class EditPinDialogFragment extends PEDialogFragment {
     private HighLightArrayAdapter mSpinnerAdapter;
     private OnPinEditListener mPinEditListener;
 
-    public static EditPinDialogFragment create(String pinId, String boardId, String des) {
+    public static EditPinDialogFragment newInstance(String pinId, String boardId, String des) {
         Bundle args = new Bundle();
         args.putString(Constants.EXTRA_PIN_ID, pinId);
         args.putString(Constants.EXTRA_BOARD_ID, boardId);
@@ -97,7 +97,7 @@ public class EditPinDialogFragment extends PEDialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         if (mPinEditListener != null) {
                             SPUtils.putByApply(Constants.PREF_LAST_SAVE_BOARD, mBoardTitles[mSelection]);
-                            mPinEditListener.onPinEdit(mBoardIds[mSelection],
+                            mPinEditListener.onPinEdit(mBoardIds[mSelection], mBoardTitles[mSelection],
                                     mEditTextCollectDes.getText().toString());
                         }
                     }
@@ -196,6 +196,6 @@ public class EditPinDialogFragment extends PEDialogFragment {
 
         void onPinDelete();
 
-        void onPinEdit(String boardId, String des);
+        void onPinEdit(String boardId, String boardName, String des);
     }
 }

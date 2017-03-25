@@ -276,7 +276,7 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
 
     private void showCollectDialog() {
         CollectDialogFragment collectDialogFragment = CollectDialogFragment
-                .create(mPinId, mCollectDes, mIsCollected, mCollectBelong);
+                .newInstance(mPinId, mCollectDes, mIsCollected, mCollectBelong);
         collectDialogFragment.setOnPinCollectListener(new CollectDialogFragment.OnPinCollectListener() {
             @Override
             public void onPinCollect(String collectDes, String boardId) {
@@ -288,7 +288,7 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
 
     private void showEditDialog() {
         EditPinDialogFragment editPinDialogFragment = EditPinDialogFragment
-                .create(String.valueOf(mPinId), mBoardId, mCollectDes);
+                .newInstance(String.valueOf(mPinId), mBoardId, mCollectDes);
         editPinDialogFragment.setPinEditListener(new EditPinDialogFragment.OnPinEditListener() {
             @Override
             public void onPinDelete() {
@@ -296,7 +296,7 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
             }
 
             @Override
-            public void onPinEdit(String boardId, String des) {
+            public void onPinEdit(String boardId, String boardName, String des) {
                 actionEditPin(boardId, des);
             }
         });

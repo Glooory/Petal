@@ -5,6 +5,7 @@ import com.glooory.petal.mvp.model.entity.PinBean;
 import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.model.entity.board.FollowBoardResultBean;
 import com.glooory.petal.mvp.model.entity.user.UserBoardSingleBean;
+import com.glooory.petal.mvp.ui.pindetail.EditPinDialogFragment;
 import com.glooory.petal.mvp.ui.user.board.CreateBoardDialogFragment;
 import com.glooory.petal.mvp.ui.user.board.EditBoardDiglogFragment;
 import com.jess.arms.mvp.BaseView;
@@ -69,6 +70,12 @@ public interface UserContract {
         void showCreateBoardDialog(CreateBoardDialogFragment fragment);
 
         void showLatestUserInfo();
+
+        void showEditPinDialog(EditPinDialogFragment editPinDialogFragment);
+
+        void showDeletePinConfirmDialog(String pinId, int position);
+
+        void showDeletePinDataChange();
     }
 
     interface SectionModel extends IModel {
@@ -90,6 +97,10 @@ public interface UserContract {
         Observable<List<PinBean>> getUserPins(String userId);
 
         Observable<List<PinBean>> getUserPinsMore(String userId);
+
+        Observable<PinBean> editPin(String pinId, String boardId, String des);
+
+        Observable<Void> deletePin(String pinId);
     }
 
 }

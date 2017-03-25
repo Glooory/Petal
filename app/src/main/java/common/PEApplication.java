@@ -121,7 +121,7 @@ public class PEApplication extends BaseApplication {
 
                         //这里如果发现token过期,可以先请求最新的token,然后在拿新的token放入request里去重新请求
                         //注意在这个回调之前已经调用过proceed,所以这里必须自己去建立网络请求,如使用okhttp使用新的request去请求
-                        // create a new request and modify it accordingly using the new token
+                        // newInstance a new request and modify it accordingly using the new token
 //                    Request newRequest = chain.request().newBuilder().header("token", newToken)
 //                            .build();
 

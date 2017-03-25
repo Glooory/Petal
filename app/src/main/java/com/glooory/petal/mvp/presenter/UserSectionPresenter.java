@@ -14,6 +14,7 @@ import com.glooory.petal.mvp.model.entity.PinBean;
 import com.glooory.petal.mvp.model.entity.board.FollowBoardResultBean;
 import com.glooory.petal.mvp.model.entity.user.UserBoardSingleBean;
 import com.glooory.petal.mvp.ui.home.HomePinsAdapter;
+import com.glooory.petal.mvp.ui.pindetail.EditPinDialogFragment;
 import com.glooory.petal.mvp.ui.pindetail.PinDetailActivity;
 import com.glooory.petal.mvp.ui.user.UserContract;
 import com.glooory.petal.mvp.ui.user.board.CreateBoardDialogFragment;
@@ -298,5 +299,56 @@ public class UserSectionPresenter extends PEPresenter<UserContract.SectionView, 
                 aspectRatio,
                 (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_pin),
                 DrawableUtils.getBasicColorStr(((HomePinsAdapter) mAdapter).getItem(position)));
+    }
+
+    public void onPinLongClick(final int position) {
+        final PinBean pinBean = ((HomePinsAdapter) mAdapter).getItem(position);
+        final String pinId = String.valueOf(pinBean.getPinId());
+        EditPinDialogFragment editPinDialogFragment = EditPinDialogFragment.newInstance(
+                pinId,
+                String.valueOf(pinBean.getBoardId()),
+                pinBean.getRawText());
+        editPinDialogFragment.setPinEditListener(new EditPinDialogFragment.OnPinEditListener() {
+            @Override
+            public void onPinDelete() {
+                mRootView.showDeletePinConfirmDialog(pinId , position);
+            }
+
+            @Override
+            public void onPinEdit(String boardId, String boardName, String des) {
+                editPin(pinId, boardId, boardName, des, position);
+            }
+        });
+        mRootView.showEditPinDialog(editPinDialogFragment);
+    }
+
+    public void editPin(final String pinId, String boardId, final String boardName,
+            String des, final int position) {
+        mModel.editPin(pinId, boardId, des)
+                .compose(RxUtils.<PinBean>bindToLifecycle(mRootView))
+                .subscribe(new BaseSubscriber<PinBean>() {
+                    @Override
+                    public void onNext(PinBean pinBean) {
+                        Logger.d(pinBean.getRawText());
+                        ((HomePinsAdapter) mAdapter).getItem(position)
+                                .setRawText(pinBean.getRawText());
+                        ((HomePinsAdapter) mAdapter).getItem(position).getBoard()
+                                .setTitle(boardName);
+                        mAdapter.notifyItemChanged(position);
+                    }
+                });
+    }
+
+    public void deletePin(String pinId, final int position) {
+        mModel.deletePin(pinId)
+                .compose(RxUtils.<Void>bindToLifecycle(mRootView))
+                .subscribe(new BaseSubscriber<Void>() {
+                    @Override
+                    public void onNext(Void aVoid) {
+                        mAdapter.remove(position);
+                        mAdapter.notifyDataSetChanged();
+                        mRootView.showDeletePinDataChange();
+                    }
+                });
     }
 }

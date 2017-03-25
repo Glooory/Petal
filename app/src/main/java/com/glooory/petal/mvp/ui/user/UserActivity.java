@@ -381,6 +381,12 @@ public class UserActivity extends PEActivity<UserPresenter>
         }
     }
 
+    public void setPinCountChanged(int pinCount) {
+        String pinSectionTitle = String.format(getString(R.string.format_collection_count), pinCount);
+        mTabTitles[1] = pinSectionTitle;
+        mViewPager.getAdapter().notifyDataSetChanged();
+    }
+
     class UserSectionPagerAdapter extends FragmentStatePagerAdapter {
 
         public UserSectionPagerAdapter(FragmentManager fm) {

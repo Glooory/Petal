@@ -3,6 +3,7 @@ package com.glooory.petal.mvp.model.api.service;
 import com.glooory.petal.app.Constants;
 import com.glooory.petal.mvp.model.entity.PinBean;
 import com.glooory.petal.mvp.model.entity.PinListBean;
+import com.glooory.petal.mvp.model.entity.PinSingleBean;
 import com.glooory.petal.mvp.model.entity.collect.CollectResultBean;
 import com.glooory.petal.mvp.model.entity.pindetail.CollectionInfoBean;
 import com.glooory.petal.mvp.model.entity.pindetail.LikeResultBean;
@@ -108,13 +109,13 @@ public interface PinService {
     // https://api.huaban.com/pins/865002387?board_id=32026507&text=%E6%9D%A5%E8%87%AA%E7%9B%B8%E5%86%8C
     @FormUrlEncoded
     @POST("pins/{pin_id}")
-    Observable<PinBean> editPin(@Path("pin_id") int pinId,
+    Observable<PinSingleBean> editPin(@Path("pin_id") String pinId,
             @Field("board_id") String boardId,
             @Field("text") String des);
 
     // 删除某个采集
     // https://api.huaban.com/pins/864657103
     @DELETE("pins/{pin_id}")
-    Observable<Void> deletePin(@Path("pin_id") int pinId);
+    Observable<Void> deletePin(@Path("pin_id") String pinId);
 
 }

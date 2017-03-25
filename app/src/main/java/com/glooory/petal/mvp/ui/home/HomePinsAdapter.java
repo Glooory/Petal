@@ -68,7 +68,8 @@ public class HomePinsAdapter extends PEAdapter<PinBean, BaseViewHolder> {
                 .setText(R.id.textview_like_count, StringUtils.appenUnit(item.getLikeCount()))
                 .setText(R.id.textview_pin_collection_via, setViaDesTextStyled(item))
                 .addOnClickListener(R.id.ll_pin_img)
-                .addOnClickListener(R.id.ll_pin_via_info);
+                .addOnClickListener(R.id.ll_pin_via_info)
+                .addOnLongClickListener(R.id.ll_pin_img);
 
         float aspectRatio = ImageUtils.getAspectRatio(item.getFile().getWidth(),
                 item.getFile().getHeight());

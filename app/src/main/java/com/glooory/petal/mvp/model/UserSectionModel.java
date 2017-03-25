@@ -7,6 +7,7 @@ import com.glooory.petal.mvp.model.api.service.ServiceManager;
 import com.glooory.petal.mvp.model.entity.BoardBean;
 import com.glooory.petal.mvp.model.entity.PinBean;
 import com.glooory.petal.mvp.model.entity.PinListBean;
+import com.glooory.petal.mvp.model.entity.PinSingleBean;
 import com.glooory.petal.mvp.model.entity.board.FollowBoardResultBean;
 import com.glooory.petal.mvp.model.entity.user.UserBoardListBean;
 import com.glooory.petal.mvp.model.entity.user.UserBoardSingleBean;
@@ -158,5 +159,30 @@ public class UserSectionModel extends BasePEModel<ServiceManager, CacheManager> 
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    @Override
+    public Observable<PinBean> editPin(final String pinId, String boardId, String des) {
+        return mServiceManager.getPinService()
+                .editPin(pinId, boardId, des)
+                .retryWhen(new RetryWithDelay(1, 1))
+                .map(new Func1<PinSingleBean, PinBean>() {
+                    @Override
+                    public PinBean call(PinSingleBean pinSingleBean) {
+                        return pinSingleBean.getPin();
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<Void> deletePin(String pinId) {
+        return mServiceManager.getPinService()
+                .deletePin(pinId)
+                .retryWhen(new RetryWithDelay(1, 1))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
 
 }

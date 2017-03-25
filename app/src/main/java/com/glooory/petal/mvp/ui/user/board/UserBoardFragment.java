@@ -20,6 +20,7 @@ import com.glooory.petal.di.component.DaggerUserSectionComponent;
 import com.glooory.petal.di.module.UserSectionModule;
 import com.glooory.petal.mvp.presenter.UserSectionPresenter;
 import com.glooory.petal.mvp.ui.login.LoginActivity;
+import com.glooory.petal.mvp.ui.pindetail.EditPinDialogFragment;
 import com.glooory.petal.mvp.ui.user.UserActivity;
 import com.glooory.petal.mvp.ui.user.UserContract;
 
@@ -215,6 +216,21 @@ public class UserBoardFragment extends PEFragment<UserSectionPresenter>
     @Override
     public void showLatestUserInfo() {
         ((UserActivity) getActivity()).onRefresh();
+    }
+
+    @Override
+    public void showEditPinDialog(EditPinDialogFragment editPinDialogFragment) {
+
+    }
+
+    @Override
+    public void showDeletePinConfirmDialog(String pinId, int position) {
+
+    }
+
+    @Override
+    public void showDeletePinDataChange() {
+
     }
 
     public void onRefresh() {
