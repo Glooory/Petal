@@ -55,7 +55,7 @@ public class ResultCountInfoBean {
     }
 
     public void setPinCount(int pinCount) {
-        this.pin_count = pin_count;
+        this.pin_count = pinCount;
     }
 
     public int getSelfPinCount() {
@@ -63,7 +63,7 @@ public class ResultCountInfoBean {
     }
 
     public void setSelfPinCount(int selfPinCount) {
-        this.self_pin_count = self_pin_count;
+        this.self_pin_count = selfPinCount;
     }
 
     public int getSelfBoardCount() {
@@ -71,7 +71,7 @@ public class ResultCountInfoBean {
     }
 
     public void setSelfBoardCount(int selfBoardCount) {
-        this.self_board_count = self_board_count;
+        this.self_board_count = selfBoardCount;
     }
 
     public int getBoardCount() {
@@ -79,7 +79,7 @@ public class ResultCountInfoBean {
     }
 
     public void setBoardCount(int boardCount) {
-        this.board_count = board_count;
+        this.board_count = boardCount;
     }
 
     public int getPeopleCount() {
@@ -87,7 +87,7 @@ public class ResultCountInfoBean {
     }
 
     public void setPeopleCount(int peopleCount) {
-        this.people_count = people_count;
+        this.people_count = peopleCount;
     }
 
     public int getPage() {

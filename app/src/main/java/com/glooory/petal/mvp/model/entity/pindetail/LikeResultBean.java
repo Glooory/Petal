@@ -35,7 +35,7 @@ public class LikeResultBean {
         }
 
         public void setPinId(int pinId) {
-            this.pin_id = pin_id;
+            this.pin_id = pinId;
         }
 
         public int getUserId() {
@@ -43,7 +43,7 @@ public class LikeResultBean {
         }
 
         public void setUserId(int userId) {
-            this.user_id = user_id;
+            this.user_id = userId;
         }
 
         public int getSeq() {
@@ -59,7 +59,7 @@ public class LikeResultBean {
         }
 
         public void setLikedAt(int likedAt) {
-            this.liked_at = liked_at;
+            this.liked_at = likedAt;
         }
     }
 }

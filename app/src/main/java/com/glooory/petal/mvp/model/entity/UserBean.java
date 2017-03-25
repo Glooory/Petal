@@ -49,7 +49,7 @@ public class UserBean implements Parcelable {
     }
 
     public void setUserId(int userId) {
-        this.user_id = user_id;
+        this.user_id = userId;
     }
 
     public String getUsername() {
@@ -73,7 +73,7 @@ public class UserBean implements Parcelable {
     }
 
     public void setCreatedAt(int createdAt) {
-        this.created_at = created_at;
+        this.created_at = createdAt;
     }
 
     public AvatarBean getAvatar() {
@@ -97,7 +97,7 @@ public class UserBean implements Parcelable {
     }
 
     public void setPinCount(int pinCount) {
-        this.pin_count = pin_count;
+        this.pin_count = pinCount;
     }
 
     public int getFollowerCount() {
@@ -105,7 +105,7 @@ public class UserBean implements Parcelable {
     }
 
     public void setFollowerCount(int followerCount) {
-        this.follower_count = follower_count;
+        this.follower_count = followerCount;
     }
 
     public int getBoardsLikeCount() {
@@ -113,7 +113,7 @@ public class UserBean implements Parcelable {
     }
 
     public void setBoardsLikeCount(int boardsLikeCount) {
-        this.boards_like_count = boards_like_count;
+        this.boards_like_count = boardsLikeCount;
     }
 
     public int getBoardCount() {
@@ -121,7 +121,7 @@ public class UserBean implements Parcelable {
     }
 
     public void setBoardCount(int boardCount) {
-        this.board_count = board_count;
+        this.board_count = boardCount;
     }
 
     public int getCommodityCount() {
@@ -129,7 +129,7 @@ public class UserBean implements Parcelable {
     }
 
     public void setCommodityCount(int commodityCount) {
-        this.commodity_count = commodity_count;
+        this.commodity_count = commodityCount;
     }
 
     public int getLikeCount() {
@@ -137,7 +137,7 @@ public class UserBean implements Parcelable {
     }
 
     public void setLikeCount(int likeCount) {
-        this.like_count = like_count;
+        this.like_count = likeCount;
     }
 
     public int getCreationsCount() {
@@ -145,7 +145,7 @@ public class UserBean implements Parcelable {
     }
 
     public void setCreationsCount(int creationsCount) {
-        this.creations_count = creations_count;
+        this.creations_count = creationsCount;
     }
 
     public int getFollowingCount() {
@@ -153,7 +153,7 @@ public class UserBean implements Parcelable {
     }
 
     public void setFollowingCount(int followingCount) {
-        this.following_count = following_count;
+        this.following_count = followingCount;
     }
 
     public ProfileBean getProfile() {
@@ -185,7 +185,7 @@ public class UserBean implements Parcelable {
     }
 
     public void setMuseBoardCount(int museBoardCount) {
-        this.muse_board_count = muse_board_count;
+        this.muse_board_count = museBoardCount;
     }
 
     public int getExploreFollowingCount() {
@@ -193,7 +193,7 @@ public class UserBean implements Parcelable {
     }
 
     public void setExploreFollowingCount(int exploreFollowingCount) {
-        this.explore_following_count = explore_following_count;
+        this.explore_following_count = exploreFollowingCount;
     }
 
     public int getSeq() {
@@ -417,7 +417,7 @@ public class UserBean implements Parcelable {
         }
 
         public void setIsMuseuser(boolean isMuseuser) {
-            this.is_museuser = is_museuser;
+            this.is_museuser = isMuseuser;
         }
 
         @Override

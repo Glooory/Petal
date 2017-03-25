@@ -22,7 +22,7 @@ public class PusersBean {
     }
 
     public void setPromoteUserId(int promoteUserId) {
-        this.promote_user_id = promote_user_id;
+        this.promote_user_id = promoteUserId;
     }
 
     public int getUserId() {
@@ -30,7 +30,7 @@ public class PusersBean {
     }
 
     public void setUserId(int userId) {
-        this.user_id = user_id;
+        this.user_id = userId;
     }
 
     public String getCategory() {
@@ -70,7 +70,7 @@ public class PusersBean {
     }
 
     public void setUpdatedAt(int updatedAt) {
-        this.updated_at = updated_at;
+        this.updated_at = updatedAt;
     }
 
     public UserBean getUser() {

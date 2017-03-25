@@ -36,7 +36,7 @@ public class FollowBoardResultBean {
         }
 
         public void setBoardId(int boardId) {
-            this.board_id = board_id;
+            this.board_id = boardId;
         }
 
         public int getUserId() {
@@ -44,7 +44,7 @@ public class FollowBoardResultBean {
         }
 
         public void setUserId(int userId) {
-            this.user_id = user_id;
+            this.user_id = userId;
         }
 
         public int getBoardOwnerId() {
@@ -52,7 +52,7 @@ public class FollowBoardResultBean {
         }
 
         public void setBoardOwnerId(int boardOwnerId) {
-            this.board_owner_id = board_owner_id;
+            this.board_owner_id = boardOwnerId;
         }
 
         public int getSeq() {
@@ -68,7 +68,7 @@ public class FollowBoardResultBean {
         }
 
         public void setFollowedAt(int followedAt) {
-            this.followed_at = followed_at;
+            this.followed_at = followedAt;
         }
     }
 }

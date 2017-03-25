@@ -114,7 +114,7 @@ public class PinBean implements Parcelable {
     }
 
     public void setPinId(int pinId) {
-        this.pin_id = pin_id;
+        this.pin_id = pinId;
     }
 
     public int getUserId() {
@@ -122,7 +122,7 @@ public class PinBean implements Parcelable {
     }
 
     public void setUserId(int userId) {
-        this.user_id = user_id;
+        this.user_id = userId;
     }
 
     public int getBoardId() {
@@ -130,7 +130,7 @@ public class PinBean implements Parcelable {
     }
 
     public void setBoardId(int boardId) {
-        this.board_id = board_id;
+        this.board_id = boardId;
     }
 
     public int getFileId() {
@@ -138,7 +138,7 @@ public class PinBean implements Parcelable {
     }
 
     public void setFileId(int fileId) {
-        this.file_id = file_id;
+        this.file_id = fileId;
     }
 
     public FileBean getFile() {
@@ -154,7 +154,7 @@ public class PinBean implements Parcelable {
     }
 
     public void setMediaType(int mediaType) {
-        this.media_type = media_type;
+        this.media_type = mediaType;
     }
 
     public String getSource() {
@@ -194,7 +194,7 @@ public class PinBean implements Parcelable {
     }
 
     public void setViaUserId(int viaUserId) {
-        this.via_user_id = via_user_id;
+        this.via_user_id = viaUserId;
     }
 
     public String getOriginal() {
@@ -210,7 +210,7 @@ public class PinBean implements Parcelable {
     }
 
     public void setCreatedAt(int createdAt) {
-        this.created_at = created_at;
+        this.created_at = createdAt;
     }
 
     public int getLikeCount() {
@@ -218,7 +218,7 @@ public class PinBean implements Parcelable {
     }
 
     public void setLikeCount(int likeCount) {
-        this.like_count = like_count;
+        this.like_count = likeCount;
     }
 
     public int getSeq() {
@@ -234,7 +234,7 @@ public class PinBean implements Parcelable {
     }
 
     public void setCommentCount(int commentCount) {
-        this.comment_count = comment_count;
+        this.comment_count = commentCount;
     }
 
     public int getRepinCount() {
@@ -242,7 +242,7 @@ public class PinBean implements Parcelable {
     }
 
     public void setRepinCount(int repinCount) {
-        this.repin_count = repin_count;
+        this.repin_count = repinCount;
     }
 
     public int getIsPrivate() {
@@ -250,7 +250,7 @@ public class PinBean implements Parcelable {
     }
 
     public void setIsPrivate(int isPrivate) {
-        this.is_private = is_private;
+        this.is_private = isPrivate;
     }
 
     public String getOrigSource() {
@@ -258,7 +258,7 @@ public class PinBean implements Parcelable {
     }
 
     public void setOrigSource(String origSource) {
-        this.orig_source = orig_source;
+        this.orig_source = origSource;
     }
 
     public boolean isLiked() {
@@ -290,15 +290,15 @@ public class PinBean implements Parcelable {
     }
 
     public void setTextMeta(TextMetaBean textMeta) {
-        this.text_meta = text_meta;
+        this.text_meta = textMeta;
     }
 
-    public boolean isShiji() {
+    public boolean IsShiji() {
         return is_shiji;
     }
 
     public void setIsShiji(boolean isShiji) {
-        this.is_shiji = is_shiji;
+        this.is_shiji = isShiji;
     }
 
     public String getShareButton() {
@@ -306,7 +306,7 @@ public class PinBean implements Parcelable {
     }
 
     public void setShareButton(String shareButton) {
-        this.share_button = share_button;
+        this.share_button = shareButton;
     }
 
     public UserBean getViaUser() {
@@ -314,7 +314,7 @@ public class PinBean implements Parcelable {
     }
 
     public void setViaUser(UserBean viaUser) {
-        this.via_user = via_user;
+        this.via_user = viaUser;
     }
 
     public static class TextMetaBean {

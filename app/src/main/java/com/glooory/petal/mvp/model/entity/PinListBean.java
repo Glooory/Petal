@@ -23,7 +23,7 @@ public class PinListBean {
     }
 
     public void setFollowedBoard(int followedBoard) {
-        this.followed_board = followed_board;
+        this.followed_board = followedBoard;
     }
 
     public List<PinBean> getPins() {

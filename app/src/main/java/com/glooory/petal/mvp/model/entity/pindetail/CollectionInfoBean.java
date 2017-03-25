@@ -38,7 +38,7 @@ public class CollectionInfoBean {
     }
 
     public void setExistPin(ExistPinBean existPin) {
-        this.exist_pin = exist_pin;
+        this.exist_pin = existPin;
     }
 
     public static class ExistPinBean {
@@ -94,7 +94,7 @@ public class CollectionInfoBean {
         }
 
         public void setPinId(int pinId) {
-            this.pin_id = pin_id;
+            this.pin_id = pinId;
         }
 
         public int getUserId() {
@@ -102,7 +102,7 @@ public class CollectionInfoBean {
         }
 
         public void setUserId(int userId) {
-            this.user_id = user_id;
+            this.user_id = userId;
         }
 
         public int getBoardId() {
@@ -110,7 +110,7 @@ public class CollectionInfoBean {
         }
 
         public void setBoardId(int boardId) {
-            this.board_id = board_id;
+            this.board_id = boardId;
         }
 
         public int getFileId() {
@@ -118,7 +118,7 @@ public class CollectionInfoBean {
         }
 
         public void setFileId(int fileId) {
-            this.file_id = file_id;
+            this.file_id = fileId;
         }
 
         public FileBean getFile() {
@@ -134,7 +134,7 @@ public class CollectionInfoBean {
         }
 
         public void setMediaType(int mediaType) {
-            this.media_type = media_type;
+            this.media_type = mediaType;
         }
 
         public String getSource() {
@@ -158,7 +158,7 @@ public class CollectionInfoBean {
         }
 
         public void setRawText(String rawText) {
-            this.raw_text = raw_text;
+            this.raw_text = rawText;
         }
 
         public int getVia() {
@@ -174,7 +174,7 @@ public class CollectionInfoBean {
         }
 
         public void setViaUserId(int viaUserId) {
-            this.via_user_id = via_user_id;
+            this.via_user_id = viaUserId;
         }
 
         public int getOriginal() {
@@ -190,7 +190,7 @@ public class CollectionInfoBean {
         }
 
         public void setCreatedAt(int createdAt) {
-            this.created_at = created_at;
+            this.created_at = createdAt;
         }
 
         public int getLikeCount() {
@@ -198,7 +198,7 @@ public class CollectionInfoBean {
         }
 
         public void setLikeCount(int likeCount) {
-            this.like_count = like_count;
+            this.like_count = likeCount;
         }
 
         public int getCommentCount() {
@@ -206,7 +206,7 @@ public class CollectionInfoBean {
         }
 
         public void setCommentCount(int commentCount) {
-            this.comment_count = comment_count;
+            this.comment_count = commentCount;
         }
 
         public int getRepinCount() {
@@ -214,7 +214,7 @@ public class CollectionInfoBean {
         }
 
         public void setRepinCount(int repinCount) {
-            this.repin_count = repin_count;
+            this.repin_count = repinCount;
         }
 
         public int getIsPrivate() {
@@ -222,7 +222,7 @@ public class CollectionInfoBean {
         }
 
         public void setIsPrivate(int isPrivate) {
-            this.is_private = is_private;
+            this.is_private = isPrivate;
         }
 
         public String getOrigSource() {
@@ -230,7 +230,7 @@ public class CollectionInfoBean {
         }
 
         public void setOrigSource(String origSource) {
-            this.orig_source = orig_source;
+            this.orig_source = origSource;
         }
 
         public BoardBean getBoard() {

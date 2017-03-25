@@ -84,7 +84,7 @@ public class PinDetailBean {
         }
 
         public void setPinId(int pinId) {
-            this.pin_id = pin_id;
+            this.pin_id = pinId;
         }
 
         public int getUserId() {
@@ -92,7 +92,7 @@ public class PinDetailBean {
         }
 
         public void setUserId(int userId) {
-            this.user_id = user_id;
+            this.user_id = userId;
         }
 
         public int getBoardId() {
@@ -100,7 +100,7 @@ public class PinDetailBean {
         }
 
         public void setBoardId(int boardId) {
-            this.board_id = board_id;
+            this.board_id = boardId;
         }
 
         public int getFileId() {
@@ -108,7 +108,7 @@ public class PinDetailBean {
         }
 
         public void setFileId(int fileId) {
-            this.file_id = file_id;
+            this.file_id = fileId;
         }
 
         public FileBean getFile() {
@@ -124,7 +124,7 @@ public class PinDetailBean {
         }
 
         public void setMediaType(int mediaType) {
-            this.media_type = media_type;
+            this.media_type = mediaType;
         }
 
         public String getSource() {
@@ -148,7 +148,7 @@ public class PinDetailBean {
         }
 
         public void setRawText(String rawText) {
-            this.raw_text = raw_text;
+            this.raw_text = rawText;
         }
 
         public int getVia() {
@@ -164,7 +164,7 @@ public class PinDetailBean {
         }
 
         public void setViaUserId(int viaUserId) {
-            this.via_user_id = via_user_id;
+            this.via_user_id = viaUserId;
         }
 
         public int getOriginal() {
@@ -180,7 +180,7 @@ public class PinDetailBean {
         }
 
         public void setCreatedAt(int createdAt) {
-            this.created_at = created_at;
+            this.created_at = createdAt;
         }
 
         public int getLikeCount() {
@@ -188,7 +188,7 @@ public class PinDetailBean {
         }
 
         public void setLikeCount(int likeCount) {
-            this.like_count = like_count;
+            this.like_count = likeCount;
         }
 
         public int getCommentCount() {
@@ -196,7 +196,7 @@ public class PinDetailBean {
         }
 
         public void setCommentCount(int commentCount) {
-            this.comment_count = comment_count;
+            this.comment_count = commentCount;
         }
 
         public int getRepinCount() {
@@ -204,7 +204,7 @@ public class PinDetailBean {
         }
 
         public void setRepinCount(int repinCount) {
-            this.repin_count = repin_count;
+            this.repin_count = repinCount;
         }
 
         public int getIsPrivate() {
@@ -212,7 +212,7 @@ public class PinDetailBean {
         }
 
         public void setIsPrivate(int isPrivate) {
-            this.is_private = is_private;
+            this.is_private = isPrivate;
         }
 
         public String getOrigSource() {
@@ -220,7 +220,7 @@ public class PinDetailBean {
         }
 
         public void setOrigSource(String origSource) {
-            this.orig_source = orig_source;
+            this.orig_source = origSource;
         }
 
         public UserBean getUser() {
@@ -244,7 +244,7 @@ public class PinDetailBean {
         }
 
         public void setViaUser(UserBean viaUser) {
-            this.via_user = via_user;
+            this.via_user = viaUser;
         }
 
         public PinBean getViaPin() {
@@ -252,7 +252,7 @@ public class PinDetailBean {
         }
 
         public void setViaPin(PinBean viaPin) {
-            this.via_pin = via_pin;
+            this.via_pin = viaPin;
         }
 
         public PinBean getOriginalPin() {
@@ -260,7 +260,7 @@ public class PinDetailBean {
         }
 
         public void setOriginalPin(PinBean originalPin) {
-            this.original_pin = original_pin;
+            this.original_pin = originalPin;
         }
 
         public boolean isHideOrigin() {
@@ -268,7 +268,7 @@ public class PinDetailBean {
         }
 
         public void setHideOrigin(boolean hideOrigin) {
-            this.hide_origin = hide_origin;
+            this.hide_origin = hideOrigin;
         }
 
         public PinBean getPrev() {
@@ -370,7 +370,7 @@ public class PinDetailBean {
             }
 
             public void setCommentId(int commentId) {
-                this.comment_id = comment_id;
+                this.comment_id = commentId;
             }
 
             public int getPinId() {
@@ -378,7 +378,7 @@ public class PinDetailBean {
             }
 
             public void setPinId(int pinId) {
-                this.pin_id = pin_id;
+                this.pin_id = pinId;
             }
 
             public int getUserId() {
@@ -386,7 +386,7 @@ public class PinDetailBean {
             }
 
             public void setUserId(int userId) {
-                this.user_id = user_id;
+                this.user_id = userId;
             }
 
             public String getRawText() {
@@ -394,7 +394,7 @@ public class PinDetailBean {
             }
 
             public void setRawText(String rawText) {
-                this.raw_text = raw_text;
+                this.raw_text = rawText;
             }
 
             public int getStatus() {
@@ -410,7 +410,7 @@ public class PinDetailBean {
             }
 
             public void setCreatedAt(int createdAt) {
-                this.created_at = created_at;
+                this.created_at = createdAt;
             }
 
             public UserBean getUser() {
@@ -441,7 +441,7 @@ public class PinDetailBean {
             }
 
             public void setUserId(int userId) {
-                this.user_id = user_id;
+                this.user_id = userId;
             }
 
             public String getUsername() {
@@ -465,7 +465,7 @@ public class PinDetailBean {
             }
 
             public void setCreatedAt(int createdAt) {
-                this.created_at = created_at;
+                this.created_at = createdAt;
             }
 
             public FileBean getAvatar() {
@@ -489,7 +489,7 @@ public class PinDetailBean {
             }
 
             public void setLikedAt(int likedAt) {
-                this.liked_at = liked_at;
+                this.liked_at = likedAt;
             }
         }
     }

@@ -31,7 +31,7 @@ public class FollowerBean {
     }
 
     public void setUserId(String userId) {
-        this.user_id = user_id;
+        this.user_id = userId;
     }
 
     public String getUsername() {
@@ -55,7 +55,7 @@ public class FollowerBean {
     }
 
     public void setCreatedAt(int createdAt) {
-        this.created_at = created_at;
+        this.created_at = createdAt;
     }
 
     public AvatarBean getAvatar() {
@@ -87,7 +87,7 @@ public class FollowerBean {
     }
 
     public void setFollowerCount(int followerCount) {
-        this.follower_count = follower_count;
+        this.follower_count = followerCount;
     }
 
     public int getBoardCount() {
@@ -95,7 +95,7 @@ public class FollowerBean {
     }
 
     public void setBoardCount(int boardCount) {
-        this.board_count = board_count;
+        this.board_count = boardCount;
     }
 
     public int getPinCount() {
@@ -103,7 +103,7 @@ public class FollowerBean {
     }
 
     public void setPinCount(int pinCount) {
-        this.pin_count = pin_count;
+        this.pin_count = pinCount;
     }
 
     public List<PinBean> getPins() {

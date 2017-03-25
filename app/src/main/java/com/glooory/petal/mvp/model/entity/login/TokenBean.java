@@ -22,7 +22,7 @@ public class TokenBean {
     }
 
     public void setAccessToken(String accessToken) {
-        this.access_token = access_token;
+        this.access_token = accessToken;
     }
 
     public String getTokenType() {
@@ -30,7 +30,7 @@ public class TokenBean {
     }
 
     public void setTokenType(String tokenType) {
-        this.token_type = token_type;
+        this.token_type = tokenType;
     }
 
     public int getExpiresIn() {
@@ -38,7 +38,7 @@ public class TokenBean {
     }
 
     public void setExpiresIn(int expiresIn) {
-        this.expires_in = expires_in;
+        this.expires_in = expiresIn;
     }
 
     public String getRefreshToken() {
@@ -46,7 +46,7 @@ public class TokenBean {
     }
 
     public void setRefreshToken(String refreshToken) {
-        this.refresh_token = refresh_token;
+        this.refresh_token = refreshToken;
     }
 
     @Override
