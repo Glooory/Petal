@@ -5,6 +5,7 @@ import com.glooory.petal.mvp.model.entity.PinListBean;
 import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.model.entity.login.TokenBean;
 import com.glooory.petal.mvp.model.entity.user.UserBoardListBean;
+import com.glooory.petal.mvp.model.entity.user.UserListBean;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -90,4 +91,29 @@ public interface UserService {
             @Query("max") int maxPinId,
             @Query("limit") int limit);
 
+    // 用户的粉丝
+    // https://api.huaban.com/users/12345678/followers?limit=20
+    @GET("users/{user_id}/followers")
+    Observable<UserListBean> getUserFollowers(@Path("user_id") String userId,
+            @Query("limit") int limit);
+
+    // 用户的粉丝
+    // https://api.huaban.com/users/12345678/followers?limit=20
+    @GET("users/{user_id}/followers")
+    Observable<UserListBean> getUserFollowersMore(@Path("user_id") String userId,
+            @Query("max") int maxId,
+            @Query("limit") int limit);
+
+    // 用户所关注的用户
+    // https://api.huaban.com/users/12345678/following?limit=20
+    @GET("users/{user_id}/following")
+    Observable<UserListBean> getUserFollowings(@Path("user_id") String userId,
+            @Query("limit") int limit);
+
+    // 用户所关注的用户
+    // https://api.huaban.com/users/12345678/following?limit=20
+    @GET("users/{user_id}/following")
+    Observable<UserListBean> getUserFollowingsMore(@Path("user_id") String userId,
+            @Query("max") int maxId,
+            @Query("limit") int limit);
 }

@@ -81,12 +81,12 @@ public class UserLikedFragment extends PEFragment<UserSectionPresenter> implemen
                         mPresenter.launchPinDetailActivity(getActivity(), view, position);
                         break;
                     case R.id.ll_pin_via_info:
-                        mPresenter.launchUserActivity(getActivity(), view, position);
+                        mPresenter.launchUserActivityFromPin(getActivity(), view, position);
                         break;
                 }
             }
         });
-        if (mLikedCount == 0) {
+        if (mLikedCount <= 0) {
             mAdapter.addFooterView(mNoMoreDataFooter);
         } else {
             mPresenter.getUserLikedPins(mUserId);
@@ -147,8 +147,8 @@ public class UserLikedFragment extends PEFragment<UserSectionPresenter> implemen
     }
 
     @Override
-    public void showNoMoreDataFooter() {
-        if (mAdapter.getData().size() >= mLikedCount || mLikedCount == 0) {
+    public void showNoMoreDataFooter(boolean showAnyway) {
+        if (showAnyway || mAdapter.getData().size() >= mLikedCount || mLikedCount == 0) {
             if (mNoMoreDataFooter.getParent() != null) {
                 ((ViewGroup) mNoMoreDataFooter.getParent()).removeView(mNoMoreDataFooter);
             }
@@ -199,6 +199,11 @@ public class UserLikedFragment extends PEFragment<UserSectionPresenter> implemen
 
     @Override
     public void showDeletePinDataChange() {
+
+    }
+
+    @Override
+    public void showFollowingDataChange(boolean isFollowed) {
 
     }
 

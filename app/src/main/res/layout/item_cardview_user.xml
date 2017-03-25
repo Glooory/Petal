@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/CardViewCustom"
+    app:cardElevation="@dimen/card_elevation_static">
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        
+        <LinearLayout
+            android:id="@+id/ll_card_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:orientation="vertical">
+            
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/simple_drawee_card_user_avatar"
+                android:layout_width="@dimen/pin_detail_avatar_size"
+                android:layout_height="@dimen/pin_detail_avatar_size"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/activity_vertical_margin"/>
+            
+            <TextView
+                android:id="@+id/text_view_card_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:maxLines="1"
+                android:ellipsize="marquee"
+                android:padding="@dimen/activity_vertical_margin"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/text_size_18sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pin_detail_divider_height"
+                android:background="@color/grey_a700"/>
+            
+            <TextView
+                android:id="@+id/text_view_card_user_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:maxLines="1"
+                android:ellipsize="marquee"
+                android:padding="@dimen/half_activity_default_margin"
+                android:textColor="@color/secondary_text"
+                android:textSize="@dimen/text_size_16sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pin_detail_divider_height"
+                android:background="@color/grey_a700"/>
+            
+            <LinearLayout
+                android:id="@+id/ll_card_user_thumbnails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="@dimen/thumbnail_padding"
+                android:orientation="horizontal">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/simple_drawee_view_card_user_thumbnail_first"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="@dimen/thumbnail_padding"
+                    fresco:viewAspectRatio="1.0"
+                    fresco:failureImage="@drawable/ic_broken_image_grey_700_48dp"/>
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/simple_drawee_view_card_user_thumbnail_second"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="@dimen/thumbnail_padding"
+                    fresco:viewAspectRatio="1.0"
+                    fresco:failureImage="@drawable/ic_broken_image_grey_700_48dp"/>
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/simple_drawee_view_card_user_thumbnail_third"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="@dimen/thumbnail_padding"
+                    fresco:viewAspectRatio="1.0"
+                    fresco:failureImage="@drawable/ic_broken_image_grey_700_48dp"/>
+
+            </LinearLayout>
+            
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/pin_detail_divider_height"
+            android:background="@color/grey_a700"/>
+
+        <LinearLayout
+            android:id="@+id/ll_card_user_operate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_view_card_user_operate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="@dimen/half_activity_default_margin"
+                android:textColor="@color/secondary_text"
+                android:textSize="@dimen/text_size_14sp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

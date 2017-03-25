@@ -11,6 +11,7 @@ import com.glooory.petal.app.util.DrawableUtils;
 import com.glooory.petal.app.widget.WindmillLoadMoreFooter;
 import com.glooory.petal.mvp.model.entity.BoardBean;
 import com.glooory.petal.mvp.model.entity.PinBean;
+import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.model.entity.board.FollowBoardResultBean;
 import com.glooory.petal.mvp.model.entity.user.UserBoardSingleBean;
 import com.glooory.petal.mvp.ui.home.HomePinsAdapter;
@@ -21,6 +22,7 @@ import com.glooory.petal.mvp.ui.user.UserContract;
 import com.glooory.petal.mvp.ui.user.board.CreateBoardDialogFragment;
 import com.glooory.petal.mvp.ui.user.board.EditBoardDiglogFragment;
 import com.glooory.petal.mvp.ui.user.board.UserBoardAdapter;
+import com.glooory.petal.mvp.ui.user.following.UserAdapter;
 import com.jess.arms.di.scope.FragmentScope;
 import com.jess.arms.utils.RxUtils;
 import com.orhanobut.logger.Logger;
@@ -95,7 +97,7 @@ public class UserSectionPresenter extends PEPresenter<UserContract.SectionView, 
                     @Override
                     public void onNext(List<BoardBean> boardBeanList) {
                         mAdapter.setNewData(boardBeanList);
-                        mRootView.showNoMoreDataFooter();
+                        mRootView.showNoMoreDataFooter(false);
                     }
                 });
     }
@@ -107,7 +109,7 @@ public class UserSectionPresenter extends PEPresenter<UserContract.SectionView, 
                     @Override
                     public void onNext(List<BoardBean> boardBeanList) {
                         mAdapter.addData(boardBeanList);
-                        mRootView.showNoMoreDataFooter();
+                        mRootView.showNoMoreDataFooter(false);
                         mAdapter.loadMoreComplete();
                     }
 
@@ -153,7 +155,7 @@ public class UserSectionPresenter extends PEPresenter<UserContract.SectionView, 
     private void actionFollowBoard(final int position) {
         final BoardBean boardBean = ((UserBoardAdapter) mAdapter).getItem(position);
         String boardId = String.valueOf(boardBean.getBoardId());
-        boolean isFollowed = boardBean.isFollowing();
+        final boolean isFollowed = boardBean.isFollowing();
         mModel.followBoard(boardId, isFollowed)
                 .compose(RxUtils.<FollowBoardResultBean>bindToLifecycle(mRootView))
                 .subscribe(new BaseSubscriber<FollowBoardResultBean>() {
@@ -161,6 +163,8 @@ public class UserSectionPresenter extends PEPresenter<UserContract.SectionView, 
                     public void onNext(FollowBoardResultBean followBoardResultBean) {
                         boolean isFollowedTemp = !boardBean.isFollowing();
                         boardBean.setFollowing(isFollowedTemp);
+                        int followerCount = boardBean.getFollowCount();
+                        boardBean.setFollowCount(isFollowed ? --followerCount : ++followerCount);
                         mAdapter.notifyItemChanged(position);
                     }
                 });
@@ -251,7 +255,7 @@ public class UserSectionPresenter extends PEPresenter<UserContract.SectionView, 
                     @Override
                     public void onNext(List<PinBean> pinBeen) {
                         mAdapter.setNewData(pinBeen);
-                        mRootView.showNoMoreDataFooter();
+                        mRootView.showNoMoreDataFooter(false);
                     }
                 });
     }
@@ -263,7 +267,7 @@ public class UserSectionPresenter extends PEPresenter<UserContract.SectionView, 
                     @Override
                     public void onNext(List<PinBean> pinBeen) {
                         mAdapter.addData(pinBeen);
-                        mRootView.showNoMoreDataFooter();
+                        mRootView.showNoMoreDataFooter(false);
                         mAdapter.loadMoreComplete();
                     }
 
@@ -290,7 +294,7 @@ public class UserSectionPresenter extends PEPresenter<UserContract.SectionView, 
                 DrawableUtils.getBasicColorStr(((HomePinsAdapter) mAdapter).getItem(position)));
     }
 
-    public void launchUserActivity(Activity activity, View view, int position) {
+    public void launchUserActivityFromPin(Activity activity, View view, int position) {
         PinBean pinBean = ((HomePinsAdapter) mAdapter).getItem(position);
         String userId = String.valueOf(pinBean.getUserId());
         UserActivity.launch(activity,
@@ -327,7 +331,6 @@ public class UserSectionPresenter extends PEPresenter<UserContract.SectionView, 
                 .subscribe(new BaseSubscriber<PinBean>() {
                     @Override
                     public void onNext(PinBean pinBean) {
-                        Logger.d(pinBean.getRawText());
                         ((HomePinsAdapter) mAdapter).getItem(position)
                                 .setRawText(pinBean.getRawText());
                         ((HomePinsAdapter) mAdapter).getItem(position).getBoard()
@@ -358,7 +361,7 @@ public class UserSectionPresenter extends PEPresenter<UserContract.SectionView, 
                     @Override
                     public void onNext(List<PinBean> pinBeen) {
                         mAdapter.setNewData(pinBeen);
-                        mRootView.showNoMoreDataFooter();
+                        mRootView.showNoMoreDataFooter(false);
                     }
                 });
     }
@@ -370,7 +373,7 @@ public class UserSectionPresenter extends PEPresenter<UserContract.SectionView, 
                     @Override
                     public void onNext(List<PinBean> pinBeen) {
                         mAdapter.addData(pinBeen);
-                        mRootView.showNoMoreDataFooter();
+                        mRootView.showNoMoreDataFooter(false);
                         mAdapter.loadMoreComplete();
                     }
 
@@ -381,4 +384,75 @@ public class UserSectionPresenter extends PEPresenter<UserContract.SectionView, 
                     }
                 });
     }
+
+    public void getUserFollowings(String userId) {
+        mUserId = userId;
+        mModel.getUserFollowings(userId)
+                .compose(RxUtils.<List<UserBean>>bindToLifecycle(mRootView))
+                .subscribe(new BaseSubscriber<List<UserBean>>() {
+                    @Override
+                    public void onNext(List<UserBean> userBeen) {
+                        mAdapter.setNewData(userBeen);
+                        mRootView.showNoMoreDataFooter(false);
+                    }
+                });
+    }
+
+    public void getUserFollowingsMore() {
+        mModel.getUserFollowingsMore(mUserId)
+                .compose(RxUtils.<List<UserBean>>bindToLifecycle(mRootView))
+                .subscribe(new BaseSubscriber<List<UserBean>>() {
+                    @Override
+                    public void onNext(List<UserBean> userBeen) {
+                        mAdapter.addData(userBeen);
+                        mRootView.showNoMoreDataFooter(false);
+                        mAdapter.loadMoreComplete();
+                        if (userBeen.size() == 0) {
+                            mAdapter.loadMoreEnd();
+                            mRootView.showNoMoreDataFooter(true);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        mAdapter.loadMoreFail();
+                    }
+                });
+    }
+
+    public void launchUserActivityFromUser(Activity activity, View view, int position) {
+        UserBean userBean = ((UserAdapter) mAdapter).getItem(position);
+        String userId = String.valueOf(userBean.getUserId());
+        UserActivity.launch(activity, userId, userBean.getUsername(),
+                (SimpleDraweeView) view.findViewById(R.id.simple_drawee_card_user_avatar));
+    }
+
+    public void onUserCardOperateBtnClick(int position) {
+        if (!mModel.isLogin()) {
+            mRootView.showLoginNav();
+            return;
+        }
+        actionFollowUser(position);
+    }
+
+    private void actionFollowUser(final int postion) {
+        UserBean userBean = ((UserAdapter) mAdapter).getItem(postion);
+        String userId = String.valueOf(userBean.getUserId());
+        final boolean isFollowed = userBean.getFollowing() == 1;
+        mModel.followUser(userId, isFollowed)
+                .compose(RxUtils.<Void>bindToLifecycle(mRootView))
+                .subscribe(new BaseSubscriber<Void>() {
+                    @Override
+                    public void onNext(Void aVoid) {
+                        ((UserAdapter) mAdapter).getItem(postion)
+                                .setFollowing(isFollowed ? 0 : 1);
+                        mAdapter.notifyItemChanged(postion);
+                        if (isMe(mUserId)) {
+                            mRootView.showFollowingDataChange(isFollowed);
+                        }
+                    }
+                });
+    }
+
 }

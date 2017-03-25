@@ -35,4 +35,5 @@
 
     <dimen name="image_width">60dp</dimen>
     <dimen name="spacing_normal">16dp</dimen>
+    <dimen name="thumbnail_padding">2dp</dimen>
 </resources>

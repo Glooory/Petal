@@ -39,6 +39,7 @@ import com.glooory.petal.di.module.UserModule;
 import com.glooory.petal.mvp.presenter.UserPresenter;
 import com.glooory.petal.mvp.ui.login.LoginActivity;
 import com.glooory.petal.mvp.ui.user.board.UserBoardFragment;
+import com.glooory.petal.mvp.ui.user.following.UserFollowingFragment;
 import com.glooory.petal.mvp.ui.user.like.UserLikedFragment;
 import com.glooory.petal.mvp.ui.user.pin.UserPinFragment;
 import com.jakewharton.rxbinding.view.RxView;
@@ -109,6 +110,7 @@ public class UserActivity extends PEActivity<UserPresenter>
     private UserBoardFragment mBoardFragment;
     private UserPinFragment mPinFragment;
     private UserLikedFragment mLikedFragment;
+    private UserFollowingFragment mFollowingFragment;
 
     public static void launch(Activity activity, String userId, String userName, SimpleDraweeView avatar) {
         Logger.d(userId);
@@ -159,7 +161,7 @@ public class UserActivity extends PEActivity<UserPresenter>
         mTablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                mViewPager.setCurrentItem(tab.getPosition());
+                mViewPager.setCurrentItem(tab.getPosition(), true);
                 if (tab.getPosition() == 0 && mIsMe) {
                     floatingActionButton.setVisibility(View.VISIBLE);
                 } else {
@@ -225,6 +227,11 @@ public class UserActivity extends PEActivity<UserPresenter>
             case 2:
                 if (mLikedFragment != null) {
                     mLikedFragment.onRefresh();
+                }
+                break;
+            case 3:
+                if (mFollowingFragment != null) {
+                    mFollowingFragment.onRefresh();
                 }
                 break;
         }
@@ -336,6 +343,9 @@ public class UserActivity extends PEActivity<UserPresenter>
         if (mLikedFragment != null) {
             mLikedFragment.setLikedCount(likeCount);
         }
+        if (mFollowingFragment != null) {
+            mFollowingFragment.setFollowingCount(followingCount);
+        }
     }
 
     @Override
@@ -400,8 +410,15 @@ public class UserActivity extends PEActivity<UserPresenter>
     }
 
     public void setPinCountChanged(int pinCount) {
-        String pinSectionTitle = String.format(getString(R.string.format_collection_count), pinCount);
+        String pinSectionTitle = String.format(getString(R.string.format_collection_count), String.valueOf(pinCount));
         mTabTitles[1] = pinSectionTitle;
+        mViewPager.getAdapter().notifyDataSetChanged();
+    }
+
+    public void setFollowingCountChanged(int followingCount) {
+        String pinSectionTitle = String.format(
+                getString(R.string.format_following_count), followingCount);
+        mTabTitles[3] = pinSectionTitle;
         mViewPager.getAdapter().notifyDataSetChanged();
     }
 
@@ -420,6 +437,8 @@ public class UserActivity extends PEActivity<UserPresenter>
                     return UserPinFragment.newInstance(mUserId, mPresenter.getCollectCount());
                 case 2:
                     return UserLikedFragment.newInstance(mUserId, mPresenter.getLikeCount());
+                case 3:
+                    return UserFollowingFragment.newInstance(mUserId, mPresenter.getFollowingCount());
             }
             return null;
         }
@@ -437,25 +456,21 @@ public class UserActivity extends PEActivity<UserPresenter>
                 case 2:
                     mLikedFragment = (UserLikedFragment) createdFragment;
                     break;
+                case 3:
+                    mFollowingFragment = (UserFollowingFragment) createdFragment;
+                    break;
             }
             return createdFragment;
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             return mTabTitles[position];
         }
-    }
-
-    public interface OnShowLoadingRequestListener {
-
-        void onShowLoadingRequest();
-
-        void onHideLoadingRequest();
     }
 }

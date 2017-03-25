@@ -8,12 +8,15 @@ import com.glooory.petal.mvp.model.entity.BoardBean;
 import com.glooory.petal.mvp.model.entity.PinBean;
 import com.glooory.petal.mvp.model.entity.PinListBean;
 import com.glooory.petal.mvp.model.entity.PinSingleBean;
+import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.model.entity.board.FollowBoardResultBean;
 import com.glooory.petal.mvp.model.entity.user.UserBoardListBean;
 import com.glooory.petal.mvp.model.entity.user.UserBoardSingleBean;
+import com.glooory.petal.mvp.model.entity.user.UserListBean;
 import com.glooory.petal.mvp.ui.user.UserContract;
 import com.jess.arms.di.scope.FragmentScope;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -224,6 +227,57 @@ public class UserSectionModel extends BasePEModel<ServiceManager, CacheManager> 
                         return pinListBean.getPins();
                     }
                 })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<List<UserBean>> getUserFollowings(final String userId) {
+        return mServiceManager.getUserService()
+                .getUserFollowings(userId, Constants.PER_PAGE_LIMIT)
+                .retryWhen(new RetryWithDelay(1, 1))
+                .filter(new Func1<UserListBean, Boolean>() {
+                    @Override
+                    public Boolean call(UserListBean userListBean) {
+                        return userListBean.getUsers() != null && userListBean.getUsers().size() > 0;
+                    }
+                })
+                .map(new Func1<UserListBean, List<UserBean>>() {
+                    @Override
+                    public List<UserBean> call(UserListBean userListBean) {
+                        mMaxId = userListBean.getUsers().get(userListBean.getUsers().size() - 1).getSeq();
+                        return userListBean.getUsers();
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<List<UserBean>> getUserFollowingsMore(String userId) {
+        return mServiceManager.getUserService()
+                .getUserFollowingsMore(userId, mMaxId, Constants.PER_PAGE_LIMIT)
+                .retryWhen(new RetryWithDelay(1, 1))
+                .map(new Func1<UserListBean, List<UserBean>>() {
+                    @Override
+                    public List<UserBean> call(UserListBean userListBean) {
+                        if (userListBean.getUsers() != null && userListBean.getUsers().size() != 0) {
+                            mMaxId = userListBean.getUsers().get(userListBean.getUsers().size() - 1).getSeq();
+                        } else {
+                            userListBean.setUsers(new ArrayList<UserBean>(0));
+                        }
+                        return userListBean.getUsers();
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<Void> followUser(String userId, boolean isFollowed) {
+        return mServiceManager.getUserService()
+                .followUser(userId, isFollowed ? Constants.HTTP_ARGS_UNFOLLOW : Constants.HTTP_ARGS_FOLLOW)
+                .retryWhen(new RetryWithDelay(1, 1))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

@@ -59,7 +59,7 @@ public interface UserContract {
 
         void showLoadingMore();
 
-        void showNoMoreDataFooter();
+        void showNoMoreDataFooter(boolean showAnyway);
 
         void showLoginNav();
 
@@ -76,6 +76,8 @@ public interface UserContract {
         void showDeletePinConfirmDialog(String pinId, int position);
 
         void showDeletePinDataChange();
+
+        void showFollowingDataChange(boolean isFollowed);
     }
 
     interface SectionModel extends IModel {
@@ -105,6 +107,12 @@ public interface UserContract {
         Observable<List<PinBean>> getUserLikedPins(String userId);
 
         Observable<List<PinBean>> getUserLikedPinsMore(String userId);
+
+        Observable<List<UserBean>> getUserFollowings(String userId);
+
+        Observable<List<UserBean>> getUserFollowingsMore(String userId);
+
+        Observable<Void> followUser(String userId, boolean isFollowed);
     }
 
 }

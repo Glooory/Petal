@@ -2,6 +2,7 @@ package com.glooory.petal.di.component;
 
 import com.glooory.petal.di.module.UserSectionModule;
 import com.glooory.petal.mvp.ui.user.board.UserBoardFragment;
+import com.glooory.petal.mvp.ui.user.following.UserFollowingFragment;
 import com.glooory.petal.mvp.ui.user.like.UserLikedFragment;
 import com.glooory.petal.mvp.ui.user.pin.UserPinFragment;
 import com.jess.arms.di.scope.FragmentScope;
@@ -21,4 +22,6 @@ public interface UserSectionComponent {
     void inject(UserPinFragment userPinFragment);
 
     void inject(UserLikedFragment userLikedFragment);
+
+    void inject(UserFollowingFragment userFollowingFragment);
 }

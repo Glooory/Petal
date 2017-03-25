@@ -35,6 +35,7 @@ public class UserBean implements Parcelable {
     private int muse_board_count;
     private int explore_following_count;
     private int seq;
+    private boolean following_me;
     private List<PinBean> pins;
     private ExtraBean extra;
     private List<BoardBean> boards;
@@ -202,6 +203,14 @@ public class UserBean implements Parcelable {
 
     public void setSeq(int seq) {
         this.seq = seq;
+    }
+
+    public boolean isFollowingMe() {
+        return following_me;
+    }
+
+    public void setFollowingMe(boolean followingMe) {
+        this.following_me = followingMe;
     }
 
     public List<PinBean> getPins() {

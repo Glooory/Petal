@@ -44,7 +44,7 @@
     <string name="msg_error_common_exception">请求失败</string>
 
     <string name="image_transition_name">image_transition</string>
-    <string name="format_collection_count">%d 采集</string>
+    <string name="format_collection_count">%s 采集</string>
     <string name="format_like_count">%d 喜欢</string>
     <string name="edit">编辑</string>
     <string name="delete">删除</string>

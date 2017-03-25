@@ -94,7 +94,11 @@ public class UserBoardFragment extends PEFragment<UserSectionPresenter>
                 }
             }
         });
-        mPresenter.getBoards(mUserId);
+        if (mBoardCount <= 0) {
+            mAdapter.addFooterView(mNoMoreDataFooter);
+        } else {
+            mPresenter.getBoards(mUserId);
+        }
         FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         if (mIsMe) {
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -166,8 +170,8 @@ public class UserBoardFragment extends PEFragment<UserSectionPresenter>
     }
 
     @Override
-    public void showNoMoreDataFooter() {
-        if (mAdapter.getData().size() >= mBoardCount) {
+    public void showNoMoreDataFooter(boolean showAnyway) {
+        if (showAnyway || mAdapter.getData().size() >= mBoardCount) {
             if (mNoMoreDataFooter.getParent() != null) {
                 ((ViewGroup) mNoMoreDataFooter.getParent()).removeView(mNoMoreDataFooter);
             }
@@ -230,6 +234,11 @@ public class UserBoardFragment extends PEFragment<UserSectionPresenter>
 
     @Override
     public void showDeletePinDataChange() {
+
+    }
+
+    @Override
+    public void showFollowingDataChange(boolean isFollowed) {
 
     }
 

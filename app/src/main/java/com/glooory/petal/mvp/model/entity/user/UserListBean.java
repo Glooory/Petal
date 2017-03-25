@@ -8,13 +8,13 @@ import java.util.List;
 /**
  * Created by Glooory on 2016/9/15 0015 12:16.
  */
-public class UserFollowingBean {
+public class UserListBean {
 
     private List<UserBean> users;
 
-    public static UserFollowingBean objectFromData(String str) {
+    public static UserListBean objectFromData(String str) {
 
-        return new Gson().fromJson(str, UserFollowingBean.class);
+        return new Gson().fromJson(str, UserListBean.class);
     }
 
     public List<UserBean> getUsers() {
