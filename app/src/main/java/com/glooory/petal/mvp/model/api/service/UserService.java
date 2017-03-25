@@ -77,4 +77,17 @@ public interface UserService {
             @Query("max") int maxPinId,
             @Query("limit") int limit);
 
+    // 用户所喜欢的采集
+    // https://api.huaban.com/users/12345678/likes?limit=20
+    @GET("users/{user_id}/likes")
+    Observable<PinListBean> getUserLikedPins(@Path("user_id") String userId,
+            @Query("limit") int limit);
+
+    // 用户所喜欢的采集
+    // https://api.huaban.com/users/12345678/likes?max=1234567&limit=20
+    @GET("users/{user_id}/likes")
+    Observable<PinListBean> getUserLikedPinsMore(@Path("user_id") String userId,
+            @Query("max") int maxPinId,
+            @Query("limit") int limit);
+
 }

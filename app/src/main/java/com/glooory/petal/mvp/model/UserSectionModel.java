@@ -184,5 +184,49 @@ public class UserSectionModel extends BasePEModel<ServiceManager, CacheManager> 
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    @Override
+    public Observable<List<PinBean>> getUserLikedPins(String userId) {
+        return mServiceManager.getUserService()
+                .getUserLikedPins(userId, Constants.PER_PAGE_LIMIT)
+                .retryWhen(new RetryWithDelay(1, 1))
+                .filter(new Func1<PinListBean, Boolean>() {
+                    @Override
+                    public Boolean call(PinListBean pinListBean) {
+                        return pinListBean.getPins() != null && pinListBean.getPins().size() > 0;
+                    }
+                })
+                .map(new Func1<PinListBean, List<PinBean>>() {
+                    @Override
+                    public List<PinBean> call(PinListBean pinListBean) {
+                        mMaxId = pinListBean.getPins().get(pinListBean.getPins().size() - 1).getSeq();
+                        return pinListBean.getPins();
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<List<PinBean>> getUserLikedPinsMore(String userId) {
+        return mServiceManager.getUserService()
+                .getUserLikedPinsMore(userId, mMaxId, Constants.PER_PAGE_LIMIT)
+                .retryWhen(new RetryWithDelay(1, 1))
+                .filter(new Func1<PinListBean, Boolean>() {
+                    @Override
+                    public Boolean call(PinListBean pinListBean) {
+                        return pinListBean.getPins() != null && pinListBean.getPins().size() > 0;
+                    }
+                })
+                .map(new Func1<PinListBean, List<PinBean>>() {
+                    @Override
+                    public List<PinBean> call(PinListBean pinListBean) {
+                        mMaxId = pinListBean.getPins().get(pinListBean.getPins().size() - 1).getSeq();
+                        return pinListBean.getPins();
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
 
 }

@@ -39,6 +39,7 @@ import com.glooory.petal.di.module.UserModule;
 import com.glooory.petal.mvp.presenter.UserPresenter;
 import com.glooory.petal.mvp.ui.login.LoginActivity;
 import com.glooory.petal.mvp.ui.user.board.UserBoardFragment;
+import com.glooory.petal.mvp.ui.user.like.UserLikedFragment;
 import com.glooory.petal.mvp.ui.user.pin.UserPinFragment;
 import com.jakewharton.rxbinding.view.RxView;
 import com.orhanobut.logger.Logger;
@@ -107,6 +108,7 @@ public class UserActivity extends PEActivity<UserPresenter>
 
     private UserBoardFragment mBoardFragment;
     private UserPinFragment mPinFragment;
+    private UserLikedFragment mLikedFragment;
 
     public static void launch(Activity activity, String userId, String userName, SimpleDraweeView avatar) {
         Logger.d(userId);
@@ -211,10 +213,19 @@ public class UserActivity extends PEActivity<UserPresenter>
         mPresenter.requestUserInfo(mUserId);
         switch (mViewPager.getCurrentItem()) {
             case 0:
-                mBoardFragment.onRefresh();
+                if (mBoardFragment != null) {
+                    mBoardFragment.onRefresh();
+                }
                 break;
             case 1:
-                mPinFragment.onRefresh();
+                if (mPinFragment != null) {
+                    mPinFragment.onRefresh();
+                }
+                break;
+            case 2:
+                if (mLikedFragment != null) {
+                    mLikedFragment.onRefresh();
+                }
                 break;
         }
     }
@@ -316,8 +327,15 @@ public class UserActivity extends PEActivity<UserPresenter>
     @Override
     public void showUserData(int boardCount, int pinCount, int likeCount, int followingCount,
             int followerCount) {
-        mBoardFragment.setBoardCount(boardCount);
-        mPinFragment.setPinCount(pinCount);
+        if (mBoardFragment != null) {
+            mBoardFragment.setBoardCount(boardCount);
+        }
+        if (mPinFragment != null) {
+            mPinFragment.setPinCount(pinCount);
+        }
+        if (mLikedFragment != null) {
+            mLikedFragment.setLikedCount(likeCount);
+        }
     }
 
     @Override
@@ -400,6 +418,8 @@ public class UserActivity extends PEActivity<UserPresenter>
                     return UserBoardFragment.newInstance(mUserId, mUserName, mPresenter.getBoardCount());
                 case 1:
                     return UserPinFragment.newInstance(mUserId, mPresenter.getCollectCount());
+                case 2:
+                    return UserLikedFragment.newInstance(mUserId, mPresenter.getLikeCount());
             }
             return null;
         }
@@ -414,13 +434,16 @@ public class UserActivity extends PEActivity<UserPresenter>
                 case 1:
                     mPinFragment = (UserPinFragment) createdFragment;
                     break;
+                case 2:
+                    mLikedFragment = (UserLikedFragment) createdFragment;
+                    break;
             }
             return createdFragment;
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
 
         @Override

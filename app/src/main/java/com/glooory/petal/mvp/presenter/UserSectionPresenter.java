@@ -16,6 +16,7 @@ import com.glooory.petal.mvp.model.entity.user.UserBoardSingleBean;
 import com.glooory.petal.mvp.ui.home.HomePinsAdapter;
 import com.glooory.petal.mvp.ui.pindetail.EditPinDialogFragment;
 import com.glooory.petal.mvp.ui.pindetail.PinDetailActivity;
+import com.glooory.petal.mvp.ui.user.UserActivity;
 import com.glooory.petal.mvp.ui.user.UserContract;
 import com.glooory.petal.mvp.ui.user.board.CreateBoardDialogFragment;
 import com.glooory.petal.mvp.ui.user.board.EditBoardDiglogFragment;
@@ -246,18 +247,6 @@ public class UserSectionPresenter extends PEPresenter<UserContract.SectionView, 
         mUserId = userId;
         mModel.getUserPins(mUserId)
                 .compose(RxUtils.<List<PinBean>>bindToLifecycle(mRootView))
-                .doOnSubscribe(new Action0() {
-                    @Override
-                    public void call() {
-                        mRootView.showLoading();
-                    }
-                })
-                .doOnTerminate(new Action0() {
-                    @Override
-                    public void call() {
-                        mRootView.hideLoading();
-                    }
-                })
                 .subscribe(new BaseSubscriber<List<PinBean>>() {
                     @Override
                     public void onNext(List<PinBean> pinBeen) {
@@ -299,6 +288,15 @@ public class UserSectionPresenter extends PEPresenter<UserContract.SectionView, 
                 aspectRatio,
                 (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_pin),
                 DrawableUtils.getBasicColorStr(((HomePinsAdapter) mAdapter).getItem(position)));
+    }
+
+    public void launchUserActivity(Activity activity, View view, int position) {
+        PinBean pinBean = ((HomePinsAdapter) mAdapter).getItem(position);
+        String userId = String.valueOf(pinBean.getUserId());
+        UserActivity.launch(activity,
+                userId,
+                pinBean.getUser().getUsername(),
+                (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_pin_avatar));
     }
 
     public void onPinLongClick(final int position) {
@@ -348,6 +346,38 @@ public class UserSectionPresenter extends PEPresenter<UserContract.SectionView, 
                         mAdapter.remove(position);
                         mAdapter.notifyDataSetChanged();
                         mRootView.showDeletePinDataChange();
+                    }
+                });
+    }
+
+    public void getUserLikedPins(String userId) {
+        mUserId = userId;
+        mModel.getUserLikedPins(userId)
+                .compose(RxUtils.<List<PinBean>>bindToLifecycle(mRootView))
+                .subscribe(new BaseSubscriber<List<PinBean>>() {
+                    @Override
+                    public void onNext(List<PinBean> pinBeen) {
+                        mAdapter.setNewData(pinBeen);
+                        mRootView.showNoMoreDataFooter();
+                    }
+                });
+    }
+
+    public void getUserLikedPinsMore() {
+        mModel.getUserLikedPinsMore(mUserId)
+                .compose(RxUtils.<List<PinBean>>bindToLifecycle(mRootView))
+                .subscribe(new BaseSubscriber<List<PinBean>>() {
+                    @Override
+                    public void onNext(List<PinBean> pinBeen) {
+                        mAdapter.addData(pinBeen);
+                        mRootView.showNoMoreDataFooter();
+                        mAdapter.loadMoreComplete();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        mAdapter.loadMoreFail();
                     }
                 });
     }

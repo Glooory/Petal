@@ -101,6 +101,10 @@ public interface UserContract {
         Observable<PinBean> editPin(String pinId, String boardId, String des);
 
         Observable<Void> deletePin(String pinId);
+
+        Observable<List<PinBean>> getUserLikedPins(String userId);
+
+        Observable<List<PinBean>> getUserLikedPinsMore(String userId);
     }
 
 }
