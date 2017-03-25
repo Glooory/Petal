@@ -34,6 +34,8 @@ public interface UserContract {
 
         void showTabTitles(String[] titles);
 
+        void showUserData(int boardCount, int pinCount, int likeCount, int followingCount, int followerCount);
+
         void showUserName(String userName);
 
         void showUserLocation(String location);

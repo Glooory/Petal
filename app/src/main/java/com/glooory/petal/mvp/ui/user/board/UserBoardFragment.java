@@ -220,4 +220,8 @@ public class UserBoardFragment extends PEFragment<UserSectionPresenter>
     public void onRefresh() {
         mPresenter.getBoards(mUserId);
     }
+
+    public void setBoardCount(int boardCount) {
+        mBoardCount = boardCount;
+    }
 }

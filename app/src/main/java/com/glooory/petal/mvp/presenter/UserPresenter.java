@@ -109,6 +109,7 @@ public class UserPresenter extends PEPresenter<UserContract.View, UserContract.M
         String tabTitle4 = String.format(resources.getString(R.string.format_following_count), mFollowingCount);
         String tabTitle5 = String.format(resources.getString(R.string.format_follower_count), mFollowerCount);
         String[] titles = new String[]{tabTitle1, tabTitle2, tabTitle3, tabTitle4, tabTitle5};
+        mRootView.showUserData(mBoardCount, mCollectCount, mLikeCount, mFollowingCount, mFollowerCount);
         mRootView.showTabTitles(titles);
     }
 

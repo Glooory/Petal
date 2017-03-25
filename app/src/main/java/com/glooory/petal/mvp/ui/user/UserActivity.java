@@ -190,10 +190,12 @@ public class UserActivity extends PEActivity<UserPresenter>
     }
 
     private void initViewPager() {
-        mPagerAdapter = new UserSectionPagerAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(mPagerAdapter);
-        mViewPager.setCurrentItem(0, true);
-        mTablayout.setupWithViewPager(mViewPager);
+        if (mPagerAdapter == null) {
+            mPagerAdapter = new UserSectionPagerAdapter(getSupportFragmentManager());
+            mViewPager.setAdapter(mPagerAdapter);
+            mViewPager.setCurrentItem(0, true);
+            mTablayout.setupWithViewPager(mViewPager);
+        }
     }
 
     @Override
@@ -309,6 +311,13 @@ public class UserActivity extends PEActivity<UserPresenter>
     public void showTabTitles(String[] titles) {
         mTabTitles = titles;
         mViewPager.getAdapter().notifyDataSetChanged();
+    }
+
+    @Override
+    public void showUserData(int boardCount, int pinCount, int likeCount, int followingCount,
+            int followerCount) {
+        mBoardFragment.setBoardCount(boardCount);
+        mPinFragment.setPinCount(pinCount);
     }
 
     @Override

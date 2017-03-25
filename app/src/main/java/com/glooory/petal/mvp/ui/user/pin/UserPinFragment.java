@@ -182,4 +182,8 @@ public class UserPinFragment extends PEFragment<UserSectionPresenter> implements
     public void onRefresh() {
         mPresenter.getUserPins(mUserId);
     }
+
+    public void setPinCount(int pinCount) {
+        mPinCount = pinCount;
+    }
 }
