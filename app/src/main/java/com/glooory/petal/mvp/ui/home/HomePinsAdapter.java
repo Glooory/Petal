@@ -19,14 +19,14 @@ import com.jess.arms.widget.imageloader.fresco.FrescoImageConfig;
 
 import javax.inject.Inject;
 
-import common.PEAdapter;
-import common.PEApplication;
+import common.BasePetalAdapter;
+import common.PetalApplication;
 
 /**
  * Created by Glooory on 17/2/22.
  */
 
-public class HomePinsAdapter extends PEAdapter<PinBean, BaseViewHolder> {
+public class HomePinsAdapter extends BasePetalAdapter<PinBean, BaseViewHolder> {
 
     @Inject
     public HomePinsAdapter() {
@@ -55,9 +55,9 @@ public class HomePinsAdapter extends PEAdapter<PinBean, BaseViewHolder> {
         }
 
         //添加采集和喜欢的 icon
-        Drawable collectDrawable = DrawableUtils.getTintDrawable(PEApplication.getContext(),
+        Drawable collectDrawable = DrawableUtils.getTintDrawable(PetalApplication.getContext(),
                 R.drawable.ic_pin_12dp, R.color.grey_500);
-        Drawable likeDrawable = DrawableUtils.getTintDrawable(PEApplication.getContext(),
+        Drawable likeDrawable = DrawableUtils.getTintDrawable(PetalApplication.getContext(),
                 R.drawable.ic_like_12dp, R.color.grey_500);
         ((TextView) holder.getView(R.id.textview_collection_count))
                 .setCompoundDrawablesWithIntrinsicBounds(collectDrawable, null, null, null);
@@ -75,7 +75,7 @@ public class HomePinsAdapter extends PEAdapter<PinBean, BaseViewHolder> {
                 item.getFile().getHeight());
         ((SimpleDraweeView) holder.getView(R.id.simple_drawee_view_pin)).setAspectRatio(aspectRatio);
         Drawable placeHolder = DrawableUtils.getColoredPlaceHolderDrawable(item);
-        mImageLoader.loadImage(PEApplication.getContext(),
+        mImageLoader.loadImage(PetalApplication.getContext(),
                 FrescoImageConfig.builder()
                         .setSimpleDraweeView(
                                 (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_pin))
@@ -84,7 +84,7 @@ public class HomePinsAdapter extends PEAdapter<PinBean, BaseViewHolder> {
                         .build());
         holder.getView(R.id.simple_drawee_view_pin).setVisibility(View.VISIBLE);
 
-        mImageLoader.loadImage(PEApplication.getContext(),
+        mImageLoader.loadImage(PetalApplication.getContext(),
                 FrescoImageConfig.builder()
                         .setSimpleDraweeView(
                                 (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_pin_avatar)
@@ -104,13 +104,13 @@ public class HomePinsAdapter extends PEAdapter<PinBean, BaseViewHolder> {
         int boardTitleLength = pinBean.getBoard().getTitle().length();
         SpannableString spannableString = new SpannableString(stringBuilder.toString());
         spannableString.setSpan(new ForegroundColorSpan(
-                        ContextCompat.getColor(PEApplication.getContext(), R.color.primary_text)),
+                        ContextCompat.getColor(PetalApplication.getContext(), R.color.primary_text)),
                 0,
                 userNameLength,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
         );
         spannableString.setSpan(new ForegroundColorSpan(
-                        ContextCompat.getColor(PEApplication.getContext(), R.color.primary_text)),
+                        ContextCompat.getColor(PetalApplication.getContext(), R.color.primary_text)),
                 userNameLength + 5,
                 userNameLength + 5 + boardTitleLength,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE

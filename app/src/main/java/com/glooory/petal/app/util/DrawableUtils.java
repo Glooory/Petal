@@ -12,7 +12,7 @@ import android.text.TextUtils;
 import com.glooory.petal.R;
 import com.glooory.petal.mvp.model.entity.PinBean;
 
-import common.PEApplication;
+import common.PetalApplication;
 
 /**
  * Created by Glooory on 17/2/18.
@@ -40,7 +40,7 @@ public final class DrawableUtils {
     public static Drawable getColoredPlaceHolderDrawable(PinBean pinBean) {
         ColorDrawable colorDrawable;
         if (TextUtils.isEmpty(pinBean.getFile().getTheme())) {
-            colorDrawable = new ColorDrawable(ContextCompat.getColor(PEApplication.getContext(),
+            colorDrawable = new ColorDrawable(ContextCompat.getColor(PetalApplication.getContext(),
                     R.color.grey_a700));
         } else {
             colorDrawable = new ColorDrawable(Color.parseColor("#" + pinBean.getFile().getTheme()));

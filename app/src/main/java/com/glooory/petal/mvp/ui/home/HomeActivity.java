@@ -36,8 +36,8 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import common.AppComponent;
-import common.PEActivity;
-import common.PEApplication;
+import common.BasePetalActivity;
+import common.PetalApplication;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -47,7 +47,7 @@ import rx.subscriptions.CompositeSubscription;
  * Created by Glooory on 17/2/18.
  */
 
-public class HomeActivity extends PEActivity
+public class HomeActivity extends BasePetalActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         View.OnClickListener{
 
@@ -163,7 +163,7 @@ public class HomeActivity extends PEActivity
         String avatarKey = basicUserInfoBean.getAvatarKey();
         if (!TextUtils.isEmpty(avatarKey)) {
             String avatarUrl = String.format(getString(R.string.url_image_small_format), avatarKey);
-            ((PEApplication) getApplication())
+            ((PetalApplication) getApplication())
                     .getAppComponent()
                     .imageLoader()
                     .loadImage(this,

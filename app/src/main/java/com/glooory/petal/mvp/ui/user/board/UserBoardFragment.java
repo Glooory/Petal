@@ -26,13 +26,13 @@ import com.glooory.petal.mvp.ui.user.UserContract;
 
 import butterknife.BindView;
 import common.AppComponent;
-import common.PEFragment;
+import common.BasePetalFragment;
 
 /**
  * Created by Glooory on 17/3/22.
  */
 
-public class UserBoardFragment extends PEFragment<UserSectionPresenter>
+public class UserBoardFragment extends BasePetalFragment<UserSectionPresenter>
         implements UserContract.SectionView {
 
     private static final String BUNDLE_BOARD_COUNT = "board_count";

@@ -9,7 +9,7 @@ import rx.subscriptions.CompositeSubscription;
  * Created by Glooory on 17/3/20.
  */
 
-public class PEDialogFragment extends AppCompatDialogFragment {
+public class BasePetalDialogFragment extends AppCompatDialogFragment {
 
     private CompositeSubscription mCompositeSubscription;
 

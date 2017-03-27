@@ -25,13 +25,13 @@ import com.glooory.petal.mvp.ui.user.board.EditBoardDiglogFragment;
 
 import butterknife.BindView;
 import common.AppComponent;
-import common.PEFragment;
+import common.BasePetalFragment;
 
 /**
  * Created by Glooory on 17/3/25.
  */
 
-public class UserFollowingFragment extends PEFragment<UserSectionPresenter> implements UserContract.SectionView {
+public class UserFollowingFragment extends BasePetalFragment<UserSectionPresenter> implements UserContract.SectionView {
 
     private static final String ARGS_FOLLOWING_COUNT = "following_count";
 
@@ -90,7 +90,7 @@ public class UserFollowingFragment extends PEFragment<UserSectionPresenter> impl
         if (mFollowingCount <= 0) {
             mAdapter.addFooterView(mNoMoreDataFooter);
         } else {
-            mPresenter.getUserFollowings(mUserId);
+            mPresenter.getUserFollowing(mUserId);
         }
     }
 
@@ -142,7 +142,7 @@ public class UserFollowingFragment extends PEFragment<UserSectionPresenter> impl
         mRecyclerView.post(new Runnable() {
             @Override
             public void run() {
-                mPresenter.getUserFollowingsMore();
+                mPresenter.getUserFollowingMore();
             }
         });
     }
@@ -220,7 +220,7 @@ public class UserFollowingFragment extends PEFragment<UserSectionPresenter> impl
     }
 
     public void onRefresh() {
-        mPresenter.getUserFollowings(mUserId);
+        mPresenter.getUserFollowing(mUserId);
     }
 
     public void setFollowingCount(int followingCount) {

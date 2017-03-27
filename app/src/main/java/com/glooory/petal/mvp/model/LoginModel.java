@@ -19,7 +19,7 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
-import common.PEApplication;
+import common.PetalApplication;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -46,7 +46,7 @@ public class LoginModel extends BasePEModel<ServiceManager, CacheManager>
     @Override
     public Observable<LatestEditBoardsBean> requestToken(final String userAccount, final String password) {
         return mServiceManager.getUserService()
-                .getToken(PEApplication.getContext().getString(R.string.url_request_token),
+                .getToken(PetalApplication.getContext().getString(R.string.url_request_token),
                         Constants.HTTP_ARGS_VALUE_PASSWORD,
                         userAccount,
                         password)

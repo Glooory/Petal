@@ -18,14 +18,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import common.PEAdapter;
-import common.PEApplication;
+import common.BasePetalAdapter;
+import common.PetalApplication;
 
 /**
  * Created by Glooory on 17/3/22.
  */
 
-public class UserBoardAdapter extends PEAdapter<BoardBean, BaseViewHolder> {
+public class UserBoardAdapter extends BasePetalAdapter<BoardBean, BaseViewHolder> {
 
     private boolean mIsMe; // 是否是已登录用户自己
     private String mCollectCountFormat;
@@ -38,7 +38,7 @@ public class UserBoardAdapter extends PEAdapter<BoardBean, BaseViewHolder> {
     @Inject
     public UserBoardAdapter(boolean isMe) {
         super(R.layout.item_cardview_user_board, null);
-        Resources resources = PEApplication.getContext().getResources();
+        Resources resources = PetalApplication.getContext().getResources();
         mIsMe = isMe;
         mCollectCountFormat = resources.getString(R.string.format_collection_count);
         mFollowerCountFormat = resources.getString(R.string.format_following_count);
@@ -80,7 +80,7 @@ public class UserBoardAdapter extends PEAdapter<BoardBean, BaseViewHolder> {
         }
         ((TextView) holder.getView(R.id.text_view_user_board_operate))
                 .setCompoundDrawablesWithIntrinsicBounds(
-                        ContextCompat.getDrawable(PEApplication.getContext(), operateDrawablResId)
+                        ContextCompat.getDrawable(PetalApplication.getContext(), operateDrawablResId)
                         , null, null, null);
 
         holder.setText(R.id.text_view_user_board_title, boardBean.getTitle())
@@ -100,7 +100,7 @@ public class UserBoardAdapter extends PEAdapter<BoardBean, BaseViewHolder> {
 
         List<PinBean> pinList = boardBean.getPins();
         if (pinList.size() > 0) {
-            mImageLoader.loadImage(PEApplication.getContext(),
+            mImageLoader.loadImage(PetalApplication.getContext(),
                     FrescoImageConfig.builder()
                             .setSimpleDraweeView(
                                     (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_user_board_cover))
@@ -134,7 +134,7 @@ public class UserBoardAdapter extends PEAdapter<BoardBean, BaseViewHolder> {
     }
 
     private void loadSmallBoardCover(SimpleDraweeView image, String imageUrlKey) {
-        mImageLoader.loadImage(PEApplication.getContext(),
+        mImageLoader.loadImage(PetalApplication.getContext(),
                 FrescoImageConfig.builder()
                         .setSimpleDraweeView(image)
                         .setUrl(String.format(mSmallImageUrlFormat, imageUrlKey))

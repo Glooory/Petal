@@ -16,9 +16,9 @@ import com.jess.arms.base.BaseActivity;
  * Created by Glooory on 17/2/17
  */
 
-public abstract class PEActivity<P extends PEPresenter> extends BaseActivity<P> {
+public abstract class BasePetalActivity<P extends BasePetalPresenter> extends BaseActivity<P> {
 
-    protected PEApplication mPEApplication;
+    protected PetalApplication mPetalApplication;
     protected int mScreenPixelsWidth;
     protected boolean isLogin = false;
     protected String mAuthorization;
@@ -66,8 +66,8 @@ public abstract class PEActivity<P extends PEPresenter> extends BaseActivity<P> 
 
     @Override
     protected void componentInject() {
-        mPEApplication = (PEApplication) getApplication();
-        setupActivityComponent(mPEApplication.getAppComponent());
+        mPetalApplication = (PetalApplication) getApplication();
+        setupActivityComponent(mPetalApplication.getAppComponent());
     }
 
     //提供AppComponent(提供所有的单例对象)给子类，进行Component依赖
@@ -76,7 +76,7 @@ public abstract class PEActivity<P extends PEPresenter> extends BaseActivity<P> 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        this.mPEApplication = null;
+        this.mPetalApplication = null;
     }
 
     public void finishSelf() {

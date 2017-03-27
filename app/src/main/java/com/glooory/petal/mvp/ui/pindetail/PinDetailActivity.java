@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import common.AppComponent;
-import common.PEActivity;
+import common.BasePetalActivity;
 import rx.functions.Action1;
 
 import static com.glooory.petal.app.Constants.EXTRA_ASPECT_RATIO;
@@ -47,7 +47,7 @@ import static com.glooory.petal.app.Constants.EXTRA_PIN_ID;
  * Created by Glooory on 17/3/17.
  */
 
-public class PinDetailActivity extends PEActivity<PinDetailPresenter> implements PinDetailContract.View {
+public class PinDetailActivity extends BasePetalActivity<PinDetailPresenter> implements PinDetailContract.View {
 
     @BindView(R.id.simple_drawee_view_pin)
     SimpleDraweeView mImagePin;

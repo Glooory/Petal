@@ -18,7 +18,7 @@ import com.glooory.petal.R;
 import com.glooory.petal.app.adapter.HighLightArrayAdapter;
 
 import butterknife.ButterKnife;
-import common.PEApplication;
+import common.PetalApplication;
 
 /**
  * Created by Glooory on 17/3/23.
@@ -104,7 +104,7 @@ public class EditBoardDiglogFragment extends AppCompatDialogFragment {
                 @Override
                 public void onClick(View v) {
                     if (isBoardNameEmpty()) {
-                        mEditTextBoardName.setError(PEApplication.getContext()
+                        mEditTextBoardName.setError(PetalApplication.getContext()
                                 .getString(R.string.msg_cannot_be_empty));
                         mEditTextBoardName.requestFocus();
                         return;

@@ -7,7 +7,7 @@ import android.view.View;
 import com.glooory.petal.R;
 import com.jess.arms.base.BaseApplication;
 
-import common.PEApplication;
+import common.PetalApplication;
 
 /**
  * Created by Glooory on 17/3/13.
@@ -20,35 +20,35 @@ public class SnackbarUtil {
 
     public static void showLong(int message) {
         showLong(
-                ((BaseApplication) PEApplication.getContext()).getAppManager().getCurrentActivity(),
+                ((BaseApplication) PetalApplication.getContext()).getAppManager().getCurrentActivity(),
                 message
         );
     }
 
     public static void showLong(String message) {
         showLong(
-                ((BaseApplication) PEApplication.getContext()).getAppManager().getCurrentActivity(),
+                ((BaseApplication) PetalApplication.getContext()).getAppManager().getCurrentActivity(),
                 message
         );
     }
 
     public static void showShort(int message) {
         showShort(
-                ((BaseApplication) PEApplication.getContext()).getAppManager().getCurrentActivity(),
+                ((BaseApplication) PetalApplication.getContext()).getAppManager().getCurrentActivity(),
                 message
         );
     }
 
     public static void showShort(String message) {
         showShort(
-                ((BaseApplication) PEApplication.getContext()).getAppManager().getCurrentActivity(),
+                ((BaseApplication) PetalApplication.getContext()).getAppManager().getCurrentActivity(),
                 message
         );
     }
 
     public static void showLong(int message, int actionResId, View.OnClickListener onClickListener) {
         showLong(
-                ((BaseApplication) PEApplication.getContext()).getAppManager().getCurrentActivity(),
+                ((BaseApplication) PetalApplication.getContext()).getAppManager().getCurrentActivity(),
                 message,
                 actionResId,
                 onClickListener
@@ -57,7 +57,7 @@ public class SnackbarUtil {
 
     public static void showLong(String message, String actionMsg, View.OnClickListener onClickListener) {
         showLong(
-                ((BaseApplication) PEApplication.getContext()).getAppManager().getCurrentActivity(),
+                ((BaseApplication) PetalApplication.getContext()).getAppManager().getCurrentActivity(),
                 message,
                 actionMsg,
                 onClickListener

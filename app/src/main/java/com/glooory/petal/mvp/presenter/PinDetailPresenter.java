@@ -34,15 +34,15 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import common.PEApplication;
-import common.PEPresenter;
+import common.BasePetalPresenter;
+import common.PetalApplication;
 import rx.Subscriber;
 
 /**
  * Created by Glooory on 17/3/17.
  */
 @ActivityScope
-public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinDetailContract.Model> {
+public class PinDetailPresenter extends BasePetalPresenter<PinDetailContract.View, PinDetailContract.Model> {
 
     private HomePinsAdapter mAdapter;
     private int mPinId;
@@ -68,9 +68,9 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
         mAdapter = adapter;
         initAdaper();
         mRootView.setAdapter(mAdapter);
-        mCollectCountFormat = PEApplication.getContext().getString(R.string.format_collection_count);
-        mLikeCountFormat = PEApplication.getContext().getString(R.string.format_like_count);
-        mStrEdit = PEApplication.getContext().getString(R.string.edit);
+        mCollectCountFormat = PetalApplication.getContext().getString(R.string.format_collection_count);
+        mLikeCountFormat = PetalApplication.getContext().getString(R.string.format_like_count);
+        mStrEdit = PetalApplication.getContext().getString(R.string.edit);
     }
 
     private void initAdaper() {
@@ -259,10 +259,10 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
         }
         if (mIsCollected) {
             String pinExistMsg = String.format(
-                    PEApplication.getContext().getString(R.string.format_collection_exist),
+                    PetalApplication.getContext().getString(R.string.format_collection_exist),
                     mCollectBelong);
             SnackbarUtil.showLong(pinExistMsg,
-                    PEApplication.getContext().getString(R.string.msg_collect_still),
+                    PetalApplication.getContext().getString(R.string.msg_collect_still),
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -337,7 +337,7 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
                             mRootView.showCollectCount(String.format(mCollectCountFormat, mCollectCount));
                             mRootView.showCollectSbtnChecked(mIsCollected, true);
                             SnackbarUtil.showLong(String.format(
-                                    PEApplication.getContext().getString(R.string.format_collect_success),
+                                    PetalApplication.getContext().getString(R.string.format_collect_success),
                                     collectResultBean.getPin().getBoard().getTitle()
                             ));
                         }
@@ -352,7 +352,7 @@ public class PinDetailPresenter extends PEPresenter<PinDetailContract.View, PinD
                     @Override
                     public void onNext(Void aVoid) {
                         mRootView.killMyself();
-                        Toast.makeText(PEApplication.getContext(), R.string.msg_delete_success,
+                        Toast.makeText(PetalApplication.getContext(), R.string.msg_delete_success,
                                 Toast.LENGTH_SHORT).show();
                     }
                 });

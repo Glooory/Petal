@@ -16,8 +16,8 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
-import common.PEApplication;
-import common.PEPresenter;
+import common.PetalApplication;
+import common.BasePetalPresenter;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -28,7 +28,7 @@ import rx.schedulers.Schedulers;
  * Created by Glooory on 17/3/13.
  */
 @ActivityScope
-public class LoginPresenter extends PEPresenter<LoginContract.View, LoginContract.Model> {
+public class LoginPresenter extends BasePetalPresenter<LoginContract.View, LoginContract.Model> {
 
     @Inject
     public LoginPresenter(LoginContract.View view, LoginContract.Model model) {
@@ -51,14 +51,14 @@ public class LoginPresenter extends PEPresenter<LoginContract.View, LoginContrac
 
         if (TextUtils.isEmpty(userAccount)) {
             mRootView.showAccountError(
-                    PEApplication.getContext().getString(R.string.msg_cannot_be_empty));
+                    PetalApplication.getContext().getString(R.string.msg_cannot_be_empty));
             isIllegalParams = true;
             isAccountIllegal = true;
         }
 
         if (TextUtils.isEmpty(password) || !isPasswordValid(password)) {
             mRootView.showPasswordError(
-                    PEApplication.getContext().getString(R.string.msg_password_illegal), isAccountIllegal);
+                    PetalApplication.getContext().getString(R.string.msg_password_illegal), isAccountIllegal);
             isIllegalParams = true;
         }
 

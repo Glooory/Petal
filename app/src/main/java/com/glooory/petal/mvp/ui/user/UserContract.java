@@ -108,9 +108,9 @@ public interface UserContract {
 
         Observable<List<PinBean>> getUserLikedPinsMore(String userId);
 
-        Observable<List<UserBean>> getUserFollowings(String userId);
+        Observable<List<UserBean>> getUserFollowing(String userId);
 
-        Observable<List<UserBean>> getUserFollowingsMore(String userId);
+        Observable<List<UserBean>> getUserFollowingMore(String userId);
 
         Observable<Void> followUser(String userId, boolean isFollowed);
     }

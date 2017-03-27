@@ -232,9 +232,9 @@ public class UserSectionModel extends BasePEModel<ServiceManager, CacheManager> 
     }
 
     @Override
-    public Observable<List<UserBean>> getUserFollowings(final String userId) {
+    public Observable<List<UserBean>> getUserFollowing(final String userId) {
         return mServiceManager.getUserService()
-                .getUserFollowings(userId, Constants.PER_PAGE_LIMIT)
+                .getUserFollowing(userId, Constants.PER_PAGE_LIMIT)
                 .retryWhen(new RetryWithDelay(1, 1))
                 .filter(new Func1<UserListBean, Boolean>() {
                     @Override
@@ -254,9 +254,9 @@ public class UserSectionModel extends BasePEModel<ServiceManager, CacheManager> 
     }
 
     @Override
-    public Observable<List<UserBean>> getUserFollowingsMore(String userId) {
+    public Observable<List<UserBean>> getUserFollowingMore(String userId) {
         return mServiceManager.getUserService()
-                .getUserFollowingsMore(userId, mMaxId, Constants.PER_PAGE_LIMIT)
+                .getUserFollowingMore(userId, mMaxId, Constants.PER_PAGE_LIMIT)
                 .retryWhen(new RetryWithDelay(1, 1))
                 .map(new Func1<UserListBean, List<UserBean>>() {
                     @Override

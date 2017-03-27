@@ -25,7 +25,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import common.PEPresenter;
+import common.BasePetalPresenter;
 import rx.Observable;
 import rx.functions.Action0;
 
@@ -33,7 +33,7 @@ import rx.functions.Action0;
  * Created by Glooory on 17/2/18.
  */
 @FragmentScope
-public class HomePresenter extends PEPresenter<HomeContract.View, HomeContract.Model> {
+public class HomePresenter extends BasePetalPresenter<HomeContract.View, HomeContract.Model> {
 
     private int mLastMaxId;
     HomePinsAdapter mAdapter;

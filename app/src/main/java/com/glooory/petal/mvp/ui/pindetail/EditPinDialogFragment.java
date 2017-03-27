@@ -24,8 +24,8 @@ import com.glooory.petal.mvp.model.entity.LatestEditBoardsBean;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import common.PEApplication;
-import common.PEDialogFragment;
+import common.PetalApplication;
+import common.BasePetalDialogFragment;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -34,7 +34,7 @@ import rx.schedulers.Schedulers;
  * Created by Glooory on 17/3/21.
  */
 
-public class EditPinDialogFragment extends PEDialogFragment {
+public class EditPinDialogFragment extends BasePetalDialogFragment {
 
     private EditText mEditTextCollectDes;
     private Spinner mSpinnerBoardTitles;
@@ -117,7 +117,7 @@ public class EditPinDialogFragment extends PEDialogFragment {
      * 请求用户的所有画板信息，失败则从本地数据读取
      */
     private void requestBoardsInfo() {
-        Subscription s = ((PEApplication) PEApplication.getContext()).getAppComponent()
+        Subscription s = ((PetalApplication) PetalApplication.getContext()).getAppComponent()
                 .serviceManager()
                 .getUserService()
                 .requestLatestBoardInfo(Constants.HTTP_RECOMMEND_TAGS)

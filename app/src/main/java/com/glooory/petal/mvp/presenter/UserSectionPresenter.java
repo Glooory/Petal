@@ -32,9 +32,9 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-import common.PEAdapter;
-import common.PEApplication;
-import common.PEPresenter;
+import common.BasePetalAdapter;
+import common.PetalApplication;
+import common.BasePetalPresenter;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -45,9 +45,9 @@ import rx.functions.Action1;
  * Created by Glooory on 17/3/21.
  */
 @FragmentScope
-public class UserSectionPresenter extends PEPresenter<UserContract.SectionView, UserContract.SectionModel> {
+public class UserSectionPresenter extends BasePetalPresenter<UserContract.SectionView, UserContract.SectionModel> {
 
-    private PEAdapter mAdapter;
+    private BasePetalAdapter mAdapter;
     private String mUserId;
     private boolean mIsMe;
 
@@ -61,7 +61,7 @@ public class UserSectionPresenter extends PEPresenter<UserContract.SectionView, 
         return mIsMe;
     }
 
-    public void setAdapter(PEAdapter adapter) {
+    public void setAdapter(BasePetalAdapter adapter) {
         mAdapter = adapter;
         initAdapter();
     }
@@ -187,7 +187,7 @@ public class UserSectionPresenter extends PEPresenter<UserContract.SectionView, 
                             Logger.d(userBoardSingleBean.getBoard().getCategoryId());
                             Logger.d(((UserBoardAdapter) mAdapter).getItem(position).getCategoryId());
                             mAdapter.notifyItemChanged(position);
-                            mRootView.showMessage(PEApplication.getContext()
+                            mRootView.showMessage(PetalApplication.getContext()
                                     .getString(R.string.msg_edit_success));
                         }
                     }
@@ -206,7 +206,7 @@ public class UserSectionPresenter extends PEPresenter<UserContract.SectionView, 
                                 .subscribe(new Action1<Integer>() {
                                     @Override
                                     public void call(Integer integer) {
-                                        mRootView.showMessage(PEApplication.getContext()
+                                        mRootView.showMessage(PetalApplication.getContext()
                                                 .getString(R.string.msg_delete_board_success));
                                         mRootView.showLatestUserInfo();
                                     }
@@ -239,7 +239,7 @@ public class UserSectionPresenter extends PEPresenter<UserContract.SectionView, 
                     @Override
                     public void onNext(UserBoardSingleBean userBoardSingleBean) {
                         if (userBoardSingleBean.getBoard() != null) {
-                            mRootView.showMessage(PEApplication.getContext()
+                            mRootView.showMessage(PetalApplication.getContext()
                                     .getString(R.string.msg_create_board_success));
                             mRootView.showLatestUserInfo();
                         }
@@ -385,9 +385,9 @@ public class UserSectionPresenter extends PEPresenter<UserContract.SectionView, 
                 });
     }
 
-    public void getUserFollowings(String userId) {
+    public void getUserFollowing(String userId) {
         mUserId = userId;
-        mModel.getUserFollowings(userId)
+        mModel.getUserFollowing(userId)
                 .compose(RxUtils.<List<UserBean>>bindToLifecycle(mRootView))
                 .subscribe(new BaseSubscriber<List<UserBean>>() {
                     @Override
@@ -398,8 +398,8 @@ public class UserSectionPresenter extends PEPresenter<UserContract.SectionView, 
                 });
     }
 
-    public void getUserFollowingsMore() {
-        mModel.getUserFollowingsMore(mUserId)
+    public void getUserFollowingMore() {
+        mModel.getUserFollowingMore(mUserId)
                 .compose(RxUtils.<List<UserBean>>bindToLifecycle(mRootView))
                 .subscribe(new BaseSubscriber<List<UserBean>>() {
                     @Override

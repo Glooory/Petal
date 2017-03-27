@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import common.AppComponent;
-import common.PEActivity;
+import common.BasePetalActivity;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -36,7 +36,7 @@ import rx.functions.Func1;
  * Created by Glooory on 17/3/4.
  */
 
-public class LoginActivity extends PEActivity<LoginPresenter> implements LoginContract.View {
+public class LoginActivity extends BasePetalActivity<LoginPresenter> implements LoginContract.View {
 
     private static final String BUNDLE_IS_FROM_SPLASH = "is_from_splash";
 

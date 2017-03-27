@@ -19,8 +19,8 @@ import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import common.AppComponent;
-import common.PEActivity;
-import common.PEApplication;
+import common.BasePetalActivity;
+import common.PetalApplication;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -32,7 +32,7 @@ import rx.schedulers.Schedulers;
  * Created by Glooory on 17/3/4.
  */
 
-public class SplashActivity extends PEActivity {
+public class SplashActivity extends BasePetalActivity {
 
     @BindView(R.id.imageview_splash)
     SimpleDraweeView mImgSplash;
@@ -60,7 +60,7 @@ public class SplashActivity extends PEActivity {
     @Override
     protected void initData() {
         mEncrypAES = new EncrypAES();
-        ((PEApplication) PEApplication.getContext()).getAppComponent().imageLoader()
+        ((PetalApplication) PetalApplication.getContext()).getAppComponent().imageLoader()
                 .loadImage(SplashActivity.this,
                         FrescoImageConfig.builder()
                                 .setUrl("res:///" + R.drawable.bg_splash_screen_bulb)
@@ -112,7 +112,7 @@ public class SplashActivity extends PEActivity {
                     public Observable<TokenBean> call(Void aVoid) {
                         String account = (String) SPUtils.get(Constants.PREF_USER_ACCOUNT, "");
                         String pswdAESed = (String) SPUtils.get(Constants.PREF_USER_PASSWORD, "");
-                        return ((PEApplication) mApplication)
+                        return ((PetalApplication) mApplication)
                                 .getAppComponent()
                                 .serviceManager()
                                 .getUserService()

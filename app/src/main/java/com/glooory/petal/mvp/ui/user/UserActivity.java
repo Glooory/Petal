@@ -53,7 +53,7 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import common.AppComponent;
-import common.PEActivity;
+import common.BasePetalActivity;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -62,7 +62,7 @@ import rx.functions.Action1;
  * Created by Glooory on 17/3/21.
  */
 
-public class UserActivity extends PEActivity<UserPresenter>
+public class UserActivity extends BasePetalActivity<UserPresenter>
         implements SwipeRefreshLayout.OnRefreshListener, UserContract.View,
         AppBarLayout.OnOffsetChangedListener{
 

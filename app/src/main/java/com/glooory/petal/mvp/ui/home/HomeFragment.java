@@ -19,7 +19,7 @@ import com.glooory.petal.mvp.presenter.HomePresenter;
 
 import butterknife.BindView;
 import common.AppComponent;
-import common.PEFragment;
+import common.BasePetalFragment;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -28,7 +28,7 @@ import rx.functions.Action1;
  * Created by Glooory on 17/2/25.
  */
 
-public class HomeFragment extends PEFragment<HomePresenter> implements HomeContract.View,
+public class HomeFragment extends BasePetalFragment<HomePresenter> implements HomeContract.View,
         SwipeRefreshLayout.OnRefreshListener{
 
     private static final String ARGS_HOME_PIN_TYPE = "pin_type";

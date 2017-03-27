@@ -107,13 +107,13 @@ public interface UserService {
     // 用户所关注的用户
     // https://api.huaban.com/users/12345678/following?limit=20
     @GET("users/{user_id}/following")
-    Observable<UserListBean> getUserFollowings(@Path("user_id") String userId,
+    Observable<UserListBean> getUserFollowing(@Path("user_id") String userId,
             @Query("limit") int limit);
 
     // 用户所关注的用户
     // https://api.huaban.com/users/12345678/following?limit=20
     @GET("users/{user_id}/following")
-    Observable<UserListBean> getUserFollowingsMore(@Path("user_id") String userId,
+    Observable<UserListBean> getUserFollowingMore(@Path("user_id") String userId,
             @Query("max") int maxId,
             @Query("limit") int limit);
 }

@@ -22,24 +22,24 @@ import com.orhanobut.logger.Logger;
  * Created by Glooory on 17/3/18.
  */
 
-public class PEPresenter<V extends BaseView, M extends IModel> extends BasePresenter<V, M> {
+public class BasePetalPresenter<V extends BaseView, M extends IModel> extends BasePresenter<V, M> {
 
     private ImageLoader mImageLoader;
     private String mLargePicUrlFormat;
     private String mSmallPicUrlFormat;
 
-    public PEPresenter(V rootView, M model) {
+    public BasePetalPresenter(V rootView, M model) {
         super(rootView, model);
-        mImageLoader = ((PEApplication) PEApplication.getContext()).getAppComponent().imageLoader();
-        mLargePicUrlFormat = PEApplication.getContext().getString(R.string.url_image_large_format);
-        mSmallPicUrlFormat = PEApplication.getContext().getString(R.string.url_image_small_format);
+        mImageLoader = ((PetalApplication) PetalApplication.getContext()).getAppComponent().imageLoader();
+        mLargePicUrlFormat = PetalApplication.getContext().getString(R.string.url_image_large_format);
+        mSmallPicUrlFormat = PetalApplication.getContext().getString(R.string.url_image_small_format);
     }
 
     public void loadImage(String imageUrlKey, SimpleDraweeView image) {
         String imageUrl = String.format(mLargePicUrlFormat, imageUrlKey);
         Logger.d(imageUrl);
         Logger.d(image == null);
-        mImageLoader.loadImage(((BaseApplication) PEApplication.getContext()).getAppManager().getCurrentActivity(),
+        mImageLoader.loadImage(((BaseApplication) PetalApplication.getContext()).getAppManager().getCurrentActivity(),
                 FrescoImageConfig.builder()
                         .setUrl(imageUrl)
                         .setSimpleDraweeView(image)
@@ -56,7 +56,7 @@ public class PEPresenter<V extends BaseView, M extends IModel> extends BasePrese
 
     public void loadImage(String imageUrlKey, SimpleDraweeView image, Drawable placeHolder) {
         String imageUrl = String.format(mLargePicUrlFormat, imageUrlKey);
-        mImageLoader.loadImage(((BaseApplication) PEApplication.getContext()).getAppManager().getCurrentActivity(),
+        mImageLoader.loadImage(((BaseApplication) PetalApplication.getContext()).getAppManager().getCurrentActivity(),
                 FrescoImageConfig.builder()
                         .setUrl(imageUrl)
                         .setSimpleDraweeView(image)
@@ -74,7 +74,7 @@ public class PEPresenter<V extends BaseView, M extends IModel> extends BasePrese
 
     public void loadImage(String imageUrlKey, SimpleDraweeView image, BaseBitmapDataSubscriber subscriber) {
         String imageUrl = String.format(mLargePicUrlFormat, imageUrlKey);
-        mImageLoader.loadImage(((BaseApplication) PEApplication.getContext()).getAppManager().getCurrentActivity(),
+        mImageLoader.loadImage(((BaseApplication) PetalApplication.getContext()).getAppManager().getCurrentActivity(),
                 FrescoImageConfig.builder()
                         .setUrl(imageUrl)
                         .setSimpleDraweeView(image)
@@ -92,7 +92,7 @@ public class PEPresenter<V extends BaseView, M extends IModel> extends BasePrese
 
     public void loadSmallImage(String imageUrlKey, SimpleDraweeView image) {
         String imageUrl = String.format(mSmallPicUrlFormat, imageUrlKey);
-        mImageLoader.loadImage(((BaseApplication) PEApplication.getContext()).getAppManager().getCurrentActivity(),
+        mImageLoader.loadImage(((BaseApplication) PetalApplication.getContext()).getAppManager().getCurrentActivity(),
                 FrescoImageConfig.builder()
                         .setUrl(imageUrl)
                         .setSimpleDraweeView(image)
@@ -101,7 +101,7 @@ public class PEPresenter<V extends BaseView, M extends IModel> extends BasePrese
 
     public void loadSmallCircleImage(String imageUrlKey, SimpleDraweeView image) {
         String imageUrl = String.format(mSmallPicUrlFormat, imageUrlKey);
-        mImageLoader.loadImage(((BaseApplication) PEApplication.getContext()).getAppManager().getCurrentActivity(),
+        mImageLoader.loadImage(((BaseApplication) PetalApplication.getContext()).getAppManager().getCurrentActivity(),
                 FrescoImageConfig.builder()
                         .setUrl(imageUrl)
                         .setSimpleDraweeView(image)
@@ -111,7 +111,7 @@ public class PEPresenter<V extends BaseView, M extends IModel> extends BasePrese
 
     public void loadUserAvatar(String imageUrlKey, SimpleDraweeView image, BaseBitmapDataSubscriber subscriber) {
         String imageUrl = String.format(mSmallPicUrlFormat, imageUrlKey);
-        mImageLoader.loadImage(((BaseApplication) PEApplication.getContext()).getAppManager().getCurrentActivity(),
+        mImageLoader.loadImage(((BaseApplication) PetalApplication.getContext()).getAppManager().getCurrentActivity(),
                 FrescoImageConfig.builder()
                         .setUrl(imageUrl)
                         .setSimpleDraweeView(image)
@@ -131,7 +131,7 @@ public class PEPresenter<V extends BaseView, M extends IModel> extends BasePrese
 
     public void loadSmallRadiusImage(String imageUrlKey, SimpleDraweeView image, int radius) {
         String imageUrl = String.format(mSmallPicUrlFormat, imageUrlKey);
-        mImageLoader.loadImage(((BaseApplication) PEApplication.getContext()).getAppManager().getCurrentActivity(),
+        mImageLoader.loadImage(((BaseApplication) PetalApplication.getContext()).getAppManager().getCurrentActivity(),
                 FrescoImageConfig.builder()
                         .setUrl(imageUrl)
                         .setSimpleDraweeView(image)
@@ -145,7 +145,7 @@ public class PEPresenter<V extends BaseView, M extends IModel> extends BasePrese
                     @Override
                     public void onClick(View v) {
                         LoginActivity.launch(
-                                ((BaseApplication) PEApplication.getContext())
+                                ((BaseApplication) PetalApplication.getContext())
                                         .getAppManager().getCurrentActivity(),
                                 false);
                     }

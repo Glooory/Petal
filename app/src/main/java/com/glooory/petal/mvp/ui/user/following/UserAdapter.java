@@ -15,14 +15,14 @@ import com.jess.arms.widget.imageloader.fresco.FrescoImageConfig;
 
 import java.util.List;
 
-import common.PEAdapter;
-import common.PEApplication;
+import common.BasePetalAdapter;
+import common.PetalApplication;
 
 /**
  * Created by Glooory on 17/3/25.
  */
 
-public class UserAdapter extends PEAdapter<UserBean, BaseViewHolder> {
+public class UserAdapter extends BasePetalAdapter<UserBean, BaseViewHolder> {
 
     private String mBoardCountFormat;
     private String mPinCountFormat;
@@ -34,12 +34,12 @@ public class UserAdapter extends PEAdapter<UserBean, BaseViewHolder> {
 
     public UserAdapter() {
         super(R.layout.item_cardview_user, null);
-        Resources resources = PEApplication.getContext().getResources();
+        Resources resources = PetalApplication.getContext().getResources();
         mBoardCountFormat = resources.getString(R.string.format_board_count);
         mPinCountFormat = resources.getString(R.string.format_collection_count);
         mStringBuilder = new StringBuilder();
-        mFollowDrawable = ContextCompat.getDrawable(PEApplication.getContext(), R.drawable.ic_add_grey_500_18dp);
-        mFollowedDrawable = ContextCompat.getDrawable(PEApplication.getContext(), R.drawable.ic_check_grey_500_18dp);
+        mFollowDrawable = ContextCompat.getDrawable(PetalApplication.getContext(), R.drawable.ic_add_grey_500_18dp);
+        mFollowedDrawable = ContextCompat.getDrawable(PetalApplication.getContext(), R.drawable.ic_check_grey_500_18dp);
         mFollowStr = resources.getString(R.string.following);
         mFollowedStr = resources.getString(R.string.followed);
     }
@@ -86,7 +86,7 @@ public class UserAdapter extends PEAdapter<UserBean, BaseViewHolder> {
     }
 
     private void loadAvatarImage(String imageUrlKey, SimpleDraweeView image) {
-        mImageLoader.loadImage(PEApplication.getContext(),
+        mImageLoader.loadImage(PetalApplication.getContext(),
                 FrescoImageConfig.builder()
                         .setUrl(String.format(mSmallImageUrlFormat, imageUrlKey))
                         .setSimpleDraweeView(image)
@@ -96,7 +96,7 @@ public class UserAdapter extends PEAdapter<UserBean, BaseViewHolder> {
     }
 
     private void loadThumbnail(String imageUrlKey, SimpleDraweeView image) {
-        mImageLoader.loadImage(PEApplication.getContext(),
+        mImageLoader.loadImage(PetalApplication.getContext(),
                 FrescoImageConfig.builder()
                         .setUrl(String.format(mSmallImageUrlFormat, imageUrlKey))
                         .setSimpleDraweeView(image)

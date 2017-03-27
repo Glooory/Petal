@@ -9,7 +9,7 @@ import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
 
-import common.PEApplication;
+import common.PetalApplication;
 import retrofit2.adapter.rxjava.HttpException;
 
 /**
@@ -22,7 +22,7 @@ public class NetworkUtils {
     }
 
     public static boolean isConnected() {
-        ConnectivityManager manager = (ConnectivityManager) PEApplication.getContext()
+        ConnectivityManager manager = (ConnectivityManager) PetalApplication.getContext()
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
 
         if (manager != null) {

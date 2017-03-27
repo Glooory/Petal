@@ -27,13 +27,13 @@ import com.glooory.petal.mvp.ui.user.board.EditBoardDiglogFragment;
 
 import butterknife.BindView;
 import common.AppComponent;
-import common.PEFragment;
+import common.BasePetalFragment;
 
 /**
  * Created by Glooory on 17/3/24.
  */
 
-public class UserPinFragment extends PEFragment<UserSectionPresenter> implements UserContract.SectionView {
+public class UserPinFragment extends BasePetalFragment<UserSectionPresenter> implements UserContract.SectionView {
 
     private static final String ARGS_PIN_COUNT = "pin_count";
 

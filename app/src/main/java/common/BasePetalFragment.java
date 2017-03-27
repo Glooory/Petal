@@ -8,13 +8,13 @@ import com.squareup.leakcanary.RefWatcher;
  * Created by Glooory on 17/2/25
  */
 
-public abstract class PEFragment<P extends Presenter> extends BaseFragment<P> {
-    protected PEApplication mPEApplication;
+public abstract class BasePetalFragment<P extends Presenter> extends BaseFragment<P> {
+    protected PetalApplication mPetalApplication;
 
     @Override
     protected void componentInject() {
-        mPEApplication = (PEApplication) mActivity.getApplication();
-        setupFragmentComponent(mPEApplication.getAppComponent());
+        mPetalApplication = (PetalApplication) mActivity.getApplication();
+        setupFragmentComponent(mPetalApplication.getAppComponent());
     }
 
     //提供AppComponent(提供所有的单例对象)给子类，进行Component依赖
@@ -23,10 +23,10 @@ public abstract class PEFragment<P extends Presenter> extends BaseFragment<P> {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        RefWatcher watcher = PEApplication.getRefWatcher(getActivity());//使用leakCanary检测fragment的内存泄漏
+        RefWatcher watcher = PetalApplication.getRefWatcher(getActivity());//使用leakCanary检测fragment的内存泄漏
         if (watcher != null) {
             watcher.watch(this);
         }
-        this.mPEApplication =null;
+        this.mPetalApplication =null;
     }
 }

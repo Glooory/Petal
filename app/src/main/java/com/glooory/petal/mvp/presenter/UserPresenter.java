@@ -12,15 +12,15 @@ import com.jess.arms.utils.RxUtils;
 
 import javax.inject.Inject;
 
-import common.PEApplication;
-import common.PEPresenter;
+import common.PetalApplication;
+import common.BasePetalPresenter;
 import rx.functions.Action0;
 
 /**
  * Created by Glooory on 17/3/22.
  */
 @ActivityScope
-public class UserPresenter extends PEPresenter<UserContract.View, UserContract.Model> {
+public class UserPresenter extends BasePetalPresenter<UserContract.View, UserContract.Model> {
 
     private String mUserId;
     private boolean mIsMe;
@@ -95,14 +95,14 @@ public class UserPresenter extends PEPresenter<UserContract.View, UserContract.M
         if (userBean.getProfile() != null && !TextUtils.isEmpty(userBean.getProfile().getAbout())) {
             mRootView.showUserAbout(userBean.getProfile().getAbout());
         } else {
-            mRootView.showUserAbout(PEApplication.getContext().getString(R.string.msg_empty_user_about));
+            mRootView.showUserAbout(PetalApplication.getContext().getString(R.string.msg_empty_user_about));
         }
 
         mRootView.showUserAvatar(userBean.getAvatar().getKey());
     }
 
     private void setupTabTitles() {
-        Resources resources = PEApplication.getContext().getResources();
+        Resources resources = PetalApplication.getContext().getResources();
         String tabTitle1 = String.format(resources.getString(R.string.format_board_count), mBoardCount);
         String tabTitle2 = String.format(resources.getString(R.string.format_collection_count), mCollectCount);
         String tabTitle3 = String.format(resources.getString(R.string.format_like_count), mLikeCount);

@@ -25,7 +25,7 @@ import okhttp3.Response;
  * Created by Glooory on 17/2/17
  */
 
-public class PEApplication extends BaseApplication {
+public class PetalApplication extends BaseApplication {
     private AppComponent mAppComponent;
     private RefWatcher mRefWatcher;//leakCanary观察器
 
@@ -74,7 +74,7 @@ public class PEApplication extends BaseApplication {
      * @return
      */
     public static RefWatcher getRefWatcher(Context context) {
-        PEApplication application = (PEApplication) context.getApplicationContext();
+        PetalApplication application = (PetalApplication) context.getApplicationContext();
         return application.mRefWatcher;
     }
 

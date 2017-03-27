@@ -24,13 +24,13 @@ import com.glooory.petal.mvp.ui.user.board.EditBoardDiglogFragment;
 
 import butterknife.BindView;
 import common.AppComponent;
-import common.PEFragment;
+import common.BasePetalFragment;
 
 /**
  * Created by Glooory on 17/3/25.
  */
 
-public class UserLikedFragment extends PEFragment<UserSectionPresenter> implements UserContract.SectionView {
+public class UserLikedFragment extends BasePetalFragment<UserSectionPresenter> implements UserContract.SectionView {
 
     private static final String ARGS_LIKED_COUNT = "liked_count";
 

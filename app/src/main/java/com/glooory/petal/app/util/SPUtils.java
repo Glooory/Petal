@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import common.PEApplication;
+import common.PetalApplication;
 
 /**
  * Created by Glooory on 17/2/18.
@@ -32,7 +32,7 @@ public class SPUtils {
      * @param object
      */
     public static void putByApply(String key, Object object) {
-        SharedPreferences sharedPreferences = PEApplication.getContext()
+        SharedPreferences sharedPreferences = PetalApplication.getContext()
                 .getSharedPreferences(SP_COMMOM_FILE_NAME, SP_READ_WRITE_MODE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         judgeDataTypeToPut(editor, key, object);
@@ -46,7 +46,7 @@ public class SPUtils {
      * @return
      */
     public static boolean putByCommit(String key, Object object) {
-        SharedPreferences sharedPreferences = PEApplication.getContext()
+        SharedPreferences sharedPreferences = PetalApplication.getContext()
                 .getSharedPreferences(SP_COMMOM_FILE_NAME, SP_READ_WRITE_MODE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         judgeDataTypeToPut(editor, key, object);
@@ -79,7 +79,7 @@ public class SPUtils {
     }
 
     public static Object get(String key, Object defaultValue) {
-        SharedPreferences sharedPreferences = PEApplication.getContext()
+        SharedPreferences sharedPreferences = PetalApplication.getContext()
                 .getSharedPreferences(SP_COMMOM_FILE_NAME, SP_READ_WRITE_MODE);
 
         if (defaultValue instanceof String) {
@@ -104,7 +104,7 @@ public class SPUtils {
      * @param key
      */
     public static void remove(String key) {
-        SharedPreferences sharedPreferences = PEApplication.getContext()
+        SharedPreferences sharedPreferences = PetalApplication.getContext()
                 .getSharedPreferences(SP_COMMOM_FILE_NAME, SP_READ_WRITE_MODE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove(key);
@@ -115,7 +115,7 @@ public class SPUtils {
      * 清除所有数据
      */
     public static void clear() {
-        SharedPreferences sharedPreferences = PEApplication.getContext()
+        SharedPreferences sharedPreferences = PetalApplication.getContext()
                 .getSharedPreferences(SP_COMMOM_FILE_NAME, SP_READ_WRITE_MODE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
@@ -128,7 +128,7 @@ public class SPUtils {
      * @return
      */
     public static boolean contains(String key) {
-        SharedPreferences sharedPreferences = PEApplication.getContext()
+        SharedPreferences sharedPreferences = PetalApplication.getContext()
                 .getSharedPreferences(SP_COMMOM_FILE_NAME, SP_READ_WRITE_MODE);
         return sharedPreferences.contains(key);
     }
@@ -138,7 +138,7 @@ public class SPUtils {
      * @return
      */
     public static Map<String, ?> getAll() {
-        SharedPreferences sharedPreferences = PEApplication.getContext()
+        SharedPreferences sharedPreferences = PetalApplication.getContext()
                 .getSharedPreferences(SP_COMMOM_FILE_NAME, SP_READ_WRITE_MODE);
         return sharedPreferences.getAll();
     }
@@ -148,7 +148,7 @@ public class SPUtils {
      * @return
      */
     public static Set<String> getHistoryAccounts() {
-        SharedPreferences sharedPreferences = PEApplication.getContext()
+        SharedPreferences sharedPreferences = PetalApplication.getContext()
                 .getSharedPreferences(SP_HISTORY_ACCOUNTS_FILE_NAME, SP_READ_WRITE_MODE);
         return sharedPreferences.getStringSet(PREF_HISTORY_ACCOUNTS, new HashSet<String>());
     }
@@ -158,7 +158,7 @@ public class SPUtils {
      * @param accouts
      */
     public static void putHistoryAccounts(Set<String> accouts) {
-        SharedPreferences sharedPreferences = PEApplication.getContext()
+        SharedPreferences sharedPreferences = PetalApplication.getContext()
                 .getSharedPreferences(SP_HISTORY_ACCOUNTS_FILE_NAME, SP_READ_WRITE_MODE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putStringSet(PREF_HISTORY_ACCOUNTS, accouts);
@@ -170,7 +170,7 @@ public class SPUtils {
     }
 
     public static class Builder{
-        private final SharedPreferences.Editor mEditor = PEApplication.getContext()
+        private final SharedPreferences.Editor mEditor = PetalApplication.getContext()
                 .getSharedPreferences(SP_COMMOM_FILE_NAME, SP_READ_WRITE_MODE).edit();
 
         public Builder addData(String key, Object object) {
