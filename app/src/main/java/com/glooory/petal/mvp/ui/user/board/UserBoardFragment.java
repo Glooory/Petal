@@ -89,7 +89,7 @@ public class UserBoardFragment extends BasePetalFragment<UserSectionPresenter>
                         // TODO: 17/3/22 Launch BoardActivity
                         break;
                     case R.id.ll_user_board_operate:
-                        mPresenter.operateBtnClicked(position);
+                        mPresenter.onBoardOperateBtnClick(position);
                         break;
                 }
             }
@@ -240,6 +240,11 @@ public class UserBoardFragment extends BasePetalFragment<UserSectionPresenter>
     @Override
     public void showFollowingDataChange(boolean isFollowed) {
 
+    }
+
+    @Override
+    public void clearRecyclerViewPool() {
+        mRecyclerView.getRecycledViewPool().clear();
     }
 
     public void onRefresh() {

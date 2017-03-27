@@ -121,7 +121,7 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                 });
     }
 
-    public void operateBtnClicked(int position) {
+    public void onBoardOperateBtnClick(int position) {
         if (!mModel.isLogin()) {
             mRootView.showLoginNav();
             return;
@@ -165,6 +165,7 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                         boardBean.setFollowing(isFollowedTemp);
                         int followerCount = boardBean.getFollowCount();
                         boardBean.setFollowCount(isFollowed ? --followerCount : ++followerCount);
+                        mRootView.clearRecyclerViewPool();
                         mAdapter.notifyItemChanged(position);
                     }
                 });
@@ -186,6 +187,7 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                                     .setCategoryId(userBoardSingleBean.getBoard().getCategoryId());
                             Logger.d(userBoardSingleBean.getBoard().getCategoryId());
                             Logger.d(((UserBoardAdapter) mAdapter).getItem(position).getCategoryId());
+                            mRootView.clearRecyclerViewPool();
                             mAdapter.notifyItemChanged(position);
                             mRootView.showMessage(PetalApplication.getContext()
                                     .getString(R.string.msg_edit_success));
@@ -335,6 +337,7 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                                 .setRawText(pinBean.getRawText());
                         ((HomePinsAdapter) mAdapter).getItem(position).getBoard()
                                 .setTitle(boardName);
+                        mRootView.clearRecyclerViewPool();
                         mAdapter.notifyItemChanged(position);
                     }
                 });
@@ -347,6 +350,7 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                     @Override
                     public void onNext(Void aVoid) {
                         mAdapter.remove(position);
+                        mRootView.clearRecyclerViewPool();
                         mAdapter.notifyDataSetChanged();
                         mRootView.showDeletePinDataChange();
                     }
@@ -447,6 +451,7 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                     public void onNext(Void aVoid) {
                         ((UserAdapter) mAdapter).getItem(postion)
                                 .setFollowing(isFollowed ? 0 : 1);
+                        mRootView.clearRecyclerViewPool();
                         mAdapter.notifyItemChanged(postion);
                         if (isMe(mUserId)) {
                             mRootView.showFollowingDataChange(isFollowed);
@@ -455,4 +460,39 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                 });
     }
 
+    public void getUserFollowers(String userId) {
+        mUserId = userId;
+        mModel.getUserFollowers(userId)
+                .compose(RxUtils.<List<UserBean>>bindToLifecycle(mRootView))
+                .subscribe(new BaseSubscriber<List<UserBean>>() {
+                    @Override
+                    public void onNext(List<UserBean> userBeen) {
+                        mAdapter.setNewData(userBeen);
+                        mRootView.showNoMoreDataFooter(false);
+                    }
+                });
+    }
+
+    public void getUserFollowersMore() {
+        mModel.getUserFollowersMore(mUserId)
+                .compose(RxUtils.<List<UserBean>>bindToLifecycle(mRootView))
+                .subscribe(new BaseSubscriber<List<UserBean>>() {
+                    @Override
+                    public void onNext(List<UserBean> userBeen) {
+                        mAdapter.addData(userBeen);
+                        mRootView.showNoMoreDataFooter(false);
+                        mAdapter.loadMoreComplete();
+                        if (userBeen.size() == 0) {
+                            mAdapter.loadMoreEnd();
+                            mRootView.showNoMoreDataFooter(true);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        mAdapter.loadMoreFail();
+                    }
+                });
+    }
 }

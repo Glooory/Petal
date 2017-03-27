@@ -78,6 +78,8 @@ public interface UserContract {
         void showDeletePinDataChange();
 
         void showFollowingDataChange(boolean isFollowed);
+
+        void clearRecyclerViewPool();
     }
 
     interface SectionModel extends IModel {
@@ -113,6 +115,10 @@ public interface UserContract {
         Observable<List<UserBean>> getUserFollowingMore(String userId);
 
         Observable<Void> followUser(String userId, boolean isFollowed);
+
+        Observable<List<UserBean>> getUserFollowers(String userId);
+
+        Observable<List<UserBean>> getUserFollowersMore(String userId);
     }
 
 }

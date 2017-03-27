@@ -30,7 +30,8 @@ import common.BasePetalFragment;
  * Created by Glooory on 17/3/25.
  */
 
-public class UserLikedFragment extends BasePetalFragment<UserSectionPresenter> implements UserContract.SectionView {
+public class UserLikedFragment extends BasePetalFragment<UserSectionPresenter>
+        implements UserContract.SectionView {
 
     private static final String ARGS_LIKED_COUNT = "liked_count";
 
@@ -205,6 +206,11 @@ public class UserLikedFragment extends BasePetalFragment<UserSectionPresenter> i
     @Override
     public void showFollowingDataChange(boolean isFollowed) {
 
+    }
+
+    @Override
+    public void clearRecyclerViewPool() {
+        mRecyclerView.getRecycledViewPool().clear();
     }
 
     public void onRefresh() {

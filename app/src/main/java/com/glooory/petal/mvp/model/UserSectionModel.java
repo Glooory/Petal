@@ -282,5 +282,43 @@ public class UserSectionModel extends BasePEModel<ServiceManager, CacheManager> 
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    @Override
+    public Observable<List<UserBean>> getUserFollowers(String userId) {
+        return mServiceManager.getUserService()
+                .getUserFollowers(userId, Constants.PER_PAGE_LIMIT)
+                .retryWhen(new RetryWithDelay(1, 1))
+                .map(new Func1<UserListBean, List<UserBean>>() {
+                    @Override
+                    public List<UserBean> call(UserListBean userListBean) {
+                        if (userListBean.getUsers() != null && userListBean.getUsers().size() != 0) {
+                            mMaxId = userListBean.getUsers().get(userListBean.getUsers().size() - 1).getSeq();
+                        } else {
+                            userListBean.setUsers(new ArrayList<UserBean>(0));
+                        }
+                        return userListBean.getUsers();
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 
+    @Override
+    public Observable<List<UserBean>> getUserFollowersMore(String userId) {
+        return mServiceManager.getUserService()
+                .getUserFollowersMore(userId, mMaxId, Constants.PER_PAGE_LIMIT)
+                .retryWhen(new RetryWithDelay(1, 1))
+                .map(new Func1<UserListBean, List<UserBean>>() {
+                    @Override
+                    public List<UserBean> call(UserListBean userListBean) {
+                        if (userListBean.getUsers() != null && userListBean.getUsers().size() != 0) {
+                            mMaxId = userListBean.getUsers().get(userListBean.getUsers().size() - 1).getSeq();
+                        } else {
+                            userListBean.setUsers(new ArrayList<UserBean>(0));
+                        }
+                        return userListBean.getUsers();
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

@@ -39,6 +39,7 @@ import com.glooory.petal.di.module.UserModule;
 import com.glooory.petal.mvp.presenter.UserPresenter;
 import com.glooory.petal.mvp.ui.login.LoginActivity;
 import com.glooory.petal.mvp.ui.user.board.UserBoardFragment;
+import com.glooory.petal.mvp.ui.user.follower.UserFollowerFragment;
 import com.glooory.petal.mvp.ui.user.following.UserFollowingFragment;
 import com.glooory.petal.mvp.ui.user.like.UserLikedFragment;
 import com.glooory.petal.mvp.ui.user.pin.UserPinFragment;
@@ -111,6 +112,7 @@ public class UserActivity extends BasePetalActivity<UserPresenter>
     private UserPinFragment mPinFragment;
     private UserLikedFragment mLikedFragment;
     private UserFollowingFragment mFollowingFragment;
+    private UserFollowerFragment mFollowerFragment;
 
     public static void launch(Activity activity, String userId, String userName, SimpleDraweeView avatar) {
         Logger.d(userId);
@@ -234,6 +236,11 @@ public class UserActivity extends BasePetalActivity<UserPresenter>
                     mFollowingFragment.onRefresh();
                 }
                 break;
+            case 4:
+                if (mFollowerFragment != null) {
+                    mFollowerFragment.onRefresh();
+                }
+                break;
         }
     }
 
@@ -346,6 +353,9 @@ public class UserActivity extends BasePetalActivity<UserPresenter>
         if (mFollowingFragment != null) {
             mFollowingFragment.setFollowingCount(followingCount);
         }
+        if (mFollowerFragment != null) {
+            mFollowerFragment.setFollowerCount(followerCount);
+        }
     }
 
     @Override
@@ -422,6 +432,15 @@ public class UserActivity extends BasePetalActivity<UserPresenter>
         mViewPager.getAdapter().notifyDataSetChanged();
     }
 
+    public void setFollowerCountChanged() {
+        int followersCountTemp = mPresenter.getFollowerCount();
+        followersCountTemp++;
+        String followerSectionTitle = String.format(getString(R.string.format_follower_count),
+                followersCountTemp);
+        mTabTitles[4] = followerSectionTitle;
+        mViewPager.getAdapter().notifyDataSetChanged();
+    }
+
     class UserSectionPagerAdapter extends FragmentStatePagerAdapter {
 
         public UserSectionPagerAdapter(FragmentManager fm) {
@@ -439,6 +458,8 @@ public class UserActivity extends BasePetalActivity<UserPresenter>
                     return UserLikedFragment.newInstance(mUserId, mPresenter.getLikeCount());
                 case 3:
                     return UserFollowingFragment.newInstance(mUserId, mPresenter.getFollowingCount());
+                case 4:
+                    return UserFollowerFragment.newInstance(mUserId, mPresenter.getFollowerCount());
             }
             return null;
         }
@@ -459,13 +480,16 @@ public class UserActivity extends BasePetalActivity<UserPresenter>
                 case 3:
                     mFollowingFragment = (UserFollowingFragment) createdFragment;
                     break;
+                case 4:
+                    mFollowerFragment = (UserFollowerFragment) createdFragment;
+                    break;
             }
             return createdFragment;
         }
 
         @Override
         public int getCount() {
-            return 4;
+            return 5;
         }
 
         @Override

@@ -1,4 +1,4 @@
-package com.glooory.petal.mvp.ui.user.following;
+package com.glooory.petal.mvp.ui.user.follower;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,35 +22,36 @@ import com.glooory.petal.mvp.ui.user.UserActivity;
 import com.glooory.petal.mvp.ui.user.UserContract;
 import com.glooory.petal.mvp.ui.user.board.CreateBoardDialogFragment;
 import com.glooory.petal.mvp.ui.user.board.EditBoardDiglogFragment;
+import com.glooory.petal.mvp.ui.user.following.UserAdapter;
 
 import butterknife.BindView;
 import common.AppComponent;
 import common.BasePetalFragment;
 
 /**
- * Created by Glooory on 17/3/25.
+ * Created by Glooory on 17/3/27.
  */
 
-public class UserFollowingFragment extends BasePetalFragment<UserSectionPresenter>
+public class UserFollowerFragment extends BasePetalFragment<UserSectionPresenter>
         implements UserContract.SectionView {
 
-    private static final String ARGS_FOLLOWING_COUNT = "following_count";
+    private static final String ARGS_FOLLOWER_COUNT = "followe_count";
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
     private UserAdapter mAdapter;
     private String mUserId;
-    private int mFollowingCount;
+    private int mFollowerCount;
     private View mNoMoreDataFooter;
 
-    public static UserFollowingFragment newInstance(String userId, int followingCount) {
+    public static UserFollowerFragment newInstance(String userId, int followingCount) {
         Bundle args = new Bundle();
         args.putString(Constants.EXTRA_USER_ID, userId);
-        args.putInt(ARGS_FOLLOWING_COUNT, followingCount);
-        UserFollowingFragment followingFragment = new UserFollowingFragment();
-        followingFragment.setArguments(args);
-        return followingFragment;
+        args.putInt(ARGS_FOLLOWER_COUNT, followingCount);
+        UserFollowerFragment followerFragment = new UserFollowerFragment();
+        followerFragment.setArguments(args);
+        return followerFragment;
     }
 
     @Override
@@ -66,7 +67,7 @@ public class UserFollowingFragment extends BasePetalFragment<UserSectionPresente
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mUserId = getArguments().getString(Constants.EXTRA_USER_ID);
-        mFollowingCount = getArguments().getInt(ARGS_FOLLOWING_COUNT);
+        mFollowerCount = getArguments().getInt(ARGS_FOLLOWER_COUNT);
         mAdapter = new UserAdapter();
         mPresenter.setAdapter(mAdapter);
     }
@@ -88,10 +89,10 @@ public class UserFollowingFragment extends BasePetalFragment<UserSectionPresente
                 }
             }
         });
-        if (mFollowingCount <= 0) {
+        if (mFollowerCount <= 0) {
             mAdapter.addFooterView(mNoMoreDataFooter);
         } else {
-            mPresenter.getUserFollowing(mUserId);
+            mPresenter.getUserFollowers(mUserId);
         }
     }
 
@@ -136,21 +137,21 @@ public class UserFollowingFragment extends BasePetalFragment<UserSectionPresente
 
     @Override
     public void showLoadingMore() {
-        if (mAdapter.getData().size() >= mFollowingCount) {
+        if (mAdapter.getData().size() >= mFollowerCount) {
             return;
         }
 
         mRecyclerView.post(new Runnable() {
             @Override
             public void run() {
-                mPresenter.getUserFollowingMore();
+                mPresenter.getUserFollowersMore();
             }
         });
     }
 
     @Override
     public void showNoMoreDataFooter(boolean showAnyway) {
-        if (showAnyway || mAdapter.getData().size() >= mFollowingCount || mFollowingCount == 0) {
+        if (showAnyway || mAdapter.getData().size() >= mFollowerCount || mFollowerCount == 0) {
             if (mNoMoreDataFooter.getParent() != null) {
                 ((ViewGroup) mNoMoreDataFooter.getParent()).removeView(mNoMoreDataFooter);
             }
@@ -213,11 +214,11 @@ public class UserFollowingFragment extends BasePetalFragment<UserSectionPresente
     @Override
     public void showFollowingDataChange(boolean isFollowed) {
         if (isFollowed) {
-            mFollowingCount--;
+            mFollowerCount--;
         } else {
-            mFollowingCount++;
+            mFollowerCount++;
         }
-        ((UserActivity) getActivity()).setFollowingCountChanged(mFollowingCount);
+        ((UserActivity) getActivity()).setFollowingCountChanged(mFollowerCount);
     }
 
     @Override
@@ -226,10 +227,10 @@ public class UserFollowingFragment extends BasePetalFragment<UserSectionPresente
     }
 
     public void onRefresh() {
-        mPresenter.getUserFollowing(mUserId);
+        mPresenter.getUserFollowers(mUserId);
     }
 
-    public void setFollowingCount(int followingCount) {
-        mFollowingCount = followingCount;
+    public void setFollowerCount(int followerCount) {
+        mFollowerCount = followerCount;
     }
 }
