@@ -64,6 +64,8 @@ public interface PinDetailContract {
         void showEditDialog(EditPinDialogFragment editPinDialogFragment);
 
         void showDeleteConfirmDialog();
+
+        void killMyself();
     }
 
     interface Model extends IModel {

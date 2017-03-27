@@ -75,10 +75,6 @@ public interface UserContract {
 
         void showDeletePinConfirmDialog(String pinId, int position);
 
-        void showDeletePinDataChange();
-
-        void showFollowingDataChange(boolean isFollowed);
-
         void clearRecyclerViewPool();
     }
 

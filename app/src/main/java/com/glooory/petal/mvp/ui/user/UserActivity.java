@@ -213,6 +213,22 @@ public class UserActivity extends BasePetalActivity<UserPresenter>
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (mPresenter.isLogin()) {
+            mPresenter.registerUserSectionCountEvent();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mPresenter.isLogin()) {
+            mPresenter.unregisterUserSectionCountEvent();
+        }
+    }
+
+    @Override
     public void onRefresh() {
         mPresenter.requestUserInfo(mUserId);
         switch (mViewPager.getCurrentItem()) {
@@ -268,16 +284,6 @@ public class UserActivity extends BasePetalActivity<UserPresenter>
 
     @Override
     public void showMessage(String message) {
-
-    }
-
-    @Override
-    public void launchActivity(Intent intent) {
-
-    }
-
-    @Override
-    public void killMyself() {
 
     }
 
@@ -417,28 +423,6 @@ public class UserActivity extends BasePetalActivity<UserPresenter>
         } else {
             mCollapsingToolbar.setAlpha(1);
         }
-    }
-
-    public void setPinCountChanged(int pinCount) {
-        String pinSectionTitle = String.format(getString(R.string.format_collection_count), String.valueOf(pinCount));
-        mTabTitles[1] = pinSectionTitle;
-        mViewPager.getAdapter().notifyDataSetChanged();
-    }
-
-    public void setFollowingCountChanged(int followingCount) {
-        String pinSectionTitle = String.format(
-                getString(R.string.format_following_count), followingCount);
-        mTabTitles[3] = pinSectionTitle;
-        mViewPager.getAdapter().notifyDataSetChanged();
-    }
-
-    public void setFollowerCountChanged() {
-        int followersCountTemp = mPresenter.getFollowerCount();
-        followersCountTemp++;
-        String followerSectionTitle = String.format(getString(R.string.format_follower_count),
-                followersCountTemp);
-        mTabTitles[4] = followerSectionTitle;
-        mViewPager.getAdapter().notifyDataSetChanged();
     }
 
     class UserSectionPagerAdapter extends FragmentStatePagerAdapter {

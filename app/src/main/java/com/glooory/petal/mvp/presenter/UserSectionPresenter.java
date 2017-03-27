@@ -7,13 +7,16 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.glooory.petal.R;
 import com.glooory.petal.app.rx.BaseSubscriber;
+import com.glooory.petal.app.rx.RxBus;
 import com.glooory.petal.app.util.DrawableUtils;
+import com.glooory.petal.app.util.SnackbarUtil;
 import com.glooory.petal.app.widget.WindmillLoadMoreFooter;
 import com.glooory.petal.mvp.model.entity.BoardBean;
 import com.glooory.petal.mvp.model.entity.PinBean;
 import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.model.entity.board.FollowBoardResultBean;
 import com.glooory.petal.mvp.model.entity.user.UserBoardSingleBean;
+import com.glooory.petal.mvp.model.entity.user.UserSectionCountBean;
 import com.glooory.petal.mvp.ui.home.HomePinsAdapter;
 import com.glooory.petal.mvp.ui.pindetail.EditPinDialogFragment;
 import com.glooory.petal.mvp.ui.pindetail.PinDetailActivity;
@@ -33,8 +36,8 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import common.BasePetalAdapter;
-import common.PetalApplication;
 import common.BasePetalPresenter;
+import common.PetalApplication;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -77,7 +80,11 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
         });
     }
 
-    public void getBoards(String userId) {
+    /**
+     * 获取用户所有的画板信息
+     * @param userId
+     */
+    public void getUserBoards(String userId) {
         mUserId = userId;
         mModel.getBoards(mUserId)
                 .compose(RxUtils.<List<BoardBean>>bindToLifecycle(mRootView))
@@ -102,7 +109,7 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                 });
     }
 
-    public void getBoardsMore() {
+    public void getUserBoardsMore() {
         mModel.getBoardsMore(mUserId)
                 .compose(RxUtils.<List<BoardBean>>bindToLifecycle(mRootView))
                 .subscribe(new BaseSubscriber<List<BoardBean>>() {
@@ -121,6 +128,10 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                 });
     }
 
+    /**
+     * 画板 item 上的底部操作按钮的点击事件
+     * @param position
+     */
     public void onBoardOperateBtnClick(int position) {
         if (!mModel.isLogin()) {
             mRootView.showLoginNav();
@@ -152,6 +163,10 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
         mRootView.showEditBoardDialog(fragment);
     }
 
+    /**
+     * 关注或者取消关注画板
+     * @param position
+     */
     private void actionFollowBoard(final int position) {
         final BoardBean boardBean = ((UserBoardAdapter) mAdapter).getItem(position);
         String boardId = String.valueOf(boardBean.getBoardId());
@@ -171,6 +186,14 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                 });
     }
 
+    /**
+     * 提交用户对画板的修改
+     * @param boardId
+     * @param boardName
+     * @param boardDes
+     * @param category
+     * @param position
+     */
     private void commitBoardEditInfo(String boardId, String boardName, String boardDes,
             String category, final int position) {
         mModel.editBoard(boardId, boardName, boardDes, category)
@@ -296,6 +319,12 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                 DrawableUtils.getBasicColorStr(((HomePinsAdapter) mAdapter).getItem(position)));
     }
 
+    /**
+     * Launch UserActivity, 仅当用户点击的是采集底部的用户头像时
+     * @param activity
+     * @param view
+     * @param position
+     */
     public void launchUserActivityFromPin(Activity activity, View view, int position) {
         PinBean pinBean = ((HomePinsAdapter) mAdapter).getItem(position);
         String userId = String.valueOf(pinBean.getUserId());
@@ -305,6 +334,10 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                 (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_pin_avatar));
     }
 
+    /**
+     * 采集（图片）的长按响应事件
+     * @param position
+     */
     public void onPinLongClick(final int position) {
         final PinBean pinBean = ((HomePinsAdapter) mAdapter).getItem(position);
         final String pinId = String.valueOf(pinBean.getPinId());
@@ -352,7 +385,9 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                         mAdapter.remove(position);
                         mRootView.clearRecyclerViewPool();
                         mAdapter.notifyDataSetChanged();
-                        mRootView.showDeletePinDataChange();
+                        RxBus.getInstance().post(
+                                new UserSectionCountBean(UserSectionCountBean.PIN_COUNT, false));
+                        SnackbarUtil.showShort(R.string.msg_delete_success);
                     }
                 });
     }
@@ -425,6 +460,12 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                 });
     }
 
+    /**
+     * Launch UserActivity, 仅当用户点击的是 User item 时
+     * @param activity
+     * @param view
+     * @param position
+     */
     public void launchUserActivityFromUser(Activity activity, View view, int position) {
         UserBean userBean = ((UserAdapter) mAdapter).getItem(position);
         String userId = String.valueOf(userBean.getUserId());
@@ -432,6 +473,10 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                 (SimpleDraweeView) view.findViewById(R.id.simple_drawee_card_user_avatar));
     }
 
+    /**
+     * User item 底部的操作按钮点击事件
+     * @param position
+     */
     public void onUserCardOperateBtnClick(int position) {
         if (!mModel.isLogin()) {
             mRootView.showLoginNav();
@@ -454,7 +499,9 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                         mRootView.clearRecyclerViewPool();
                         mAdapter.notifyItemChanged(postion);
                         if (isMe(mUserId)) {
-                            mRootView.showFollowingDataChange(isFollowed);
+                            RxBus.getInstance().post(
+                                    new UserSectionCountBean(UserSectionCountBean.FOLLOWING_COUNT, !isFollowed)
+                            );
                         }
                     }
                 });

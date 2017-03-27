@@ -1,7 +1,6 @@
 package com.glooory.petal.mvp.ui.user.pin;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -135,16 +134,6 @@ public class UserPinFragment extends BasePetalFragment<UserSectionPresenter>
     }
 
     @Override
-    public void launchActivity(Intent intent) {
-
-    }
-
-    @Override
-    public void killMyself() {
-
-    }
-
-    @Override
     public void showLoadingMore() {
         if (mAdapter.getData().size() >= mPinCount) {
             return;
@@ -213,17 +202,6 @@ public class UserPinFragment extends BasePetalFragment<UserSectionPresenter>
                         mPresenter.deletePin(pinId, position);
                     }
                 });
-    }
-
-    @Override
-    public void showDeletePinDataChange() {
-        mPinCount--;
-        ((UserActivity) getActivity()).setPinCountChanged(mPinCount);
-    }
-
-    @Override
-    public void showFollowingDataChange(boolean isFollowed) {
-
     }
 
     @Override

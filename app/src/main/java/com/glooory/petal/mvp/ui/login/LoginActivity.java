@@ -159,12 +159,6 @@ public class LoginActivity extends BasePetalActivity<LoginPresenter> implements 
 
     }
 
-    @Override
-    public void launchActivity(Intent intent) {
-
-    }
-
-    @Override
     public void killMyself() {
         if (mIsFromSplashActivity) {
             HomeActivity.launch(LoginActivity.this);
@@ -218,7 +212,9 @@ public class LoginActivity extends BasePetalActivity<LoginPresenter> implements 
 
     @Override
     public void showLoginSuccess() {
-        HomeActivity.launch(LoginActivity.this);
+        if (mIsFromSplashActivity) {
+            HomeActivity.launch(LoginActivity.this);
+        }
         finishSelf();
     }
 

@@ -1,6 +1,5 @@
 package com.glooory.petal.mvp.ui.user.following;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -125,16 +124,6 @@ public class UserFollowingFragment extends BasePetalFragment<UserSectionPresente
     }
 
     @Override
-    public void launchActivity(Intent intent) {
-
-    }
-
-    @Override
-    public void killMyself() {
-
-    }
-
-    @Override
     public void showLoadingMore() {
         if (mAdapter.getData().size() >= mFollowingCount) {
             return;
@@ -203,21 +192,6 @@ public class UserFollowingFragment extends BasePetalFragment<UserSectionPresente
     @Override
     public void showDeletePinConfirmDialog(String pinId, int position) {
 
-    }
-
-    @Override
-    public void showDeletePinDataChange() {
-
-    }
-
-    @Override
-    public void showFollowingDataChange(boolean isFollowed) {
-        if (isFollowed) {
-            mFollowingCount--;
-        } else {
-            mFollowingCount++;
-        }
-        ((UserActivity) getActivity()).setFollowingCountChanged(mFollowingCount);
     }
 
     @Override

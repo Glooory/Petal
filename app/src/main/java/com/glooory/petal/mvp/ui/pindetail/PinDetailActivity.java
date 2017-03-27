@@ -241,11 +241,6 @@ public class PinDetailActivity extends BasePetalActivity<PinDetailPresenter> imp
     }
 
     @Override
-    public void launchActivity(Intent intent) {
-
-    }
-
-    @Override
     public void killMyself() {
         finishSelf();
     }

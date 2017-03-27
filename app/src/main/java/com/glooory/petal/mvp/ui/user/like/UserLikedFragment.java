@@ -1,6 +1,5 @@
 package com.glooory.petal.mvp.ui.user.like;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -124,16 +123,6 @@ public class UserLikedFragment extends BasePetalFragment<UserSectionPresenter>
     }
 
     @Override
-    public void launchActivity(Intent intent) {
-
-    }
-
-    @Override
-    public void killMyself() {
-
-    }
-
-    @Override
     public void showLoadingMore() {
         if (mAdapter.getData().size() >= mLikedCount) {
             return;
@@ -195,16 +184,6 @@ public class UserLikedFragment extends BasePetalFragment<UserSectionPresenter>
 
     @Override
     public void showDeletePinConfirmDialog(String pinId, int position) {
-
-    }
-
-    @Override
-    public void showDeletePinDataChange() {
-
-    }
-
-    @Override
-    public void showFollowingDataChange(boolean isFollowed) {
 
     }
 

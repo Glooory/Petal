@@ -5,16 +5,22 @@ import android.text.TextUtils;
 
 import com.glooory.petal.R;
 import com.glooory.petal.app.rx.BaseSubscriber;
+import com.glooory.petal.app.rx.RxBus;
 import com.glooory.petal.mvp.model.entity.UserBean;
+import com.glooory.petal.mvp.model.entity.user.UserSectionCountBean;
 import com.glooory.petal.mvp.ui.user.UserContract;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.utils.RxUtils;
 
 import javax.inject.Inject;
 
-import common.PetalApplication;
 import common.BasePetalPresenter;
+import common.PetalApplication;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Glooory on 17/3/22.
@@ -39,6 +45,10 @@ public class UserPresenter extends BasePetalPresenter<UserContract.View, UserCon
     public boolean isMe(String userId) {
         mIsMe = mModel.isMe(userId);
         return mIsMe;
+    }
+
+    public boolean isLogin() {
+        return mModel.isLogin();
     }
 
     public void requestUserInfo(String userId) {
@@ -98,13 +108,15 @@ public class UserPresenter extends BasePetalPresenter<UserContract.View, UserCon
             mRootView.showUserAbout(PetalApplication.getContext().getString(R.string.msg_empty_user_about));
         }
 
-        mRootView.showUserAvatar(userBean.getAvatar().getKey());
+        if (userBean.getAvatar() != null) {
+            mRootView.showUserAvatar(userBean.getAvatar().getKey());
+        }
     }
 
     private void setupTabTitles() {
         Resources resources = PetalApplication.getContext().getResources();
         String tabTitle1 = String.format(resources.getString(R.string.format_board_count), mBoardCount);
-        String tabTitle2 = String.format(resources.getString(R.string.format_collection_count), mCollectCount);
+        String tabTitle2 = String.format(resources.getString(R.string.format_collection_count), String.valueOf(mCollectCount));
         String tabTitle3 = String.format(resources.getString(R.string.format_like_count), mLikeCount);
         String tabTitle4 = String.format(resources.getString(R.string.format_following_count), mFollowingCount);
         String tabTitle5 = String.format(resources.getString(R.string.format_follower_count), mFollowerCount);
@@ -151,16 +163,76 @@ public class UserPresenter extends BasePetalPresenter<UserContract.View, UserCon
                 .subscribe(new BaseSubscriber<Void>() {
                     @Override
                     public void onNext(Void aVoid) {
-                        if (mIsFollowed) {
-                            mFollowerCount--;
-                        } else {
-                            mFollowerCount++;
-                        }
-                        mIsFollowed = !mIsFollowed;
-                        setupToolbarAction();
-                        setupTabTitles();
+                        updateUserInfoBackground();
                     }
                 });
+    }
+
+    private void updateUserInfoBackground() {
+        mModel.getUser(mUserId)
+                .compose(RxUtils.<UserBean>bindToLifecycle(mRootView))
+                .subscribe(new BaseSubscriber<UserBean>() {
+                    @Override
+                    public void onNext(UserBean userBean) {
+                        updateUserInfo(userBean);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+                });
+    }
+
+    /**
+     * 注册用户的画板、采集、粉丝及关注等信息改变事件
+     */
+    public void registerUserSectionCountEvent() {
+        Subscription s = RxBus.getInstance()
+                .toObservable(UserSectionCountBean.class)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<UserSectionCountBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(UserSectionCountBean userSectionCountBean) {
+                        updateUserSectionCounts(userSectionCountBean);
+                    }
+                });
+        addSubscrebe(s);
+    }
+
+    private void updateUserSectionCounts(UserSectionCountBean userSectionCountBean) {
+        switch (userSectionCountBean.getCountTypeIndex()) {
+            case UserSectionCountBean.BOARD_COUNT:
+                mBoardCount = userSectionCountBean.isIncreasing() ? ++mBoardCount : --mBoardCount;
+                break;
+            case UserSectionCountBean.PIN_COUNT:
+                mCollectCount = userSectionCountBean.isIncreasing() ? ++mCollectCount : --mCollectCount;
+                break;
+            case UserSectionCountBean.FOLLOWING_COUNT:
+                mFollowingCount = userSectionCountBean.isIncreasing() ? ++mFollowingCount : --mFollowingCount;
+                break;
+            case UserSectionCountBean.FOLLOWER_COUNT:
+                mFollowerCount = userSectionCountBean.isIncreasing() ? ++mFollowerCount : --mFollowerCount;
+                break;
+        }
+        setupTabTitles();
+    }
+
+    public void unregisterUserSectionCountEvent() {
+        if (mCompositeSubscription != null && !mCompositeSubscription.isUnsubscribed()) {
+            mCompositeSubscription.unsubscribe();
+        }
     }
 
     public int getBoardCount() {

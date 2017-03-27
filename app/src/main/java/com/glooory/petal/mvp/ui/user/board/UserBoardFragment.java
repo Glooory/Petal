@@ -1,7 +1,6 @@
 package com.glooory.petal.mvp.ui.user.board;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
@@ -97,7 +96,7 @@ public class UserBoardFragment extends BasePetalFragment<UserSectionPresenter>
         if (mBoardCount <= 0) {
             mAdapter.addFooterView(mNoMoreDataFooter);
         } else {
-            mPresenter.getBoards(mUserId);
+            mPresenter.getUserBoards(mUserId);
         }
         FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         if (mIsMe) {
@@ -146,16 +145,6 @@ public class UserBoardFragment extends BasePetalFragment<UserSectionPresenter>
     }
 
     @Override
-    public void launchActivity(Intent intent) {
-
-    }
-
-    @Override
-    public void killMyself() {
-
-    }
-
-    @Override
     public void showLoadingMore() {
         if (mAdapter.getData().size() >= mBoardCount) {
             return;
@@ -164,7 +153,7 @@ public class UserBoardFragment extends BasePetalFragment<UserSectionPresenter>
         mRecyclerView.post(new Runnable() {
             @Override
             public void run() {
-                mPresenter.getBoardsMore();
+                mPresenter.getUserBoardsMore();
             }
         });
     }
@@ -233,22 +222,12 @@ public class UserBoardFragment extends BasePetalFragment<UserSectionPresenter>
     }
 
     @Override
-    public void showDeletePinDataChange() {
-
-    }
-
-    @Override
-    public void showFollowingDataChange(boolean isFollowed) {
-
-    }
-
-    @Override
     public void clearRecyclerViewPool() {
         mRecyclerView.getRecycledViewPool().clear();
     }
 
     public void onRefresh() {
-        mPresenter.getBoards(mUserId);
+        mPresenter.getUserBoards(mUserId);
     }
 
     public void setBoardCount(int boardCount) {
