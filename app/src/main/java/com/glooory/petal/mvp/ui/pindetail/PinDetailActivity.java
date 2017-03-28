@@ -27,7 +27,7 @@ import com.glooory.petal.app.util.DrawableUtils;
 import com.glooory.petal.di.component.DaggerPinDetailComponent;
 import com.glooory.petal.di.module.PinDetailModule;
 import com.glooory.petal.mvp.presenter.PinDetailPresenter;
-import com.glooory.petal.mvp.ui.home.HomePinsAdapter;
+import com.glooory.petal.mvp.ui.home.HomePinAdapter;
 import com.jakewharton.rxbinding.view.RxView;
 import com.sackcentury.shinebuttonlib.ShineButton;
 
@@ -61,7 +61,7 @@ public class PinDetailActivity extends BasePetalActivity<PinDetailPresenter>
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
-    private HomePinsAdapter mAdapter;
+    private HomePinAdapter mAdapter;
     private int mPinId;
     private float mAspectRatio;
     private String mUserName;
@@ -247,7 +247,7 @@ public class PinDetailActivity extends BasePetalActivity<PinDetailPresenter>
     }
 
     @Override
-    public void setAdapter(HomePinsAdapter adapter) {
+    public void setAdapter(HomePinAdapter adapter) {
         mAdapter = adapter;
     }
 

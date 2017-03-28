@@ -1,4 +1,4 @@
-package com.glooory.petal.mvp.ui.user.pin;
+package com.glooory.petal.mvp.ui.board.pin;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -14,51 +14,55 @@ import com.chad.library.adapter.base.listener.OnItemChildLongClickListener;
 import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.util.DialogUtils;
-import com.glooory.petal.di.component.DaggerUserSectionComponent;
-import com.glooory.petal.di.module.UserSectionModule;
-import com.glooory.petal.mvp.presenter.UserSectionPresenter;
-import com.glooory.petal.mvp.ui.home.HomePinAdapter;
+import com.glooory.petal.di.component.DaggerBoardSectionComponent;
+import com.glooory.petal.di.module.BoardSectionModule;
+import com.glooory.petal.mvp.presenter.BoardSectionPresenter;
+import com.glooory.petal.mvp.ui.board.BoardActivity;
+import com.glooory.petal.mvp.ui.board.BoardContract;
 import com.glooory.petal.mvp.ui.pindetail.EditPinDialogFragment;
-import com.glooory.petal.mvp.ui.user.UserActivity;
-import com.glooory.petal.mvp.ui.user.UserContract;
-import com.glooory.petal.mvp.ui.user.board.CreateBoardDialogFragment;
-import com.glooory.petal.mvp.ui.user.board.EditBoardDiglogFragment;
+
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import common.AppComponent;
 import common.BasePetalFragment;
+import rx.Observable;
+import rx.functions.Action1;
 
 /**
- * Created by Glooory on 17/3/24.
+ * Created by Glooory on 17/3/28.
  */
 
-public class UserPinFragment extends BasePetalFragment<UserSectionPresenter>
-        implements UserContract.SectionView {
+public class BoardPinFragment extends BasePetalFragment<BoardSectionPresenter>
+        implements BoardContract.SectionView{
 
     private static final String ARGS_PIN_COUNT = "pin_count";
+    private static final String ARGS_IS_MINE = "is_mine";
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
-    private HomePinAdapter mAdapter;
+    private BoardPinAdapter mAdapter;
     private int mPinCount;
-    private String mUserId;
+    private String mBoardId;
+    private boolean mIsMine;
     private View mNoMoreDataFooter;
 
-    public static UserPinFragment newInstance(String userId, int pinCount) {
+    public static BoardPinFragment newInstance(String boardId, int pinCount, boolean isMine) {
         Bundle args = new Bundle();
-        args.putString(Constants.EXTRA_USER_ID, userId);
+        args.putString(Constants.EXTRA_BOARD_ID, boardId);
         args.putInt(ARGS_PIN_COUNT, pinCount);
-        UserPinFragment fragment = new UserPinFragment();
+        args.putBoolean(ARGS_IS_MINE, isMine);
+        BoardPinFragment fragment = new BoardPinFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     protected void setupFragmentComponent(AppComponent appComponent) {
-        DaggerUserSectionComponent.builder()
+        DaggerBoardSectionComponent.builder()
                 .appComponent(appComponent)
-                .userSectionModule(new UserSectionModule(this))
+                .boardSectionModule(new BoardSectionModule(this))
                 .build()
                 .inject(this);
     }
@@ -66,9 +70,10 @@ public class UserPinFragment extends BasePetalFragment<UserSectionPresenter>
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mUserId = getArguments().getString(Constants.EXTRA_USER_ID);
+        mBoardId = getArguments().getString(Constants.EXTRA_BOARD_ID);
         mPinCount = getArguments().getInt(ARGS_PIN_COUNT);
-        mAdapter = new HomePinAdapter();
+        mIsMine = getArguments().getBoolean(ARGS_IS_MINE);
+        mAdapter = new BoardPinAdapter();
         mPresenter.setAdapter(mAdapter);
     }
 
@@ -89,7 +94,7 @@ public class UserPinFragment extends BasePetalFragment<UserSectionPresenter>
                 }
             }
         });
-        if (mPresenter.isMe(mUserId)) {
+        if (mIsMine) {
             mRecyclerView.addOnItemTouchListener(new OnItemChildLongClickListener() {
                 @Override
                 public void onSimpleItemChildLongClick(BaseQuickAdapter adapter, View view, int position) {
@@ -100,7 +105,7 @@ public class UserPinFragment extends BasePetalFragment<UserSectionPresenter>
         if (mPinCount <= 0) {
             mAdapter.addFooterView(mNoMoreDataFooter);
         } else {
-            mPresenter.getUserPins(mUserId);
+            mPresenter.getBoardPins(mBoardId);
         }
     }
 
@@ -120,12 +125,12 @@ public class UserPinFragment extends BasePetalFragment<UserSectionPresenter>
 
     @Override
     public void showLoading() {
-        ((UserActivity) getActivity()).showLoading();
+        ((BoardActivity) getActivity()).showLoading();
     }
 
     @Override
     public void hideLoading() {
-        ((UserActivity) getActivity()).hideLoading();
+        ((BoardActivity) getActivity()).hideLoading();
     }
 
     @Override
@@ -142,7 +147,7 @@ public class UserPinFragment extends BasePetalFragment<UserSectionPresenter>
         mRecyclerView.post(new Runnable() {
             @Override
             public void run() {
-                mPresenter.getUserPinsMore();
+                mPresenter.getBoardPinsMore();
             }
         });
     }
@@ -164,36 +169,6 @@ public class UserPinFragment extends BasePetalFragment<UserSectionPresenter>
     }
 
     @Override
-    public void showLoginNav() {
-
-    }
-
-    @Override
-    public void showEditBoardDialog(EditBoardDiglogFragment editBoardDiglogFragment) {
-
-    }
-
-    @Override
-    public void showDeleteBoardConfirmDialog(String boardId, int position) {
-
-    }
-
-    @Override
-    public void showCreateBoardDialog(CreateBoardDialogFragment fragment) {
-
-    }
-
-    @Override
-    public void showLatestUserInfo() {
-        ((UserActivity) getActivity()).onRefresh();
-    }
-
-    @Override
-    public void showEditPinDialog(EditPinDialogFragment editPinDialogFragment) {
-        editPinDialogFragment.show(getActivity().getSupportFragmentManager(), null);
-    }
-
-    @Override
     public void showDeletePinConfirmDialog(final String pinId, final int position) {
         DialogUtils.show(getActivity(), R.string.msg_delete_waring, R.string.msg_cancel,
                 R.string.msg_confirm, null, new DialogInterface.OnClickListener() {
@@ -205,15 +180,23 @@ public class UserPinFragment extends BasePetalFragment<UserSectionPresenter>
     }
 
     @Override
-    public void clearRecyclerViewPool() {
-        mRecyclerView.getRecycledViewPool().clear();
+    public void showEditPinDialog(EditPinDialogFragment editPinDialogFragment) {
+        editPinDialogFragment.show(getActivity().getSupportFragmentManager(), null);
+    }
+
+    @Override
+    public void showPinDeleted() {
+        Observable.just(1)
+                .delay(200, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        ((BoardActivity) getActivity()).onRefresh();
+                    }
+                });
     }
 
     public void onRefresh() {
-        mPresenter.getUserPins(mUserId);
-    }
-
-    public void setPinCount(int pinCount) {
-        mPinCount = pinCount;
+        mPresenter.getBoardPins(mBoardId);
     }
 }

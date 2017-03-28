@@ -22,7 +22,7 @@ import com.glooory.petal.mvp.model.entity.pindetail.CollectionInfoBean;
 import com.glooory.petal.mvp.model.entity.pindetail.LikeResultBean;
 import com.glooory.petal.mvp.model.entity.pindetail.PinDetailBean;
 import com.glooory.petal.mvp.ui.board.BoardActivity;
-import com.glooory.petal.mvp.ui.home.HomePinsAdapter;
+import com.glooory.petal.mvp.ui.home.HomePinAdapter;
 import com.glooory.petal.mvp.ui.pindetail.CollectDialogFragment;
 import com.glooory.petal.mvp.ui.pindetail.EditPinDialogFragment;
 import com.glooory.petal.mvp.ui.pindetail.PinDetailActivity;
@@ -46,7 +46,7 @@ import rx.Subscriber;
 @ActivityScope
 public class PinDetailPresenter extends BasePetalPresenter<PinDetailContract.View, PinDetailContract.Model> {
 
-    private HomePinsAdapter mAdapter;
+    private HomePinAdapter mAdapter;
     private int mPinId;
     private String mCollectDes;
     private boolean mIsMine;
@@ -66,7 +66,7 @@ public class PinDetailPresenter extends BasePetalPresenter<PinDetailContract.Vie
 
     @Inject
     public PinDetailPresenter(PinDetailContract.View rootView, PinDetailContract.Model model,
-            HomePinsAdapter adapter) {
+            HomePinAdapter adapter) {
         super(rootView, model);
         mAdapter = adapter;
         initAdaper();

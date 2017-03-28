@@ -18,7 +18,7 @@ import com.glooory.petal.mvp.model.entity.board.FollowBoardResultBean;
 import com.glooory.petal.mvp.model.entity.user.UserBoardSingleBean;
 import com.glooory.petal.mvp.model.entity.user.UserSectionCountBean;
 import com.glooory.petal.mvp.ui.board.BoardActivity;
-import com.glooory.petal.mvp.ui.home.HomePinsAdapter;
+import com.glooory.petal.mvp.ui.home.HomePinAdapter;
 import com.glooory.petal.mvp.ui.pindetail.EditPinDialogFragment;
 import com.glooory.petal.mvp.ui.pindetail.PinDetailActivity;
 import com.glooory.petal.mvp.ui.user.UserActivity;
@@ -313,7 +313,7 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
     }
 
     public void launchPinDetailActivity(Activity activity, View view, int position) {
-        PinBean pinBean = ((HomePinsAdapter) mAdapter).getItem(position);
+        PinBean pinBean = ((HomePinAdapter) mAdapter).getItem(position);
         float aspectRatio = pinBean.getFile().getWidth() /
                 (float) pinBean.getFile().getHeight();
         if (aspectRatio < 0.3) {
@@ -323,7 +323,7 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                 pinBean.getPinId(),
                 aspectRatio,
                 (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_pin),
-                DrawableUtils.getBasicColorStr(((HomePinsAdapter) mAdapter).getItem(position)));
+                DrawableUtils.getBasicColorStr(((HomePinAdapter) mAdapter).getItem(position)));
     }
 
     /**
@@ -333,7 +333,7 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
      * @param position
      */
     public void launchUserActivityFromPin(Activity activity, View view, int position) {
-        PinBean pinBean = ((HomePinsAdapter) mAdapter).getItem(position);
+        PinBean pinBean = ((HomePinAdapter) mAdapter).getItem(position);
         String userId = String.valueOf(pinBean.getUserId());
         UserActivity.launch(activity,
                 userId,
@@ -346,7 +346,7 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
      * @param position
      */
     public void onPinLongClick(final int position) {
-        final PinBean pinBean = ((HomePinsAdapter) mAdapter).getItem(position);
+        final PinBean pinBean = ((HomePinAdapter) mAdapter).getItem(position);
         final String pinId = String.valueOf(pinBean.getPinId());
         EditPinDialogFragment editPinDialogFragment = EditPinDialogFragment.newInstance(
                 pinId,
@@ -373,9 +373,9 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                 .subscribe(new BaseSubscriber<PinBean>() {
                     @Override
                     public void onNext(PinBean pinBean) {
-                        ((HomePinsAdapter) mAdapter).getItem(position)
+                        ((HomePinAdapter) mAdapter).getItem(position)
                                 .setRawText(pinBean.getRawText());
-                        ((HomePinsAdapter) mAdapter).getItem(position).getBoard()
+                        ((HomePinAdapter) mAdapter).getItem(position).getBoard()
                                 .setTitle(boardName);
                         mRootView.clearRecyclerViewPool();
                         mAdapter.notifyItemChanged(position);

@@ -10,22 +10,19 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/appbar_normal_height"
+        android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_scrollFlags="scroll|enterAlways"
+            android:layout_height="@dimen/appbar_normal_height"
+            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
             app:statusBarScrim="@color/transparent"
             app:titleEnabled="false">
 
-            <include layout="@layout/view_header_board_info"
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:layout_gravity="bottom|start"/>
+            <include layout="@layout/view_header_board_info"/>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"

@@ -17,7 +17,7 @@ public interface HomeContract {
 
     interface View extends BaseView{
 
-        void setAdapter(HomePinsAdapter adapter);
+        void setAdapter(HomePinAdapter adapter);
 
         void showLoadingMore();
     }

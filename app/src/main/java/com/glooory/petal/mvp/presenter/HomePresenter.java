@@ -14,7 +14,7 @@ import com.glooory.petal.mvp.model.entity.BasicUserInfoBean;
 import com.glooory.petal.mvp.model.entity.PinBean;
 import com.glooory.petal.mvp.ui.home.HomeContract;
 import com.glooory.petal.mvp.ui.home.HomeFragment;
-import com.glooory.petal.mvp.ui.home.HomePinsAdapter;
+import com.glooory.petal.mvp.ui.home.HomePinAdapter;
 import com.glooory.petal.mvp.ui.pindetail.PinDetailActivity;
 import com.glooory.petal.mvp.ui.user.UserActivity;
 import com.jess.arms.di.scope.FragmentScope;
@@ -36,12 +36,12 @@ import rx.functions.Action0;
 public class HomePresenter extends BasePetalPresenter<HomeContract.View, HomeContract.Model> {
 
     private int mLastMaxId;
-    HomePinsAdapter mAdapter;
+    HomePinAdapter mAdapter;
 
     @Inject
-    HomePresenter(HomeContract.View view, HomeContract.Model model, HomePinsAdapter homePinsAdapter) {
+    HomePresenter(HomeContract.View view, HomeContract.Model model, HomePinAdapter homePinAdapter) {
         super(view, model);
-        mAdapter = homePinsAdapter;
+        mAdapter = homePinAdapter;
         initAdapter();
         mRootView.setAdapter(mAdapter);
     }

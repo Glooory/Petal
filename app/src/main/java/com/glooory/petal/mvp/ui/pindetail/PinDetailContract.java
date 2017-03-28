@@ -5,7 +5,7 @@ import com.glooory.petal.mvp.model.entity.collect.CollectResultBean;
 import com.glooory.petal.mvp.model.entity.pindetail.CollectionInfoBean;
 import com.glooory.petal.mvp.model.entity.pindetail.LikeResultBean;
 import com.glooory.petal.mvp.model.entity.pindetail.PinDetailBean;
-import com.glooory.petal.mvp.ui.home.HomePinsAdapter;
+import com.glooory.petal.mvp.ui.home.HomePinAdapter;
 import com.jess.arms.mvp.BaseView;
 import com.jess.arms.mvp.IModel;
 
@@ -21,7 +21,7 @@ public interface PinDetailContract {
 
     interface View extends BaseView {
 
-        void setAdapter(HomePinsAdapter adapter);
+        void setAdapter(HomePinAdapter adapter);
 
         void showLoadingMore();
 

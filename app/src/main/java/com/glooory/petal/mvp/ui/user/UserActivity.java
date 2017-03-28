@@ -383,7 +383,7 @@ public class UserActivity extends BasePetalActivity<UserPresenter>
             protected void onNewResultImpl(Bitmap bitmap) {
                 if (bitmap != null) {
                     final Drawable blurDrawable = new BitmapDrawable(getResources(),
-                            FastBlurUtils.doBlur(bitmap, 15, false));
+                            FastBlurUtils.doBlur(bitmap, 10, false));
                     Observable.just(1)
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new Action1<Integer>() {

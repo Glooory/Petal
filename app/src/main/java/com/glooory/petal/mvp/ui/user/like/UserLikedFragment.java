@@ -14,7 +14,7 @@ import com.glooory.petal.app.Constants;
 import com.glooory.petal.di.component.DaggerUserSectionComponent;
 import com.glooory.petal.di.module.UserSectionModule;
 import com.glooory.petal.mvp.presenter.UserSectionPresenter;
-import com.glooory.petal.mvp.ui.home.HomePinsAdapter;
+import com.glooory.petal.mvp.ui.home.HomePinAdapter;
 import com.glooory.petal.mvp.ui.pindetail.EditPinDialogFragment;
 import com.glooory.petal.mvp.ui.user.UserActivity;
 import com.glooory.petal.mvp.ui.user.UserContract;
@@ -37,7 +37,7 @@ public class UserLikedFragment extends BasePetalFragment<UserSectionPresenter>
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
-    private HomePinsAdapter mAdapter;
+    private HomePinAdapter mAdapter;
     private String mUserId;
     private int mLikedCount;
     private View mNoMoreDataFooter;
@@ -65,7 +65,7 @@ public class UserLikedFragment extends BasePetalFragment<UserSectionPresenter>
         super.onCreate(savedInstanceState);
         mUserId = getArguments().getString(Constants.EXTRA_USER_ID);
         mLikedCount = getArguments().getInt(ARGS_LIKED_COUNT);
-        mAdapter = new HomePinsAdapter();
+        mAdapter = new HomePinAdapter();
         mPresenter.setAdapter(mAdapter);
     }
 

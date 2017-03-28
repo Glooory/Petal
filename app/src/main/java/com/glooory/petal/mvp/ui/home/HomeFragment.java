@@ -41,7 +41,7 @@ public class HomeFragment extends BasePetalFragment<HomePresenter> implements Ho
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     private int mTypeIndex;
-    HomePinsAdapter mAdapter;
+    HomePinAdapter mAdapter;
 
     public static HomeFragment newInstance(int pinTypeIndex) {
         Bundle args = new Bundle();
@@ -138,7 +138,7 @@ public class HomeFragment extends BasePetalFragment<HomePresenter> implements Ho
     }
 
     @Override
-    public void setAdapter(HomePinsAdapter adapter) {
+    public void setAdapter(HomePinAdapter adapter) {
         this.mAdapter = adapter;
     }
 
