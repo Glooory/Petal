@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true">
+
+    <RelativeLayout
+        android:id="@+id/rl_board_thumbnails"
+        android:layout_width="@dimen/pin_detail_avatar_size"
+        android:layout_height="@dimen/pin_detail_avatar_size"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:background="@color/transparent">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/simple_drawee_view_board_thumbnail_first"
+            android:layout_width="@dimen/board_thumbnail_size"
+            android:layout_height="@dimen/board_thumbnail_size"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="@dimen/board_thumbnail_padding"
+            android:background="@color/transparent"/>
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/simple_drawee_view_board_thumbnail_second"
+            android:layout_width="@dimen/board_thumbnail_size"
+            android:layout_height="@dimen/board_thumbnail_size"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="@dimen/board_thumbnail_padding"
+            android:background="@color/transparent"/>
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/simple_drawee_view_board_thumbnail_third"
+            android:layout_width="@dimen/board_thumbnail_size"
+            android:layout_height="@dimen/board_thumbnail_size"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/board_thumbnail_padding"
+            android:background="@color/transparent"/>
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/simple_drawee_view_board_thumbnail_fourth"
+            android:layout_width="@dimen/board_thumbnail_size"
+            android:layout_height="@dimen/board_thumbnail_size"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/board_thumbnail_padding"
+            android:background="@color/transparent"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/text_view_board_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/rl_board_thumbnails"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_toRightOf="@id/rl_board_thumbnails"
+        android:maxLines="1"
+        android:ellipsize="marquee"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/text_view_board_des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/rl_board_thumbnails"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_toRightOf="@id/rl_board_thumbnails"
+        android:maxLines="1"
+        android:ellipsize="marquee"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+</RelativeLayout>

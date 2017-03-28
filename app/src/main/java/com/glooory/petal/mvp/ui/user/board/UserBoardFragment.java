@@ -85,7 +85,7 @@ public class UserBoardFragment extends BasePetalFragment<UserSectionPresenter>
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.ll_user_board_cover:
-                        // TODO: 17/3/22 Launch BoardActivity
+                        mPresenter.launchBoardActivity(getActivity(), mUserName, view, position);
                         break;
                     case R.id.ll_user_board_operate:
                         mPresenter.onBoardOperateBtnClick(position);

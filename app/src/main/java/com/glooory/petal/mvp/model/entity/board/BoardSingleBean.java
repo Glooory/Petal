@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 /**
  * Created by Glooory on 2016/9/7 0007 16:50.
  */
-public class SimpleBoardInfoBean {
+public class BoardSingleBean {
 
     /**
      * board_id : 25394109
@@ -34,9 +34,9 @@ public class SimpleBoardInfoBean {
 
     private BoardBean board;
 
-    public static SimpleBoardInfoBean objectFromData(String str) {
+    public static BoardSingleBean objectFromData(String str) {
 
-        return new Gson().fromJson(str, SimpleBoardInfoBean.class);
+        return new Gson().fromJson(str, BoardSingleBean.class);
     }
 
     public BoardBean getBoard() {

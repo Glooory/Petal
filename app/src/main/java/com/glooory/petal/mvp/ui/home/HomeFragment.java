@@ -85,7 +85,6 @@ public class HomeFragment extends BasePetalFragment<HomePresenter> implements Ho
                         mPresenter.launchPinDetailActivity(getActivity(), view, position);
                         break;
                     case R.id.ll_pin_via_info:
-                        // TODO: 17/3/18 Launch UserActivity
                         mPresenter.launchUserActivity(getActivity(), view, position);
                         break;
                 }
@@ -106,6 +105,9 @@ public class HomeFragment extends BasePetalFragment<HomePresenter> implements Ho
 
     @Override
     public void showLoading() {
+        if (mSwipeRefreshLayout == null) {
+            return;
+        }
         Observable.just(1)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Integer>() {

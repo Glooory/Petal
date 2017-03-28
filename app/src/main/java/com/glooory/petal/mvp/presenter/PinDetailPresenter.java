@@ -15,11 +15,13 @@ import com.glooory.petal.app.util.SPUtils;
 import com.glooory.petal.app.util.SnackbarUtil;
 import com.glooory.petal.app.util.TimeUtils;
 import com.glooory.petal.app.widget.WindmillLoadMoreFooter;
+import com.glooory.petal.mvp.model.entity.BoardBean;
 import com.glooory.petal.mvp.model.entity.PinBean;
 import com.glooory.petal.mvp.model.entity.collect.CollectResultBean;
 import com.glooory.petal.mvp.model.entity.pindetail.CollectionInfoBean;
 import com.glooory.petal.mvp.model.entity.pindetail.LikeResultBean;
 import com.glooory.petal.mvp.model.entity.pindetail.PinDetailBean;
+import com.glooory.petal.mvp.ui.board.BoardActivity;
 import com.glooory.petal.mvp.ui.home.HomePinsAdapter;
 import com.glooory.petal.mvp.ui.pindetail.CollectDialogFragment;
 import com.glooory.petal.mvp.ui.pindetail.EditPinDialogFragment;
@@ -60,6 +62,7 @@ public class PinDetailPresenter extends BasePetalPresenter<PinDetailContract.Vie
     private String mBoardId;
     private String mUserId;
     private String mUserName;
+    private BoardBean mBoardBean;
 
     @Inject
     public PinDetailPresenter(PinDetailContract.View rootView, PinDetailContract.Model model,
@@ -111,6 +114,7 @@ public class PinDetailPresenter extends BasePetalPresenter<PinDetailContract.Vie
         mUserId = String.valueOf(pinDetailBean.getPin().getUserId());
         mUserName = pinDetailBean.getPin().getUser().getUsername();
         mCollectDes = pinDetailBean.getPin().getRawText();
+        mBoardBean = pinDetailBean.getPin().getBoard();
         mRootView.showCollectCount(
                 String.format(mCollectCountFormat, mCollectCount));
         mIsMine = pinDetailBean.getPin().getUser().getUsername()
@@ -386,5 +390,9 @@ public class PinDetailPresenter extends BasePetalPresenter<PinDetailContract.Vie
 
     public void launchUserActivity(Activity activity, SimpleDraweeView avatar) {
         UserActivity.launch(activity, mUserId, mUserName, avatar);
+    }
+
+    public void launchBoardActivity(Activity activity, SimpleDraweeView cover) {
+        BoardActivity.launch(activity, mUserName, mBoardBean, cover);
     }
 }

@@ -19,6 +19,7 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
+import common.BasePetalModel;
 import common.PetalApplication;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 import rx.Observable;
@@ -30,7 +31,7 @@ import rx.schedulers.Schedulers;
  * Created by Glooory on 17/3/13.
  */
 @ActivityScope
-public class LoginModel extends BasePEModel<ServiceManager, CacheManager>
+public class LoginModel extends BasePetalModel<ServiceManager, CacheManager>
         implements LoginContract.Model {
 
     @Inject

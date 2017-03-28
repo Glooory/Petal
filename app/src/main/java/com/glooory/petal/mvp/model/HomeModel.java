@@ -15,6 +15,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import common.BasePetalModel;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -25,7 +26,7 @@ import rx.schedulers.Schedulers;
  * Created by Glooory on 17/2/21.
  */
 @FragmentScope
-public class HomeModel extends BasePEModel<ServiceManager, CacheManager>
+public class HomeModel extends BasePetalModel<ServiceManager, CacheManager>
         implements HomeContract.Model {
 
     @Inject

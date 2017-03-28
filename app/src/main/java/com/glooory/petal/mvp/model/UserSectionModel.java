@@ -21,6 +21,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import common.BasePetalModel;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -31,7 +32,7 @@ import rx.schedulers.Schedulers;
  * Created by Glooory on 17/3/23.
  */
 @FragmentScope
-public class UserSectionModel extends BasePEModel<ServiceManager, CacheManager> implements UserContract.SectionModel {
+public class UserSectionModel extends BasePetalModel<ServiceManager, CacheManager> implements UserContract.SectionModel {
 
     private int mMaxId;
 

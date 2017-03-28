@@ -81,11 +81,18 @@
     <string name="msg_new_board">新建画板</string>
     <string name="msg_create_board_success">画板创建成功</string>
 
+    <string name="msg_board_belongs_to">来自</string>
+
     <string-array name="user_subitem_titles">
         <item>@string/board</item>
         <item>@string/collection</item>
         <item>@string/like</item>
         <item>@string/nav_title_following</item>
         <item>@string/follower</item>
+    </string-array>
+
+    <string-array name="board_subitem_titles">
+        <item>@string/collection</item>
+        <item>@string/following</item>
     </string-array>
 </resources>

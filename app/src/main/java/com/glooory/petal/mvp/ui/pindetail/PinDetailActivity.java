@@ -47,7 +47,8 @@ import static com.glooory.petal.app.Constants.EXTRA_PIN_ID;
  * Created by Glooory on 17/3/17.
  */
 
-public class PinDetailActivity extends BasePetalActivity<PinDetailPresenter> implements PinDetailContract.View {
+public class PinDetailActivity extends BasePetalActivity<PinDetailPresenter>
+        implements PinDetailContract.View {
 
     @BindView(R.id.simple_drawee_view_pin)
     SimpleDraweeView mImagePin;
@@ -209,7 +210,7 @@ public class PinDetailActivity extends BasePetalActivity<PinDetailPresenter> imp
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        // TODO: 17/3/21 Launch BoardActivity
+                        mPresenter.launchBoardActivity(PinDetailActivity.this, mImgBoardFirst);
                     }
                 });
     }

@@ -50,7 +50,6 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindArray;
 import butterknife.BindColor;
-import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import common.AppComponent;
@@ -94,10 +93,6 @@ public class UserActivity extends BasePetalActivity<UserPresenter>
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
-    @BindString(R.string.url_image_root)
-    String mImgUrlRoot;
-    @BindString(R.string.url_image_small_format)
-    String mSmallImaUrlFormat;
     @BindArray(R.array.user_subitem_titles)
     String[] mTabTitles;
     @BindColor(R.color.colorPrimary)

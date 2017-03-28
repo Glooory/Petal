@@ -29,6 +29,7 @@
     <dimen name="dialog_margin_default">24dp</dimen>
 
     <dimen name="appbar_image_backgroud_height">292dp</dimen>
+    <dimen name="appbar_normal_height">192dp</dimen>
     <dimen name="card_corner_radius_default">2dp</dimen>
     <dimen name="button_heght_nomal">36dp</dimen>
     <dimen name="progressbar_size_small">24dp</dimen>
@@ -36,4 +37,6 @@
     <dimen name="image_width">60dp</dimen>
     <dimen name="spacing_normal">16dp</dimen>
     <dimen name="thumbnail_padding">2dp</dimen>
+    <dimen name="board_thumbnail_size">28dp</dimen>
+    <dimen name="board_thumbnail_padding">1dp</dimen>
 </resources>

@@ -10,6 +10,7 @@ import com.jess.arms.di.scope.ActivityScope;
 
 import javax.inject.Inject;
 
+import common.BasePetalModel;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -19,7 +20,7 @@ import rx.schedulers.Schedulers;
  * Created by Glooory on 17/3/22.
  */
 @ActivityScope
-public class UserModel extends BasePEModel<ServiceManager, CacheManager> implements UserContract.Model {
+public class UserModel extends BasePetalModel<ServiceManager, CacheManager> implements UserContract.Model {
 
     private int mMaxId;
 

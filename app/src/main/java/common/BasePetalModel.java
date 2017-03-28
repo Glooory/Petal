@@ -1,4 +1,4 @@
-package com.glooory.petal.mvp.model;
+package common;
 
 import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.util.BaseClientInfo;
@@ -11,13 +11,13 @@ import com.jess.arms.mvp.IModel;
  * Created by Glooory on 17/2/20.
  */
 
-public class BasePEModel<S extends BaseServiceManager, C extends BaseCacheManager>
+public class BasePetalModel<S extends BaseServiceManager, C extends BaseCacheManager>
         implements IModel {
 
     protected S mServiceManager;//服务管理类,用于网络请求
     protected C mCacheManager;//缓存管理类,用于管理本地或者内存缓存
 
-    public BasePEModel(S serviceManager, C cacheManager) {
+    public BasePetalModel(S serviceManager, C cacheManager) {
         this.mServiceManager = serviceManager;
         this.mCacheManager = cacheManager;
     }

@@ -16,6 +16,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import common.BasePetalModel;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -26,7 +27,7 @@ import rx.schedulers.Schedulers;
  * Created by Glooory on 17/3/17.
  */
 @ActivityScope
-public class PinDetailModel extends BasePEModel<ServiceManager, CacheManager>
+public class PinDetailModel extends BasePetalModel<ServiceManager, CacheManager>
         implements PinDetailContract.Model {
 
     private static final int PAGE_SIZE = 10;

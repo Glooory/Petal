@@ -17,6 +17,7 @@ import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.model.entity.board.FollowBoardResultBean;
 import com.glooory.petal.mvp.model.entity.user.UserBoardSingleBean;
 import com.glooory.petal.mvp.model.entity.user.UserSectionCountBean;
+import com.glooory.petal.mvp.ui.board.BoardActivity;
 import com.glooory.petal.mvp.ui.home.HomePinsAdapter;
 import com.glooory.petal.mvp.ui.pindetail.EditPinDialogFragment;
 import com.glooory.petal.mvp.ui.pindetail.PinDetailActivity;
@@ -126,6 +127,12 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                         mAdapter.loadMoreFail();
                     }
                 });
+    }
+
+    public void launchBoardActivity(Activity activity, String userName, View view, int position) {
+        final BoardBean boardBean = ((UserBoardAdapter) mAdapter).getItem(position);
+        BoardActivity.launch(activity, userName, boardBean,
+                (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_user_board_cover));
     }
 
     /**

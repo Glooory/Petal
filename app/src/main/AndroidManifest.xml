@@ -50,6 +50,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Petal.Light"/>
 
+        <activity
+            android:name=".mvp.ui.board.BoardActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Petal.Light"/>
+
+
     </application>
 
 </manifest>

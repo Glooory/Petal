@@ -39,7 +39,7 @@ public class BasePetalPresenter<V extends BaseView, M extends IModel> extends Ba
         String imageUrl = String.format(mLargePicUrlFormat, imageUrlKey);
         Logger.d(imageUrl);
         Logger.d(image == null);
-        mImageLoader.loadImage(((BaseApplication) PetalApplication.getContext()).getAppManager().getCurrentActivity(),
+        mImageLoader.loadImage(PetalApplication.getContext(),
                 FrescoImageConfig.builder()
                         .setUrl(imageUrl)
                         .setSimpleDraweeView(image)
@@ -56,7 +56,7 @@ public class BasePetalPresenter<V extends BaseView, M extends IModel> extends Ba
 
     public void loadImage(String imageUrlKey, SimpleDraweeView image, Drawable placeHolder) {
         String imageUrl = String.format(mLargePicUrlFormat, imageUrlKey);
-        mImageLoader.loadImage(((BaseApplication) PetalApplication.getContext()).getAppManager().getCurrentActivity(),
+        mImageLoader.loadImage(PetalApplication.getContext(),
                 FrescoImageConfig.builder()
                         .setUrl(imageUrl)
                         .setSimpleDraweeView(image)
@@ -74,7 +74,7 @@ public class BasePetalPresenter<V extends BaseView, M extends IModel> extends Ba
 
     public void loadImage(String imageUrlKey, SimpleDraweeView image, BaseBitmapDataSubscriber subscriber) {
         String imageUrl = String.format(mLargePicUrlFormat, imageUrlKey);
-        mImageLoader.loadImage(((BaseApplication) PetalApplication.getContext()).getAppManager().getCurrentActivity(),
+        mImageLoader.loadImage(PetalApplication.getContext(),
                 FrescoImageConfig.builder()
                         .setUrl(imageUrl)
                         .setSimpleDraweeView(image)
@@ -92,7 +92,7 @@ public class BasePetalPresenter<V extends BaseView, M extends IModel> extends Ba
 
     public void loadSmallImage(String imageUrlKey, SimpleDraweeView image) {
         String imageUrl = String.format(mSmallPicUrlFormat, imageUrlKey);
-        mImageLoader.loadImage(((BaseApplication) PetalApplication.getContext()).getAppManager().getCurrentActivity(),
+        mImageLoader.loadImage(PetalApplication.getContext(),
                 FrescoImageConfig.builder()
                         .setUrl(imageUrl)
                         .setSimpleDraweeView(image)
@@ -101,7 +101,7 @@ public class BasePetalPresenter<V extends BaseView, M extends IModel> extends Ba
 
     public void loadSmallCircleImage(String imageUrlKey, SimpleDraweeView image) {
         String imageUrl = String.format(mSmallPicUrlFormat, imageUrlKey);
-        mImageLoader.loadImage(((BaseApplication) PetalApplication.getContext()).getAppManager().getCurrentActivity(),
+        mImageLoader.loadImage(PetalApplication.getContext(),
                 FrescoImageConfig.builder()
                         .setUrl(imageUrl)
                         .setSimpleDraweeView(image)
@@ -111,7 +111,7 @@ public class BasePetalPresenter<V extends BaseView, M extends IModel> extends Ba
 
     public void loadUserAvatar(String imageUrlKey, SimpleDraweeView image, BaseBitmapDataSubscriber subscriber) {
         String imageUrl = String.format(mSmallPicUrlFormat, imageUrlKey);
-        mImageLoader.loadImage(((BaseApplication) PetalApplication.getContext()).getAppManager().getCurrentActivity(),
+        mImageLoader.loadImage(PetalApplication.getContext(),
                 FrescoImageConfig.builder()
                         .setUrl(imageUrl)
                         .setSimpleDraweeView(image)
@@ -129,9 +129,28 @@ public class BasePetalPresenter<V extends BaseView, M extends IModel> extends Ba
                         .build());
     }
 
+    public void loadSmallBoardCover(String imageUrlKey, SimpleDraweeView image, BaseBitmapDataSubscriber subscriber) {
+        String imageUrl = String.format(mSmallPicUrlFormat, imageUrlKey);
+        mImageLoader.loadImage(PetalApplication.getContext(),
+                FrescoImageConfig.builder()
+                        .setUrl(imageUrl)
+                        .setSimpleDraweeView(image)
+                        .isRadius(true, 4)
+                        .setControlListener(new BaseControllerListener() {
+                            @Override
+                            public void onFinalImageSet(String id, Object imageInfo, Animatable animatable) {
+                                if (animatable != null) {
+                                    animatable.start();
+                                }
+                            }
+                        })
+                        .setBitmapDataSubscriber(subscriber)
+                        .build());
+    }
+
     public void loadSmallRadiusImage(String imageUrlKey, SimpleDraweeView image, int radius) {
         String imageUrl = String.format(mSmallPicUrlFormat, imageUrlKey);
-        mImageLoader.loadImage(((BaseApplication) PetalApplication.getContext()).getAppManager().getCurrentActivity(),
+        mImageLoader.loadImage(PetalApplication.getContext(),
                 FrescoImageConfig.builder()
                         .setUrl(imageUrl)
                         .setSimpleDraweeView(image)
