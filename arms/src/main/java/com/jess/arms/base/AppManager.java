@@ -10,10 +10,6 @@ import android.view.View;
 
 import com.orhanobut.logger.Logger;
 
-import org.simple.eventbus.EventBus;
-import org.simple.eventbus.Subscriber;
-import org.simple.eventbus.ThreadMode;
-
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -46,33 +42,6 @@ public class AppManager {
     @Inject
     public AppManager(Application application) {
         this.mApplication = application;
-        EventBus.getDefault().register(this);
-    }
-
-
-    /**
-     * 通过eventbus post事件,远程遥控执行对应方法
-     */
-    @Subscriber(tag = APPMANAGER_MESSAGE, mode = ThreadMode.MAIN)
-    public void onReceive(Message message) {
-        switch (message.what) {
-            case START_ACTIVITY:
-                if (message.obj == null)
-                    break;
-                dispatchStart(message);
-                break;
-            case SHOW_SNACKBAR:
-                if (message.obj == null)
-                    break;
-                showSnackbar((String) message.obj, message.arg1 == 0 ? false : true);
-                break;
-            case KILL_ALL:
-                killAll();
-                break;
-            case APP_EXIT:
-                AppExit();
-                break;
-        }
     }
 
     private void dispatchStart(Message message) {
@@ -129,7 +98,6 @@ public class AppManager {
      * 释放资源
      */
     public void release() {
-        EventBus.getDefault().unregister(this);
         mActivityList.clear();
         mActivityList = null;
         mCurrentActivity = null;

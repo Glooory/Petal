@@ -1,7 +1,5 @@
 package com.jess.arms.mvp;
 
-import org.simple.eventbus.EventBus;
-
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
@@ -31,17 +29,13 @@ public class BasePresenter<V extends BaseView, M extends IModel> implements Pres
         onStart();
     }
 
-
     @Override
     public void onStart() {
-        if (useEventBus())//如果要使用eventbus请将此方法返回true
-            EventBus.getDefault().register(this);//注册eventbus
+
     }
 
     @Override
     public void onDestroy() {
-        if (useEventBus())//如果要使用eventbus请将此方法返回true
-            EventBus.getDefault().unregister(this);//解除注册eventbus
         unSubscribe();//解除订阅
         if (mModel != null) {
             mModel.onDestory();
@@ -50,16 +44,6 @@ public class BasePresenter<V extends BaseView, M extends IModel> implements Pres
         this.mRootView = null;
         this.mCompositeSubscription = null;
     }
-
-    /**
-     * 是否使用eventBus,默认为使用(true)，
-     *
-     * @return
-     */
-    protected boolean useEventBus() {
-        return true;
-    }
-
 
     protected void addSubscrebe(Subscription subscription) {
         if (mCompositeSubscription == null) {

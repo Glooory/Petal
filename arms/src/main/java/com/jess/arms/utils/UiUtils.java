@@ -21,13 +21,8 @@ import android.widget.Toast;
 
 import com.jess.arms.base.BaseApplication;
 
-import org.simple.eventbus.EventBus;
-
 import java.security.MessageDigest;
 
-import static com.jess.arms.base.AppManager.APPMANAGER_MESSAGE;
-import static com.jess.arms.base.AppManager.APP_EXIT;
-import static com.jess.arms.base.AppManager.KILL_ALL;
 import static com.jess.arms.base.AppManager.SHOW_SNACKBAR;
 import static com.jess.arms.base.AppManager.START_ACTIVITY;
 
@@ -215,7 +210,6 @@ public class UiUtils {
         message.what = SHOW_SNACKBAR;
         message.obj = text;
         message.arg1 = 0;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
     }
 
     /**
@@ -228,7 +222,6 @@ public class UiUtils {
         message.what = SHOW_SNACKBAR;
         message.obj = text;
         message.arg1 = 1;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
     }
 
 
@@ -263,7 +256,6 @@ public class UiUtils {
         Message message = new Message();
         message.what = START_ACTIVITY;
         message.obj = homeActivityClass;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
     }
 
     /**
@@ -275,7 +267,6 @@ public class UiUtils {
         Message message = new Message();
         message.what = START_ACTIVITY;
         message.obj = content;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
     }
 
     /**
@@ -397,19 +388,6 @@ public class UiUtils {
         //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-    }
-
-
-    public static void killAll(){
-        Message message = new Message();
-        message.what = KILL_ALL;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
-    }
-
-    public static void exitApp(){
-        Message message = new Message();
-        message.what = APP_EXIT;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
     }
 
 }

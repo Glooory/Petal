@@ -41,7 +41,7 @@ dependencies {
     compile rootProject.ext.dependencies["cardview-v7"]
     compile rootProject.ext.dependencies["autolayout"]
     compile rootProject.ext.dependencies["butterknife"]
-    compile rootProject.ext.dependencies["androideventbus"]
+//    compile rootProject.ext.dependencies["androideventbus"]
     compile rootProject.ext.dependencies["design"]
     compile rootProject.ext.dependencies["rxjava"]
     compile rootProject.ext.dependencies["rxandroid"]

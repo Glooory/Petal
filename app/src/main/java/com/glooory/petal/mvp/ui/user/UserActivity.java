@@ -44,7 +44,6 @@ import com.glooory.petal.mvp.ui.user.following.UserFollowingFragment;
 import com.glooory.petal.mvp.ui.user.like.UserLikedFragment;
 import com.glooory.petal.mvp.ui.user.pin.UserPinFragment;
 import com.jakewharton.rxbinding.view.RxView;
-import com.orhanobut.logger.Logger;
 
 import java.util.concurrent.TimeUnit;
 
@@ -110,7 +109,6 @@ public class UserActivity extends BasePetalActivity<UserPresenter>
     private UserFollowerFragment mFollowerFragment;
 
     public static void launch(Activity activity, String userId, String userName, SimpleDraweeView avatar) {
-        Logger.d(userId);
         Intent intent = new Intent(activity, UserActivity.class);
         intent.putExtra(Constants.EXTRA_USER_ID, userId);
         intent.putExtra(Constants.EXTRA_USER_NAME, userName);
