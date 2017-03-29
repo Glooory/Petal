@@ -224,6 +224,16 @@ public class UserActivity extends BasePetalActivity<UserPresenter>
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mBoardFragment = null;
+        mPinFragment = null;
+        mLikedFragment = null;
+        mFollowingFragment = null;
+        mFollowerFragment = null;
+    }
+
+    @Override
     public void onRefresh() {
         mPresenter.requestUserInfo(mUserId);
         switch (mViewPager.getCurrentItem()) {

@@ -187,6 +187,13 @@ public class BoardActivity extends BasePetalActivity<BoardPresenter>
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPinFragment = null;
+        mFollowerFragment = null;
+    }
+
+    @Override
     public void onRefresh() {
         mPresenter.getBoardInfo(mBoardId);
         switch (mViewPager.getCurrentItem()) {
