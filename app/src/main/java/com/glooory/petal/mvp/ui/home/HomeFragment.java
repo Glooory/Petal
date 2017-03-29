@@ -20,8 +20,8 @@ import butterknife.BindView;
 import common.AppComponent;
 import common.BasePetalFragment;
 import rx.Observable;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 
 /**
  * Created by Glooory on 17/2/25.
@@ -110,10 +110,20 @@ public class HomeFragment extends BasePetalFragment<HomePresenter> implements Ho
         }
         Observable.just(1)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Integer>() {
+                .subscribe(new Subscriber<Integer>() {
                     @Override
-                    public void call(Integer integer) {
+                    public void onCompleted() {
                         mSwipeRefreshLayout.setRefreshing(true);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+
                     }
                 });
     }

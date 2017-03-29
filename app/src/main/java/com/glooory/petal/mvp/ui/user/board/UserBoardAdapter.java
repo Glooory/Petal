@@ -1,8 +1,6 @@
 package com.glooory.petal.mvp.ui.user.board;
 
 import android.content.res.Resources;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.widget.TextView;
 
@@ -33,7 +31,6 @@ public class UserBoardAdapter extends BasePetalAdapter<BoardBean, BaseViewHolder
     private String mEditStr;
     private String mFollowStr;
     private String mFollowedStr;
-    private Drawable mDefaulPlaceHolder;
 
     @Inject
     public UserBoardAdapter(boolean isMe) {
@@ -45,7 +42,6 @@ public class UserBoardAdapter extends BasePetalAdapter<BoardBean, BaseViewHolder
         mEditStr = resources.getString(R.string.edit);
         mFollowStr = resources.getString(R.string.nav_title_following);
         mFollowedStr = resources.getString(R.string.followed);
-        mDefaulPlaceHolder = new ColorDrawable(R.color.grey_300);
     }
 
     @Override
@@ -106,7 +102,6 @@ public class UserBoardAdapter extends BasePetalAdapter<BoardBean, BaseViewHolder
                                     (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_user_board_cover))
                             .setUrl(String.format(mGeneralImageUrlFormat, pinList.get(0).getFile().getKey()))
                             .setScaleType(ScalingUtils.ScaleType.CENTER_CROP)
-                            .setPlaceHolder(mDefaulPlaceHolder)
                             .build());
         }
 
@@ -139,7 +134,6 @@ public class UserBoardAdapter extends BasePetalAdapter<BoardBean, BaseViewHolder
                         .setSimpleDraweeView(image)
                         .setUrl(String.format(mSmallImageUrlFormat, imageUrlKey))
                         .isRadius(true, 8)
-                        .setPlaceHolder(mDefaulPlaceHolder)
                         .build());
     }
 }
