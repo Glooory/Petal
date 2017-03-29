@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import com.jess.arms.mvp.Presenter;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
-import org.simple.eventbus.EventBus;
-
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
@@ -41,9 +39,6 @@ public abstract class BaseFragment<P extends Presenter> extends RxFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (useEventBus()) {
-            EventBus.getDefault().register(this);//注册到事件主线
-        }
         initData();
     }
 
@@ -71,8 +66,6 @@ public abstract class BaseFragment<P extends Presenter> extends RxFragment {
     public void onDestroy() {
         super.onDestroy();
         if (mPresenter != null) mPresenter.onDestroy();//释放资源
-        if (useEventBus())//如果要使用eventbus请将此方法返回true
-            EventBus.getDefault().unregister(this);
         this.mPresenter = null;
         this.mActivity = null;
         this.mRootView = null;
@@ -88,16 +81,6 @@ public abstract class BaseFragment<P extends Presenter> extends RxFragment {
      * 依赖注入的入口
      */
     protected abstract void componentInject();
-
-    /**
-     * 是否使用eventBus,默认为使用(true)，
-     *
-     * @return
-     */
-    protected boolean useEventBus() {
-        return true;
-    }
-
 
     protected abstract View initView(ViewGroup container);
 

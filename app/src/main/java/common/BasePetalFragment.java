@@ -9,12 +9,10 @@ import com.squareup.leakcanary.RefWatcher;
  */
 
 public abstract class BasePetalFragment<P extends Presenter> extends BaseFragment<P> {
-    protected PetalApplication mPetalApplication;
 
     @Override
     protected void componentInject() {
-        mPetalApplication = (PetalApplication) mActivity.getApplication();
-        setupFragmentComponent(mPetalApplication.getAppComponent());
+        setupFragmentComponent(((PetalApplication) PetalApplication.getContext()).getAppComponent());
     }
 
     //提供AppComponent(提供所有的单例对象)给子类，进行Component依赖
@@ -27,6 +25,5 @@ public abstract class BasePetalFragment<P extends Presenter> extends BaseFragmen
         if (watcher != null) {
             watcher.watch(this);
         }
-        this.mPetalApplication =null;
     }
 }
