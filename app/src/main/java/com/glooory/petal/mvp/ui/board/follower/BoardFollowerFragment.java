@@ -1,6 +1,5 @@
-package com.glooory.petal.mvp.ui.board.pin;
+package com.glooory.petal.mvp.ui.board.follower;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -10,52 +9,46 @@ import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
-import com.chad.library.adapter.base.listener.OnItemChildLongClickListener;
 import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
-import com.glooory.petal.app.util.DialogUtils;
+import com.glooory.petal.app.util.SnackbarUtil;
 import com.glooory.petal.di.component.DaggerBoardSectionComponent;
 import com.glooory.petal.di.module.BoardSectionModule;
 import com.glooory.petal.mvp.presenter.BoardSectionPresenter;
 import com.glooory.petal.mvp.ui.board.BoardActivity;
 import com.glooory.petal.mvp.ui.board.BoardContract;
+import com.glooory.petal.mvp.ui.login.LoginActivity;
 import com.glooory.petal.mvp.ui.pindetail.EditPinDialogFragment;
-
-import java.util.concurrent.TimeUnit;
+import com.glooory.petal.mvp.ui.user.following.UserAdapter;
 
 import butterknife.BindView;
 import common.AppComponent;
 import common.BasePetalFragment;
-import rx.Observable;
-import rx.functions.Action1;
 
 /**
- * Created by Glooory on 17/3/28.
+ * Created by Glooory on 17/3/29.
  */
 
-public class BoardPinFragment extends BasePetalFragment<BoardSectionPresenter>
-        implements BoardContract.SectionView{
+public class BoardFollowerFragment extends BasePetalFragment<BoardSectionPresenter>
+        implements BoardContract.SectionView {
 
-    private static final String ARGS_PIN_COUNT = "pin_count";
-    private static final String ARGS_IS_MINE = "is_mine";
+    private static final String ARGS_FOLLOWER_COUNT = "follower_count";
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
-    private BoardPinAdapter mAdapter;
-    private int mPinCount;
+    private UserAdapter mAdapter;
+    private int mFollowerCount;
     private String mBoardId;
-    private boolean mIsMine;
     private View mNoMoreDataFooter;
 
-    public static BoardPinFragment newInstance(String boardId, int pinCount, boolean isMine) {
+    public static BoardFollowerFragment newInstance(String boardId, int followerCount) {
         Bundle args = new Bundle();
         args.putString(Constants.EXTRA_BOARD_ID, boardId);
-        args.putInt(ARGS_PIN_COUNT, pinCount);
-        args.putBoolean(ARGS_IS_MINE, isMine);
-        BoardPinFragment fragment = new BoardPinFragment();
-        fragment.setArguments(args);
-        return fragment;
+        args.putInt(ARGS_FOLLOWER_COUNT, followerCount);
+        BoardFollowerFragment followerFragment = new BoardFollowerFragment();
+        followerFragment.setArguments(args);
+        return followerFragment;
     }
 
     @Override
@@ -71,9 +64,8 @@ public class BoardPinFragment extends BasePetalFragment<BoardSectionPresenter>
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBoardId = getArguments().getString(Constants.EXTRA_BOARD_ID);
-        mPinCount = getArguments().getInt(ARGS_PIN_COUNT);
-        mIsMine = getArguments().getBoolean(ARGS_IS_MINE);
-        mAdapter = new BoardPinAdapter();
+        mFollowerCount = getArguments().getInt(ARGS_FOLLOWER_COUNT);
+        mAdapter = new UserAdapter();
         mPresenter.setAdapter(mAdapter);
     }
 
@@ -85,27 +77,19 @@ public class BoardPinFragment extends BasePetalFragment<BoardSectionPresenter>
             @Override
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
-                    case R.id.ll_pin_img:
-                        mPresenter.launchPinDetailActivity(getActivity(), view, position);
+                    case R.id.ll_card_user:
+                        mPresenter.launchUserActivityFromUser(getActivity(), view, position);
                         break;
-                    case R.id.ll_pin_via_info:
-                        mPresenter.launchUserActivityFromPin(getActivity(), view, position);
+                    case R.id.ll_card_user_operate:
+                        mPresenter.onUserCardOperateBtnClick(position);
                         break;
                 }
             }
         });
-        if (mIsMine) {
-            mRecyclerView.addOnItemTouchListener(new OnItemChildLongClickListener() {
-                @Override
-                public void onSimpleItemChildLongClick(BaseQuickAdapter adapter, View view, int position) {
-                    mPresenter.onPinLongClick(position);
-                }
-            });
-        }
-        if (mPinCount <= 0) {
+        if (mFollowerCount <= 0) {
             mAdapter.addFooterView(mNoMoreDataFooter);
         } else {
-            mPresenter.getBoardPins(mBoardId);
+            mPresenter.getBoardFollowers(mBoardId);
         }
     }
 
@@ -140,21 +124,21 @@ public class BoardPinFragment extends BasePetalFragment<BoardSectionPresenter>
 
     @Override
     public void showLoadingMore() {
-        if (mAdapter.getData().size() >= mPinCount) {
+        if (mAdapter.getData().size() >= mFollowerCount) {
             return;
         }
 
         mRecyclerView.post(new Runnable() {
             @Override
             public void run() {
-                mPresenter.getBoardPinsMore();
+                mPresenter.getBoardFollowersMore();
             }
         });
     }
 
     @Override
     public void showNoMoreDataFooter(boolean showAnyway) {
-        if (showAnyway || mAdapter.getData().size() >= mPinCount) {
+        if (showAnyway || mAdapter.getData().size() >= mFollowerCount) {
             if (mNoMoreDataFooter.getParent() != null) {
                 ((ViewGroup) mNoMoreDataFooter.getParent()).removeView(mNoMoreDataFooter);
             }
@@ -169,39 +153,32 @@ public class BoardPinFragment extends BasePetalFragment<BoardSectionPresenter>
     }
 
     @Override
-    public void showDeletePinConfirmDialog(final String pinId, final int position) {
-        DialogUtils.show(getActivity(), R.string.msg_delete_waring, R.string.msg_cancel,
-                R.string.msg_confirm, null, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mPresenter.deletePin(pinId, position);
-                    }
-                });
+    public void showDeletePinConfirmDialog(String pinId, int position) {
+
     }
 
     @Override
     public void showEditPinDialog(EditPinDialogFragment editPinDialogFragment) {
-        editPinDialogFragment.show(getActivity().getSupportFragmentManager(), null);
+
     }
 
     @Override
     public void showPinDeleted() {
-        Observable.just(1)
-                .delay(200, TimeUnit.MILLISECONDS)
-                .subscribe(new Action1<Integer>() {
-                    @Override
-                    public void call(Integer integer) {
-                        ((BoardActivity) getActivity()).onRefresh();
-                    }
-                });
+
     }
 
     @Override
     public void showLoginNav() {
-
+        SnackbarUtil.showLong(getActivity(), R.string.msg_login_hint, R.string.msg_go_login,
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        LoginActivity.launch(getActivity(), false);
+                    }
+                });
     }
 
     public void onRefresh() {
-        mPresenter.getBoardPins(mBoardId);
+        mPresenter.getBoardFollowers(mBoardId);
     }
 }

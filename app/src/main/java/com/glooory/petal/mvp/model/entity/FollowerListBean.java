@@ -113,7 +113,7 @@ public class FollowerListBean {
      * pin_count : 0
      */
 
-    private List<FollowerBean> followers;
+    private List<UserBean> followers;
 
     public static FollowerListBean objectFromData(String str) {
 
@@ -136,11 +136,11 @@ public class FollowerListBean {
         this.board_title = board_title;
     }
 
-    public List<FollowerBean> getFollowers() {
+    public List<UserBean> getFollowers() {
         return followers;
     }
 
-    public void setFollowers(List<FollowerBean> followers) {
+    public void setFollowers(List<UserBean> followers) {
         this.followers = followers;
     }
 }

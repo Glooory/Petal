@@ -51,6 +51,7 @@ public class BoardPresenter extends BasePetalPresenter<BoardContract.View, Board
     private int mPinCount;
     private int mFollowerCount;
     private String mCategory;
+    private boolean mIsOperatable;
 
     @Inject
     public BoardPresenter(BoardContract.View rootView, BoardContract.Model model) {
@@ -91,6 +92,12 @@ public class BoardPresenter extends BasePetalPresenter<BoardContract.View, Board
         mCategory = boardBean.getCategoryId();
 
         mRootView.showViewPager();
+
+        // 不为 0 的标志位才能操作
+        if (boardBean.getDeleting() != 0) {
+            mIsOperatable = true;
+        }
+
         updateBoardInfo();
 
         loadBoardThumbnails(boardBean);
@@ -110,22 +117,26 @@ public class BoardPresenter extends BasePetalPresenter<BoardContract.View, Board
 
         Drawable actionDrawable;
         String action;
-        if (mIsMine) {
-            actionDrawable = ContextCompat.getDrawable(PetalApplication.getContext(),
-                    R.drawable.ic_edit_white_24dp);
-            action = PetalApplication.getContext().getString(R.string.edit);
-        } else {
-            if (mIsFollowed) {
+        if (mIsOperatable) {
+            if (mIsMine) {
                 actionDrawable = ContextCompat.getDrawable(PetalApplication.getContext(),
-                        R.drawable.ic_check_white_24dp);
-                action = PetalApplication.getContext().getString(R.string.followed);
+                        R.drawable.ic_edit_white_24dp);
+                action = PetalApplication.getContext().getString(R.string.edit);
             } else {
-                actionDrawable = ContextCompat.getDrawable(PetalApplication.getContext(),
-                        R.drawable.ic_add_white_24dp);
-                action = PetalApplication.getContext().getString(R.string.following);
+                if (mIsFollowed) {
+                    actionDrawable = ContextCompat.getDrawable(PetalApplication.getContext(),
+                            R.drawable.ic_check_white_24dp);
+                    action = PetalApplication.getContext().getString(R.string.followed);
+                } else {
+                    actionDrawable = ContextCompat.getDrawable(PetalApplication.getContext(),
+                            R.drawable.ic_add_white_24dp);
+                    action = PetalApplication.getContext().getString(R.string.following);
+                }
             }
+            mRootView.showBoardOperateBtn(action, actionDrawable);
+        } else {
+            mRootView.hideBoardOperateBtn();
         }
-        mRootView.showBoardOperateBtn(action, actionDrawable);
 
         String[] titles = new String[2];
         Resources resources = PetalApplication.getContext().getResources();
@@ -226,6 +237,7 @@ public class BoardPresenter extends BasePetalPresenter<BoardContract.View, Board
 
     /**
      * 提交用户对画板的修改
+     *
      * @param boardId
      * @param boardName
      * @param boardDes

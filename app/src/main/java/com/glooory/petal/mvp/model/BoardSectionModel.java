@@ -4,9 +4,11 @@ import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.util.SPUtils;
 import com.glooory.petal.mvp.model.api.cache.CacheManager;
 import com.glooory.petal.mvp.model.api.service.ServiceManager;
+import com.glooory.petal.mvp.model.entity.FollowerListBean;
 import com.glooory.petal.mvp.model.entity.PinBean;
 import com.glooory.petal.mvp.model.entity.PinListBean;
 import com.glooory.petal.mvp.model.entity.PinSingleBean;
+import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.ui.board.BoardContract;
 import com.jess.arms.di.scope.FragmentScope;
 
@@ -100,6 +102,57 @@ public class BoardSectionModel extends BasePetalModel<ServiceManager, CacheManag
     public Observable<Void> deletePin(String pinId) {
         return mServiceManager.getPinService()
                 .deletePin(pinId)
+                .retryWhen(new RetryWithDelay(1, 1))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<List<UserBean>> getBoardFollowers(String boardId) {
+        return mServiceManager.getBoardService()
+                .getBoardFollowers(boardId, Constants.PER_PAGE_LIMIT)
+                .retryWhen(new RetryWithDelay(1, 1))
+                .map(new Func1<FollowerListBean, List<UserBean>>() {
+                    @Override
+                    public List<UserBean> call(FollowerListBean followerListBean) {
+                        if (followerListBean != null && followerListBean.getFollowers().size() > 0) {
+                            mMaxId = followerListBean.getFollowers()
+                                    .get(followerListBean.getFollowers().size() - 1).getSeq();
+                        } else {
+                            followerListBean.setFollowers(new ArrayList<UserBean>(0));
+                        }
+                        return followerListBean.getFollowers();
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<List<UserBean>> getBoardFollowersMore(String boardId) {
+        return mServiceManager.getBoardService()
+                .getBoardFollowersMore(boardId, mMaxId, Constants.PER_PAGE_LIMIT)
+                .retryWhen(new RetryWithDelay(1, 1))
+                .map(new Func1<FollowerListBean, List<UserBean>>() {
+                    @Override
+                    public List<UserBean> call(FollowerListBean followerListBean) {
+                        if (followerListBean != null && followerListBean.getFollowers().size() > 0) {
+                            mMaxId = followerListBean.getFollowers()
+                                    .get(followerListBean.getFollowers().size() - 1).getSeq();
+                        } else {
+                            followerListBean.setFollowers(new ArrayList<UserBean>(0));
+                        }
+                        return followerListBean.getFollowers();
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<Void> followUser(String userId, boolean isFollowed) {
+        return mServiceManager.getUserService()
+                .followUser(userId, isFollowed ? Constants.HTTP_ARGS_UNFOLLOW : Constants.HTTP_ARGS_FOLLOW)
                 .retryWhen(new RetryWithDelay(1, 1))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

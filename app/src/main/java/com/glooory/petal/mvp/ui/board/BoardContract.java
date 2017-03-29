@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 
 import com.glooory.petal.mvp.model.entity.BoardBean;
 import com.glooory.petal.mvp.model.entity.PinBean;
+import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.model.entity.board.FollowBoardResultBean;
 import com.glooory.petal.mvp.model.entity.user.UserBoardSingleBean;
 import com.glooory.petal.mvp.ui.pindetail.EditPinDialogFragment;
@@ -24,6 +25,8 @@ public interface BoardContract {
     interface View extends BaseView {
 
         void showBoardOperateBtn(String operate, Drawable actionDrawable);
+
+        void hideBoardOperateBtn();
 
         void showBoardName(CharSequence boardName);
 
@@ -82,6 +85,8 @@ public interface BoardContract {
         void showEditPinDialog(EditPinDialogFragment editPinDialogFragment);
 
         void showPinDeleted();
+
+        void showLoginNav();
     }
 
     interface SectionModel extends IModel {
@@ -95,5 +100,11 @@ public interface BoardContract {
         Observable<PinBean> editPin(String pinId, String boardId, String des);
 
         Observable<Void> deletePin(String pinId);
+
+        Observable<List<UserBean>> getBoardFollowers(String boardId);
+
+        Observable<List<UserBean>> getBoardFollowersMore(String boardId);
+
+        Observable<Void> followUser(String userId, boolean isFollowed);
     }
 }

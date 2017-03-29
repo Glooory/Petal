@@ -1,6 +1,7 @@
 package com.glooory.petal.di.component;
 
 import com.glooory.petal.di.module.BoardSectionModule;
+import com.glooory.petal.mvp.ui.board.follower.BoardFollowerFragment;
 import com.glooory.petal.mvp.ui.board.pin.BoardPinFragment;
 import com.jess.arms.di.scope.FragmentScope;
 
@@ -15,4 +16,6 @@ import dagger.Component;
 public interface BoardSectionComponent {
 
     void inject(BoardPinFragment boardPinFragment);
+
+    void inject(BoardFollowerFragment boardFollowerFragment);
 }

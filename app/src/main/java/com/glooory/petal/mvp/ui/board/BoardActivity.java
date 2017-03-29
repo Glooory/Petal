@@ -35,6 +35,7 @@ import com.glooory.petal.di.component.DaggerBoardComponent;
 import com.glooory.petal.di.module.BoardModule;
 import com.glooory.petal.mvp.model.entity.BoardBean;
 import com.glooory.petal.mvp.presenter.BoardPresenter;
+import com.glooory.petal.mvp.ui.board.follower.BoardFollowerFragment;
 import com.glooory.petal.mvp.ui.board.pin.BoardPinFragment;
 import com.glooory.petal.mvp.ui.user.board.EditBoardDiglogFragment;
 import com.jakewharton.rxbinding.view.RxView;
@@ -102,6 +103,7 @@ public class BoardActivity extends BasePetalActivity<BoardPresenter>
     private BoardBean mBoardBean;
     private BoardSectionAdapter mViewPagerAdapter;
     private BoardPinFragment mPinFragment;
+    private BoardFollowerFragment mFollowerFragment;
 
 
     public static void launch(Activity activity, String userName, BoardBean boardBean, SimpleDraweeView image) {
@@ -193,6 +195,11 @@ public class BoardActivity extends BasePetalActivity<BoardPresenter>
                     mPinFragment.onRefresh();
                 }
                 break;
+            case 1:
+                if (mFollowerFragment != null) {
+                    mFollowerFragment.onRefresh();
+                }
+                break;
         }
     }
 
@@ -229,6 +236,12 @@ public class BoardActivity extends BasePetalActivity<BoardPresenter>
     public void showBoardOperateBtn(String operate, Drawable actionDrawable) {
         mTvBoardFollowEdit.setCompoundDrawablesWithIntrinsicBounds(actionDrawable, null, null, null);
         mTvBoardFollowEdit.setText(operate);
+    }
+
+    @Override
+    public void hideBoardOperateBtn() {
+        mTvBoardFollowEdit.setVisibility(View.GONE);
+        mProgressbarFollowing.setVisibility(View.GONE);
     }
 
     @Override
@@ -384,6 +397,8 @@ public class BoardActivity extends BasePetalActivity<BoardPresenter>
                 case 0:
                     return BoardPinFragment
                             .newInstance(mBoardId, mPresenter.getPinCount(), mPresenter.isMine());
+                case 1:
+                    return BoardFollowerFragment.newInstance(mBoardId, mPresenter.getFollowerCount());
             }
             return null;
         }
@@ -395,13 +410,16 @@ public class BoardActivity extends BasePetalActivity<BoardPresenter>
                 case 0:
                     mPinFragment = (BoardPinFragment) createdFragment;
                     break;
+                case 1:
+                    mFollowerFragment = (BoardFollowerFragment) createdFragment;
+                    break;
             }
             return createdFragment;
         }
 
         @Override
         public int getCount() {
-            return 1;
+            return 2;
         }
 
         @Override

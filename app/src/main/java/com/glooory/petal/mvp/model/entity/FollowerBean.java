@@ -14,7 +14,7 @@ public class FollowerBean {
     private String urlname;
     private int created_at;
     private AvatarBean avatar;
-    private String extra;
+    private ExtraBean extra;
     private int seq;
     private int follower_count;
     private int board_count;
@@ -66,11 +66,11 @@ public class FollowerBean {
         this.avatar = avatar;
     }
 
-    public String getExtra() {
+    public ExtraBean getExtra() {
         return extra;
     }
 
-    public void setExtra(String extra) {
+    public void setExtra(ExtraBean extra) {
         this.extra = extra;
     }
 
@@ -112,5 +112,18 @@ public class FollowerBean {
 
     public void setPins(List<PinBean> pins) {
         this.pins = pins;
+    }
+
+    public static class ExtraBean {
+
+        private boolean is_museuser;
+
+        public boolean isMuseuser() {
+            return is_museuser;
+        }
+
+        public void setIsMuseuser(boolean isMuseuser) {
+            this.is_museuser = isMuseuser;
+        }
     }
 }
