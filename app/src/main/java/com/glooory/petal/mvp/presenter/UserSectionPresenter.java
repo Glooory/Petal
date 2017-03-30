@@ -103,6 +103,10 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                 .subscribe(new BaseSubscriber<List<BoardBean>>() {
                     @Override
                     public void onNext(List<BoardBean> boardBeanList) {
+                        if (boardBeanList.size() == 0) {
+                            mRootView.showNoMoreDataFooter(true);
+                            return;
+                        }
                         mAdapter.setNewData(boardBeanList);
                         mRootView.showNoMoreDataFooter(false);
                     }
@@ -285,6 +289,10 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                 .subscribe(new BaseSubscriber<List<PinBean>>() {
                     @Override
                     public void onNext(List<PinBean> pinBeen) {
+                        if (pinBeen.size() == 0) {
+                            mRootView.showNoMoreDataFooter(true);
+                            return;
+                        }
                         mAdapter.setNewData(pinBeen);
                         mRootView.showNoMoreDataFooter(false);
                     }
@@ -408,6 +416,10 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                 .subscribe(new BaseSubscriber<List<PinBean>>() {
                     @Override
                     public void onNext(List<PinBean> pinBeen) {
+                        if (pinBeen.size() == 0) {
+                            mRootView.showNoMoreDataFooter(true);
+                            return;
+                        }
                         mAdapter.setNewData(pinBeen);
                         mRootView.showNoMoreDataFooter(false);
                     }
@@ -445,6 +457,10 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                 .subscribe(new BaseSubscriber<List<UserBean>>() {
                     @Override
                     public void onNext(List<UserBean> userBeen) {
+                        if (userBeen.size() == 0) {
+                            mRootView.showNoMoreDataFooter(true);
+                            return;
+                        }
                         mAdapter.setNewData(userBeen);
                         mRootView.showNoMoreDataFooter(false);
                     }
@@ -528,6 +544,10 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                 .subscribe(new BaseSubscriber<List<UserBean>>() {
                     @Override
                     public void onNext(List<UserBean> userBeen) {
+                        if (userBeen.size() == 0) {
+                            mRootView.showNoMoreDataFooter(true);
+                            return;
+                        }
                         mAdapter.setNewData(userBeen);
                         mRootView.showNoMoreDataFooter(false);
                     }

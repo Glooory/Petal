@@ -30,7 +30,6 @@ import com.glooory.petal.mvp.ui.pindetail.PinDetailContract;
 import com.glooory.petal.mvp.ui.user.UserActivity;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.utils.RxUtils;
-import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
@@ -198,6 +197,10 @@ public class PinDetailPresenter extends BasePetalPresenter<PinDetailContract.Vie
                 .subscribe(new BaseSubscriber<List<PinBean>>() {
                     @Override
                     public void onNext(List<PinBean> pinBeen) {
+                        if (pinBeen.size() == 0) {
+                            mRootView.showNoMoreDataFooter(true);
+                            return;
+                        }
                         mPage++;
                         mAdapter.setNewData(pinBeen);
                         mAdapter.loadMoreComplete();
@@ -217,6 +220,11 @@ public class PinDetailPresenter extends BasePetalPresenter<PinDetailContract.Vie
                 .subscribe(new BaseSubscriber<List<PinBean>>() {
                     @Override
                     public void onNext(List<PinBean> pinBeen) {
+                        if (pinBeen.size() == 0) {
+                            mAdapter.loadMoreEnd();
+                            mRootView.showNoMoreDataFooter(true);
+                            return;
+                        }
                         mPage++;
                         mAdapter.addData(pinBeen);
                         mAdapter.loadMoreComplete();
@@ -234,7 +242,6 @@ public class PinDetailPresenter extends BasePetalPresenter<PinDetailContract.Vie
         PinBean pinBean = mAdapter.getItem(position);
         float aspectRatio = pinBean.getFile().getWidth() /
                 (float) pinBean.getFile().getHeight();
-        Logger.d(aspectRatio);
         if (aspectRatio < 0.3) {
             aspectRatio = 0.3F;
         }
@@ -328,6 +335,11 @@ public class PinDetailPresenter extends BasePetalPresenter<PinDetailContract.Vie
                 });
     }
 
+    /**
+     * 采集图片
+     * @param boardId
+     * @param des
+     */
     public void collectPin(String boardId, String des) {
         mModel.collectPin(boardId, des)
                 .compose(RxUtils.<CollectResultBean>bindToLifecycle(mRootView))

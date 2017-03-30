@@ -12,6 +12,7 @@ import com.glooory.petal.mvp.model.entity.pindetail.PinDetailBean;
 import com.glooory.petal.mvp.ui.pindetail.PinDetailContract;
 import com.jess.arms.di.scope.ActivityScope;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -62,10 +63,13 @@ public class PinDetailModel extends BasePetalModel<ServiceManager, CacheManager>
         return mServiceManager.getPinService()
                 .getRecommendedPins(mPinId, page, PAGE_SIZE)
                 .retryWhen(new RetryWithDelay(2, 2))
-                .filter(new Func1<List<PinBean>, Boolean>() {
+                .map(new Func1<List<PinBean>, List<PinBean>>() {
                     @Override
-                    public Boolean call(List<PinBean> pinBeen) {
-                        return pinBeen.size() > 0;
+                    public List<PinBean> call(List<PinBean> pinBeen) {
+                        if (pinBeen.size() == 0) {
+                            pinBeen = new ArrayList<PinBean>(0);
+                        }
+                        return pinBeen;
                     }
                 })
                 .subscribeOn(Schedulers.io())

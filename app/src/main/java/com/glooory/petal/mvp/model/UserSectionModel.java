@@ -32,7 +32,8 @@ import rx.schedulers.Schedulers;
  * Created by Glooory on 17/3/23.
  */
 @FragmentScope
-public class UserSectionModel extends BasePetalModel<ServiceManager, CacheManager> implements UserContract.SectionModel {
+public class UserSectionModel extends BasePetalModel<ServiceManager, CacheManager>
+        implements UserContract.SectionModel {
 
     private int mMaxId;
 
@@ -55,8 +56,12 @@ public class UserSectionModel extends BasePetalModel<ServiceManager, CacheManage
                 .map(new Func1<UserBoardListBean, List<BoardBean>>() {
                     @Override
                     public List<BoardBean> call(UserBoardListBean userBoardListBean) {
-                        mMaxId = userBoardListBean.getBoards().
-                                get(userBoardListBean.getBoards().size() - 1).getBoardId();
+                        if (userBoardListBean.getBoards() != null && userBoardListBean.getBoards().size() > 0) {
+                            mMaxId = userBoardListBean.getBoards().
+                                    get(userBoardListBean.getBoards().size() - 1).getBoardId();
+                        } else {
+                            userBoardListBean.setBoards(new ArrayList<BoardBean>(0));
+                        }
                         return userBoardListBean.getBoards();
                     }
                 })
@@ -72,8 +77,12 @@ public class UserSectionModel extends BasePetalModel<ServiceManager, CacheManage
                 .map(new Func1<UserBoardListBean, List<BoardBean>>() {
                     @Override
                     public List<BoardBean> call(UserBoardListBean userBoardListBean) {
-                        mMaxId = userBoardListBean.getBoards()
-                                .get(userBoardListBean.getBoards().size() - 1).getBoardId();
+                        if (userBoardListBean.getBoards() != null && userBoardListBean.getBoards().size() > 0) {
+                            mMaxId = userBoardListBean.getBoards()
+                                    .get(userBoardListBean.getBoards().size() - 1).getBoardId();
+                        } else {
+                            userBoardListBean.setBoards(new ArrayList<BoardBean>(0));
+                        }
                         return userBoardListBean.getBoards();
                     }
                 })
@@ -125,16 +134,14 @@ public class UserSectionModel extends BasePetalModel<ServiceManager, CacheManage
         return mServiceManager.getUserService()
                 .getUserPins(userId, Constants.PER_PAGE_LIMIT)
                 .retryWhen(new RetryWithDelay(1, 1))
-                .filter(new Func1<PinListBean, Boolean>() {
-                    @Override
-                    public Boolean call(PinListBean pinListBean) {
-                        return pinListBean.getPins() != null && pinListBean.getPins().size() > 0;
-                    }
-                })
                 .map(new Func1<PinListBean, List<PinBean>>() {
                     @Override
                     public List<PinBean> call(PinListBean pinListBean) {
-                        mMaxId = pinListBean.getPins().get(pinListBean.getPins().size() - 1).getPinId();
+                        if (pinListBean.getPins() != null && pinListBean.getPins().size() > 0) {
+                            mMaxId = pinListBean.getPins().get(pinListBean.getPins().size() - 1).getPinId();
+                        } else {
+                            pinListBean.setPins(new ArrayList<PinBean>(0));
+                        }
                         return pinListBean.getPins();
                     }
                 })
@@ -147,16 +154,14 @@ public class UserSectionModel extends BasePetalModel<ServiceManager, CacheManage
         return mServiceManager.getUserService()
                 .getUserPinsMore(userId, mMaxId, Constants.PER_PAGE_LIMIT)
                 .retryWhen(new RetryWithDelay(1, 1))
-                .filter(new Func1<PinListBean, Boolean>() {
-                    @Override
-                    public Boolean call(PinListBean pinListBean) {
-                        return pinListBean.getPins() != null && pinListBean.getPins().size() > 0;
-                    }
-                })
                 .map(new Func1<PinListBean, List<PinBean>>() {
                     @Override
                     public List<PinBean> call(PinListBean pinListBean) {
-                        mMaxId = pinListBean.getPins().get(pinListBean.getPins().size() - 1).getPinId();
+                        if (pinListBean.getPins() != null && pinListBean.getPins().size() > 0) {
+                            mMaxId = pinListBean.getPins().get(pinListBean.getPins().size() - 1).getPinId();
+                        } else {
+                            pinListBean.setPins(new ArrayList<PinBean>(0));
+                        }
                         return pinListBean.getPins();
                     }
                 })
@@ -193,16 +198,14 @@ public class UserSectionModel extends BasePetalModel<ServiceManager, CacheManage
         return mServiceManager.getUserService()
                 .getUserLikedPins(userId, Constants.PER_PAGE_LIMIT)
                 .retryWhen(new RetryWithDelay(1, 1))
-                .filter(new Func1<PinListBean, Boolean>() {
-                    @Override
-                    public Boolean call(PinListBean pinListBean) {
-                        return pinListBean.getPins() != null && pinListBean.getPins().size() > 0;
-                    }
-                })
                 .map(new Func1<PinListBean, List<PinBean>>() {
                     @Override
                     public List<PinBean> call(PinListBean pinListBean) {
-                        mMaxId = pinListBean.getPins().get(pinListBean.getPins().size() - 1).getSeq();
+                        if (pinListBean.getPins() != null && pinListBean.getPins().size() > 0) {
+                            mMaxId = pinListBean.getPins().get(pinListBean.getPins().size() - 1).getSeq();
+                        } else {
+                            pinListBean.setPins(new ArrayList<PinBean>(0));
+                        }
                         return pinListBean.getPins();
                     }
                 })
@@ -215,16 +218,14 @@ public class UserSectionModel extends BasePetalModel<ServiceManager, CacheManage
         return mServiceManager.getUserService()
                 .getUserLikedPinsMore(userId, mMaxId, Constants.PER_PAGE_LIMIT)
                 .retryWhen(new RetryWithDelay(1, 1))
-                .filter(new Func1<PinListBean, Boolean>() {
-                    @Override
-                    public Boolean call(PinListBean pinListBean) {
-                        return pinListBean.getPins() != null && pinListBean.getPins().size() > 0;
-                    }
-                })
                 .map(new Func1<PinListBean, List<PinBean>>() {
                     @Override
                     public List<PinBean> call(PinListBean pinListBean) {
-                        mMaxId = pinListBean.getPins().get(pinListBean.getPins().size() - 1).getSeq();
+                        if (pinListBean.getPins() != null && pinListBean.getPins().size() > 0) {
+                            mMaxId = pinListBean.getPins().get(pinListBean.getPins().size() - 1).getSeq();
+                        } else {
+                            pinListBean.setPins(new ArrayList<PinBean>(0));
+                        }
                         return pinListBean.getPins();
                     }
                 })
@@ -237,16 +238,14 @@ public class UserSectionModel extends BasePetalModel<ServiceManager, CacheManage
         return mServiceManager.getUserService()
                 .getUserFollowing(userId, Constants.PER_PAGE_LIMIT)
                 .retryWhen(new RetryWithDelay(1, 1))
-                .filter(new Func1<UserListBean, Boolean>() {
-                    @Override
-                    public Boolean call(UserListBean userListBean) {
-                        return userListBean.getUsers() != null && userListBean.getUsers().size() > 0;
-                    }
-                })
                 .map(new Func1<UserListBean, List<UserBean>>() {
                     @Override
                     public List<UserBean> call(UserListBean userListBean) {
-                        mMaxId = userListBean.getUsers().get(userListBean.getUsers().size() - 1).getSeq();
+                        if (userListBean.getUsers() != null && userListBean.getUsers().size() > 0) {
+                            mMaxId = userListBean.getUsers().get(userListBean.getUsers().size() - 1).getSeq();
+                        } else {
+                            userListBean.setUsers(new ArrayList<UserBean>(0));
+                        }
                         return userListBean.getUsers();
                     }
                 })

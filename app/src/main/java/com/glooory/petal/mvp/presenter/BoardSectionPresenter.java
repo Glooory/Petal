@@ -84,6 +84,10 @@ public class BoardSectionPresenter extends BasePetalPresenter<BoardContract.Sect
                 .subscribe(new BaseSubscriber<List<PinBean>>() {
                     @Override
                     public void onNext(List<PinBean> pinBeen) {
+                        if (pinBeen.size() == 0) {
+                            mRootView.showNoMoreDataFooter(true);
+                            return;
+                        }
                         mAdapter.setNewData(pinBeen);
                         mRootView.showNoMoreDataFooter(false);
                     }
@@ -96,6 +100,11 @@ public class BoardSectionPresenter extends BasePetalPresenter<BoardContract.Sect
                 .subscribe(new BaseSubscriber<List<PinBean>>() {
                     @Override
                     public void onNext(List<PinBean> pinBeen) {
+                        if (pinBeen.size() == 0) {
+                            mAdapter.loadMoreEnd();
+                            mRootView.showNoMoreDataFooter(true);
+                            return;
+                        }
                         mAdapter.addData(pinBeen);
                         mRootView.showNoMoreDataFooter(false);
                         mAdapter.loadMoreComplete();
@@ -148,7 +157,9 @@ public class BoardSectionPresenter extends BasePetalPresenter<BoardContract.Sect
         EditPinDialogFragment editPinDialogFragment = EditPinDialogFragment.newInstance(
                 pinId,
                 String.valueOf(pinBean.getBoardId()),
-                pinBean.getRawText());
+                pinBean.getRawText()
+        );
+
         editPinDialogFragment.setPinEditListener(new EditPinDialogFragment.OnPinEditListener() {
             @Override
             public void onPinDelete() {
@@ -160,6 +171,7 @@ public class BoardSectionPresenter extends BasePetalPresenter<BoardContract.Sect
                 editPin(pinId, boardId, des, position);
             }
         });
+
         mRootView.showEditPinDialog(editPinDialogFragment);
     }
 
@@ -203,11 +215,12 @@ public class BoardSectionPresenter extends BasePetalPresenter<BoardContract.Sect
                 .subscribe(new BaseSubscriber<List<UserBean>>() {
                     @Override
                     public void onNext(List<UserBean> followerBeen) {
-                        mAdapter.setNewData(followerBeen);
-                        mRootView.showNoMoreDataFooter(false);
                         if (followerBeen.size() == 0) {
                             mAdapter.loadMoreEnd();
+                            return;
                         }
+                        mAdapter.setNewData(followerBeen);
+                        mRootView.showNoMoreDataFooter(false);
                     }
                 });
     }
@@ -218,12 +231,14 @@ public class BoardSectionPresenter extends BasePetalPresenter<BoardContract.Sect
                 .subscribe(new BaseSubscriber<List<UserBean>>() {
                     @Override
                     public void onNext(List<UserBean> followerBeen) {
+                        if (followerBeen.size() == 0) {
+                            mAdapter.loadMoreEnd();
+                            mRootView.showNoMoreDataFooter(true);
+                            return;
+                        }
                         mAdapter.addData(followerBeen);
                         mRootView.showNoMoreDataFooter(false);
                         mAdapter.loadMoreComplete();
-                        if (followerBeen.size() == 0) {
-                            mAdapter.loadMoreEnd();
-                        }
                     }
 
                     @Override
