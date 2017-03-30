@@ -59,7 +59,7 @@ public class HomeFragment extends BasePetalFragment<HomePresenter> implements Ho
 
     @Override
     protected View initView(ViewGroup container) {
-        mRootView = LayoutInflater.from(mActivity)
+        mRootView = LayoutInflater.from(getActivity())
                 .inflate(R.layout.view_swiperefreshlayout_recyclerview, container, false);
         return mRootView;
     }
@@ -67,10 +67,10 @@ public class HomeFragment extends BasePetalFragment<HomePresenter> implements Ho
     @Override
     protected void setupViews() {
         mSwipeRefreshLayout.setColorSchemeColors(
-                ContextCompat.getColor(mActivity, R.color.blue_google_icon),
-                ContextCompat.getColor(mActivity, R.color.red_google_icon),
-                ContextCompat.getColor(mActivity, R.color.yellow_google_icon),
-                ContextCompat.getColor(mActivity, R.color.green_google_icon)
+                ContextCompat.getColor(getActivity(), R.color.blue_google_icon),
+                ContextCompat.getColor(getActivity(), R.color.red_google_icon),
+                ContextCompat.getColor(getActivity(), R.color.yellow_google_icon),
+                ContextCompat.getColor(getActivity(), R.color.green_google_icon)
         );
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mRecyclerView.setLayoutManager(
@@ -105,16 +105,14 @@ public class HomeFragment extends BasePetalFragment<HomePresenter> implements Ho
 
     @Override
     public void showLoading() {
-        if (mSwipeRefreshLayout == null) {
-            return;
-        }
         Observable.just(1)
-                .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        mSwipeRefreshLayout.setRefreshing(true);
+                        if (mSwipeRefreshLayout != null) {
+                            mSwipeRefreshLayout.setRefreshing(true);
+                        }
                     }
                 }, new Action1<Throwable>() {
                     @Override
