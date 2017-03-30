@@ -24,6 +24,7 @@ import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.util.DialogUtils;
 import com.glooory.petal.app.util.DrawableUtils;
+import com.glooory.petal.app.widget.CustomStaggeredGridLayoutManager;
 import com.glooory.petal.di.component.DaggerPinDetailComponent;
 import com.glooory.petal.di.module.PinDetailModule;
 import com.glooory.petal.mvp.presenter.PinDetailPresenter;
@@ -129,7 +130,7 @@ public class PinDetailActivity extends BasePetalActivity<PinDetailPresenter>
         getSupportActionBar().setTitle("");
 
         mRecyclerView.setLayoutManager(
-                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+                new CustomStaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         initRecyelerHeader();
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.glooory.petal.R;
+import com.glooory.petal.app.widget.CustomStaggeredGridLayoutManager;
 import com.glooory.petal.di.component.DaggerHomeComponent;
 import com.glooory.petal.di.module.HomeModule;
 import com.glooory.petal.mvp.presenter.HomePresenter;
@@ -74,7 +75,7 @@ public class HomeFragment extends BasePetalFragment<HomePresenter> implements Ho
         );
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mRecyclerView.setLayoutManager(
-                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+                new CustomStaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mAdapter);
         mPresenter.requestPinsFirstTime(mTypeIndex);
         mRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {

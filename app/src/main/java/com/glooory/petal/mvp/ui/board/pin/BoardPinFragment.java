@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.listener.OnItemChildLongClickListener;
 import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.util.DialogUtils;
+import com.glooory.petal.app.widget.CustomStaggeredGridLayoutManager;
 import com.glooory.petal.di.component.DaggerBoardSectionComponent;
 import com.glooory.petal.di.module.BoardSectionModule;
 import com.glooory.petal.mvp.presenter.BoardSectionPresenter;
@@ -79,7 +80,7 @@ public class BoardPinFragment extends BasePetalFragment<BoardSectionPresenter>
 
     @Override
     protected void setupViews() {
-        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        mRecyclerView.setLayoutManager(new CustomStaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override

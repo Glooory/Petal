@@ -12,6 +12,7 @@ import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.util.SnackbarUtil;
+import com.glooory.petal.app.widget.CustomStaggeredGridLayoutManager;
 import com.glooory.petal.di.component.DaggerUserSectionComponent;
 import com.glooory.petal.di.module.UserSectionModule;
 import com.glooory.petal.mvp.presenter.UserSectionPresenter;
@@ -73,7 +74,7 @@ public class UserFollowerFragment extends BasePetalFragment<UserSectionPresenter
 
     @Override
     protected void setupViews() {
-        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        mRecyclerView.setLayoutManager(new CustomStaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
