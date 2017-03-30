@@ -85,7 +85,7 @@ public class UserBoardFragment extends BasePetalFragment<UserSectionPresenter>
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.ll_user_board_cover:
-                        mPresenter.launchBoardActivity(getActivity(), mUserName, view, position);
+                        mPresenter.launchBoardActivity(getActivity(), mUserName, position);
                         break;
                     case R.id.ll_user_board_operate:
                         mPresenter.onBoardOperateBtnClick(position);
@@ -111,9 +111,9 @@ public class UserBoardFragment extends BasePetalFragment<UserSectionPresenter>
 
     @Override
     protected View initView(ViewGroup container) {
-        mRootView = LayoutInflater.from(mActivity)
+        mRootView = LayoutInflater.from(getActivity())
                 .inflate(R.layout.view_recycler_view, container, false);
-        mNoMoreDataFooter = LayoutInflater.from(mActivity)
+        mNoMoreDataFooter = LayoutInflater.from(getActivity())
                 .inflate(R.layout.view_footer_no_more_data, null);
         return mRootView;
     }
@@ -127,6 +127,14 @@ public class UserBoardFragment extends BasePetalFragment<UserSectionPresenter>
     @Override
     protected void initData() {
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mAdapter.removeAllFooterView();
+        mAdapter = null;
+        mNoMoreDataFooter = null;
     }
 
     @Override
@@ -219,11 +227,6 @@ public class UserBoardFragment extends BasePetalFragment<UserSectionPresenter>
     @Override
     public void showDeletePinConfirmDialog(String pinId, int position) {
 
-    }
-
-    @Override
-    public void clearRecyclerViewPool() {
-        mRecyclerView.getRecycledViewPool().clear();
     }
 
     public void onRefresh() {

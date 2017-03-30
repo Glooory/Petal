@@ -392,7 +392,7 @@ public class PinDetailPresenter extends BasePetalPresenter<PinDetailContract.Vie
         UserActivity.launch(activity, mUserId, mUserName, avatar);
     }
 
-    public void launchBoardActivity(Activity activity, SimpleDraweeView cover) {
-        BoardActivity.launch(activity, mUserName, mBoardBean, cover);
+    public void launchBoardActivity(Activity activity) {
+        BoardActivity.launch(activity, mUserName, mBoardBean);
     }
 }

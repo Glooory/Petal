@@ -96,9 +96,9 @@ public class UserFollowingFragment extends BasePetalFragment<UserSectionPresente
 
     @Override
     protected View initView(ViewGroup container) {
-        mRootView = LayoutInflater.from(mActivity)
+        mRootView = LayoutInflater.from(getActivity())
                 .inflate(R.layout.view_recycler_view, container, false);
-        mNoMoreDataFooter = LayoutInflater.from(mActivity)
+        mNoMoreDataFooter = LayoutInflater.from(getActivity())
                 .inflate(R.layout.view_footer_no_more_data, null);
         return mRootView;
     }
@@ -106,6 +106,14 @@ public class UserFollowingFragment extends BasePetalFragment<UserSectionPresente
     @Override
     protected void initData() {
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mAdapter.removeAllFooterView();
+        mAdapter = null;
+        mNoMoreDataFooter = null;
     }
 
     @Override
@@ -192,11 +200,6 @@ public class UserFollowingFragment extends BasePetalFragment<UserSectionPresente
     @Override
     public void showDeletePinConfirmDialog(String pinId, int position) {
 
-    }
-
-    @Override
-    public void clearRecyclerViewPool() {
-        mRecyclerView.getRecycledViewPool().clear();
     }
 
     public void onRefresh() {

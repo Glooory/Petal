@@ -67,8 +67,8 @@ ext {
             "espresso-intents"         : "com.android.support.test.espresso:espresso-intents:${android["espressoSdkVersion"]}",
             "mockito-core"             : "org.mockito:mockito-core:1.+",
             "timber"                   : "com.jakewharton.timber:timber:4.1.2",
-            "canary-debug"             : "com.squareup.leakcanary:leakcanary-android:1.4-beta2",
-            "canary-release"           : "com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2"
+            "canary-debug"             : "com.squareup.leakcanary:leakcanary-android:1.5",
+            "canary-release"           : "com.squareup.leakcanary:leakcanary-android-no-op:1.5"
     ]
 
 

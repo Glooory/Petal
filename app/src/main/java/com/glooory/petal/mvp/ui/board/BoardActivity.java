@@ -5,11 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -106,18 +104,11 @@ public class BoardActivity extends BasePetalActivity<BoardPresenter>
     private BoardFollowerFragment mFollowerFragment;
 
 
-    public static void launch(Activity activity, String userName, BoardBean boardBean, SimpleDraweeView image) {
+    public static void launch(Activity activity, String userName, BoardBean boardBean) {
         Intent intent = new Intent(activity, BoardActivity.class);
         intent.putExtra(Constants.EXTRA_USER_NAME, userName);
         intent.putExtra(ARGS_BOARD_BEAN, boardBean);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            image.setTransitionName(activity.getString(R.string.image_transition_name));
-            activity.startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(
-                    activity, image, activity.getString(R.string.image_transition_name)
-            ).toBundle());
-        } else {
-            activity.startActivity(intent);
-        }
+        activity.startActivity(intent);
     }
 
     @Override

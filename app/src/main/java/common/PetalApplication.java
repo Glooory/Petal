@@ -47,7 +47,7 @@ public class PetalApplication extends BaseApplication {
                 .logLevel(BuildConfig.DEBUG ? LogLevel.FULL : LogLevel.NONE);
 
         installLeakCanary();//leakCanary内存泄露检查
-        Fresco.initialize(this);
+        Fresco.initialize(mApplication);
     }
 
 

@@ -165,8 +165,7 @@ public class BasePetalPresenter<V extends BaseView, M extends IModel> extends Ba
                     public void onClick(View v) {
                         LoginActivity.launch(
                                 ((BaseApplication) PetalApplication.getContext())
-                                        .getAppManager().getCurrentActivity(),
-                                false);
+                                        .getAppManager().getCurrentActivity(), false);
                     }
                 });
     }

@@ -74,8 +74,6 @@ public interface UserContract {
         void showEditPinDialog(EditPinDialogFragment editPinDialogFragment);
 
         void showDeletePinConfirmDialog(String pinId, int position);
-
-        void clearRecyclerViewPool();
     }
 
     interface SectionModel extends IModel {

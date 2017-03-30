@@ -42,7 +42,7 @@ public class FrescoImageConfig extends ImageConfig {
      * 2 对应 DiskCacheStrategy.SOURCE
      * 3 对应 DiskCacheStrategy.RESULT
      */
-    private int mCacheStrategy = 1;//默认不缓存
+    private int mCacheStrategy = 2;//默认缓存策略
     private Builder mBuilder;
 
     private FrescoImageConfig(Builder builder) {

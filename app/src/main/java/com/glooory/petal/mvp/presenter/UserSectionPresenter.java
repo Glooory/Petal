@@ -29,7 +29,6 @@ import com.glooory.petal.mvp.ui.user.board.UserBoardAdapter;
 import com.glooory.petal.mvp.ui.user.following.UserAdapter;
 import com.jess.arms.di.scope.FragmentScope;
 import com.jess.arms.utils.RxUtils;
-import com.orhanobut.logger.Logger;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -116,6 +115,11 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                 .subscribe(new BaseSubscriber<List<BoardBean>>() {
                     @Override
                     public void onNext(List<BoardBean> boardBeanList) {
+                        if (boardBeanList.size() == 0) {
+                            mAdapter.loadMoreEnd();
+                            mRootView.showNoMoreDataFooter(true);
+                            return;
+                        }
                         mAdapter.addData(boardBeanList);
                         mRootView.showNoMoreDataFooter(false);
                         mAdapter.loadMoreComplete();
@@ -129,10 +133,9 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                 });
     }
 
-    public void launchBoardActivity(Activity activity, String userName, View view, int position) {
+    public void launchBoardActivity(Activity activity, String userName, int position) {
         final BoardBean boardBean = ((UserBoardAdapter) mAdapter).getItem(position);
-        BoardActivity.launch(activity, userName, boardBean,
-                (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_user_board_cover));
+        BoardActivity.launch(activity, userName, boardBean);
     }
 
     /**
@@ -187,7 +190,6 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                         boardBean.setFollowing(isFollowedTemp);
                         int followerCount = boardBean.getFollowCount();
                         boardBean.setFollowCount(isFollowed ? --followerCount : ++followerCount);
-                        mRootView.clearRecyclerViewPool();
                         mAdapter.notifyItemChanged(position);
                     }
                 });
@@ -215,9 +217,6 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                                     .setDescription(userBoardSingleBean.getBoard().getDescription());
                             ((UserBoardAdapter) mAdapter).getItem(position)
                                     .setCategoryId(userBoardSingleBean.getBoard().getCategoryId());
-                            Logger.d(userBoardSingleBean.getBoard().getCategoryId());
-                            Logger.d(((UserBoardAdapter) mAdapter).getItem(position).getCategoryId());
-                            mRootView.clearRecyclerViewPool();
                             mAdapter.notifyItemChanged(position);
                             mRootView.showMessage(PetalApplication.getContext()
                                     .getString(R.string.msg_edit_success));
@@ -298,6 +297,11 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                 .subscribe(new BaseSubscriber<List<PinBean>>() {
                     @Override
                     public void onNext(List<PinBean> pinBeen) {
+                        if (pinBeen.size() == 0) {
+                            mAdapter.loadMoreEnd();
+                            mRootView.showNoMoreDataFooter(true);
+                            return;
+                        }
                         mAdapter.addData(pinBeen);
                         mRootView.showNoMoreDataFooter(false);
                         mAdapter.loadMoreComplete();
@@ -377,7 +381,6 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                                 .setRawText(pinBean.getRawText());
                         ((HomePinAdapter) mAdapter).getItem(position).getBoard()
                                 .setTitle(boardName);
-                        mRootView.clearRecyclerViewPool();
                         mAdapter.notifyItemChanged(position);
                     }
                 });
@@ -390,7 +393,6 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                     @Override
                     public void onNext(Void aVoid) {
                         mAdapter.remove(position);
-                        mRootView.clearRecyclerViewPool();
                         mAdapter.notifyDataSetChanged();
                         RxBus.getInstance().post(
                                 new UserSectionCountBean(UserSectionCountBean.PIN_COUNT, false));
@@ -418,6 +420,11 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                 .subscribe(new BaseSubscriber<List<PinBean>>() {
                     @Override
                     public void onNext(List<PinBean> pinBeen) {
+                        if (pinBeen.size() == 0) {
+                            mAdapter.loadMoreEnd();
+                            mRootView.showNoMoreDataFooter(true);
+                            return;
+                        }
                         mAdapter.addData(pinBeen);
                         mRootView.showNoMoreDataFooter(false);
                         mAdapter.loadMoreComplete();
@@ -450,13 +457,14 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                 .subscribe(new BaseSubscriber<List<UserBean>>() {
                     @Override
                     public void onNext(List<UserBean> userBeen) {
-                        mAdapter.addData(userBeen);
-                        mRootView.showNoMoreDataFooter(false);
-                        mAdapter.loadMoreComplete();
                         if (userBeen.size() == 0) {
                             mAdapter.loadMoreEnd();
                             mRootView.showNoMoreDataFooter(true);
+                            return;
                         }
+                        mAdapter.addData(userBeen);
+                        mRootView.showNoMoreDataFooter(false);
+                        mAdapter.loadMoreComplete();
                     }
 
                     @Override
@@ -503,7 +511,6 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                     public void onNext(Void aVoid) {
                         ((UserAdapter) mAdapter).getItem(postion)
                                 .setFollowing(isFollowed ? 0 : 1);
-                        mRootView.clearRecyclerViewPool();
                         mAdapter.notifyItemChanged(postion);
                         if (isMe(mUserId)) {
                             RxBus.getInstance().post(
@@ -533,13 +540,14 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                 .subscribe(new BaseSubscriber<List<UserBean>>() {
                     @Override
                     public void onNext(List<UserBean> userBeen) {
-                        mAdapter.addData(userBeen);
-                        mRootView.showNoMoreDataFooter(false);
-                        mAdapter.loadMoreComplete();
                         if (userBeen.size() == 0) {
                             mAdapter.loadMoreEnd();
                             mRootView.showNoMoreDataFooter(true);
+                            return;
                         }
+                        mAdapter.addData(userBeen);
+                        mRootView.showNoMoreDataFooter(false);
+                        mAdapter.loadMoreComplete();
                     }
 
                     @Override

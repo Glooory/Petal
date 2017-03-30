@@ -210,7 +210,7 @@ public class PinDetailActivity extends BasePetalActivity<PinDetailPresenter>
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        mPresenter.launchBoardActivity(PinDetailActivity.this, mImgBoardFirst);
+                        mPresenter.launchBoardActivity(PinDetailActivity.this);
                     }
                 });
     }
