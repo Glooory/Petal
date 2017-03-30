@@ -187,4 +187,10 @@ public class HomePresenter extends BasePetalPresenter<HomeContract.View, HomeCon
         UserActivity.launch(activity, userId, userName,
                 (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_pin_avatar));
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mAdapter = null;
+    }
 }

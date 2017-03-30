@@ -395,4 +395,10 @@ public class PinDetailPresenter extends BasePetalPresenter<PinDetailContract.Vie
     public void launchBoardActivity(Activity activity) {
         BoardActivity.launch(activity, mUserName, mBoardBean);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mAdapter = null;
+    }
 }

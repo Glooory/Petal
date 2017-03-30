@@ -22,6 +22,7 @@ import com.glooory.petal.mvp.model.entity.user.UserBoardSingleBean;
 import com.glooory.petal.mvp.ui.board.BoardContract;
 import com.glooory.petal.mvp.ui.user.board.EditBoardDiglogFragment;
 import com.jess.arms.di.scope.ActivityScope;
+import com.jess.arms.mvp.Presenter;
 import com.jess.arms.utils.RxUtils;
 
 import java.util.List;
@@ -41,7 +42,8 @@ import rx.functions.Action1;
  * Created by Glooory on 17/3/27.
  */
 @ActivityScope
-public class BoardPresenter extends BasePetalPresenter<BoardContract.View, BoardContract.Model> {
+public class BoardPresenter extends BasePetalPresenter<BoardContract.View, BoardContract.Model>
+        implements Presenter{
 
     private String mBoardId;
     private boolean mIsMine;
@@ -184,7 +186,11 @@ public class BoardPresenter extends BasePetalPresenter<BoardContract.View, Board
         if (mIsMine) {
             showEditBoardDialog();
         } else {
-            actionFollowBoard();
+            if (mModel.isLogin()) {
+                actionFollowBoard();
+            } else {
+                showLoginHintMsg();
+            }
         }
     }
 

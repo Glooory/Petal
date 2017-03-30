@@ -169,4 +169,10 @@ public class BasePetalPresenter<V extends BaseView, M extends IModel> extends Ba
                     }
                 });
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mImageLoader = null;
+    }
 }

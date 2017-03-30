@@ -182,6 +182,7 @@ public class BoardActivity extends BasePetalActivity<BoardPresenter>
         super.onDestroy();
         mPinFragment = null;
         mFollowerFragment = null;
+        mViewPagerAdapter = null;
     }
 
     @Override

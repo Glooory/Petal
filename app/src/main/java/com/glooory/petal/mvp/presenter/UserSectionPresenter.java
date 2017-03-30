@@ -557,4 +557,10 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                     }
                 });
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mAdapter = null;
+    }
 }

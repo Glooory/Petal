@@ -229,6 +229,7 @@ public class UserActivity extends BasePetalActivity<UserPresenter>
         mLikedFragment = null;
         mFollowingFragment = null;
         mFollowerFragment = null;
+        mPagerAdapter = null;
     }
 
     @Override

@@ -274,4 +274,10 @@ public class BoardSectionPresenter extends BasePetalPresenter<BoardContract.Sect
                     }
                 });
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mAdapter = null;
+    }
 }
