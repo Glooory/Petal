@@ -1,7 +1,7 @@
 package com.glooory.petal.di.module;
 
 import com.glooory.petal.mvp.model.SearchResultModel;
-import com.glooory.petal.mvp.ui.search.result.SearchResultContract;
+import com.glooory.petal.mvp.ui.searchresult.SearchResultContract;
 import com.jess.arms.di.scope.FragmentScope;
 
 import dagger.Module;

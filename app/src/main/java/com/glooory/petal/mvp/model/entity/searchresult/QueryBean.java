@@ -1,27 +1,22 @@
 package com.glooory.petal.mvp.model.entity.searchresult;
 
-import com.google.gson.Gson;
-
 /**
- * Created by Glooory on 17/2/25.
+ * Created by Glooory on 17/3/31.
  */
 
 public class QueryBean {
-
     /**
-     * text : coldplay
+     * text : design
      * type : pin
      * sort : weight
+     * page : 1
+     * category : null
      */
 
     private String text;
     private String type;
     private String sort;
-
-    public static QueryBean objectFromData(String str) {
-
-        return new Gson().fromJson(str, QueryBean.class);
-    }
+    private int page;
 
     public String getText() {
         return text;
@@ -47,4 +42,11 @@ public class QueryBean {
         this.sort = sort;
     }
 
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
 }

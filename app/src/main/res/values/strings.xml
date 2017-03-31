@@ -88,6 +88,9 @@
     <string name="msg_scan_by_category">分类浏览</string>
     <string name="msg_empty_search_history">没有搜索历史</string>
 
+    <string name="user">用户</string>
+    <string name="format_user_count">%d 用户</string>
+
     <string-array name="user_subitem_titles">
         <item>@string/board</item>
         <item>@string/collection</item>
@@ -99,5 +102,11 @@
     <string-array name="board_subitem_titles">
         <item>@string/collection</item>
         <item>@string/following</item>
+    </string-array>
+
+    <string-array name="search_result_subitem_titles">
+        <item>@string/collection</item>
+        <item>@string/board</item>
+        <item>@string/user</item>
     </string-array>
 </resources>

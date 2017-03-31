@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.glooory.petal.R;
@@ -28,6 +26,7 @@ import com.glooory.petal.app.util.SPUtils;
 import com.glooory.petal.app.util.UIUtils;
 import com.glooory.petal.app.widget.FlowLayout;
 import com.glooory.petal.mvp.model.entity.search.SearchHintBean;
+import com.glooory.petal.mvp.ui.searchresult.SearchResultActivity;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
@@ -56,6 +55,8 @@ public class SearchActivity extends BasePetalActivity {
 
     private static final int RAW_COUNT = 3;
     private static final int ITEM_MARGIN = 1;
+    private static final int ITEM_VERTICAL_MARGIN = 8;
+    private static final int ITEM_HORIZATAL_MARGIN = 16;
 
     @BindView(R.id.actv_search)
     AutoCompleteTextView mActvSearch;
@@ -117,6 +118,12 @@ public class SearchActivity extends BasePetalActivity {
 
     @Override
     protected void initData() {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         showSearchHistory();
     }
 
@@ -145,10 +152,12 @@ public class SearchActivity extends BasePetalActivity {
 
         mItemWidth = UIUtils.getScreenWidth(this) / RAW_COUNT - ITEM_MARGIN * (RAW_COUNT - 1);
 
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+        ViewGroup.MarginLayoutParams layoutParams = new ViewGroup.MarginLayoutParams(
                 mItemWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.gravity = Gravity.CENTER;
-        layoutParams.setMargins(ITEM_MARGIN, ITEM_MARGIN, ITEM_MARGIN, ITEM_MARGIN);
+        layoutParams.leftMargin = ITEM_MARGIN;
+        layoutParams.topMargin = ITEM_MARGIN;
+        layoutParams.rightMargin = ITEM_MARGIN;
+        layoutParams.bottomMargin = ITEM_MARGIN;
         for (int i = 0; i < categoryNames.length; i++) {
             addCategorySubitem(categoryNames[i], categoryValues[i], i, layoutParams);
         }
@@ -221,7 +230,7 @@ public class SearchActivity extends BasePetalActivity {
         mActvSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // TODO: 17/3/31 Launch SearchResultActivity
+                launchSearchResultActivity();
             }
         });
 
@@ -251,7 +260,7 @@ public class SearchActivity extends BasePetalActivity {
      * @param layoutParams
      */
     private void addCategorySubitem(String categoryName, String categoryValue, int position,
-            LinearLayout.LayoutParams layoutParams) {
+            ViewGroup.MarginLayoutParams layoutParams) {
         Button categoryBtn = new Button(this);
         int drawbleResId = Constants.CATEGORY_ICON_RES_IDS[position];
         categoryBtn.setCompoundDrawablesWithIntrinsicBounds(
@@ -277,12 +286,12 @@ public class SearchActivity extends BasePetalActivity {
 
     private void showEmptySearchHistory() {
         TextView emptyHistoryTv = new TextView(this);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout
-                .LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.gravity = Gravity.CENTER;
-        layoutParams.setMargins(ITEM_MARGIN * 16, ITEM_MARGIN * 16, ITEM_MARGIN * 16, ITEM_MARGIN * 16);
+        ViewGroup.MarginLayoutParams layoutParams = new ViewGroup
+                .MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(ITEM_HORIZATAL_MARGIN, ITEM_MARGIN, ITEM_MARGIN, ITEM_MARGIN);
         emptyHistoryTv.setText(mStrEmptySearchHistory);
         emptyHistoryTv.setLayoutParams(layoutParams);
+        emptyHistoryTv.setGravity(Gravity.START);
         mFlowLayoutHistory.addView(emptyHistoryTv);
     }
 
@@ -293,8 +302,14 @@ public class SearchActivity extends BasePetalActivity {
         if (mHistoryList.isEmpty()) {
             showEmptySearchHistory();
         } else {
+            ViewGroup.MarginLayoutParams layoutParams = new ViewGroup.MarginLayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+            layoutParams.leftMargin = ITEM_HORIZATAL_MARGIN;
+            layoutParams.topMargin = ITEM_VERTICAL_MARGIN;
+            layoutParams.bottomMargin = ITEM_HORIZATAL_MARGIN;
             for (String s : mHistoryList) {
-                addHistorySubitem(s);
+                addHistorySubitem(s, layoutParams);
             }
         }
     }
@@ -303,18 +318,19 @@ public class SearchActivity extends BasePetalActivity {
      * 添加搜索记录
      * @param text
      */
-    private void addHistorySubitem(String text) {
-        TextView textView = (TextView) LayoutInflater.from(this)
-                .inflate(R.layout.view_textview_search_history, mFlowLayoutHistory);
+    private void addHistorySubitem(final String text, ViewGroup.MarginLayoutParams layoutParams) {
+        TextView textView = new TextView(this);
+        textView.setPadding(ITEM_HORIZATAL_MARGIN, ITEM_VERTICAL_MARGIN, ITEM_HORIZATAL_MARGIN, ITEM_VERTICAL_MARGIN);
+        textView.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_text_search_history));
+        textView.setLayoutParams(layoutParams);
         textView.setText(text);
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 17/3/31 Launch SearchResultActivity
+                SearchResultActivity.launch(SearchActivity.this, text);
             }
         });
-
         mFlowLayoutHistory.addView(textView);
     }
 
@@ -329,7 +345,11 @@ public class SearchActivity extends BasePetalActivity {
 
     private void actionSearch() {
         if (mActvSearch.getText().toString().trim().length() > 0) {
-            // TODO: 17/3/31 Launch SearchResultActivity
+            launchSearchResultActivity();
         }
+    }
+
+    private void launchSearchResultActivity() {
+        SearchResultActivity.launch(SearchActivity.this, mActvSearch.getText().toString().trim());
     }
 }

@@ -31,5 +31,6 @@
 
     <style name="Theme.Petal.Search" parent="Theme.Petal.Light">
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
     </style>
 </resources>
