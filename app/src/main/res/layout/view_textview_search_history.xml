@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/half_activity_default_margin"
+    android:background="@drawable/bg_text_search_history"
+    android:paddingStart="@dimen/half_activity_default_margin"
+    android:paddingTop="@dimen/thumbnail_padding"
+    android:paddingEnd="@dimen/half_activity_default_margin"
+    android:paddingBottom="@dimen/thumbnail_padding">
+
+</TextView>

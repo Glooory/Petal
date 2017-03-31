@@ -1,5 +1,7 @@
 package com.glooory.petal.app;
 
+import com.glooory.petal.R;
+
 /**
  * Created by Glooory on 17/2/18.
  */
@@ -30,6 +32,7 @@ public class Constants {
     public static final String PREF_BOARD_TITLES = "board_titles";
     public static final String PREF_BOARD_IDS = "board_ids";
     public static final String PREF_LAST_SAVE_BOARD = "last_save_board";
+    public static final String PREF_SEARCH_HISTORY = "search_history";
 
     public static final int PER_PAGE_LIMIT = 20;
     public static final String HTTP_HEADER_AUTHORIZATION = "Authorization";
@@ -57,4 +60,18 @@ public class Constants {
     public static final int THROTTLE_DURATION = 300;
 
     public static final String IMAGE_TRANSITION_NAME = "image_transition";
+
+    public static int[] CATEGORY_ICON_RES_IDS = new int[]{
+            R.drawable.ic_ui_ux_24dp, R.drawable.ic_design_24dp, R.drawable.ic_illustration_24dp,
+            R.drawable.ic_home_faliture_24dp, R.drawable.ic_apparel_24dp, R.drawable.ic_men_24dp,
+            R.drawable.ic_marriage_24dp, R.drawable.ic_industry_design_24dp, R.drawable.ic_photography_24dp,
+            R.drawable.ic_hair_model_24dp, R.drawable.ic_food_drinks_24dp, R.drawable.ic_travling_24dp,
+            R.drawable.ic_diy_crafts_24dp, R.drawable.ic_fitness_24dp, R.drawable.ic_kids_24dp,
+            R.drawable.ic_pets_24dp, R.drawable.ic_quatos_24dp, R.drawable.ic_famouis_people_24dp,
+            R.drawable.ic_beauty_24dp, R.drawable.ic_gifs_24dp, R.drawable.ic_geek_24dp,
+            R.drawable.ic_anime_24dp, R.drawable.ic_archetature_24dp, R.drawable.ic_arts_24dp,
+            R.drawable.ic_data_figure_24dp, R.drawable.ic_game_24dp, R.drawable.ic_cars_24dp,
+            R.drawable.ic_film_24dp, R.drawable.ic_tips_24dp, R.drawable.ic_education_24dp,
+            R.drawable.ic_sports_24dp, R.drawable.ic_funny_24dp
+    };
 }

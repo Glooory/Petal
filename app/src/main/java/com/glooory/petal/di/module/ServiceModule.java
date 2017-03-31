@@ -2,6 +2,7 @@ package com.glooory.petal.di.module;
 
 import com.glooory.petal.mvp.model.api.service.BoardService;
 import com.glooory.petal.mvp.model.api.service.PinService;
+import com.glooory.petal.mvp.model.api.service.SearchService;
 import com.glooory.petal.mvp.model.api.service.UserService;
 
 import javax.inject.Singleton;
@@ -32,5 +33,11 @@ public class ServiceModule {
     @Provides
     BoardService provideOperateService(Retrofit retrofit) {
         return retrofit.create(BoardService.class);
+    }
+
+    @Singleton
+    @Provides
+    SearchService provideSearchService(Retrofit retrofit) {
+        return retrofit.create(SearchService.class);
     }
 }

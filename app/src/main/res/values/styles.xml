@@ -44,6 +44,8 @@
 
     <style name="Theme.Petal.Login" parent="Theme.Petal.Light"/>
 
+    <style name="Theme.Petal.Search" parent="Theme.Petal.Light"/>
+
     <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -118,6 +120,12 @@
     </style>
 
     <style name="SpinderUnderLined" parent="@style/Widget.AppCompat.Spinner.Underlined"/>
+
+    <style name="AutoCompleteTextViewCustom" parent="Widget.AppCompat.Light.AutoCompleteTextView">
+        <item name="android:background">@color/transparent</item>
+        <item name="colorControlActivated">@color/white</item>
+    </style>
+
 
     <!--********************************************-->
 

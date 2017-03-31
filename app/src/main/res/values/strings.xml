@@ -80,8 +80,13 @@
     <string name="msg_input_board_des">请输入画板描述</string>
     <string name="msg_new_board">新建画板</string>
     <string name="msg_create_board_success">画板创建成功</string>
-
     <string name="msg_board_belongs_to">来自</string>
+
+    <string name="msg_clear_history">清空搜索历史</string>
+    <string name="search_actv_hint">搜索采集、画板、用户</string>
+    <string name="msg_search_history">搜索历史</string>
+    <string name="msg_scan_by_category">分类浏览</string>
+    <string name="msg_empty_search_history">没有搜索历史</string>
 
     <string-array name="user_subitem_titles">
         <item>@string/board</item>

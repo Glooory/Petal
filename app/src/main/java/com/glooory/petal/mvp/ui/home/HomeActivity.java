@@ -27,6 +27,7 @@ import com.glooory.petal.app.util.SPUtils;
 import com.glooory.petal.app.util.SnackbarUtil;
 import com.glooory.petal.mvp.model.entity.BasicUserInfoBean;
 import com.glooory.petal.mvp.ui.login.LoginActivity;
+import com.glooory.petal.mvp.ui.search.SearchActivity;
 import com.glooory.petal.mvp.ui.user.UserActivity;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jess.arms.widget.imageloader.fresco.FrescoImageConfig;
@@ -198,7 +199,8 @@ public class HomeActivity extends BasePetalActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_home_search:
-                // TODO: 17/3/2 Launch SearchActivity
+                SearchActivity.launch(HomeActivity.this);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -227,12 +229,16 @@ public class HomeActivity extends BasePetalActivity
         } else if (itemId == R.id.nav_popular) {
             createHomeFragment(HomeFragment.PIN_TYPE_POPULAR);
             getSupportActionBar().setTitle(R.string.nav_title_popular);
-        } else if (itemId == R.id.nav_about) {
-            // TODO: 17/3/4 About info
-        } else if (itemId == R.id.nav_settings) {
-            // TODO: 17/3/4 Launch SettingsActivity
-        } else if (itemId == R.id.nav_logout) {
-            // TODO: 17/3/4 logout
+        } else if (itemId == R.id.nav_discover) {
+            SearchActivity.launch(HomeActivity.this);
+        } else {
+            if (itemId == R.id.nav_about) {
+                // TODO: 17/3/4 About info
+            } else if (itemId == R.id.nav_settings) {
+                // TODO: 17/3/4 Launch SettingsActivity
+            } else if (itemId == R.id.nav_logout) {
+                // TODO: 17/3/4 logout
+            }
         }
         closeDrawer();
         return true;
