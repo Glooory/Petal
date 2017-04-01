@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.util.SPUtils;
+import com.glooory.petal.mvp.ui.searchresult.board.SearchBoardFragment;
 import com.glooory.petal.mvp.ui.searchresult.pin.SearchPinFragment;
 
 import butterknife.BindColor;
@@ -54,6 +55,7 @@ public class SearchResultActivity extends BasePetalActivity
     private SearchResultSectionAdapter mPagerAdapter;
     private String[] mTabTitles;
     private SearchPinFragment mPinFragment;
+    private SearchBoardFragment mBoardFragment;
 
     public static void launch(Activity activity, String keyword) {
         Intent intent = new Intent(activity, SearchResultActivity.class);
@@ -102,6 +104,11 @@ public class SearchResultActivity extends BasePetalActivity
             case 0:
                 if (mPinFragment != null) {
                     mPinFragment.onRefresh();
+                }
+                break;
+            case 1:
+                if (mBoardFragment != null) {
+                    mBoardFragment.onRefresh();
                 }
                 break;
         }
@@ -193,6 +200,8 @@ public class SearchResultActivity extends BasePetalActivity
             switch (position) {
                 case 0:
                     return SearchPinFragment.newInstance(mSearchKeyword);
+                case 1:
+                    return SearchBoardFragment.newInstance(mSearchKeyword);
             }
             return null;
         }
@@ -204,13 +213,16 @@ public class SearchResultActivity extends BasePetalActivity
                 case 0:
                     mPinFragment = (SearchPinFragment) createFragment;
                     break;
+                case 1:
+                    mBoardFragment = (SearchBoardFragment) createFragment;
+                    break;
             }
             return createFragment;
         }
 
         @Override
         public int getCount() {
-            return 1;
+            return 2;
         }
 
         @Override

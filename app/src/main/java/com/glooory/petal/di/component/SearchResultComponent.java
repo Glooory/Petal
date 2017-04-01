@@ -1,6 +1,7 @@
 package com.glooory.petal.di.component;
 
 import com.glooory.petal.di.module.SearchResultModule;
+import com.glooory.petal.mvp.ui.searchresult.board.SearchBoardFragment;
 import com.glooory.petal.mvp.ui.searchresult.pin.SearchPinFragment;
 import com.jess.arms.di.scope.FragmentScope;
 
@@ -15,4 +16,6 @@ import dagger.Component;
 public interface SearchResultComponent {
 
     void inject(SearchPinFragment searchPinFragment);
+
+    void inject(SearchBoardFragment searchBoardFragment);
 }

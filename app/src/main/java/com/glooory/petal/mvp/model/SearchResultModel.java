@@ -3,7 +3,10 @@ package com.glooory.petal.mvp.model;
 import com.glooory.petal.app.Constants;
 import com.glooory.petal.mvp.model.api.cache.CacheManager;
 import com.glooory.petal.mvp.model.api.service.ServiceManager;
+import com.glooory.petal.mvp.model.entity.BoardBean;
 import com.glooory.petal.mvp.model.entity.PinBean;
+import com.glooory.petal.mvp.model.entity.board.FollowBoardResultBean;
+import com.glooory.petal.mvp.model.entity.searchresult.SearchBoardListBean;
 import com.glooory.petal.mvp.model.entity.searchresult.SearchPinListBean;
 import com.glooory.petal.mvp.ui.searchresult.SearchResultContract;
 import com.jess.arms.di.scope.FragmentScope;
@@ -59,6 +62,46 @@ public class SearchResultModel extends BasePetalModel<ServiceManager, CacheManag
                         return searchPinListBean.getPins();
                     }
                 })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<SearchBoardListBean> getSearchedBoards(String keyword) {
+        mPage = 1;
+        mPage++;
+        return mServiceManager.getSearchService()
+                .getSearchedBoards(keyword, 1, Constants.PER_PAGE_LIMIT)
+                .retryWhen(new RetryWithDelay(1, 1));
+    }
+
+    @Override
+    public Observable<List<BoardBean>> getSearchedBoardsMore(String keyword) {
+        return mServiceManager.getSearchService()
+                .getSearchedBoards(keyword, mPage, Constants.PER_PAGE_LIMIT)
+                .retryWhen(new RetryWithDelay(1, 1))
+                .map(new Func1<SearchBoardListBean, List<BoardBean>>() {
+                    @Override
+                    public List<BoardBean> call(SearchBoardListBean searchBoardListBean) {
+                        if (searchBoardListBean.getBoards() != null &&
+                                searchBoardListBean.getBoards().size() > 0) {
+                            mPage++;
+                        } else {
+                            searchBoardListBean.setBoards(new ArrayList<BoardBean>(0));
+                        }
+                        return searchBoardListBean.getBoards();
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<FollowBoardResultBean> followBoard(String boardId, boolean isFollowed) {
+        String operate = isFollowed ? Constants.HTTP_ARGS_UNFOLLOW : Constants.HTTP_ARGS_FOLLOW;
+        return mServiceManager.getBoardService()
+                .followBoard(boardId, operate)
+                .retryWhen(new RetryWithDelay(1, 1))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

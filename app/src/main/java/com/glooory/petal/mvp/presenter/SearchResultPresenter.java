@@ -10,11 +10,16 @@ import com.glooory.petal.R;
 import com.glooory.petal.app.rx.BaseSubscriber;
 import com.glooory.petal.app.util.DrawableUtils;
 import com.glooory.petal.app.widget.WindmillLoadMoreFooter;
+import com.glooory.petal.mvp.model.entity.BoardBean;
 import com.glooory.petal.mvp.model.entity.PinBean;
+import com.glooory.petal.mvp.model.entity.board.FollowBoardResultBean;
+import com.glooory.petal.mvp.model.entity.searchresult.SearchBoardListBean;
 import com.glooory.petal.mvp.model.entity.searchresult.SearchPinListBean;
+import com.glooory.petal.mvp.ui.board.BoardActivity;
 import com.glooory.petal.mvp.ui.home.HomePinAdapter;
 import com.glooory.petal.mvp.ui.pindetail.PinDetailActivity;
 import com.glooory.petal.mvp.ui.searchresult.SearchResultContract;
+import com.glooory.petal.mvp.ui.searchresult.board.CategoryBoardAdapter;
 import com.glooory.petal.mvp.ui.user.UserActivity;
 import com.jess.arms.di.scope.FragmentScope;
 import com.jess.arms.utils.RxUtils;
@@ -169,6 +174,110 @@ public class SearchResultPresenter extends BasePetalPresenter<SearchResultContra
                 userId,
                 pinBean.getUser().getUsername(),
                 (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_pin_avatar));
+    }
+
+    public void getSearchedBoards(String keyword) {
+        mSearchKeyword = keyword;
+        mModel.getSearchedBoards(keyword)
+                .map(new Func1<SearchBoardListBean, List<BoardBean>>() {
+                    @Override
+                    public List<BoardBean> call(SearchBoardListBean searchBoardListBean) {
+                        mBoardCount = searchBoardListBean.getBoardCount();
+                        return searchBoardListBean.getBoards();
+                    }
+                })
+                .doOnTerminate(new Action0() {
+                    @Override
+                    public void call() {
+                        mRootView.hideLoading();
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<List<BoardBean>>() {
+                    @Override
+                    public void onNext(List<BoardBean> boardBean) {
+                        if (boardBean.size() == 0) {
+                            mRootView.showNoMoreDataFooter(true);
+                            return;
+                        }
+                        mAdapter.setNewData(boardBean);
+                        mRootView.showNoMoreDataFooter(false);
+                    }
+                });
+
+    }
+
+    public void getSearchedBoardsMore() {
+        mModel.getSearchedBoardsMore(mSearchKeyword)
+                .compose(RxUtils.<List<BoardBean>>bindToLifecycle(mRootView))
+                .subscribe(new BaseSubscriber<List<BoardBean>>() {
+                    @Override
+                    public void onNext(List<BoardBean> boardBeanList) {
+                        if (boardBeanList.size() == 0) {
+                            mRootView.showNoMoreDataFooter(true);
+                            mAdapter.loadMoreEnd();
+                            return;
+                        }
+                        mAdapter.addData(boardBeanList);
+                        mRootView.showNoMoreDataFooter(false);
+                        mAdapter.loadMoreComplete();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        mAdapter.loadMoreFail();
+                    }
+                });
+    }
+
+    public void launchBoardActivity(Activity activity, int position) {
+        final BoardBean boardBean = ((CategoryBoardAdapter) mAdapter).getItem(position);
+        boardBean.setDeleting(1);
+        BoardActivity.launch(activity, boardBean.getUser().getUsername(), boardBean);
+    }
+
+    public void launchUserActivityFromBoard(Activity activity, View view, int position) {
+        BoardBean boardBean = ((CategoryBoardAdapter) mAdapter).getItem(position);
+        String userId = String.valueOf(boardBean.getUserId());
+        String userName = boardBean.getUser().getUsername();
+        UserActivity.launch(activity, userId, userName,
+                (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_category_board_user_avatar));
+    }
+
+    /**
+     * 画板 item 上的底部操作按钮的点击事件
+     * @param position
+     */
+    public void onBoardOperateBtnClick(int position) {
+        if (!mModel.isLogin()) {
+            mRootView.showLoginNav();
+            return;
+        }
+        actionFollowBoard(position);
+    }
+
+    /**
+     * 关注或者取消关注画板
+     * @param position
+     */
+    private void actionFollowBoard(final int position) {
+        final BoardBean boardBean = ((CategoryBoardAdapter) mAdapter).getItem(position);
+        String boardId = String.valueOf(boardBean.getBoardId());
+        final boolean isFollowed = boardBean.isFollowing();
+        mModel.followBoard(boardId, isFollowed)
+                .compose(RxUtils.<FollowBoardResultBean>bindToLifecycle(mRootView))
+                .subscribe(new BaseSubscriber<FollowBoardResultBean>() {
+                    @Override
+                    public void onNext(FollowBoardResultBean followBoardResultBean) {
+                        boolean isFollowedTemp = !boardBean.isFollowing();
+                        boardBean.setFollowing(isFollowedTemp);
+                        int followerCount = boardBean.getFollowCount();
+                        boardBean.setFollowCount(isFollowed ? --followerCount : ++followerCount);
+                        mAdapter.notifyItemChanged(position);
+                    }
+                });
     }
 
     public int getPinCount() {

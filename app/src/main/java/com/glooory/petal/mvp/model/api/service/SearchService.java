@@ -1,9 +1,9 @@
 package com.glooory.petal.mvp.model.api.service;
 
 import com.glooory.petal.mvp.model.entity.search.SearchHintBean;
+import com.glooory.petal.mvp.model.entity.searchresult.SearchBoardListBean;
 import com.glooory.petal.mvp.model.entity.searchresult.SearchPinListBean;
-import com.glooory.petal.mvp.model.entity.user.UserBoardListBean;
-import com.glooory.petal.mvp.model.entity.user.UserListBean;
+import com.glooory.petal.mvp.model.entity.searchresult.SearchUserListBean;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -30,14 +30,14 @@ public interface SearchService {
     // 根据关键字搜索画板
     // https://api.huaban.com/search/boards/?q=text&page=1&per_page=20
     @GET("search/boards")
-    Observable<UserBoardListBean> getSearchedBoards(@Query("q") String keyword,
+    Observable<SearchBoardListBean> getSearchedBoards(@Query("q") String keyword,
             @Query("page") int page,
             @Query("per_page") int perPageSize);
 
     // 根据关键字搜索用户
     // https://api.huaban.com/search/users/?q=text&page=1&per_page=20
     @GET("search/people")
-    Observable<UserListBean> getSearchedUsers(@Query("q") String keyword,
+    Observable<SearchUserListBean> getSearchedUsers(@Query("q") String keyword,
             @Query("page") int page,
             @Query("per_page") int perPageSize);
 

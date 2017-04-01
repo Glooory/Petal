@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Glooory on 2016/9/18 0018 18:22.
  * 搜索用户返回的实体类
  */
-public class ResultUserListBean {
+public class SearchUserListBean {
 
     /**
      * query : {"text":"海贼王","type":"people"}
@@ -44,9 +44,9 @@ public class ResultUserListBean {
     private int self_board_count;
     private List<UserBean> users;
 
-    public static ResultUserListBean objectFromData(String str) {
+    public static SearchUserListBean objectFromData(String str) {
 
-        return new Gson().fromJson(str, ResultUserListBean.class);
+        return new Gson().fromJson(str, SearchUserListBean.class);
     }
 
     public QueryBean getQuery() {
