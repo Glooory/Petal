@@ -162,6 +162,15 @@ public class CategoryActivity extends BasePetalActivity
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPagerAdapter = null;
+        mPinFragment = null;
+        mBoardFragment = null;
+        mUserFragment = null;
+    }
+
     class CategorySectionAdapter extends FragmentStatePagerAdapter {
 
         public CategorySectionAdapter(FragmentManager fm) {

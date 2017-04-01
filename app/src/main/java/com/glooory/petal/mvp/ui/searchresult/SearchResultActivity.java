@@ -196,6 +196,15 @@ public class SearchResultActivity extends BasePetalActivity
                 });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPagerAdapter = null;
+        mPinFragment = null;
+        mBoardFragment = null;
+        mUserFragment = null;
+    }
+
     class SearchResultSectionAdapter extends FragmentStatePagerAdapter {
 
         public SearchResultSectionAdapter(FragmentManager fm) {
