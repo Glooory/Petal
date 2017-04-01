@@ -205,6 +205,7 @@ public class UserFollowerFragment extends BasePetalFragment<UserSectionPresenter
     }
 
     public void onRefresh() {
+        mAdapter.removeAllFooterView();
         mPresenter.getUserFollowers(mUserId);
     }
 

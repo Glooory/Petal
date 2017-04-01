@@ -81,7 +81,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="2dp"
+            android:padding="@dimen/thumbnail_padding"
             fresco:viewAspectRatio="1.0"
             fresco:failureImage="@drawable/ic_broken_image_grey_700_48dp"
             fresco:failureImageScaleType="centerInside"/>
@@ -91,7 +91,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="2dp"
+            android:padding="@dimen/thumbnail_padding"
             fresco:viewAspectRatio="1.0"
             fresco:failureImage="@drawable/ic_broken_image_grey_700_48dp"
             fresco:failureImageScaleType="centerInside"/>
@@ -101,7 +101,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="2dp"
+            android:padding="@dimen/thumbnail_padding"
             fresco:viewAspectRatio="1.0"
             fresco:failureImage="@drawable/ic_broken_image_grey_700_48dp"
             fresco:failureImageScaleType="centerInside"/>

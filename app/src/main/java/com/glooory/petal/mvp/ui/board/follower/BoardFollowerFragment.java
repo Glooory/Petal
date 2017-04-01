@@ -188,6 +188,7 @@ public class BoardFollowerFragment extends BasePetalFragment<BoardSectionPresent
     }
 
     public void onRefresh() {
+        mAdapter.removeAllFooterView();
         mPresenter.getBoardFollowers(mBoardId);
     }
 }

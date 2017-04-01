@@ -211,6 +211,7 @@ public class BoardPinFragment extends BasePetalFragment<BoardSectionPresenter>
     }
 
     public void onRefresh() {
+        mAdapter.removeAllFooterView();
         mPresenter.getBoardPins(mBoardId);
     }
 }

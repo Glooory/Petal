@@ -160,6 +160,7 @@ public class SearchPinFragment extends BasePetalFragment<SearchResultPresenter>
     }
 
     public void onRefresh() {
+        mAdapter.removeAllFooterView();
         mPresenter.getSearchedPins(mSearchKeyword);
     }
 }

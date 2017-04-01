@@ -231,6 +231,7 @@ public class UserBoardFragment extends BasePetalFragment<UserSectionPresenter>
     }
 
     public void onRefresh() {
+        mAdapter.removeAllFooterView();
         mPresenter.getUserBoards(mUserId);
     }
 

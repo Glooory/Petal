@@ -214,6 +214,7 @@ public class UserPinFragment extends BasePetalFragment<UserSectionPresenter>
     }
 
     public void onRefresh() {
+        mAdapter.removeAllFooterView();
         mPresenter.getUserPins(mUserId);
     }
 

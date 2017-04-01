@@ -197,6 +197,7 @@ public class UserLikedFragment extends BasePetalFragment<UserSectionPresenter>
     }
 
     public void onRefresh() {
+        mAdapter.removeAllFooterView();
         mPresenter.getUserLikedPins(mUserId);
     }
 
