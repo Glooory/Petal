@@ -56,6 +56,7 @@ public class Constants {
     public static final String EXTRA_USER_ID = "user_id";
     public static final String EXTRA_USER_NAME = "user_name";
     public static final String EXTRA_SEARCH_KEYWORD = "search_keyword";
+    public static final String BUNDLE_CATEGORY_VALUE = "category_value";
 
     //防抖动时间间隔
     public static final int THROTTLE_DURATION = 300;

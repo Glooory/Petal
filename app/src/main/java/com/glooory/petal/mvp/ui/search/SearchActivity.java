@@ -27,6 +27,7 @@ import com.glooory.petal.app.util.SPUtils;
 import com.glooory.petal.app.util.UIUtils;
 import com.glooory.petal.app.widget.FlowLayout;
 import com.glooory.petal.mvp.model.entity.search.SearchHintBean;
+import com.glooory.petal.mvp.ui.category.CategoryActivity;
 import com.glooory.petal.mvp.ui.searchresult.SearchResultActivity;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
@@ -258,7 +259,7 @@ public class SearchActivity extends BasePetalActivity {
      * @param position
      * @param layoutParams
      */
-    private void addCategorySubitem(String categoryName, String categoryValue, int position,
+    private void addCategorySubitem(final String categoryName, final String categoryValue, int position,
             ViewGroup.MarginLayoutParams layoutParams) {
         Button categoryBtn = new Button(this);
         int drawbleResId = Constants.CATEGORY_ICON_RES_IDS[position];
@@ -276,7 +277,7 @@ public class SearchActivity extends BasePetalActivity {
         categoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 17/3/30 Launch CategotyActivity
+                CategoryActivity.launch(SearchActivity.this, categoryName, categoryValue);
             }
         });
 

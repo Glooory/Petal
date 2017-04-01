@@ -51,39 +51,39 @@ public interface SearchService {
     // 请求该分类的采集
     // https://api.huaban.com/favourite/{type}/?limit=20
     @GET("favorite/{category}")
-    Observable<PinListBean> getCategoryPins(@Path("type") String type,
+    Observable<PinListBean> getCategoryPins(@Path("category") String category,
             @Query("limit") int limit);
 
     // 请求该分类的采集
     // https://api.huaban.com/favorite/{type}/?limit=20&max=
     @GET("favorite/{category}")
-    Observable<PinListBean> getCategoryPinsMore(@Path("type") String type,
+    Observable<PinListBean> getCategoryPinsMore(@Path("category") String category,
             @Query("max") int maxId,
             @Query("limit") int limit);
 
     // 请求该分类的相关画板
     // https://api.huaban.com/boards/favorite/{type}/?limit=20
-    @GET("boards/favorite/{type}")
-    Observable<UserBoardListBean> getCategoryBoards(@Path("type") String type,
+    @GET("boards/favorite/{category}")
+    Observable<UserBoardListBean> getCategoryBoards(@Path("category") String category,
             @Query("limit") int limit);
 
     // 请求该分类的相关画板
     // https://api.huaban.com/boards/favorite/{type}/?limit=20&max=
-    @GET("boards/favorite/{type}")
-    Observable<UserBoardListBean> getCategoryBoardsMore(@Path("type") String type,
+    @GET("boards/favorite/{category}")
+    Observable<UserBoardListBean> getCategoryBoardsMore(@Path("category") String category,
             @Query("max") int maxId,
             @Query("limit") int limit);
 
     // 请求该分类的相关的用户
     // https://api.huaban.com/users/favorite/{type}/?limit=20
-    @GET("users/favorite/{type}")
-    Observable<UserListBean> getCategoryUsers(@Path("type") String type,
+    @GET("users/favorite/{category}")
+    Observable<UserListBean> getCategoryUsers(@Path("category") String category,
             @Query("limit") int limit);
 
     // 请求该分类的相关的用户
     // https://api.huaban.com/users/favorite/{type}/?limit=20&max
-    @GET("users/favorite/{type}")
-    Observable<UserListBean> getCategoryUsersMore(@Path("type") String type,
+    @GET("users/favorite/{category}")
+    Observable<UserListBean> getCategoryUsersMore(@Path("category") String category,
             @Query("max") int maxId,
             @Query("limit") int limit);
 

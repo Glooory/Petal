@@ -14,12 +14,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.ViewGroup;
 
 import com.glooory.petal.R;
+import com.glooory.petal.mvp.ui.category.pin.CategoryPinFragment;
 
 import butterknife.BindArray;
 import butterknife.BindColor;
 import butterknife.BindView;
 import common.AppComponent;
 import common.BasePetalActivity;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * Created by Glooory on 17/4/1.
@@ -50,6 +54,7 @@ public class CategoryActivity extends BasePetalActivity
     private CategorySectionAdapter mPagerAdapter;
     private String mCategoryName;
     private String mCategoryValue;
+    private CategoryPinFragment mPinFragment;
 
     public static void launch(Activity activity, String categoryName, String categoryValue) {
         Intent intent = new Intent(activity, CategoryActivity.class);
@@ -102,9 +107,53 @@ public class CategoryActivity extends BasePetalActivity
         }
     }
 
+    public void showLoading() {
+        Observable.just(1)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        mSwipeRefreshLayout.setRefreshing(true);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        throwable.printStackTrace();
+                    }
+                });
+    }
+
+    public void hideLoading() {
+        Observable.just(1)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        throwable.printStackTrace();
+                    }
+                });
+    }
+
     @Override
     public void onRefresh() {
+        switch (mViewPager.getCurrentItem()) {
+            case 0:
+                if (mPinFragment != null) {
+                    mPinFragment.onRefresh();
+                }
+                break;
+            case 1:
 
+                break;
+            case 2:
+
+                break;
+        }
     }
 
     class CategorySectionAdapter extends FragmentStatePagerAdapter {
@@ -115,6 +164,11 @@ public class CategoryActivity extends BasePetalActivity
 
         @Override
         public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    return CategoryPinFragment.newInstance(mCategoryValue);
+
+            }
             return null;
         }
 
@@ -123,7 +177,7 @@ public class CategoryActivity extends BasePetalActivity
             Fragment createdFragment = (Fragment) super.instantiateItem(container, position);
             switch (position) {
                 case 0:
-
+                    mPinFragment = (CategoryPinFragment) createdFragment;
                     break;
                 case 1:
 
@@ -137,7 +191,7 @@ public class CategoryActivity extends BasePetalActivity
 
         @Override
         public int getCount() {
-            return 0;
+            return 1;
         }
 
         @Override
