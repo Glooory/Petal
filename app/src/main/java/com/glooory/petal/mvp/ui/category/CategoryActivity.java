@@ -54,7 +54,6 @@ public class CategoryActivity extends BasePetalActivity
     String[] mTabTitles;
 
     private CategorySectionAdapter mPagerAdapter;
-    private String mCategoryName;
     private String mCategoryValue;
     private CategoryPinFragment mPinFragment;
     private CategoryBoardFragment mBoardFragment;
@@ -91,15 +90,14 @@ public class CategoryActivity extends BasePetalActivity
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         mTablayout.setSelectedTabIndicatorColor(mTabIndicatorColor);
-        mTabTitles = getResources().getStringArray(R.array.search_result_subitem_titles);
         initViewPager();
     }
 
     @Override
     protected void initData() {
-        mCategoryName = getIntent().getStringExtra(EXTRA_CATEGORY_NAME);
+        String categoryName = getIntent().getStringExtra(EXTRA_CATEGORY_NAME);
         mCategoryValue = getIntent().getStringExtra(EXTRA_CATEGORY_VALUE);
-        getSupportActionBar().setTitle(mCategoryName);
+        getSupportActionBar().setTitle(categoryName);
     }
 
     private void initViewPager() {

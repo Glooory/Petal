@@ -40,7 +40,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:gravity="center_vertical"
-            android:text="@string/msg_login_hint"
+            android:text="@string/msg_nav_login_hint"
             android:textColor="@color/grey_100"
             android:textSize="@dimen/text_size_18sp"
             android:textStyle="bold"/>
