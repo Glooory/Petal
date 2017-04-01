@@ -5,9 +5,11 @@ import com.glooory.petal.mvp.model.api.cache.CacheManager;
 import com.glooory.petal.mvp.model.api.service.ServiceManager;
 import com.glooory.petal.mvp.model.entity.BoardBean;
 import com.glooory.petal.mvp.model.entity.PinBean;
+import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.model.entity.board.FollowBoardResultBean;
 import com.glooory.petal.mvp.model.entity.searchresult.SearchBoardListBean;
 import com.glooory.petal.mvp.model.entity.searchresult.SearchPinListBean;
+import com.glooory.petal.mvp.model.entity.searchresult.SearchUserListBean;
 import com.glooory.petal.mvp.ui.searchresult.SearchResultContract;
 import com.jess.arms.di.scope.FragmentScope;
 
@@ -101,6 +103,45 @@ public class SearchResultModel extends BasePetalModel<ServiceManager, CacheManag
         String operate = isFollowed ? Constants.HTTP_ARGS_UNFOLLOW : Constants.HTTP_ARGS_FOLLOW;
         return mServiceManager.getBoardService()
                 .followBoard(boardId, operate)
+                .retryWhen(new RetryWithDelay(1, 1))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<SearchUserListBean> getSearchedUsers(String keyword) {
+        mPage = 1;
+        mPage++;
+        return mServiceManager.getSearchService()
+                .getSearchedUsers(keyword, 1, Constants.PER_PAGE_LIMIT)
+                .retryWhen(new RetryWithDelay(1, 1));
+    }
+
+    @Override
+    public Observable<List<UserBean>> getSearchedUsersMore(String keyword) {
+        return mServiceManager.getSearchService()
+                .getSearchedUsers(keyword, mPage, Constants.PER_PAGE_LIMIT)
+                .retryWhen(new RetryWithDelay(1, 1))
+                .map(new Func1<SearchUserListBean, List<UserBean>>() {
+                    @Override
+                    public List<UserBean> call(SearchUserListBean searchUserListBean) {
+                        if (searchUserListBean.getUsers() != null &&
+                                searchUserListBean.getUsers().size() > 0) {
+                            mPage++;
+                        } else {
+                            searchUserListBean.setUsers(new ArrayList<UserBean>(0));
+                        }
+                        return searchUserListBean.getUsers();
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<Void> followUser(String userId, boolean isFollowed) {
+        return mServiceManager.getUserService()
+                .followUser(userId, isFollowed ? Constants.HTTP_ARGS_UNFOLLOW : Constants.HTTP_ARGS_FOLLOW)
                 .retryWhen(new RetryWithDelay(1, 1))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

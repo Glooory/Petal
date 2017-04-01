@@ -2,6 +2,7 @@ package com.glooory.petal.mvp.presenter;
 
 import android.app.Activity;
 import android.content.res.Resources;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -12,14 +13,17 @@ import com.glooory.petal.app.util.DrawableUtils;
 import com.glooory.petal.app.widget.WindmillLoadMoreFooter;
 import com.glooory.petal.mvp.model.entity.BoardBean;
 import com.glooory.petal.mvp.model.entity.PinBean;
+import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.model.entity.board.FollowBoardResultBean;
 import com.glooory.petal.mvp.model.entity.searchresult.SearchBoardListBean;
 import com.glooory.petal.mvp.model.entity.searchresult.SearchPinListBean;
+import com.glooory.petal.mvp.model.entity.searchresult.SearchUserListBean;
 import com.glooory.petal.mvp.ui.board.BoardActivity;
 import com.glooory.petal.mvp.ui.home.HomePinAdapter;
 import com.glooory.petal.mvp.ui.pindetail.PinDetailActivity;
 import com.glooory.petal.mvp.ui.searchresult.SearchResultContract;
 import com.glooory.petal.mvp.ui.searchresult.board.CategoryBoardAdapter;
+import com.glooory.petal.mvp.ui.searchresult.user.CategoryUserAdapter;
 import com.glooory.petal.mvp.ui.user.UserActivity;
 import com.jess.arms.di.scope.FragmentScope;
 import com.jess.arms.utils.RxUtils;
@@ -276,6 +280,96 @@ public class SearchResultPresenter extends BasePetalPresenter<SearchResultContra
                         int followerCount = boardBean.getFollowCount();
                         boardBean.setFollowCount(isFollowed ? --followerCount : ++followerCount);
                         mAdapter.notifyItemChanged(position);
+                    }
+                });
+    }
+
+    public void getSearchedUsers(String keyword) {
+        mSearchKeyword = keyword;
+        mModel.getSearchedUsers(mSearchKeyword)
+                .compose(RxUtils.<SearchUserListBean>bindToLifecycle(mRootView))
+                .doOnTerminate(new Action0() {
+                    @Override
+                    public void call() {
+                        mRootView.hideLoading();
+                    }
+                })
+                .map(new Func1<SearchUserListBean, List<UserBean>>() {
+                    @Override
+                    public List<UserBean> call(SearchUserListBean searchUserListBean) {
+                        mUserCount = searchUserListBean.getPeopleCount();
+                        return searchUserListBean.getUsers();
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<List<UserBean>>() {
+                    @Override
+                    public void onNext(List<UserBean> userBeen) {
+                        if (userBeen.size() == 0) {
+                            mRootView.showNoMoreDataFooter(true);
+                            return;
+                        }
+                        mAdapter.setNewData(userBeen);
+                        mRootView.showNoMoreDataFooter(false);
+                    }
+                });
+    }
+
+    public void getSearchedUsersMore() {
+        mModel.getSearchedUsersMore(mSearchKeyword)
+                .compose(RxUtils.<List<UserBean>>bindToLifecycle(mRootView))
+                .subscribe(new BaseSubscriber<List<UserBean>>() {
+                    @Override
+                    public void onNext(List<UserBean> userBeen) {
+                        if (userBeen.size() == 0) {
+                            mRootView.showNoMoreDataFooter(true);
+                            mAdapter.loadMoreEnd();
+                            return;
+                        }
+                        mAdapter.addData(userBeen);
+                        mAdapter.loadMoreComplete();
+                        mRootView.showNoMoreDataFooter(false);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        mAdapter.loadMoreFail();
+                    }
+                });
+    }
+
+    public void launchUserActivityFromUser(FragmentActivity activity, View view, int position) {
+        UserBean userBean = ((CategoryUserAdapter) mAdapter).getItem(position);
+        String userId = String.valueOf(userBean.getUserId());
+        String userName = userBean.getUsername();
+        UserActivity.launch(activity, userId, userName,
+                (SimpleDraweeView) view.findViewById(R.id.simple_drawee_card_user_avatar));
+    }
+
+    public void onUserOperateBtnClick(int position) {
+        if (!mModel.isLogin()) {
+            mRootView.showLoginNav();
+            return;
+        }
+        actionFollowUser(position);
+    }
+
+    private void actionFollowUser(final int postion) {
+        final UserBean userBean = ((CategoryUserAdapter) mAdapter).getItem(postion);
+        String userId = String.valueOf(userBean.getUserId());
+        final boolean isFollowed = userBean.getFollowing() == 1;
+        mModel.followUser(userId, isFollowed)
+                .compose(RxUtils.<Void>bindToLifecycle(mRootView))
+                .subscribe(new BaseSubscriber<Void>() {
+                    @Override
+                    public void onNext(Void aVoid) {
+                        int followerCount = userBean.getFollowerCount();
+                        userBean.setFollowerCount(isFollowed ? --followerCount : ++followerCount);
+                        ((CategoryUserAdapter) mAdapter).getItem(postion)
+                                .setFollowing(isFollowed ? 0 : 1);
+                        mAdapter.notifyItemChanged(postion);
                     }
                 });
     }

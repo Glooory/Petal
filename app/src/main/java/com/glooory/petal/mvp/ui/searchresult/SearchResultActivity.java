@@ -19,6 +19,7 @@ import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.util.SPUtils;
 import com.glooory.petal.mvp.ui.searchresult.board.SearchBoardFragment;
 import com.glooory.petal.mvp.ui.searchresult.pin.SearchPinFragment;
+import com.glooory.petal.mvp.ui.searchresult.user.SearchUserFragment;
 
 import butterknife.BindColor;
 import butterknife.BindView;
@@ -56,6 +57,7 @@ public class SearchResultActivity extends BasePetalActivity
     private String[] mTabTitles;
     private SearchPinFragment mPinFragment;
     private SearchBoardFragment mBoardFragment;
+    private SearchUserFragment mUserFragment;
 
     public static void launch(Activity activity, String keyword) {
         Intent intent = new Intent(activity, SearchResultActivity.class);
@@ -109,6 +111,11 @@ public class SearchResultActivity extends BasePetalActivity
             case 1:
                 if (mBoardFragment != null) {
                     mBoardFragment.onRefresh();
+                }
+                break;
+            case 2:
+                if (mUserFragment != null) {
+                    mUserFragment.onRefresh();
                 }
                 break;
         }
@@ -202,6 +209,8 @@ public class SearchResultActivity extends BasePetalActivity
                     return SearchPinFragment.newInstance(mSearchKeyword);
                 case 1:
                     return SearchBoardFragment.newInstance(mSearchKeyword);
+                case 2:
+                    return SearchUserFragment.newInstance(mSearchKeyword);
             }
             return null;
         }
@@ -216,13 +225,16 @@ public class SearchResultActivity extends BasePetalActivity
                 case 1:
                     mBoardFragment = (SearchBoardFragment) createFragment;
                     break;
+                case 2:
+                    mUserFragment = (SearchUserFragment) createFragment;
+                    break;
             }
             return createFragment;
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
 
         @Override

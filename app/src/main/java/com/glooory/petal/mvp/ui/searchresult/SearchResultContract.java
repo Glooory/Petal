@@ -2,9 +2,11 @@ package com.glooory.petal.mvp.ui.searchresult;
 
 import com.glooory.petal.mvp.model.entity.BoardBean;
 import com.glooory.petal.mvp.model.entity.PinBean;
+import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.model.entity.board.FollowBoardResultBean;
 import com.glooory.petal.mvp.model.entity.searchresult.SearchBoardListBean;
 import com.glooory.petal.mvp.model.entity.searchresult.SearchPinListBean;
+import com.glooory.petal.mvp.model.entity.searchresult.SearchUserListBean;
 import com.jess.arms.mvp.BaseView;
 import com.jess.arms.mvp.IModel;
 
@@ -40,5 +42,11 @@ public interface SearchResultContract {
         Observable<List<BoardBean>> getSearchedBoardsMore(String keyword);
 
         Observable<FollowBoardResultBean> followBoard(String boardId, boolean isFollowed);
+
+        Observable<SearchUserListBean> getSearchedUsers(String keyword);
+
+        Observable<List<UserBean>> getSearchedUsersMore(String keyword);
+
+        Observable<Void> followUser(String userId, boolean isFollowed);
     }
 }
