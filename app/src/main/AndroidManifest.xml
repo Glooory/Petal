@@ -64,6 +64,11 @@
             android:name=".mvp.ui.searchresult.SearchResultActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Petal.Search"/>
+
+        <activity
+            android:name=".mvp.ui.category.CategoryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Petal.Search"/>
     </application>
 
 </manifest>
