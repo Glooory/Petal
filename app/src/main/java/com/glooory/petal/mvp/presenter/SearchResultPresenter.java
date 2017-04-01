@@ -22,7 +22,7 @@ import com.glooory.petal.mvp.ui.board.BoardActivity;
 import com.glooory.petal.mvp.ui.home.HomePinAdapter;
 import com.glooory.petal.mvp.ui.pindetail.PinDetailActivity;
 import com.glooory.petal.mvp.ui.searchresult.SearchResultContract;
-import com.glooory.petal.mvp.ui.searchresult.board.CategoryBoardAdapter;
+import com.glooory.petal.mvp.ui.category.board.CategoryBoardAdapter;
 import com.glooory.petal.mvp.ui.searchresult.user.CategoryUserAdapter;
 import com.glooory.petal.mvp.ui.user.UserActivity;
 import com.jess.arms.di.scope.FragmentScope;

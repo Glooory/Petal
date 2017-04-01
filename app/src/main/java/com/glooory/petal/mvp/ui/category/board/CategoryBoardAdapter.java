@@ -1,4 +1,4 @@
-package com.glooory.petal.mvp.ui.searchresult.board;
+package com.glooory.petal.mvp.ui.category.board;
 
 import android.content.res.Resources;
 import android.support.v4.content.ContextCompat;
@@ -25,7 +25,6 @@ import common.PetalApplication;
 
 public class CategoryBoardAdapter extends BasePetalAdapter<BoardBean, BaseViewHolder> {
 
-    private boolean mIsMe; // 是否是已登录用户自己
     private String mCollectCountFormat;
     private String mFollowerCountFormat;
     private String mFollowStr;

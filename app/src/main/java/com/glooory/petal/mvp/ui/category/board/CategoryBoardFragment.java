@@ -1,4 +1,4 @@
-package com.glooory.petal.mvp.ui.searchresult.board;
+package com.glooory.petal.mvp.ui.category.board;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -13,13 +13,12 @@ import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.util.SnackbarUtil;
 import com.glooory.petal.app.widget.CustomStaggeredGridLayoutManager;
-import com.glooory.petal.di.component.DaggerSearchResultComponent;
-import com.glooory.petal.di.module.SearchResultModule;
-import com.glooory.petal.mvp.presenter.SearchResultPresenter;
-import com.glooory.petal.mvp.ui.category.board.CategoryBoardAdapter;
+import com.glooory.petal.di.component.DaggerCategoryComponent;
+import com.glooory.petal.di.module.CategoryModule;
+import com.glooory.petal.mvp.presenter.CategoryPresenter;
+import com.glooory.petal.mvp.ui.category.CategoryActivity;
+import com.glooory.petal.mvp.ui.category.CategoryContract;
 import com.glooory.petal.mvp.ui.login.LoginActivity;
-import com.glooory.petal.mvp.ui.searchresult.SearchResultActivity;
-import com.glooory.petal.mvp.ui.searchresult.SearchResultContract;
 
 import butterknife.BindView;
 import common.AppComponent;
@@ -29,29 +28,29 @@ import common.BasePetalFragment;
  * Created by Glooory on 17/4/1.
  */
 
-public class SearchBoardFragment extends BasePetalFragment<SearchResultPresenter>
-        implements SearchResultContract.View{
+public class CategoryBoardFragment extends BasePetalFragment<CategoryPresenter>
+        implements CategoryContract.View {
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
     private CategoryBoardAdapter mAdapter;
     private View mNoMoreDataFooter;
-    private String mSearchKeyword;
+    private String mCategoryValue;
 
-    public static SearchBoardFragment newInstance(String keyword) {
+    public static CategoryBoardFragment newInstance(String categoryValue) {
         Bundle args = new Bundle();
-        args.putString(Constants.EXTRA_SEARCH_KEYWORD, keyword);
-        SearchBoardFragment fragment = new SearchBoardFragment();
+        args.putString(Constants.BUNDLE_CATEGORY_VALUE, categoryValue);
+        CategoryBoardFragment fragment = new CategoryBoardFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     protected void setupFragmentComponent(AppComponent appComponent) {
-        DaggerSearchResultComponent.builder()
+        DaggerCategoryComponent.builder()
                 .appComponent(appComponent)
-                .searchResultModule(new SearchResultModule(this))
+                .categoryModule(new CategoryModule(this))
                 .build()
                 .inject(this);
     }
@@ -59,10 +58,10 @@ public class SearchBoardFragment extends BasePetalFragment<SearchResultPresenter
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mSearchKeyword = getArguments().getString(Constants.EXTRA_SEARCH_KEYWORD);
+        mCategoryValue = getArguments().getString(Constants.BUNDLE_CATEGORY_VALUE);
         mAdapter = new CategoryBoardAdapter();
         mPresenter.setAdapter(mAdapter);
-        mPresenter.getSearchedBoards(mSearchKeyword);
+        mPresenter.getCategoryBoards(mCategoryValue);
     }
 
     @Override
@@ -111,12 +110,12 @@ public class SearchBoardFragment extends BasePetalFragment<SearchResultPresenter
 
     @Override
     public void showLoading() {
-        ((SearchResultActivity) getActivity()).showLoading();
+        ((CategoryActivity) getActivity()).showLoading();
     }
 
     @Override
     public void hideLoading() {
-        ((SearchResultActivity) getActivity()).hideLoading();
+        ((CategoryActivity) getActivity()).hideLoading();
     }
 
     @Override
@@ -125,38 +124,27 @@ public class SearchBoardFragment extends BasePetalFragment<SearchResultPresenter
     }
 
     @Override
-    public void showTabTitles(String[] titles) {
-
-    }
-
-    @Override
     public void showLoadingMore() {
-        if (mAdapter.getData().size() >= mPresenter.getBoardCount()) {
-            return;
-        }
-
         mRecyclerView.post(new Runnable() {
             @Override
             public void run() {
-                mPresenter.getSearchedBoardsMore();
+                mPresenter.getCategoryBoardsMore();
             }
         });
     }
 
     @Override
-    public void showNoMoreDataFooter(boolean showAnyway) {
-        if (showAnyway || mAdapter.getData().size() >= mPresenter.getBoardCount()) {
-            if (mNoMoreDataFooter.getParent() != null) {
-                ((ViewGroup) mNoMoreDataFooter.getParent()).removeView(mNoMoreDataFooter);
-            }
-            mRecyclerView.post(new Runnable() {
-                @Override
-                public void run() {
-                    mAdapter.loadMoreEnd();
-                    mAdapter.addFooterView(mNoMoreDataFooter);
-                }
-            });
+    public void showNoMoreDataFooter() {
+        if (mNoMoreDataFooter.getParent() != null) {
+            ((ViewGroup) mNoMoreDataFooter.getParent()).removeView(mNoMoreDataFooter);
         }
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.loadMoreEnd();
+                mAdapter.addFooterView(mNoMoreDataFooter);
+            }
+        });
     }
 
     @Override
@@ -172,6 +160,6 @@ public class SearchBoardFragment extends BasePetalFragment<SearchResultPresenter
 
     public void onRefresh() {
         mAdapter.removeAllFooterView();
-        mPresenter.getSearchedBoards(mSearchKeyword);
+        mPresenter.getCategoryBoards(mCategoryValue);
     }
 }

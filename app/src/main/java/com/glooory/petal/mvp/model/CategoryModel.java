@@ -7,6 +7,7 @@ import com.glooory.petal.mvp.model.entity.BoardBean;
 import com.glooory.petal.mvp.model.entity.PinBean;
 import com.glooory.petal.mvp.model.entity.PinListBean;
 import com.glooory.petal.mvp.model.entity.UserBean;
+import com.glooory.petal.mvp.model.entity.board.FollowBoardResultBean;
 import com.glooory.petal.mvp.model.entity.user.UserBoardListBean;
 import com.glooory.petal.mvp.ui.category.CategoryContract;
 import com.jess.arms.di.scope.FragmentScope;
@@ -117,6 +118,16 @@ public class CategoryModel extends BasePetalModel<ServiceManager, CacheManager>
                         return userBoardListBean.getBoards();
                     }
                 })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<FollowBoardResultBean> followBoard(String boardId, boolean isFollowed) {
+        String operate = isFollowed ? Constants.HTTP_ARGS_UNFOLLOW : Constants.HTTP_ARGS_FOLLOW;
+        return mServiceManager.getBoardService()
+                .followBoard(boardId, operate)
+                .retryWhen(new RetryWithDelay(1, 1))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

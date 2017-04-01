@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.ViewGroup;
 
 import com.glooory.petal.R;
+import com.glooory.petal.mvp.ui.category.board.CategoryBoardFragment;
 import com.glooory.petal.mvp.ui.category.pin.CategoryPinFragment;
 
 import butterknife.BindArray;
@@ -55,6 +56,7 @@ public class CategoryActivity extends BasePetalActivity
     private String mCategoryName;
     private String mCategoryValue;
     private CategoryPinFragment mPinFragment;
+    private CategoryBoardFragment mBoardFragment;
 
     public static void launch(Activity activity, String categoryName, String categoryValue) {
         Intent intent = new Intent(activity, CategoryActivity.class);
@@ -148,7 +150,9 @@ public class CategoryActivity extends BasePetalActivity
                 }
                 break;
             case 1:
-
+                if (mBoardFragment != null) {
+                    mBoardFragment.onRefresh();
+                }
                 break;
             case 2:
 
@@ -167,7 +171,8 @@ public class CategoryActivity extends BasePetalActivity
             switch (position) {
                 case 0:
                     return CategoryPinFragment.newInstance(mCategoryValue);
-
+                case 1:
+                    return CategoryBoardFragment.newInstance(mCategoryValue);
             }
             return null;
         }
@@ -180,7 +185,7 @@ public class CategoryActivity extends BasePetalActivity
                     mPinFragment = (CategoryPinFragment) createdFragment;
                     break;
                 case 1:
-
+                    mBoardFragment = (CategoryBoardFragment) createdFragment;
                     break;
                 case 2:
 
@@ -191,7 +196,7 @@ public class CategoryActivity extends BasePetalActivity
 
         @Override
         public int getCount() {
-            return 1;
+            return 2;
         }
 
         @Override
