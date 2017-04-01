@@ -23,7 +23,7 @@ import com.glooory.petal.mvp.ui.home.HomePinAdapter;
 import com.glooory.petal.mvp.ui.pindetail.PinDetailActivity;
 import com.glooory.petal.mvp.ui.searchresult.SearchResultContract;
 import com.glooory.petal.mvp.ui.category.board.CategoryBoardAdapter;
-import com.glooory.petal.mvp.ui.searchresult.user.CategoryUserAdapter;
+import com.glooory.petal.mvp.ui.searchresult.user.SearchUserAdapter;
 import com.glooory.petal.mvp.ui.user.UserActivity;
 import com.jess.arms.di.scope.FragmentScope;
 import com.jess.arms.utils.RxUtils;
@@ -341,7 +341,7 @@ public class SearchResultPresenter extends BasePetalPresenter<SearchResultContra
     }
 
     public void launchUserActivityFromUser(FragmentActivity activity, View view, int position) {
-        UserBean userBean = ((CategoryUserAdapter) mAdapter).getItem(position);
+        UserBean userBean = ((SearchUserAdapter) mAdapter).getItem(position);
         String userId = String.valueOf(userBean.getUserId());
         String userName = userBean.getUsername();
         UserActivity.launch(activity, userId, userName,
@@ -357,7 +357,7 @@ public class SearchResultPresenter extends BasePetalPresenter<SearchResultContra
     }
 
     private void actionFollowUser(final int postion) {
-        final UserBean userBean = ((CategoryUserAdapter) mAdapter).getItem(postion);
+        final UserBean userBean = ((SearchUserAdapter) mAdapter).getItem(postion);
         String userId = String.valueOf(userBean.getUserId());
         final boolean isFollowed = userBean.getFollowing() == 1;
         mModel.followUser(userId, isFollowed)
@@ -367,7 +367,7 @@ public class SearchResultPresenter extends BasePetalPresenter<SearchResultContra
                     public void onNext(Void aVoid) {
                         int followerCount = userBean.getFollowerCount();
                         userBean.setFollowerCount(isFollowed ? --followerCount : ++followerCount);
-                        ((CategoryUserAdapter) mAdapter).getItem(postion)
+                        ((SearchUserAdapter) mAdapter).getItem(postion)
                                 .setFollowing(isFollowed ? 0 : 1);
                         mAdapter.notifyItemChanged(postion);
                     }

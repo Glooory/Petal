@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.glooory.petal.R;
 import com.glooory.petal.mvp.ui.category.board.CategoryBoardFragment;
 import com.glooory.petal.mvp.ui.category.pin.CategoryPinFragment;
+import com.glooory.petal.mvp.ui.category.user.CategoryUserFragment;
 
 import butterknife.BindArray;
 import butterknife.BindColor;
@@ -57,6 +58,7 @@ public class CategoryActivity extends BasePetalActivity
     private String mCategoryValue;
     private CategoryPinFragment mPinFragment;
     private CategoryBoardFragment mBoardFragment;
+    private CategoryUserFragment mUserFragment;
 
     public static void launch(Activity activity, String categoryName, String categoryValue) {
         Intent intent = new Intent(activity, CategoryActivity.class);
@@ -155,7 +157,9 @@ public class CategoryActivity extends BasePetalActivity
                 }
                 break;
             case 2:
-
+                if (mUserFragment != null) {
+                    mUserFragment.onRefresh();
+                }
                 break;
         }
     }
@@ -173,6 +177,8 @@ public class CategoryActivity extends BasePetalActivity
                     return CategoryPinFragment.newInstance(mCategoryValue);
                 case 1:
                     return CategoryBoardFragment.newInstance(mCategoryValue);
+                case 2:
+                    return CategoryUserFragment.newInstance(mCategoryValue);
             }
             return null;
         }
@@ -188,7 +194,7 @@ public class CategoryActivity extends BasePetalActivity
                     mBoardFragment = (CategoryBoardFragment) createdFragment;
                     break;
                 case 2:
-
+                    mUserFragment = (CategoryUserFragment) createdFragment;
                     break;
             }
             return createdFragment;
@@ -196,7 +202,7 @@ public class CategoryActivity extends BasePetalActivity
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
 
         @Override

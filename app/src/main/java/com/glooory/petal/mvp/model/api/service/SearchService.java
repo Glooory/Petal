@@ -5,8 +5,8 @@ import com.glooory.petal.mvp.model.entity.search.SearchHintBean;
 import com.glooory.petal.mvp.model.entity.searchresult.SearchBoardListBean;
 import com.glooory.petal.mvp.model.entity.searchresult.SearchPinListBean;
 import com.glooory.petal.mvp.model.entity.searchresult.SearchUserListBean;
+import com.glooory.petal.mvp.model.entity.type.CategoryUserListBean;
 import com.glooory.petal.mvp.model.entity.user.UserBoardListBean;
-import com.glooory.petal.mvp.model.entity.user.UserListBean;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -77,13 +77,13 @@ public interface SearchService {
     // 请求该分类的相关的用户
     // https://api.huaban.com/users/favorite/{type}/?limit=20
     @GET("users/favorite/{category}")
-    Observable<UserListBean> getCategoryUsers(@Path("category") String category,
+    Observable<CategoryUserListBean> getCategoryUsers(@Path("category") String category,
             @Query("limit") int limit);
 
     // 请求该分类的相关的用户
     // https://api.huaban.com/users/favorite/{type}/?limit=20&max
     @GET("users/favorite/{category}")
-    Observable<UserListBean> getCategoryUsersMore(@Path("category") String category,
+    Observable<CategoryUserListBean> getCategoryUsersMore(@Path("category") String category,
             @Query("max") int maxId,
             @Query("limit") int limit);
 

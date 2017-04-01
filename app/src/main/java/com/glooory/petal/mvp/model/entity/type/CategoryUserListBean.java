@@ -8,7 +8,7 @@ import java.util.List;
  * Created by Glooory on 2016/9/16 0016 21:15.
  * 请求分类数据时返回的相关用户实体类
  */
-public class TypeUserListBean {
+public class CategoryUserListBean {
 
     private String filter;
     /**
@@ -23,9 +23,9 @@ public class TypeUserListBean {
 
     private List<PusersBean> pusers;
 
-    public static TypeUserListBean objectFromData(String str) {
+    public static CategoryUserListBean objectFromData(String str) {
 
-        return new Gson().fromJson(str, TypeUserListBean.class);
+        return new Gson().fromJson(str, CategoryUserListBean.class);
     }
 
     public String getFilter() {

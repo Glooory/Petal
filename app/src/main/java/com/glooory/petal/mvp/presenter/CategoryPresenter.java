@@ -11,10 +11,13 @@ import com.glooory.petal.app.util.DrawableUtils;
 import com.glooory.petal.app.widget.WindmillLoadMoreFooter;
 import com.glooory.petal.mvp.model.entity.BoardBean;
 import com.glooory.petal.mvp.model.entity.PinBean;
+import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.model.entity.board.FollowBoardResultBean;
+import com.glooory.petal.mvp.model.entity.type.PusersBean;
 import com.glooory.petal.mvp.ui.board.BoardActivity;
 import com.glooory.petal.mvp.ui.category.CategoryContract;
 import com.glooory.petal.mvp.ui.category.board.CategoryBoardAdapter;
+import com.glooory.petal.mvp.ui.category.user.CategoryUserAdapter;
 import com.glooory.petal.mvp.ui.home.HomePinAdapter;
 import com.glooory.petal.mvp.ui.pindetail.PinDetailActivity;
 import com.glooory.petal.mvp.ui.user.UserActivity;
@@ -226,6 +229,98 @@ public class CategoryPresenter extends BasePetalPresenter<CategoryContract.View,
                         int followerCount = boardBean.getFollowCount();
                         boardBean.setFollowCount(isFollowed ? --followerCount : ++followerCount);
                         mAdapter.notifyItemChanged(position);
+                    }
+                });
+    }
+
+    public void getCategoryUsers(String category) {
+        mCategory = category;
+        mModel.getCategoryUsers(mCategory)
+                .compose(RxUtils.<List<PusersBean>>bindToLifecycle(mRootView))
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mRootView.showLoading();
+                    }
+                })
+                .doOnTerminate(new Action0() {
+                    @Override
+                    public void call() {
+                        mRootView.hideLoading();
+                    }
+                })
+                .subscribe(new BaseSubscriber<List<PusersBean>>() {
+                    @Override
+                    public void onNext(List<PusersBean> pusersBeen) {
+                        if (pusersBeen.size() == 0) {
+                            mRootView.showNoMoreDataFooter();
+                            return;
+                        }
+                        mAdapter.setNewData(pusersBeen);
+                    }
+                });
+    }
+
+    public void getCategoryUsersMore() {
+        mModel.getCategoryUsersMore(mCategory)
+                .compose(RxUtils.<List<PusersBean>>bindToLifecycle(mRootView))
+                .subscribe(new BaseSubscriber<List<PusersBean>>() {
+                    @Override
+                    public void onNext(List<PusersBean> pusersBeen) {
+                        if (pusersBeen.size() == 0) {
+                            mAdapter.loadMoreEnd();
+                            mRootView.showNoMoreDataFooter();
+                            return;
+                        }
+                        mAdapter.addData(pusersBeen);
+                        mAdapter.loadMoreComplete();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        mAdapter.loadMoreFail();
+                    }
+                });
+    }
+
+    /**
+     * Launch UserActivity, 仅当用户点击的是 User item 时
+     * @param activity
+     * @param view
+     * @param position
+     */
+    public void launchUserActivityFromUser(Activity activity, View view, int position) {
+        UserBean userBean = ((CategoryUserAdapter) mAdapter).getItem(position).getUser();
+        String userId = String.valueOf(userBean.getUserId());
+        UserActivity.launch(activity, userId, userBean.getUsername(),
+                (SimpleDraweeView) view.findViewById(R.id.simple_drawee_card_user_avatar));
+    }
+
+    /**
+     * User item 底部的操作按钮点击事件
+     * @param position
+     */
+    public void onUserCardOperateBtnClick(int position) {
+        if (!mModel.isLogin()) {
+            mRootView.showLoginNav();
+            return;
+        }
+        actionFollowUser(position);
+    }
+
+    private void actionFollowUser(final int postion) {
+        UserBean userBean = ((CategoryUserAdapter) mAdapter).getItem(postion).getUser();
+        String userId = String.valueOf(userBean.getUserId());
+        final boolean isFollowed = userBean.getFollowing() == 1;
+        mModel.followUser(userId, isFollowed)
+                .compose(RxUtils.<Void>bindToLifecycle(mRootView))
+                .subscribe(new BaseSubscriber<Void>() {
+                    @Override
+                    public void onNext(Void aVoid) {
+                        ((CategoryUserAdapter) mAdapter).getItem(postion).getUser()
+                                .setFollowing(isFollowed ? 0 : 1);
+                        mAdapter.notifyItemChanged(postion);
                     }
                 });
     }

@@ -1,4 +1,4 @@
-package com.glooory.petal.mvp.ui.searchresult.user;
+package com.glooory.petal.mvp.ui.category.user;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -13,12 +13,12 @@ import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.util.SnackbarUtil;
 import com.glooory.petal.app.widget.CustomStaggeredGridLayoutManager;
-import com.glooory.petal.di.component.DaggerSearchResultComponent;
-import com.glooory.petal.di.module.SearchResultModule;
-import com.glooory.petal.mvp.presenter.SearchResultPresenter;
+import com.glooory.petal.di.component.DaggerCategoryComponent;
+import com.glooory.petal.di.module.CategoryModule;
+import com.glooory.petal.mvp.presenter.CategoryPresenter;
+import com.glooory.petal.mvp.ui.category.CategoryActivity;
+import com.glooory.petal.mvp.ui.category.CategoryContract;
 import com.glooory.petal.mvp.ui.login.LoginActivity;
-import com.glooory.petal.mvp.ui.searchresult.SearchResultActivity;
-import com.glooory.petal.mvp.ui.searchresult.SearchResultContract;
 
 import butterknife.BindView;
 import common.AppComponent;
@@ -28,29 +28,29 @@ import common.BasePetalFragment;
  * Created by Glooory on 17/4/1.
  */
 
-public class SearchUserFragment extends BasePetalFragment<SearchResultPresenter>
-        implements SearchResultContract.View {
+public class CategoryUserFragment extends BasePetalFragment<CategoryPresenter>
+        implements CategoryContract.View {
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
-    private SearchUserAdapter mAdapter;
+    private CategoryUserAdapter mAdapter;
     private View mNoMoreDataFooter;
-    private String mSearchKeyword;
+    private String mCategoryValue;
 
-    public static SearchUserFragment newInstance(String searchKeyword) {
+    public static CategoryUserFragment newInstance(String categoryValue) {
         Bundle args = new Bundle();
-        args.putString(Constants.EXTRA_SEARCH_KEYWORD, searchKeyword);
-        SearchUserFragment fragment = new SearchUserFragment();
+        args.putString(Constants.BUNDLE_CATEGORY_VALUE, categoryValue);
+        CategoryUserFragment fragment = new CategoryUserFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     protected void setupFragmentComponent(AppComponent appComponent) {
-        DaggerSearchResultComponent.builder()
+        DaggerCategoryComponent.builder()
                 .appComponent(appComponent)
-                .searchResultModule(new SearchResultModule(this))
+                .categoryModule(new CategoryModule(this))
                 .build()
                 .inject(this);
     }
@@ -58,10 +58,10 @@ public class SearchUserFragment extends BasePetalFragment<SearchResultPresenter>
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mSearchKeyword = getArguments().getString(Constants.EXTRA_SEARCH_KEYWORD);
-        mAdapter = new SearchUserAdapter();
+        mCategoryValue = getArguments().getString(Constants.BUNDLE_CATEGORY_VALUE);
+        mAdapter = new CategoryUserAdapter();
         mPresenter.setAdapter(mAdapter);
-        mPresenter.getSearchedUsers(mSearchKeyword);
+        mPresenter.getCategoryUsers(mCategoryValue);
     }
 
     @Override
@@ -76,7 +76,7 @@ public class SearchUserFragment extends BasePetalFragment<SearchResultPresenter>
                         mPresenter.launchUserActivityFromUser(getActivity(), view, position);
                         break;
                     case R.id.ll_card_user_operate:
-                        mPresenter.onUserOperateBtnClick(position);
+                        mPresenter.onUserCardOperateBtnClick(position);
                         break;
                 }
             }
@@ -107,12 +107,12 @@ public class SearchUserFragment extends BasePetalFragment<SearchResultPresenter>
 
     @Override
     public void showLoading() {
-        ((SearchResultActivity) getActivity()).showLoading();
+        ((CategoryActivity) getActivity()).showLoading();
     }
 
     @Override
     public void hideLoading() {
-        ((SearchResultActivity) getActivity()).hideLoading();
+        ((CategoryActivity) getActivity()).hideLoading();
     }
 
     @Override
@@ -120,40 +120,28 @@ public class SearchUserFragment extends BasePetalFragment<SearchResultPresenter>
 
     }
 
-
-    @Override
-    public void showTabTitles(String[] titles) {
-
-    }
-
     @Override
     public void showLoadingMore() {
-        if (mAdapter.getData().size() >= mPresenter.getUserCount()) {
-            return;
-        }
-
         mRecyclerView.post(new Runnable() {
             @Override
             public void run() {
-                mPresenter.getSearchedUsersMore();
+                mPresenter.getCategoryUsersMore();
             }
         });
     }
 
     @Override
-    public void showNoMoreDataFooter(boolean showAnyway) {
-        if (showAnyway || mAdapter.getData().size() >= mPresenter.getUserCount()) {
-            if (mNoMoreDataFooter.getParent() != null) {
-                ((ViewGroup) mNoMoreDataFooter.getParent()).removeView(mNoMoreDataFooter);
-            }
-            mRecyclerView.post(new Runnable() {
-                @Override
-                public void run() {
-                    mAdapter.loadMoreEnd();
-                    mAdapter.addFooterView(mNoMoreDataFooter);
-                }
-            });
+    public void showNoMoreDataFooter() {
+        if (mNoMoreDataFooter.getParent() != null) {
+            ((ViewGroup) mNoMoreDataFooter.getParent()).removeView(mNoMoreDataFooter);
         }
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.loadMoreEnd();
+                mAdapter.addFooterView(mNoMoreDataFooter);
+            }
+        });
     }
 
     @Override
@@ -169,6 +157,6 @@ public class SearchUserFragment extends BasePetalFragment<SearchResultPresenter>
 
     public void onRefresh() {
         mAdapter.removeAllFooterView();
-        mPresenter.getSearchedUsers(mSearchKeyword);
+        mPresenter.getCategoryUsers(mCategoryValue);
     }
 }

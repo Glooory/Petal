@@ -23,7 +23,7 @@ import common.PetalApplication;
  * Created by Glooory on 17/4/1.
  */
 
-public class CategoryUserAdapter extends BasePetalAdapter<UserBean, BaseViewHolder> {
+public class SearchUserAdapter extends BasePetalAdapter<UserBean, BaseViewHolder> {
 
     private Drawable mFollowedDrawable;
     private Drawable mFollowDrawable;
@@ -32,7 +32,7 @@ public class CategoryUserAdapter extends BasePetalAdapter<UserBean, BaseViewHold
     private String mFollowerCountFormat;
     private String mMyUserId;
 
-    public CategoryUserAdapter() {
+    public SearchUserAdapter() {
         super(R.layout.item_cardview_user, null);
         Resources resources = PetalApplication.getContext().getResources();
         mFollowerCountFormat = resources.getString(R.string.format_follower_count);

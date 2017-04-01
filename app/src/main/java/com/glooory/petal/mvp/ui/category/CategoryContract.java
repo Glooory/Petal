@@ -2,8 +2,8 @@ package com.glooory.petal.mvp.ui.category;
 
 import com.glooory.petal.mvp.model.entity.BoardBean;
 import com.glooory.petal.mvp.model.entity.PinBean;
-import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.model.entity.board.FollowBoardResultBean;
+import com.glooory.petal.mvp.model.entity.type.PusersBean;
 import com.jess.arms.mvp.BaseView;
 import com.jess.arms.mvp.IModel;
 
@@ -38,8 +38,10 @@ public interface CategoryContract {
 
         Observable<FollowBoardResultBean> followBoard(String boardId, boolean isFollowed);
 
-        Observable<List<UserBean>> getCategoryUsers(String category);
+        Observable<List<PusersBean>> getCategoryUsers(String category);
 
-        Observable<List<UserBean>> getCategoryUsersMore(String category);
+        Observable<List<PusersBean>> getCategoryUsersMore(String category);
+
+        Observable<Void> followUser(String userId, boolean isFollowed);
     }
 }
