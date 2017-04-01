@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,9 +32,7 @@ import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindString;
@@ -298,8 +297,12 @@ public class SearchActivity extends BasePetalActivity {
     private void showSearchHistory() {
         mFlowLayoutHistory.removeAllViews();
 
-        Set<String> mHistoryList = (Set<String>) SPUtils.get(Constants.PREF_SEARCH_HISTORY, new HashSet<String>());
-        if (mHistoryList.isEmpty()) {
+        String searchHistory = (String) SPUtils.get(Constants.PREF_SEARCH_HISTORY, "");
+        String[] searchHistories = searchHistory.split(Constants.COMMA);
+
+        if (searchHistories == null || searchHistories.length == 0) {
+            showEmptySearchHistory();
+        } else if (searchHistories.length == 1 && TextUtils.isEmpty(searchHistories[0])) {
             showEmptySearchHistory();
         } else {
             ViewGroup.MarginLayoutParams layoutParams = new ViewGroup.MarginLayoutParams(
@@ -308,8 +311,8 @@ public class SearchActivity extends BasePetalActivity {
             layoutParams.leftMargin = ITEM_HORIZATAL_MARGIN;
             layoutParams.topMargin = ITEM_VERTICAL_MARGIN;
             layoutParams.bottomMargin = ITEM_HORIZATAL_MARGIN;
-            for (String s : mHistoryList) {
-                addHistorySubitem(s, layoutParams);
+            for (int i = 0; i < searchHistories.length; i++) {
+                addHistorySubitem(searchHistories[i], layoutParams);
             }
         }
     }
@@ -319,6 +322,10 @@ public class SearchActivity extends BasePetalActivity {
      * @param text
      */
     private void addHistorySubitem(final String text, ViewGroup.MarginLayoutParams layoutParams) {
+        if (TextUtils.isEmpty(text)) {
+            return;
+        }
+
         TextView textView = new TextView(this);
         textView.setPadding(ITEM_HORIZATAL_MARGIN, ITEM_VERTICAL_MARGIN, ITEM_HORIZATAL_MARGIN, ITEM_VERTICAL_MARGIN);
         textView.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_text_search_history));

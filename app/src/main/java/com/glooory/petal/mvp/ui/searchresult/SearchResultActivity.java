@@ -11,15 +11,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.ViewGroup;
 
 import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.util.SPUtils;
 import com.glooory.petal.mvp.ui.searchresult.pin.SearchPinFragment;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import butterknife.BindColor;
 import butterknife.BindView;
@@ -119,10 +117,20 @@ public class SearchResultActivity extends BasePetalActivity
     }
 
     private void saveSearchHistoryKeyword(String keyword) {
-        HashSet<String> histories = ((HashSet<String>) SPUtils.get(Constants.PREF_SEARCH_HISTORY, new HashSet<String>()));
-        Set<String> newData = new HashSet<>(histories);
-        newData.add(keyword);
-        SPUtils.putByApply(Constants.PREF_SEARCH_HISTORY, newData);
+        StringBuilder stringBuilder = new StringBuilder();
+        String oldHistory = (String) SPUtils.get(Constants.PREF_SEARCH_HISTORY, "");
+        if (!TextUtils.isEmpty(oldHistory)) {
+            if (oldHistory.contains(keyword)) {
+                stringBuilder.append(oldHistory);
+            } else {
+                stringBuilder.append(keyword)
+                        .append(Constants.COMMA)
+                        .append(oldHistory);
+            }
+        } else {
+            stringBuilder.append(keyword);
+        }
+        SPUtils.putByApply(Constants.PREF_SEARCH_HISTORY, stringBuilder.toString());
     }
 
     public void showLoading() {
