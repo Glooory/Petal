@@ -67,4 +67,5 @@ dependencies {
     compile rootProject.ext.dependencies["fresco-drawee"]
     compile rootProject.ext.dependencies["fresco-imagepipeline"]
     compile rootProject.ext.dependencies["fresco-animated-gif"]
+    compile rootProject.ext.dependencies["album"]
 }

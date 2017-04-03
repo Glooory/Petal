@@ -60,6 +60,7 @@ ext {
             "logger"                   : "com.orhanobut:logger:1.15",
             "baserecyclerviewadapterhelper" : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.8.1",
             "shinebutton"              : "com.sackcentury:shinebutton:0.1.6",
+            "album"                    : "com.yanzhenjie:album:1.0.2",
             //test
             "runner"                   : 'com.android.support.test:runner:0.5',
             "espresso-core"            : "com.android.support.test.espresso:espresso-core:${android["espressoSdkVersion"]}",
