@@ -26,6 +26,7 @@ import com.glooory.petal.app.rx.RxBus;
 import com.glooory.petal.app.util.SPUtils;
 import com.glooory.petal.app.util.SnackbarUtil;
 import com.glooory.petal.mvp.model.entity.BasicUserInfoBean;
+import com.glooory.petal.mvp.ui.collect.CollectActivity;
 import com.glooory.petal.mvp.ui.login.LoginActivity;
 import com.glooory.petal.mvp.ui.search.SearchActivity;
 import com.glooory.petal.mvp.ui.user.UserActivity;
@@ -104,7 +105,7 @@ public class HomeActivity extends BasePetalActivity
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        // TODO: 17/3/2 Launch CollectActivity
+                        CollectActivity.launch(HomeActivity.this);
                     }
                 });
 

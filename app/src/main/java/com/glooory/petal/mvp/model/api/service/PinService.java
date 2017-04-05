@@ -5,17 +5,21 @@ import com.glooory.petal.mvp.model.entity.PinBean;
 import com.glooory.petal.mvp.model.entity.PinListBean;
 import com.glooory.petal.mvp.model.entity.PinSingleBean;
 import com.glooory.petal.mvp.model.entity.collect.CollectResultBean;
+import com.glooory.petal.mvp.model.entity.collect.UploadResultBean;
 import com.glooory.petal.mvp.model.entity.pindetail.CollectionInfoBean;
 import com.glooory.petal.mvp.model.entity.pindetail.LikeResultBean;
 import com.glooory.petal.mvp.model.entity.pindetail.PinDetailBean;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -106,7 +110,7 @@ public interface PinService {
     );
 
     // 编辑修改某个采集的信息
-    // https://api.huaban.com/pins/865002387?board_id=32026507&text=%E6%9D%A5%E8%87%AA%E7%9B%B8%E5%86%8C
+    // https://api.huaban.com/pins/865002387?board_id=32026507&text=%E6%9D%A5%E8%87%AA%EE5%86%8C
     @FormUrlEncoded
     @POST("pins/{pin_id}")
     Observable<PinSingleBean> editPin(@Path("pin_id") String pinId,
@@ -118,4 +122,21 @@ public interface PinService {
     @DELETE("pins/{pin_id}")
     Observable<Void> deletePin(@Path("pin_id") String pinId);
 
+    // 上传本地图片
+    // https://api.huaban.com/upload
+    @Multipart
+    @POST("upload")
+    Observable<UploadResultBean> uploadImage(@Part MultipartBody.Part image);
+
+    // 将上传的图片采集到自己的画板中
+    // https://api.huaban.com/pins
+    // body : board_id=31769&text=108a91c24aead7a0&check=true&file_id=115536&via=1&share_button=0
+    @FormUrlEncoded
+    @POST("pins/")
+    Observable<CollectResultBean> collect(@Field("board_id") String boardId,
+            @Field("text") String des,
+            @Field("file_id") String fileId,
+            @Field("via") int via,
+            @Field("check") boolean check,
+            @Field("share_button") int shareButton);
 }

@@ -11,8 +11,8 @@ public class ErrorBaseBean {
      * board_id : 17891564
      */
 
-    private int err;
-    private String msg;
+    protected int err;
+    protected String msg;
 
     public int getErr() {
         return err;

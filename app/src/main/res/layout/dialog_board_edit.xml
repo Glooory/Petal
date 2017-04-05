@@ -46,6 +46,6 @@
         android:id="@+id/spinner_dialog_board_edit"
         android:layout_width="match_parent"
         android:layout_height="@dimen/triple_activity_default_margin"
-        style="@style/SpinderUnderLined"/>
+        style="@style/SpinnerUnderLined"/>
 
 </LinearLayout>

@@ -103,6 +103,8 @@ public class UploadResultBean extends ErrorBaseBean{
     @Override
     public String toString() {
         return "UploadResultBean{" +
+                "err=" + err +
+                "msg" + msg +
                 "id=" + id +
                 ", farm='" + farm + '\'' +
                 ", bucket='" + bucket + '\'' +
@@ -113,4 +115,6 @@ public class UploadResultBean extends ErrorBaseBean{
                 ", frames=" + frames +
                 '}';
     }
+
+
 }

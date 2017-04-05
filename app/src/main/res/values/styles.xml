@@ -119,7 +119,7 @@
         <item name="android:textSize">@dimen/text_size_18sp</item>
     </style>
 
-    <style name="SpinderUnderLined" parent="@style/Widget.AppCompat.Spinner.Underlined"/>
+    <style name="SpinnerUnderLined" parent="@style/Widget.AppCompat.Spinner.Underlined"/>
 
     <style name="AutoCompleteTextViewCustom" parent="Widget.AppCompat.Light.AutoCompleteTextView">
         <item name="android:background">@color/transparent</item>

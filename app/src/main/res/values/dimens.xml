@@ -40,4 +40,7 @@
     <dimen name="board_thumbnail_size">28dp</dimen>
     <dimen name="board_thumbnail_padding">1dp</dimen>
     <dimen name="shint_button_height_small">24dp</dimen>
+    <dimen name="collect_preview_image_size">264dp</dimen>
+    <dimen name="dash_width_normal">8dp</dimen>
+    <dimen name="dash_gap_normal">8dp</dimen>
 </resources>

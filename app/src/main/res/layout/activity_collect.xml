@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinator"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <ProgressBar
+                android:id="@+id/progressbar_uploading"
+                style="@style/Base.Widget.AppCompat.ProgressBar"
+                android:layout_width="@dimen/progressbar_size_small"
+                android:layout_height="@dimen/progressbar_size_small"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/activity_vertical_margin"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/white"
+                android:visibility="gone"/>
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:id="@+id/ll_collect"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingEnd="@dimen/triple_activity_default_margin"
+            android:paddingStart="@dimen/triple_activity_default_margin"
+            android:paddingTop="@dimen/activity_vertical_margin">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/simple_drawee_view_collect_preview"
+                android:layout_width="@dimen/collect_preview_image_size"
+                android:layout_height="@dimen/collect_preview_image_size"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_dash_line"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground"
+                fresco:actualImageScaleType="fitCenter"
+                fresco:viewAspectRatio="1.0"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:gravity="left"
+                android:text="@string/msg_collect_to_with_colon"
+                android:textColor="@color/secondary_text"
+                android:textSize="@dimen/text_size_14sp"/>
+
+            <Spinner
+                android:id="@+id/spinner_collect"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/triple_activity_default_margin"
+                android:layout_marginTop="@dimen/half_activity_default_margin"
+                style="@style/SpinnerUnderLined"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:gravity="left"
+                android:text="@string/msg_collect_des_with_colon"
+                android:textColor="@color/secondary_text"
+                android:textSize="@dimen/text_size_14sp"/>
+
+            <EditText
+                android:id="@+id/edittext_collect_des"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/half_activity_default_margin"
+                android:maxLines="4"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_cancel"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/triple_activity_default_margin"
+                    android:layout_margin="@dimen/half_activity_default_margin"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_collect_cancel_button"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:gravity="center"
+                    android:text="@string/msg_cancel"
+                    android:textColor="@color/grey_200"
+                    android:textSize="@dimen/text_size_14sp"/>
+
+                <Button
+                    android:id="@+id/btn_collect"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/triple_activity_default_margin"
+                    android:layout_margin="@dimen/half_activity_default_margin"
+                    android:layout_weight="1"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:background="@drawable/bg_collect_button"
+                    android:text="@string/collection"
+                    android:textColor="@color/grey_200"
+                    android:textSize="@dimen/text_size_14sp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
