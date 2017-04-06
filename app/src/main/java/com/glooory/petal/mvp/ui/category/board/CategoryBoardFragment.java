@@ -20,6 +20,8 @@ import com.glooory.petal.mvp.ui.category.CategoryActivity;
 import com.glooory.petal.mvp.ui.category.CategoryContract;
 import com.glooory.petal.mvp.ui.login.LoginActivity;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import common.AppComponent;
 import common.BasePetalFragment;
@@ -34,7 +36,8 @@ public class CategoryBoardFragment extends BasePetalFragment<CategoryPresenter>
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
-    private CategoryBoardAdapter mAdapter;
+    @Inject
+    CategoryBoardAdapter mAdapter;
     private View mNoMoreDataFooter;
     private String mCategoryValue;
 
@@ -59,7 +62,6 @@ public class CategoryBoardFragment extends BasePetalFragment<CategoryPresenter>
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCategoryValue = getArguments().getString(Constants.BUNDLE_CATEGORY_VALUE);
-        mAdapter = new CategoryBoardAdapter();
         mPresenter.setAdapter(mAdapter);
         mPresenter.getCategoryBoards(mCategoryValue);
     }

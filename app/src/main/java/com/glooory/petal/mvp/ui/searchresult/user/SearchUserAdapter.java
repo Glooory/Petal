@@ -16,6 +16,8 @@ import com.jess.arms.widget.imageloader.fresco.FrescoImageConfig;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import common.BasePetalAdapter;
 import common.PetalApplication;
 
@@ -32,6 +34,7 @@ public class SearchUserAdapter extends BasePetalAdapter<UserBean, BaseViewHolder
     private String mFollowerCountFormat;
     private String mMyUserId;
 
+    @Inject
     public SearchUserAdapter() {
         super(R.layout.item_cardview_user, null);
         Resources resources = PetalApplication.getContext().getResources();

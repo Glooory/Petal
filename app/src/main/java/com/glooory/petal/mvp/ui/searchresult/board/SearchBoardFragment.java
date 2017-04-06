@@ -21,6 +21,8 @@ import com.glooory.petal.mvp.ui.login.LoginActivity;
 import com.glooory.petal.mvp.ui.searchresult.SearchResultActivity;
 import com.glooory.petal.mvp.ui.searchresult.SearchResultContract;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import common.AppComponent;
 import common.BasePetalFragment;
@@ -35,7 +37,8 @@ public class SearchBoardFragment extends BasePetalFragment<SearchResultPresenter
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
-    private CategoryBoardAdapter mAdapter;
+    @Inject
+    CategoryBoardAdapter mAdapter;
     private View mNoMoreDataFooter;
     private String mSearchKeyword;
 
@@ -60,7 +63,6 @@ public class SearchBoardFragment extends BasePetalFragment<SearchResultPresenter
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSearchKeyword = getArguments().getString(Constants.EXTRA_SEARCH_KEYWORD);
-        mAdapter = new CategoryBoardAdapter();
         mPresenter.setAdapter(mAdapter);
         mPresenter.getSearchedBoards(mSearchKeyword);
     }

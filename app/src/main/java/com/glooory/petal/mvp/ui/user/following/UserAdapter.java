@@ -15,6 +15,8 @@ import com.jess.arms.widget.imageloader.fresco.FrescoImageConfig;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import common.BasePetalAdapter;
 import common.PetalApplication;
 
@@ -32,6 +34,7 @@ public class UserAdapter extends BasePetalAdapter<UserBean, BaseViewHolder> {
     private String mFollowStr;
     private String mFollowedStr;
 
+    @Inject
     public UserAdapter() {
         super(R.layout.item_cardview_user, null);
         Resources resources = PetalApplication.getContext().getResources();

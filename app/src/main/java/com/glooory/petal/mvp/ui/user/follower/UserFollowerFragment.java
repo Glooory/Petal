@@ -24,6 +24,8 @@ import com.glooory.petal.mvp.ui.user.board.CreateBoardDialogFragment;
 import com.glooory.petal.mvp.ui.user.board.EditBoardDiglogFragment;
 import com.glooory.petal.mvp.ui.user.following.UserAdapter;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import common.AppComponent;
 import common.BasePetalFragment;
@@ -40,7 +42,8 @@ public class UserFollowerFragment extends BasePetalFragment<UserSectionPresenter
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
-    private UserAdapter mAdapter;
+    @Inject
+    UserAdapter mAdapter;
     private String mUserId;
     private int mFollowerCount;
     private View mNoMoreDataFooter;
@@ -68,7 +71,6 @@ public class UserFollowerFragment extends BasePetalFragment<UserSectionPresenter
         super.onCreate(savedInstanceState);
         mUserId = getArguments().getString(Constants.EXTRA_USER_ID);
         mFollowerCount = getArguments().getInt(ARGS_FOLLOWER_COUNT);
-        mAdapter = new UserAdapter();
         mPresenter.setAdapter(mAdapter);
     }
 

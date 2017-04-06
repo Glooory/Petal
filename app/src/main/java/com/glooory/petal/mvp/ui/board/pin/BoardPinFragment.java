@@ -24,6 +24,8 @@ import com.glooory.petal.mvp.ui.pindetail.EditPinDialogFragment;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import common.AppComponent;
 import common.BasePetalFragment;
@@ -43,7 +45,8 @@ public class BoardPinFragment extends BasePetalFragment<BoardSectionPresenter>
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
-    private BoardPinAdapter mAdapter;
+    @Inject
+    BoardPinAdapter mAdapter;
     private int mPinCount;
     private String mBoardId;
     private boolean mIsMine;
@@ -74,7 +77,6 @@ public class BoardPinFragment extends BasePetalFragment<BoardSectionPresenter>
         mBoardId = getArguments().getString(Constants.EXTRA_BOARD_ID);
         mPinCount = getArguments().getInt(ARGS_PIN_COUNT);
         mIsMine = getArguments().getBoolean(ARGS_IS_MINE);
-        mAdapter = new BoardPinAdapter();
         mPresenter.setAdapter(mAdapter);
     }
 

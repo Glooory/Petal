@@ -19,6 +19,8 @@ import com.glooory.petal.mvp.ui.home.HomePinAdapter;
 import com.glooory.petal.mvp.ui.searchresult.SearchResultActivity;
 import com.glooory.petal.mvp.ui.searchresult.SearchResultContract;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import common.AppComponent;
 import common.BasePetalFragment;
@@ -33,7 +35,8 @@ public class SearchPinFragment extends BasePetalFragment<SearchResultPresenter>
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
-    private HomePinAdapter mAdapter;
+    @Inject
+    HomePinAdapter mAdapter;
     private View mNoMoreDataFooter;
     private String mSearchKeyword;
 
@@ -58,7 +61,6 @@ public class SearchPinFragment extends BasePetalFragment<SearchResultPresenter>
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSearchKeyword = getArguments().getString(Constants.EXTRA_SEARCH_KEYWORD);
-        mAdapter = new HomePinAdapter();
         mPresenter.setAdapter(mAdapter);
         mPresenter.getSearchedPins(mSearchKeyword);
     }

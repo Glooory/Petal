@@ -62,8 +62,7 @@ public class LoginActivity extends BasePetalActivity<LoginPresenter> implements 
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
-        DaggerLoginComponent
-                .builder()
+        DaggerLoginComponent.builder()
                 .appComponent(appComponent)
                 .loginModule(new LoginModule(this))
                 .build()

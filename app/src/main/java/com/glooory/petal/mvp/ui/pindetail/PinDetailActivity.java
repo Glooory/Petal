@@ -34,6 +34,8 @@ import com.sackcentury.shinebuttonlib.ShineButton;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import common.AppComponent;
@@ -62,7 +64,9 @@ public class PinDetailActivity extends BasePetalActivity<PinDetailPresenter>
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
-    private HomePinAdapter mAdapter;
+    @Inject
+    HomePinAdapter mAdapter;
+
     private int mPinId;
     private float mAspectRatio;
     private String mUserName;

@@ -13,7 +13,6 @@ import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.rx.BaseSubscriber;
 import com.glooory.petal.app.util.SPUtils;
-import com.glooory.petal.app.util.SnackbarUtil;
 import com.glooory.petal.app.util.UIUtils;
 import com.glooory.petal.mvp.model.entity.BoardBean;
 import com.glooory.petal.mvp.model.entity.LatestEditBoardsBean;
@@ -24,6 +23,7 @@ import com.glooory.petal.mvp.ui.collect.CollectContract;
 import com.glooory.petal.mvp.ui.login.LoginActivity;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.utils.RxUtils;
+import com.jess.arms.widget.imageloader.ImageLoader;
 import com.jess.arms.widget.imageloader.fresco.FrescoImageConfig;
 import com.orhanobut.logger.Logger;
 import com.yanzhenjie.album.Album;
@@ -46,10 +46,12 @@ public class CollectPresenter extends BasePetalPresenter<CollectContract.View, C
     private int mPinId;
     private String[] mBoardNames;
     private String[] mBoardIds;
+    private ImageLoader mImageLoader;
 
     @Inject
     public CollectPresenter(CollectContract.View rootView, CollectContract.Model model) {
         super(rootView, model);
+        mImageLoader = ((PetalApplication) PetalApplication.getContext()).getAppComponent().imageLoader();
     }
 
     public void getUserBoardsInfo() {
@@ -127,13 +129,12 @@ public class CollectPresenter extends BasePetalPresenter<CollectContract.View, C
     }
 
     public void loadAddPictureIcon(SimpleDraweeView simpleDraweeView) {
-        ((PetalApplication) PetalApplication.getContext()).getAppComponent().imageLoader()
-                .loadImage(PetalApplication.getContext(),
-                        FrescoImageConfig.builder()
-                                .setUrl("res:///" + R.drawable.ic_add_grey_500_48dp)
-                                .setSimpleDraweeView(simpleDraweeView)
-                                .setScaleType(ScalingUtils.ScaleType.CENTER)
-                                .build());
+        mImageLoader.loadImage(PetalApplication.getContext(),
+                FrescoImageConfig.builder()
+                        .setUrl("res:///" + R.drawable.ic_add_grey_500_48dp)
+                        .setSimpleDraweeView(simpleDraweeView)
+                        .setScaleType(ScalingUtils.ScaleType.CENTER)
+                        .build());
     }
 
     public void uploadPicture(SimpleDraweeView imgPreview, Intent data) {
@@ -148,6 +149,7 @@ public class CollectPresenter extends BasePetalPresenter<CollectContract.View, C
 
     /**
      * 将要上传的图片加载到预览框中
+     *
      * @param imagePreview
      * @param imagePath
      */
@@ -160,18 +162,18 @@ public class CollectPresenter extends BasePetalPresenter<CollectContract.View, C
         int desiredWidth = UIUtils.getScreenWidth(PetalApplication.getContext());
         int desiredHeight = (int) (desiredWidth / aspectRatio);
         imagePreview.setBackground(null);
-        ((PetalApplication) PetalApplication.getContext()).getAppComponent().imageLoader()
-                .loadImage(PetalApplication.getContext(),
-                        FrescoImageConfig.builder()
-                                .setUrl("file://" + imagePath)
-                                .setSimpleDraweeView(imagePreview)
-                                .setScaleType(ScalingUtils.ScaleType.CENTER_INSIDE)
-                                .setResizeOptions(new ResizeOptions(desiredWidth, desiredHeight))
-                                .build());
+        mImageLoader.loadImage(PetalApplication.getContext(),
+                FrescoImageConfig.builder()
+                        .setUrl("file://" + imagePath)
+                        .setSimpleDraweeView(imagePreview)
+                        .setScaleType(ScalingUtils.ScaleType.CENTER_INSIDE)
+                        .setResizeOptions(new ResizeOptions(desiredWidth, desiredHeight))
+                        .build());
     }
 
     /**
      * 上传选中的图片到服务器,成功后保存返回的 pinId
+     *
      * @param imagePath
      */
     private void uploadImage(String imagePath) {
@@ -195,7 +197,8 @@ public class CollectPresenter extends BasePetalPresenter<CollectContract.View, C
 
                     @Override
                     public void onError(Throwable e) {
-                        SnackbarUtil.showLong(R.string.msg_upload_failed);
+                        mRootView.showMessage(PetalApplication.getContext()
+                                .getString(R.string.msg_upload_failed));
                     }
                 });
     }
@@ -220,10 +223,16 @@ public class CollectPresenter extends BasePetalPresenter<CollectContract.View, C
                             String collectSuccessFormat = PetalApplication.getContext()
                                     .getString(R.string.format_collect_success);
                             String successInfo = String.format(collectSuccessFormat, mBoardNames[selection]);
-                            SnackbarUtil.showLong(successInfo);
+                            mRootView.showMessage(successInfo);
                             mRootView.showEmptyPreview();
                         }
                     }
                 });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mImageLoader = null;
     }
 }

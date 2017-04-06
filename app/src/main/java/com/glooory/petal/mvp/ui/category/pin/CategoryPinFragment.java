@@ -19,6 +19,8 @@ import com.glooory.petal.mvp.ui.category.CategoryActivity;
 import com.glooory.petal.mvp.ui.category.CategoryContract;
 import com.glooory.petal.mvp.ui.home.HomePinAdapter;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import common.AppComponent;
 import common.BasePetalFragment;
@@ -33,7 +35,8 @@ public class CategoryPinFragment extends BasePetalFragment<CategoryPresenter>
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
-    private HomePinAdapter mAdapter;
+    @Inject
+    HomePinAdapter mAdapter;
     private View mNoMoreDataFooter;
     private String mCategoryValue;
 
@@ -58,7 +61,6 @@ public class CategoryPinFragment extends BasePetalFragment<CategoryPresenter>
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCategoryValue = getArguments().getString(Constants.BUNDLE_CATEGORY_VALUE);
-        mAdapter = new HomePinAdapter();
         mPresenter.setAdapter(mAdapter);
         mPresenter.getCategoryPins(mCategoryValue);
     }

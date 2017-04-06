@@ -13,6 +13,8 @@ import com.glooory.petal.app.util.StringUtils;
 import com.glooory.petal.mvp.model.entity.PinBean;
 import com.jess.arms.widget.imageloader.fresco.FrescoImageConfig;
 
+import javax.inject.Inject;
+
 import common.BasePetalAdapter;
 import common.PetalApplication;
 
@@ -22,7 +24,7 @@ import common.PetalApplication;
 
 public class BoardPinAdapter extends BasePetalAdapter<PinBean, BaseViewHolder> {
 
-
+    @Inject
     public BoardPinAdapter() {
         super(R.layout.item_cardview_pin_board, null);
     }

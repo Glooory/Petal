@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.glooory.petal.R;
 import com.glooory.petal.app.adapter.HighLightArrayAdapter;
+import com.glooory.petal.app.util.SnackbarUtil;
 import com.glooory.petal.di.component.DaggerCollectComponent;
 import com.glooory.petal.di.module.CollectModule;
 import com.glooory.petal.mvp.presenter.CollectPresenter;
@@ -155,7 +156,7 @@ public class CollectActivity extends BasePetalActivity<CollectPresenter>
 
     @Override
     public void showMessage(String message) {
-
+        SnackbarUtil.showLong(CollectActivity.this, message);
     }
 
     @Override
