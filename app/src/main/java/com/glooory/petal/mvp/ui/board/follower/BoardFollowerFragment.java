@@ -1,9 +1,7 @@
 package com.glooory.petal.mvp.ui.board.follower;
 
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -24,27 +22,22 @@ import com.glooory.petal.mvp.ui.user.following.UserAdapter;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
 import common.AppComponent;
-import common.BasePetalFragment;
+import common.BaseRecyclerFragment;
 
 /**
  * Created by Glooory on 17/3/29.
  */
 
-public class BoardFollowerFragment extends BasePetalFragment<BoardSectionPresenter>
+public class BoardFollowerFragment extends BaseRecyclerFragment<BoardSectionPresenter>
         implements BoardContract.SectionView {
 
     private static final String ARGS_FOLLOWER_COUNT = "follower_count";
-
-    @BindView(R.id.recycler_view)
-    RecyclerView mRecyclerView;
 
     @Inject
     UserAdapter mAdapter;
     private int mFollowerCount;
     private String mBoardId;
-    private View mNoMoreDataFooter;
 
     public static BoardFollowerFragment newInstance(String boardId, int followerCount) {
         Bundle args = new Bundle();
@@ -97,15 +90,6 @@ public class BoardFollowerFragment extends BasePetalFragment<BoardSectionPresent
     }
 
     @Override
-    protected View initView(ViewGroup container) {
-        mRootView = LayoutInflater.from(getActivity())
-                .inflate(R.layout.view_recycler_view, container, false);
-        mNoMoreDataFooter = LayoutInflater.from(getActivity())
-                .inflate(R.layout.view_footer_no_more_data, null);
-        return mRootView;
-    }
-
-    @Override
     protected void initData() {
 
     }
@@ -115,7 +99,6 @@ public class BoardFollowerFragment extends BasePetalFragment<BoardSectionPresent
         super.onDestroyView();
         mAdapter.removeAllFooterView();
         mAdapter = null;
-        mNoMoreDataFooter = null;
     }
 
     @Override

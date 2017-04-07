@@ -1,9 +1,7 @@
 package com.glooory.petal.mvp.ui.searchresult.pin;
 
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -21,23 +19,18 @@ import com.glooory.petal.mvp.ui.searchresult.SearchResultContract;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
 import common.AppComponent;
-import common.BasePetalFragment;
+import common.BaseRecyclerFragment;
 
 /**
  * Created by Glooory on 17/3/31.
  */
 
-public class SearchPinFragment extends BasePetalFragment<SearchResultPresenter>
+public class SearchPinFragment extends BaseRecyclerFragment<SearchResultPresenter>
         implements SearchResultContract.View {
-
-    @BindView(R.id.recycler_view)
-    RecyclerView mRecyclerView;
 
     @Inject
     HomePinAdapter mAdapter;
-    private View mNoMoreDataFooter;
     private String mSearchKeyword;
 
     public static SearchPinFragment newInstance(String keyword) {
@@ -85,15 +78,6 @@ public class SearchPinFragment extends BasePetalFragment<SearchResultPresenter>
     }
 
     @Override
-    protected View initView(ViewGroup container) {
-        mRootView = LayoutInflater.from(getActivity())
-                .inflate(R.layout.view_recycler_view, container, false);
-        mNoMoreDataFooter = LayoutInflater.from(getActivity())
-                .inflate(R.layout.view_footer_no_more_data, null);
-        return mRootView;
-    }
-
-    @Override
     protected void initData() {
 
     }
@@ -103,7 +87,6 @@ public class SearchPinFragment extends BasePetalFragment<SearchResultPresenter>
         super.onDestroyView();
         mAdapter.removeAllFooterView();
         mAdapter = null;
-        mNoMoreDataFooter = null;
     }
 
     @Override

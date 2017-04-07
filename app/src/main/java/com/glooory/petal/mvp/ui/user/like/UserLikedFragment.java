@@ -1,9 +1,7 @@
 package com.glooory.petal.mvp.ui.user.like;
 
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -24,27 +22,22 @@ import com.glooory.petal.mvp.ui.user.board.EditBoardDiglogFragment;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
 import common.AppComponent;
-import common.BasePetalFragment;
+import common.BaseRecyclerFragment;
 
 /**
  * Created by Glooory on 17/3/25.
  */
 
-public class UserLikedFragment extends BasePetalFragment<UserSectionPresenter>
+public class UserLikedFragment extends BaseRecyclerFragment<UserSectionPresenter>
         implements UserContract.SectionView {
 
     private static final String ARGS_LIKED_COUNT = "liked_count";
-
-    @BindView(R.id.recycler_view)
-    RecyclerView mRecyclerView;
 
     @Inject
     HomePinAdapter mAdapter;
     private String mUserId;
     private int mLikedCount;
-    private View mNoMoreDataFooter;
 
     public static UserLikedFragment newInstance(String userId, int likedCount) {
         Bundle args = new Bundle();
@@ -97,15 +90,6 @@ public class UserLikedFragment extends BasePetalFragment<UserSectionPresenter>
     }
 
     @Override
-    protected View initView(ViewGroup container) {
-        mRootView = LayoutInflater.from(getActivity())
-                .inflate(R.layout.view_recycler_view, container, false);
-        mNoMoreDataFooter = LayoutInflater.from(getActivity())
-                .inflate(R.layout.view_footer_no_more_data, null);
-        return mRootView;
-    }
-
-    @Override
     protected void initData() {
 
     }
@@ -115,7 +99,6 @@ public class UserLikedFragment extends BasePetalFragment<UserSectionPresenter>
         super.onDestroyView();
         mAdapter.removeAllFooterView();
         mAdapter = null;
-        mNoMoreDataFooter = null;
     }
 
     @Override

@@ -2,9 +2,7 @@ package com.glooory.petal.mvp.ui.board.pin;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -26,9 +24,8 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
 import common.AppComponent;
-import common.BasePetalFragment;
+import common.BaseRecyclerFragment;
 import rx.Observable;
 import rx.functions.Action1;
 
@@ -36,21 +33,17 @@ import rx.functions.Action1;
  * Created by Glooory on 17/3/28.
  */
 
-public class BoardPinFragment extends BasePetalFragment<BoardSectionPresenter>
+public class BoardPinFragment extends BaseRecyclerFragment<BoardSectionPresenter>
         implements BoardContract.SectionView{
 
     private static final String ARGS_PIN_COUNT = "pin_count";
     private static final String ARGS_IS_MINE = "is_mine";
-
-    @BindView(R.id.recycler_view)
-    RecyclerView mRecyclerView;
 
     @Inject
     BoardPinAdapter mAdapter;
     private int mPinCount;
     private String mBoardId;
     private boolean mIsMine;
-    private View mNoMoreDataFooter;
 
     public static BoardPinFragment newInstance(String boardId, int pinCount, boolean isMine) {
         Bundle args = new Bundle();
@@ -113,15 +106,6 @@ public class BoardPinFragment extends BasePetalFragment<BoardSectionPresenter>
     }
 
     @Override
-    protected View initView(ViewGroup container) {
-        mRootView = LayoutInflater.from(getActivity())
-                .inflate(R.layout.view_recycler_view, container, false);
-        mNoMoreDataFooter = LayoutInflater.from(getActivity())
-                .inflate(R.layout.view_footer_no_more_data, null);
-        return mRootView;
-    }
-
-    @Override
     protected void initData() {
 
     }
@@ -131,7 +115,6 @@ public class BoardPinFragment extends BasePetalFragment<BoardSectionPresenter>
         super.onDestroyView();
         mAdapter.removeAllFooterView();
         mAdapter = null;
-        mNoMoreDataFooter = null;
     }
 
     @Override

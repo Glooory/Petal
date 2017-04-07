@@ -3,9 +3,7 @@ package com.glooory.petal.mvp.ui.user.board;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -24,28 +22,23 @@ import com.glooory.petal.mvp.ui.pindetail.EditPinDialogFragment;
 import com.glooory.petal.mvp.ui.user.UserActivity;
 import com.glooory.petal.mvp.ui.user.UserContract;
 
-import butterknife.BindView;
 import common.AppComponent;
-import common.BasePetalFragment;
+import common.BaseRecyclerFragment;
 
 /**
  * Created by Glooory on 17/3/22.
  */
 
-public class UserBoardFragment extends BasePetalFragment<UserSectionPresenter>
+public class UserBoardFragment extends BaseRecyclerFragment<UserSectionPresenter>
         implements UserContract.SectionView {
 
     private static final String BUNDLE_BOARD_COUNT = "board_count";
-
-    @BindView(R.id.recycler_view)
-    RecyclerView mRecyclerView;
 
     private boolean mIsMe;
     private UserBoardAdapter mAdapter;
     private int mBoardCount;
     private String mUserId;
     private String mUserName;
-    private View mNoMoreDataFooter;
 
     public static UserBoardFragment newInstance(String userId, String userName, int boardCount) {
         Bundle args = new Bundle();
@@ -111,15 +104,6 @@ public class UserBoardFragment extends BasePetalFragment<UserSectionPresenter>
     }
 
     @Override
-    protected View initView(ViewGroup container) {
-        mRootView = LayoutInflater.from(getActivity())
-                .inflate(R.layout.view_recycler_view, container, false);
-        mNoMoreDataFooter = LayoutInflater.from(getActivity())
-                .inflate(R.layout.view_footer_no_more_data, null);
-        return mRootView;
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
 
@@ -135,7 +119,6 @@ public class UserBoardFragment extends BasePetalFragment<UserSectionPresenter>
         super.onDestroyView();
         mAdapter.removeAllFooterView();
         mAdapter = null;
-        mNoMoreDataFooter = null;
     }
 
     @Override

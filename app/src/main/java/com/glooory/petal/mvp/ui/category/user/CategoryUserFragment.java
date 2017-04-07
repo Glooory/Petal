@@ -1,9 +1,7 @@
 package com.glooory.petal.mvp.ui.category.user;
 
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -22,23 +20,18 @@ import com.glooory.petal.mvp.ui.login.LoginActivity;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
 import common.AppComponent;
-import common.BasePetalFragment;
+import common.BaseRecyclerFragment;
 
 /**
  * Created by Glooory on 17/4/1.
  */
 
-public class CategoryUserFragment extends BasePetalFragment<CategoryPresenter>
+public class CategoryUserFragment extends BaseRecyclerFragment<CategoryPresenter>
         implements CategoryContract.View {
-
-    @BindView(R.id.recycler_view)
-    RecyclerView mRecyclerView;
 
     @Inject
     CategoryUserAdapter mAdapter;
-    private View mNoMoreDataFooter;
     private String mCategoryValue;
 
     public static CategoryUserFragment newInstance(String categoryValue) {
@@ -86,15 +79,6 @@ public class CategoryUserFragment extends BasePetalFragment<CategoryPresenter>
     }
 
     @Override
-    protected View initView(ViewGroup container) {
-        mRootView = LayoutInflater.from(getActivity())
-                .inflate(R.layout.view_recycler_view, container, false);
-        mNoMoreDataFooter = LayoutInflater.from(getActivity())
-                .inflate(R.layout.view_footer_no_more_data, null);
-        return mRootView;
-    }
-
-    @Override
     protected void initData() {
 
     }
@@ -104,7 +88,6 @@ public class CategoryUserFragment extends BasePetalFragment<CategoryPresenter>
         super.onDestroyView();
         mAdapter.removeAllFooterView();
         mAdapter = null;
-        mNoMoreDataFooter = null;
     }
 
     @Override
