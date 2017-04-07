@@ -382,6 +382,10 @@ public class PinDetailActivity extends BasePetalActivity<PinDetailPresenter>
 
     @Override
     public void showBoardImgFirst(String imageUrlKey) {
+        mImgBoardFirst.setController(null);
+        mImgBoardSecond.setController(null);
+        mImgBoardThird.setController(null);
+        mImgBoardFourth.setController(null);
         mPresenter.loadSmallRadiusImage(imageUrlKey, mImgBoardFirst, 4);
     }
 

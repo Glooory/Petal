@@ -92,7 +92,6 @@ public class SplashActivity extends BasePetalActivity {
                     @Override
                     public Boolean call(Void aVoid) {
                         isSkipLogin = (boolean) SPUtils.get(Constants.PREF_IS_SKIP_LOGIN, false);
-                        Logger.d("is login skipped?" + isSkipLogin);
                         return isLogin();
                     }
                 })

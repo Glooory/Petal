@@ -183,6 +183,22 @@ public class BoardActivity extends BasePetalActivity<BoardPresenter>
         mPinFragment = null;
         mFollowerFragment = null;
         mViewPagerAdapter = null;
+        if (mImgBoardThumbnailFirst != null) {
+            mImgBoardThumbnailFirst.setController(null);
+            mImgBoardThumbnailFirst = null;
+        }
+        if (mImgBoardThumbnailSecond != null) {
+            mImgBoardThumbnailSecond.setController(null);
+            mImgBoardThumbnailSecond = null;
+        }
+        if (mImgBoardThumbnailThird != null) {
+            mImgBoardThumbnailThird.setController(null);
+            mImgBoardThumbnailThird = null;
+        }
+        if (mImgBoardThumbnailFourth != null) {
+            mImgBoardThumbnailFourth.setController(null);
+            mImgBoardThumbnailFourth = null;
+        }
     }
 
     @Override

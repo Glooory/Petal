@@ -9,15 +9,14 @@ import com.glooory.petal.app.rx.BaseSubscriber;
 import com.glooory.petal.mvp.model.entity.LatestEditBoardsBean;
 import com.glooory.petal.mvp.ui.login.LoginContract;
 import com.jess.arms.di.scope.ActivityScope;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.Set;
 
 import javax.inject.Inject;
 
-import common.PetalApplication;
 import common.BasePetalPresenter;
+import common.PetalApplication;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -37,7 +36,6 @@ public class LoginPresenter extends BasePetalPresenter<LoginContract.View, Login
 
     public void loadHistoryAccount(Context context) {
         Set<String> accountsSet = mModel.loadHistoryAccounts();
-        Logger.d("HistoryAccounts Counts:" + accountsSet.size());
         ArrayList<String> accoutsList = new ArrayList<>(accountsSet);
         NoFilterringAdapter adapter = new NoFilterringAdapter(context,
                 android.R.layout.simple_spinner_dropdown_item, accoutsList);

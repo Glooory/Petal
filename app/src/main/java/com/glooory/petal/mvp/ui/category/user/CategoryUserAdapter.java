@@ -3,6 +3,7 @@ package com.glooory.petal.mvp.ui.category.user;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -14,6 +15,7 @@ import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.model.entity.type.PusersBean;
 import com.jess.arms.widget.imageloader.fresco.FrescoImageConfig;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -70,35 +72,48 @@ public class CategoryUserAdapter extends BasePetalAdapter<PusersBean, BaseViewHo
                     .setCompoundDrawablesWithIntrinsicBounds(mFollowDrawable, null, null, null);
         }
 
-        loadAvatarImage(userBean.getAvatar().getKey(),
-                (SimpleDraweeView) holder.getView(R.id.simple_drawee_card_user_avatar));
+        if (!TextUtils.isEmpty(userBean.getAvatar().getKey())) {
+            loadAvatarImage(userBean.getAvatar().getKey(),
+                    (SimpleDraweeView) holder.getView(R.id.simple_drawee_card_user_avatar));
+        } else {
+            ((SimpleDraweeView) holder.getView(R.id.simple_drawee_card_user_avatar)).setController(null);
+        }
 
         List<BoardBean> boardList = userBean.getBoards();
         if (boardList == null || boardList.size() == 0) {
-            return;
+            boardList = new ArrayList<>(0);
         }
 
+        SimpleDraweeView thumbnailFirst =
+                (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_card_user_thumbnail_first);
+        SimpleDraweeView thumbnailSecond =
+                (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_card_user_thumbnail_second);
+        SimpleDraweeView thumbnailThird =
+                (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_card_user_thumbnail_third);
+
         if (boardList.get(0).getPins() != null && boardList.get(0).getPins().size() > 0) {
-            loadThumbnail(boardList.get(0).getPins().get(0).getFile().getKey(),
-                    (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_card_user_thumbnail_first));
+            loadThumbnail(boardList.get(0).getPins().get(0).getFile().getKey(), thumbnailFirst);
+        } else {
+            thumbnailFirst.setController(null);
         }
 
         if (boardList.size() < 2) {
+            thumbnailSecond.setController(null);
+            thumbnailThird.setController(null);
             return;
         }
 
         if (boardList.get(1).getPins() != null && boardList.get(1).getPins().size() > 0) {
-            loadThumbnail(boardList.get(1).getPins().get(0).getFile().getKey(),
-                    (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_card_user_thumbnail_second));
+            loadThumbnail(boardList.get(1).getPins().get(0).getFile().getKey(), thumbnailSecond);
         }
 
         if (boardList.size() < 3) {
+            thumbnailThird.setController(null);
             return;
         }
 
         if (boardList.get(2).getPins() != null && boardList.get(2).getPins().size() > 0) {
-            loadThumbnail(boardList.get(2).getPins().get(0).getFile().getKey(),
-                    (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_card_user_thumbnail_third));
+            loadThumbnail(boardList.get(2).getPins().get(0).getFile().getKey(), thumbnailThird);
         }
     }
 

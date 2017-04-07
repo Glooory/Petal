@@ -1,6 +1,7 @@
 package com.glooory.petal.mvp.ui.board.pin;
 
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -31,8 +32,6 @@ public class BoardPinAdapter extends BasePetalAdapter<PinBean, BaseViewHolder> {
 
     @Override
     protected void convert(BaseViewHolder holder, PinBean item) {
-        // 采集图片地址
-        String pinUrl = String.format(mGeneralImageUrlFormat, item.getFile().getKey());
 
         // 是否需要显示 Gif icon
         if (ImageUtils.isGif(item.getFile().getType())) {
@@ -66,14 +65,20 @@ public class BoardPinAdapter extends BasePetalAdapter<PinBean, BaseViewHolder> {
         float aspectRatio = ImageUtils.getAspectRatio(item.getFile().getWidth(),
                 item.getFile().getHeight());
         ((SimpleDraweeView) holder.getView(R.id.simple_drawee_view_pin)).setAspectRatio(aspectRatio);
-        Drawable placeHolder = DrawableUtils.getColoredPlaceHolderDrawable(item);
-        mImageLoader.loadImage(PetalApplication.getContext(),
-                FrescoImageConfig.builder()
-                        .setSimpleDraweeView(
-                                (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_pin))
-                        .setUrl(pinUrl)
-                        .setPlaceHolder(placeHolder)
-                        .build());
-        holder.getView(R.id.simple_drawee_view_pin).setVisibility(View.VISIBLE);
+
+        if (!TextUtils.isEmpty(item.getFile().getKey())) {
+            // 采集图片地址
+            String pinUrl = String.format(mGeneralImageUrlFormat, item.getFile().getKey());
+            Drawable placeHolder = DrawableUtils.getColoredPlaceHolderDrawable(item);
+            mImageLoader.loadImage(PetalApplication.getContext(),
+                    FrescoImageConfig.builder()
+                            .setSimpleDraweeView(
+                                    (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_pin))
+                            .setUrl(pinUrl)
+                            .setPlaceHolder(placeHolder)
+                            .build());
+        } else {
+            ((SimpleDraweeView) holder.getView(R.id.simple_drawee_view_pin)).setController(null);
+        }
     }
 }

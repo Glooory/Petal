@@ -12,6 +12,7 @@ import com.glooory.petal.mvp.model.entity.BoardBean;
 import com.glooory.petal.mvp.model.entity.PinBean;
 import com.jess.arms.widget.imageloader.fresco.FrescoImageConfig;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import common.BasePetalAdapter;
@@ -92,40 +93,50 @@ public class UserBoardAdapter extends BasePetalAdapter<BoardBean, BaseViewHolder
         }
 
         List<PinBean> pinList = boardBean.getPins();
+        if (pinList == null) {
+            pinList = new ArrayList<>(0);
+        }
+
+        SimpleDraweeView boardCover =
+                (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_user_board_cover);
+        SimpleDraweeView thumbnailFirst =
+                (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_user_board_first);
+        SimpleDraweeView thumbnailSecond =
+                (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_user_board_second);
+        SimpleDraweeView thumbnailThird =
+                (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_user_board_third);
+
         if (pinList.size() > 0) {
             mImageLoader.loadImage(PetalApplication.getContext(),
                     FrescoImageConfig.builder()
-                            .setSimpleDraweeView(
-                                    (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_user_board_cover))
+                            .setSimpleDraweeView(boardCover)
                             .setUrl(String.format(mGeneralImageUrlFormat, pinList.get(0).getFile().getKey()))
                             .setScaleType(ScalingUtils.ScaleType.CENTER_CROP)
                             .build());
-        }
-
-        if (pinList.size() <= 1) {
-            return;
+        } else {
+            boardCover.setController(null);
         }
 
         if (pinList.size() > 1) {
-            loadSmallBoardCover(
-                    (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_user_board_first),
-                    pinList.get(1).getFile().getKey());
+            loadBoardThumbnail(thumbnailFirst, pinList.get(1).getFile().getKey());
+        } else {
+            thumbnailFirst.setController(null);
         }
 
         if (pinList.size() > 2) {
-            loadSmallBoardCover(
-                    (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_user_board_second),
-                    pinList.get(2).getFile().getKey());
+            loadBoardThumbnail(thumbnailSecond, pinList.get(2).getFile().getKey());
+        } else {
+            thumbnailSecond.setController(null);
         }
 
         if (pinList.size() > 3) {
-            loadSmallBoardCover(
-                    (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_user_board_third),
-                    pinList.get(3).getFile().getKey());
+            loadBoardThumbnail(thumbnailThird, pinList.get(3).getFile().getKey());
+        } else {
+            thumbnailThird.setController(null);
         }
     }
 
-    private void loadSmallBoardCover(SimpleDraweeView image, String imageUrlKey) {
+    private void loadBoardThumbnail(SimpleDraweeView image, String imageUrlKey) {
         mImageLoader.loadImage(PetalApplication.getContext(),
                 FrescoImageConfig.builder()
                         .setSimpleDraweeView(image)

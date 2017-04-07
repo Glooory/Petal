@@ -230,6 +230,10 @@ public class UserActivity extends BasePetalActivity<UserPresenter>
         mFollowingFragment = null;
         mFollowerFragment = null;
         mPagerAdapter = null;
+        if (mImgUserAvatar != null) {
+            mImgUserAvatar.setController(null);
+            mImgUserAvatar = null;
+        }
     }
 
     @Override

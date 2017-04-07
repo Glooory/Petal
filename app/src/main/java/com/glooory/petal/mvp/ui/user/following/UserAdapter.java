@@ -3,6 +3,7 @@ package com.glooory.petal.mvp.ui.user.following;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -13,6 +14,7 @@ import com.glooory.petal.mvp.model.entity.PinBean;
 import com.glooory.petal.mvp.model.entity.UserBean;
 import com.jess.arms.widget.imageloader.fresco.FrescoImageConfig;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -68,23 +70,42 @@ public class UserAdapter extends BasePetalAdapter<UserBean, BaseViewHolder> {
                     .setCompoundDrawablesWithIntrinsicBounds(mFollowDrawable, null, null, null);
         }
 
-        loadAvatarImage(userBean.getAvatar().getKey(),
-                (SimpleDraweeView) holder.getView(R.id.simple_drawee_card_user_avatar));
+        if (!TextUtils.isEmpty(userBean.getAvatar().getKey())) {
+            loadAvatarImage(userBean.getAvatar().getKey(),
+                    (SimpleDraweeView) holder.getView(R.id.simple_drawee_card_user_avatar));
+        } else {
+            ((SimpleDraweeView) holder.getView(R.id.simple_drawee_card_user_avatar))
+                    .setController(null);
+        }
 
         List<PinBean> thumbnailList = userBean.getPins();
-        if (thumbnailList == null || thumbnailList.size() == 0) {
-            return;
+        if (thumbnailList == null) {
+            thumbnailList = new ArrayList<>(0);
         }
 
-        loadThumbnail(thumbnailList.get(0).getFile().getKey(),
-                (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_card_user_thumbnail_first));
-        if (thumbnailList.size() >= 2) {
-            loadThumbnail(thumbnailList.get(1).getFile().getKey(),
-                    (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_card_user_thumbnail_second));
+        SimpleDraweeView thumbnailFirst =
+                (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_card_user_thumbnail_first);
+        SimpleDraweeView thumbnailSecond =
+                (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_card_user_thumbnail_second);
+        SimpleDraweeView thumbnailThird =
+                (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_card_user_thumbnail_third);
+
+        if (thumbnailList.size() > 0) {
+            loadThumbnail(thumbnailList.get(0).getFile().getKey(), thumbnailFirst);
+        } else {
+            thumbnailFirst.setController(null);
         }
+
+        if (thumbnailList.size() >= 2) {
+            loadThumbnail(thumbnailList.get(1).getFile().getKey(), thumbnailSecond);
+        } else {
+            thumbnailSecond.setController(null);
+        }
+
         if (thumbnailList.size() >= 3) {
-            loadThumbnail(thumbnailList.get(2).getFile().getKey(),
-                    (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_card_user_thumbnail_third));
+            loadThumbnail(thumbnailList.get(2).getFile().getKey(), thumbnailThird);
+        } else {
+            thumbnailThird.setController(null);
         }
     }
 
