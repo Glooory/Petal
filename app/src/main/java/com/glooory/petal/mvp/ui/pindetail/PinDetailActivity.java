@@ -1,5 +1,6 @@
 package com.glooory.petal.mvp.ui.pindetail;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +12,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -24,6 +27,8 @@ import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.util.DialogUtils;
 import com.glooory.petal.app.util.DrawableUtils;
+import com.glooory.petal.app.util.SnackbarUtil;
+import com.glooory.petal.app.util.UIUtils;
 import com.glooory.petal.app.widget.CustomStaggeredGridLayoutManager;
 import com.glooory.petal.di.component.DaggerPinDetailComponent;
 import com.glooory.petal.di.module.PinDetailModule;
@@ -31,6 +36,8 @@ import com.glooory.petal.mvp.presenter.PinDetailPresenter;
 import com.glooory.petal.mvp.ui.home.HomePinAdapter;
 import com.jakewharton.rxbinding.view.RxView;
 import com.sackcentury.shinebuttonlib.ShineButton;
+import com.tbruyelle.rxpermissions.Permission;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.util.concurrent.TimeUnit;
 
@@ -40,6 +47,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import common.AppComponent;
 import common.BasePetalActivity;
+import rx.Observable;
 import rx.functions.Action1;
 
 import static com.glooory.petal.app.Constants.EXTRA_ASPECT_RATIO;
@@ -90,6 +98,7 @@ public class PinDetailActivity extends BasePetalActivity<PinDetailPresenter>
     private TextView mTvBoardName;
     private View mNoMoreDataFooter;
     private String mBasicColorStr;
+    private RxPermissions mRxPermissions;
 
     public static void launch(Activity activity, int pinId, float aspectRatio,
             SimpleDraweeView image, String placeHolderColor) {
@@ -229,6 +238,66 @@ public class PinDetailActivity extends BasePetalActivity<PinDetailPresenter>
         mPresenter.getPinDetailInfo(mPinId);
         mPresenter.requestForIsCollected();
         mPresenter.requestRecommendedPins();
+        mRxPermissions = new RxPermissions(PinDetailActivity.this);
+        mRxPermissions.setLogging(true);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_pin_detail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_download_pin) {
+            actionDownloadPin();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void actionDownloadPin() {
+        Observable.just(1)
+                .compose(mRxPermissions.ensureEach(Manifest.permission.READ_EXTERNAL_STORAGE))
+                .subscribe(new Action1<Permission>() {
+                               @Override
+                               public void call(Permission permission) {
+                                   if (permission.granted) {
+//                                       mPresenter.downloadPin();
+                                   } else if (permission.shouldShowRequestPermissionRationale) {
+                                       // Denied permission without asking never again
+                                       showMessage(getString(R.string.msg_permission_storage_denied));
+                                   } else {
+                                       // Denied permission with asking again
+                                       // Need to go to the settings
+                                       SnackbarUtil.showLong(PinDetailActivity.this,
+                                               R.string.msg_permission_storage_not_enabled,
+                                               R.string.msg_go_to_settings,
+                                               new View.OnClickListener() {
+                                                   @Override
+                                                   public void onClick(View v) {
+                                                       UIUtils.startInstalledAppDetailsActivity(
+                                                               PinDetailActivity.this);
+                                                   }
+                                               });
+                                   }
+                               }
+                           },
+                        new Action1<Throwable>() {
+                            @Override
+                            public void call(Throwable throwable) {
+                                throwable.printStackTrace();
+                            }
+                        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mRxPermissions = null;
+        mNoMoreDataFooter = null;
+        mAdapter = null;
     }
 
     @Override
@@ -243,7 +312,7 @@ public class PinDetailActivity extends BasePetalActivity<PinDetailPresenter>
 
     @Override
     public void showMessage(String message) {
-
+        SnackbarUtil.showLong(PinDetailActivity.this, message);
     }
 
     @Override
