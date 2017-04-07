@@ -84,6 +84,8 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden" />
+
+        <service android:name=".app.service.DownloadPinService"/>
     </application>
 
 </manifest>

@@ -1,5 +1,7 @@
 package com.glooory.petal.mvp.ui.pindetail;
 
+import android.app.Activity;
+
 import com.glooory.petal.mvp.model.entity.PinBean;
 import com.glooory.petal.mvp.model.entity.collect.CollectResultBean;
 import com.glooory.petal.mvp.model.entity.pindetail.CollectionInfoBean;
@@ -83,6 +85,8 @@ public interface PinDetailContract {
         Observable<Void> deletePin();
 
         Observable<LikeResultBean> likePin(boolean isLiked);
+
+        void downloadPin(Activity activity, String pinKey, String pinType);
     }
 }
 

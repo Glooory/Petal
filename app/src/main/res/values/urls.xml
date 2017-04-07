@@ -3,7 +3,7 @@
     <string name="url_regist">http://huaban.com/signup</string>
     <string name="url_api_base">http://api.huaban.com/</string>
     <string name="url_api_base_https">https://api.huaban.com/</string>
-    <string name="url_image_root">http://img.hb.aicdn.com</string>
+    <string name="url_image_root">http://img.hb.aicdn.com/</string>
 
     // 图片的尺寸后缀
     <string name="image_suffix_size_general">_fw320</string>//普通浏览的图

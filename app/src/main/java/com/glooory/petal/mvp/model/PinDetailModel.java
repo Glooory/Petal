@@ -1,6 +1,9 @@
 package com.glooory.petal.mvp.model;
 
+import android.app.Activity;
+
 import com.glooory.petal.app.Constants;
+import com.glooory.petal.app.service.DownloadPinService;
 import com.glooory.petal.mvp.model.api.cache.CacheManager;
 import com.glooory.petal.mvp.model.api.service.ServiceManager;
 import com.glooory.petal.mvp.model.entity.PinBean;
@@ -116,5 +119,10 @@ public class PinDetailModel extends BasePetalModel<ServiceManager, CacheManager>
                 .retryWhen(new RetryWithDelay(1, 1))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public void downloadPin(Activity activity, String pinKey, String pinType) {
+        DownloadPinService.launch(activity, pinKey, pinType);
     }
 }

@@ -11,6 +11,7 @@ import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.rx.BaseSubscriber;
 import com.glooory.petal.app.util.DrawableUtils;
+import com.glooory.petal.app.util.NetworkUtils;
 import com.glooory.petal.app.util.SPUtils;
 import com.glooory.petal.app.util.SnackbarUtil;
 import com.glooory.petal.app.util.TimeUtils;
@@ -62,6 +63,8 @@ public class PinDetailPresenter extends BasePetalPresenter<PinDetailContract.Vie
     private String mUserId;
     private String mUserName;
     private BoardBean mBoardBean;
+    private String mPinKey;
+    private String mPinType;
 
     @Inject
     public PinDetailPresenter(PinDetailContract.View rootView, PinDetailContract.Model model,
@@ -153,6 +156,8 @@ public class PinDetailPresenter extends BasePetalPresenter<PinDetailContract.Vie
                 mRootView.showBoardImgFourth(pinList.get(3).getFile().getKey());
             }
         }
+        mPinKey = pinDetailBean.getPin().getFile().getKey();
+        mPinType = pinDetailBean.getPin().getFile().getType();
     }
 
     /**
@@ -406,6 +411,19 @@ public class PinDetailPresenter extends BasePetalPresenter<PinDetailContract.Vie
 
     public void launchBoardActivity(Activity activity) {
         BoardActivity.launch(activity, mUserName, mBoardBean);
+    }
+
+    public void downloadPin(Activity activity) {
+        if (!NetworkUtils.isConnected()) {
+            mRootView.showMessage(PetalApplication.getContext().getString(R.string.msg_network_unavailable));
+            return;
+        }
+
+        if (TextUtils.isEmpty(mPinKey)) {
+            return;
+        }
+
+        mModel.downloadPin(activity, mPinKey, mPinType);
     }
 
     @Override

@@ -239,7 +239,6 @@ public class PinDetailActivity extends BasePetalActivity<PinDetailPresenter>
         mPresenter.requestForIsCollected();
         mPresenter.requestRecommendedPins();
         mRxPermissions = new RxPermissions(PinDetailActivity.this);
-        mRxPermissions.setLogging(true);
     }
 
     @Override
@@ -264,7 +263,7 @@ public class PinDetailActivity extends BasePetalActivity<PinDetailPresenter>
                                @Override
                                public void call(Permission permission) {
                                    if (permission.granted) {
-//                                       mPresenter.downloadPin();
+                                       mPresenter.downloadPin(PinDetailActivity.this);
                                    } else if (permission.shouldShowRequestPermissionRationale) {
                                        // Denied permission without asking never again
                                        showMessage(getString(R.string.msg_permission_storage_denied));

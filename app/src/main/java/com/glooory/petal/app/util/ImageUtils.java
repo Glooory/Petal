@@ -33,4 +33,21 @@ public class ImageUtils {
         }
         return ratio;
     }
+
+    /**
+     * 解析图片的格式
+     * @param type
+     * @return
+     */
+    public static String parseImageType(String type) {
+        if (type.contains("png")) {
+            return ".png";
+        }
+
+        if (type.contains("gif")) {
+            return ".gif";
+        }
+
+        return ".jpeg";
+    }
 }
