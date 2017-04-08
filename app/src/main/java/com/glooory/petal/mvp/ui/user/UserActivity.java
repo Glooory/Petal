@@ -63,7 +63,7 @@ import rx.functions.Action1;
 
 public class UserActivity extends BasePetalActivity<UserPresenter>
         implements SwipeRefreshLayout.OnRefreshListener, UserContract.View,
-        AppBarLayout.OnOffsetChangedListener{
+        AppBarLayout.OnOffsetChangedListener {
 
     @BindView(R.id.simple_drawee_user_avatar)
     SimpleDraweeView mImgUserAvatar;
@@ -223,17 +223,15 @@ public class UserActivity extends BasePetalActivity<UserPresenter>
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        mPagerAdapter = null;
         mBoardFragment = null;
         mPinFragment = null;
         mLikedFragment = null;
         mFollowingFragment = null;
         mFollowerFragment = null;
-        mPagerAdapter = null;
-        if (mImgUserAvatar != null) {
-            mImgUserAvatar.setController(null);
-            mImgUserAvatar = null;
-        }
+        mImgUserAvatar.setController(null);
+        mAppbarLayout.setBackground(null);
+        super.onDestroy();
     }
 
     @Override

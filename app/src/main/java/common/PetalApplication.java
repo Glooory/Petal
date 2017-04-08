@@ -157,4 +157,8 @@ public class PetalApplication extends BaseApplication {
 //                })
                 .build();
     }
+
+    public static PetalApplication getContext() {
+        return (PetalApplication) mApplication;
+    }
 }

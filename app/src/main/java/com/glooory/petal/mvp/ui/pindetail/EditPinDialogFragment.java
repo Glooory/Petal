@@ -117,7 +117,7 @@ public class EditPinDialogFragment extends BasePetalDialogFragment {
      * 请求用户的所有画板信息，失败则从本地数据读取
      */
     private void requestBoardsInfo() {
-        Subscription s = ((PetalApplication) PetalApplication.getContext()).getAppComponent()
+        Subscription s = PetalApplication.getContext().getAppComponent()
                 .serviceManager()
                 .getUserService()
                 .requestLatestBoardInfo(Constants.HTTP_RECOMMEND_TAGS)

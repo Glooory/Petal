@@ -12,7 +12,7 @@ public abstract class BasePetalFragment<P extends Presenter> extends BaseFragmen
 
     @Override
     protected void componentInject() {
-        setupFragmentComponent(((PetalApplication) PetalApplication.getContext()).getAppComponent());
+        setupFragmentComponent(PetalApplication.getContext().getAppComponent());
     }
 
     //提供AppComponent(提供所有的单例对象)给子类，进行Component依赖
@@ -20,10 +20,10 @@ public abstract class BasePetalFragment<P extends Presenter> extends BaseFragmen
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         RefWatcher watcher = PetalApplication.getRefWatcher(getActivity());//使用leakCanary检测fragment的内存泄漏
         if (watcher != null) {
             watcher.watch(this);
         }
+        super.onDestroy();
     }
 }

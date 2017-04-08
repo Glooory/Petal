@@ -60,7 +60,7 @@ public class SplashActivity extends BasePetalActivity {
     @Override
     protected void initData() {
         mEncrypAES = new EncrypAES();
-        ((PetalApplication) PetalApplication.getContext()).getAppComponent().imageLoader()
+        PetalApplication.getContext().getAppComponent().imageLoader()
                 .loadImage(SplashActivity.this,
                         FrescoImageConfig.builder()
                                 .setUrl("res:///" + R.drawable.bg_splash_screen_bulb)

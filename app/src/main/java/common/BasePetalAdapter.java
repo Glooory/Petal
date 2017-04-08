@@ -24,6 +24,6 @@ public abstract class BasePetalAdapter<T, K extends BaseViewHolder> extends Base
         Resources resources = PetalApplication.getContext().getResources();
         mGeneralImageUrlFormat = resources.getString(R.string.url_image_general_format);
         mSmallImageUrlFormat = resources.getString(R.string.url_image_small_format);
-        mImageLoader = ((PetalApplication) PetalApplication.getContext()).getAppComponent().imageLoader();
+        mImageLoader = PetalApplication.getContext().getAppComponent().imageLoader();
     }
 }

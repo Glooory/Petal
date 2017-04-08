@@ -55,7 +55,7 @@ import rx.functions.Action1;
 
 public class BoardActivity extends BasePetalActivity<BoardPresenter>
         implements BoardContract.View, SwipeRefreshLayout.OnRefreshListener,
-        AppBarLayout.OnOffsetChangedListener{
+        AppBarLayout.OnOffsetChangedListener {
 
     private static final String ARGS_BOARD_BEAN = "board_bean";
 
@@ -179,26 +179,15 @@ public class BoardActivity extends BasePetalActivity<BoardPresenter>
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        mAppbarLayout.setBackground(null);
+        mViewPagerAdapter = null;
         mPinFragment = null;
         mFollowerFragment = null;
-        mViewPagerAdapter = null;
-        if (mImgBoardThumbnailFirst != null) {
-            mImgBoardThumbnailFirst.setController(null);
-            mImgBoardThumbnailFirst = null;
-        }
-        if (mImgBoardThumbnailSecond != null) {
-            mImgBoardThumbnailSecond.setController(null);
-            mImgBoardThumbnailSecond = null;
-        }
-        if (mImgBoardThumbnailThird != null) {
-            mImgBoardThumbnailThird.setController(null);
-            mImgBoardThumbnailThird = null;
-        }
-        if (mImgBoardThumbnailFourth != null) {
-            mImgBoardThumbnailFourth.setController(null);
-            mImgBoardThumbnailFourth = null;
-        }
+        mImgBoardThumbnailFirst.setController(null);
+        mImgBoardThumbnailSecond.setController(null);
+        mImgBoardThumbnailThird.setController(null);
+        mImgBoardThumbnailFourth.setController(null);
+        super.onDestroy();
     }
 
     @Override

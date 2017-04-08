@@ -184,10 +184,10 @@ public class HomeActivity extends BasePetalActivity
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         if (mCompositeSubscription != null && !mCompositeSubscription.isUnsubscribed()) {
             mCompositeSubscription.unsubscribe();
         }
+        super.onDestroy();
     }
 
     @Override
@@ -262,7 +262,6 @@ public class HomeActivity extends BasePetalActivity
             case R.id.ll_drawer_avatar:
                 closeDrawer();
                 if (isLogin()) {
-                    // TODO: 17/3/15 Launch UserActivit
                     String userId = String.valueOf(SPUtils.get(Constants.PREF_USER_ID, 0));
                     String userName = (String) SPUtils.get(Constants.PREF_USER_NAME, "");
                     UserActivity.launch(HomeActivity.this, userId, userName, mAvatarImg);

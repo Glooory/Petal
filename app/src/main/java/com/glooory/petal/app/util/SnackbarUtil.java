@@ -5,7 +5,6 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.glooory.petal.R;
-import com.jess.arms.base.BaseApplication;
 
 import common.PetalApplication;
 
@@ -20,35 +19,35 @@ public class SnackbarUtil {
 
     public static void showLong(int message) {
         showLong(
-                ((BaseApplication) PetalApplication.getContext()).getAppManager().getCurrentActivity(),
+                PetalApplication.getContext().getAppManager().getCurrentActivity(),
                 message
         );
     }
 
     public static void showLong(String message) {
         showLong(
-                ((BaseApplication) PetalApplication.getContext()).getAppManager().getCurrentActivity(),
+                PetalApplication.getContext().getAppManager().getCurrentActivity(),
                 message
         );
     }
 
     public static void showShort(int message) {
         showShort(
-                ((BaseApplication) PetalApplication.getContext()).getAppManager().getCurrentActivity(),
+                PetalApplication.getContext().getAppManager().getCurrentActivity(),
                 message
         );
     }
 
     public static void showShort(String message) {
         showShort(
-                ((BaseApplication) PetalApplication.getContext()).getAppManager().getCurrentActivity(),
+                PetalApplication.getContext().getAppManager().getCurrentActivity(),
                 message
         );
     }
 
     public static void showLong(int message, int actionResId, View.OnClickListener onClickListener) {
         showLong(
-                ((BaseApplication) PetalApplication.getContext()).getAppManager().getCurrentActivity(),
+                PetalApplication.getContext().getAppManager().getCurrentActivity(),
                 message,
                 actionResId,
                 onClickListener
@@ -57,7 +56,7 @@ public class SnackbarUtil {
 
     public static void showLong(String message, String actionMsg, View.OnClickListener onClickListener) {
         showLong(
-                ((BaseApplication) PetalApplication.getContext()).getAppManager().getCurrentActivity(),
+                PetalApplication.getContext().getAppManager().getCurrentActivity(),
                 message,
                 actionMsg,
                 onClickListener

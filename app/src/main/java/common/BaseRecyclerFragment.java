@@ -32,7 +32,7 @@ public abstract class BaseRecyclerFragment<P extends Presenter> extends BasePeta
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         mNoMoreDataFooter = null;
+        super.onDestroy();
     }
 }

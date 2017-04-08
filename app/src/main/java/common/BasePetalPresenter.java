@@ -30,7 +30,7 @@ public class BasePetalPresenter<V extends BaseView, M extends IModel> extends Ba
 
     public BasePetalPresenter(V rootView, M model) {
         super(rootView, model);
-        mImageLoader = ((PetalApplication) PetalApplication.getContext()).getAppComponent().imageLoader();
+        mImageLoader = PetalApplication.getContext().getAppComponent().imageLoader();
         mLargePicUrlFormat = PetalApplication.getContext().getString(R.string.url_image_large_format);
         mSmallPicUrlFormat = PetalApplication.getContext().getString(R.string.url_image_small_format);
     }

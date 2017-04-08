@@ -188,7 +188,7 @@ public class SearchActivity extends BasePetalActivity {
                 .switchMap(new Func1<CharSequence, Observable<SearchHintBean>>() {
                     @Override
                     public Observable<SearchHintBean> call(CharSequence charSequence) {
-                        return ((PetalApplication) PetalApplication.getContext())
+                        return PetalApplication.getContext()
                                 .getAppComponent()
                                 .serviceManager()
                                 .getSearchService()

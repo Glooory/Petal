@@ -51,7 +51,7 @@ public class CollectPresenter extends BasePetalPresenter<CollectContract.View, C
     @Inject
     public CollectPresenter(CollectContract.View rootView, CollectContract.Model model) {
         super(rootView, model);
-        mImageLoader = ((PetalApplication) PetalApplication.getContext()).getAppComponent().imageLoader();
+        mImageLoader = PetalApplication.getContext().getAppComponent().imageLoader();
     }
 
     public void getUserBoardsInfo() {

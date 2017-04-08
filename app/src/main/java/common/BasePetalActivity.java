@@ -17,7 +17,6 @@ import com.jess.arms.base.BaseActivity;
 
 public abstract class BasePetalActivity<P extends BasePetalPresenter> extends BaseActivity<P> {
 
-    protected PetalApplication mPetalApplication;
     protected int mScreenPixelsWidth;
 
     @Nullable
@@ -44,17 +43,11 @@ public abstract class BasePetalActivity<P extends BasePetalPresenter> extends Ba
 
     @Override
     protected void componentInject() {
-        setupActivityComponent(((PetalApplication) PetalApplication.getContext()).getAppComponent());
+        setupActivityComponent(PetalApplication.getContext().getAppComponent());
     }
 
     //提供AppComponent(提供所有的单例对象)给子类，进行Component依赖
     protected abstract void setupActivityComponent(AppComponent appComponent);
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        this.mPetalApplication = null;
-    }
 
     public void finishSelf() {
         if (Build.VERSION.SDK_INT >= 21) {
