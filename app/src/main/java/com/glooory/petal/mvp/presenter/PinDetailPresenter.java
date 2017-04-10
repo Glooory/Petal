@@ -10,7 +10,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.rx.BaseSubscriber;
-import com.glooory.petal.app.util.DrawableUtils;
 import com.glooory.petal.app.util.NetworkUtils;
 import com.glooory.petal.app.util.SPUtils;
 import com.glooory.petal.app.util.SnackbarUtil;
@@ -139,7 +138,6 @@ public class PinDetailPresenter extends BasePetalPresenter<PinDetailContract.Vie
         mRootView.showCollectTime(TimeUtils.getTimeDifference(
                 pinDetailBean.getPin().getCreatedAt(), System.currentTimeMillis()));
         mRootView.showBoardName(pinDetailBean.getPin().getBoard().getTitle());
-        mRootView.showPinImage(pinDetailBean.getPin().getFile().getKey());
         mRootView.showAvatarImage(pinDetailBean.getPin().getUser().getAvatar().getKey());
         List<PinBean> pinList = pinDetailBean.getPin().getBoard().getPins();
         if (pinList != null) {
@@ -253,7 +251,7 @@ public class PinDetailPresenter extends BasePetalPresenter<PinDetailContract.Vie
                 pinBean.getPinId(),
                 aspectRatio,
                 (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_pin),
-                DrawableUtils.getBasicColorStr(mAdapter.getItem(position)));
+                pinBean.getFile().getKey());
     }
 
     public void launchUserActivity(Activity activity, View view, int position) {
@@ -427,7 +425,7 @@ public class PinDetailPresenter extends BasePetalPresenter<PinDetailContract.Vie
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         mAdapter = null;
+        super.onDestroy();
     }
 }

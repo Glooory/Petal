@@ -41,8 +41,6 @@ public interface PinDetailContract {
 
         void showBoardName(String boardName);
 
-        void showPinImage(String imageUrlKey);
-
         void showAvatarImage(String avatarKey);
 
         void showBoardImgFirst(String imageUrlKey);

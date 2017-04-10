@@ -8,7 +8,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.glooory.petal.R;
 import com.glooory.petal.app.rx.BaseSubscriber;
 import com.glooory.petal.app.rx.RxBus;
-import com.glooory.petal.app.util.DrawableUtils;
 import com.glooory.petal.app.util.SnackbarUtil;
 import com.glooory.petal.app.widget.WindmillLoadMoreFooter;
 import com.glooory.petal.mvp.model.entity.BoardBean;
@@ -335,7 +334,7 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
                 pinBean.getPinId(),
                 aspectRatio,
                 (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_pin),
-                DrawableUtils.getBasicColorStr(((HomePinAdapter) mAdapter).getItem(position)));
+                pinBean.getFile().getKey());
     }
 
     /**

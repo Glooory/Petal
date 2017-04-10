@@ -8,7 +8,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.glooory.petal.R;
 import com.glooory.petal.app.rx.BaseSubscriber;
 import com.glooory.petal.app.rx.RxBus;
-import com.glooory.petal.app.util.DrawableUtils;
 import com.glooory.petal.app.widget.WindmillLoadMoreFooter;
 import com.glooory.petal.mvp.model.entity.BasicUserInfoBean;
 import com.glooory.petal.mvp.model.entity.PinBean;
@@ -177,7 +176,7 @@ public class HomePresenter extends BasePetalPresenter<HomeContract.View, HomeCon
                 pinBean.getPinId(),
                 aspectRatio,
                 (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_pin),
-                DrawableUtils.getBasicColorStr(mAdapter.getItem(position)));
+                pinBean.getFile().getKey());
     }
 
     public void launchUserActivity(Activity activity, View view, int position) {

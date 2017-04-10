@@ -9,7 +9,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.glooory.petal.R;
 import com.glooory.petal.app.rx.BaseSubscriber;
-import com.glooory.petal.app.util.DrawableUtils;
 import com.glooory.petal.app.widget.WindmillLoadMoreFooter;
 import com.glooory.petal.mvp.model.entity.BoardBean;
 import com.glooory.petal.mvp.model.entity.PinBean;
@@ -19,10 +18,10 @@ import com.glooory.petal.mvp.model.entity.searchresult.SearchBoardListBean;
 import com.glooory.petal.mvp.model.entity.searchresult.SearchPinListBean;
 import com.glooory.petal.mvp.model.entity.searchresult.SearchUserListBean;
 import com.glooory.petal.mvp.ui.board.BoardActivity;
+import com.glooory.petal.mvp.ui.category.board.CategoryBoardAdapter;
 import com.glooory.petal.mvp.ui.home.HomePinAdapter;
 import com.glooory.petal.mvp.ui.pindetail.PinDetailActivity;
 import com.glooory.petal.mvp.ui.searchresult.SearchResultContract;
-import com.glooory.petal.mvp.ui.category.board.CategoryBoardAdapter;
 import com.glooory.petal.mvp.ui.searchresult.user.SearchUserAdapter;
 import com.glooory.petal.mvp.ui.user.UserActivity;
 import com.jess.arms.di.scope.FragmentScope;
@@ -162,7 +161,7 @@ public class SearchResultPresenter extends BasePetalPresenter<SearchResultContra
                 pinBean.getPinId(),
                 aspectRatio,
                 (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_pin),
-                DrawableUtils.getBasicColorStr(((HomePinAdapter) mAdapter).getItem(position)));
+                pinBean.getFile().getKey());
     }
 
     /**

@@ -30,9 +30,7 @@
                 android:id="@+id/simple_drawee_view_pin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingEnd="-2dp"
                 android:fitsSystemWindows="true"
-                android:transitionName="@string/pin_transition_name"
                 fresco:failureImage="@drawable/ic_broken_image_grey_700_48dp"
                 fresco:failureImageScaleType="centerInside"/>
 

@@ -26,7 +26,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.util.DialogUtils;
-import com.glooory.petal.app.util.DrawableUtils;
 import com.glooory.petal.app.util.SnackbarUtil;
 import com.glooory.petal.app.util.UIUtils;
 import com.glooory.petal.app.widget.CustomStaggeredGridLayoutManager;
@@ -49,7 +48,6 @@ import rx.Observable;
 import rx.functions.Action1;
 
 import static com.glooory.petal.app.Constants.EXTRA_ASPECT_RATIO;
-import static com.glooory.petal.app.Constants.EXTRA_BASIC_COLOR;
 import static com.glooory.petal.app.Constants.EXTRA_PIN_ID;
 
 /**
@@ -72,7 +70,6 @@ public class PinDetailActivity extends BasePetalActivity<PinDetailPresenter>
 
     private HomePinAdapter mAdapter;
     private int mPinId;
-    private float mAspectRatio;
     private String mUserName;
     private int mUserId;
     private LinearLayout mLlCollect;
@@ -93,24 +90,23 @@ public class PinDetailActivity extends BasePetalActivity<PinDetailPresenter>
     private SimpleDraweeView mImgBoardFourth;
     private TextView mTvBoardName;
     private View mNoMoreDataFooter;
-    private String mBasicColorStr;
     private RxPermissions mRxPermissions;
 
     public static void launch(Activity activity, int pinId, float aspectRatio,
-            SimpleDraweeView image, String placeHolderColor) {
+            SimpleDraweeView image, String imageKey) {
 
         Intent intent = new Intent(activity, PinDetailActivity.class);
         intent.putExtra(Constants.EXTRA_PIN_ID, pinId);
-        intent.putExtra(Constants.EXTRA_ASPECT_RATIO, aspectRatio);
-        intent.putExtra(Constants.EXTRA_BASIC_COLOR, placeHolderColor);
+        intent.putExtra(EXTRA_ASPECT_RATIO, aspectRatio);
+        intent.putExtra(Constants.EXTRA_IMAGE_KEY, imageKey);
 
         // 太长的图使用 Shared Element transition 动画时会 crash
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && aspectRatio > 0.2) {
-            image.setTransitionName(Constants.PIN_TRANSITION_NAME);
+            image.setTransitionName(String.valueOf(pinId));
             activity.startActivity(
                     intent,
                     ActivityOptionsCompat.makeSceneTransitionAnimation(
-                            activity, image, Constants.PIN_TRANSITION_NAME)
+                            activity, image, String.valueOf(pinId))
                             .toBundle()
             );
         } else {
@@ -134,6 +130,18 @@ public class PinDetailActivity extends BasePetalActivity<PinDetailPresenter>
 
     @Override
     protected void initView() {
+        mPinId = getIntent().getIntExtra(EXTRA_PIN_ID, 0);
+        float aspectRatio = getIntent().getFloatExtra(EXTRA_ASPECT_RATIO, 0F);
+        mImagePin.setAspectRatio(aspectRatio);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // 这里在代码中动态设置 Shared Element Transition Name,
+            // 如果在 xml 文件中写死 Shared Element Transtion Name 的话，
+            // 打开多个本 Activity 时，返回时动画会是之前 Activity 对应的图片，而不是本 Activity 对应的图片
+            mImagePin.setTransitionName(String.valueOf(mPinId));
+        }
+        String imageKey = getIntent().getStringExtra(Constants.EXTRA_IMAGE_KEY);
+        mPresenter.loadImageWithLowUrl(imageKey, mImagePin);
+
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("");
@@ -227,10 +235,6 @@ public class PinDetailActivity extends BasePetalActivity<PinDetailPresenter>
 
     @Override
     protected void initData() {
-        mPinId = getIntent().getIntExtra(EXTRA_PIN_ID, 0);
-        mAspectRatio = getIntent().getFloatExtra(EXTRA_ASPECT_RATIO, 0F);
-        mBasicColorStr = getIntent().getStringExtra(EXTRA_BASIC_COLOR);
-        mImagePin.setAspectRatio(mAspectRatio);
         mPresenter.getPinDetailInfo(mPinId);
         mPresenter.requestForIsCollected();
         mPresenter.requestRecommendedPins();
@@ -363,12 +367,6 @@ public class PinDetailActivity extends BasePetalActivity<PinDetailPresenter>
     @Override
     public void showBoardName(String boardName) {
         mTvBoardName.setText(boardName);
-    }
-
-    @Override
-    public void showPinImage(String imageUrlKey) {
-        mImagePin.setVisibility(View.VISIBLE);
-        mPresenter.loadImage(imageUrlKey, mImagePin, DrawableUtils.getColoredDrwable(mBasicColorStr));
     }
 
     @Override

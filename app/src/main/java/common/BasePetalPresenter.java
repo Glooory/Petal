@@ -10,7 +10,6 @@ import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
 import com.glooory.petal.R;
 import com.glooory.petal.app.util.SnackbarUtil;
 import com.glooory.petal.mvp.ui.login.LoginActivity;
-import com.jess.arms.base.BaseApplication;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.mvp.BaseView;
 import com.jess.arms.mvp.IModel;
@@ -26,12 +25,14 @@ public class BasePetalPresenter<V extends BaseView, M extends IModel> extends Ba
 
     private ImageLoader mImageLoader;
     private String mLargePicUrlFormat;
+    private String mGeneralImageUrlFormat;
     private String mSmallPicUrlFormat;
 
     public BasePetalPresenter(V rootView, M model) {
         super(rootView, model);
         mImageLoader = PetalApplication.getContext().getAppComponent().imageLoader();
         mLargePicUrlFormat = PetalApplication.getContext().getString(R.string.url_image_large_format);
+        mGeneralImageUrlFormat = PetalApplication.getContext().getString(R.string.url_image_general_format);
         mSmallPicUrlFormat = PetalApplication.getContext().getString(R.string.url_image_small_format);
     }
 
@@ -61,6 +62,25 @@ public class BasePetalPresenter<V extends BaseView, M extends IModel> extends Ba
                         .setUrl(imageUrl)
                         .setSimpleDraweeView(image)
                         .setPlaceHolder(placeHolder)
+                        .setControlListener(new BaseControllerListener() {
+                            @Override
+                            public void onFinalImageSet(String id, Object imageInfo, Animatable animatable) {
+                                if (animatable != null) {
+                                    animatable.start();
+                                }
+                            }
+                        })
+                        .build());
+    }
+
+    public void loadImageWithLowUrl(String imageUrlKey, SimpleDraweeView image) {
+        String lowImageUrl = String.format(mGeneralImageUrlFormat, imageUrlKey);
+        String imageUrl = String.format(mLargePicUrlFormat, imageUrlKey);
+        mImageLoader.loadImage(PetalApplication.getContext(),
+                FrescoImageConfig.builder()
+                        .setUrl(imageUrl)
+                        .setSimpleDraweeView(image)
+                        .setLowUrl(lowImageUrl)
                         .setControlListener(new BaseControllerListener() {
                             @Override
                             public void onFinalImageSet(String id, Object imageInfo, Animatable animatable) {
@@ -164,7 +184,7 @@ public class BasePetalPresenter<V extends BaseView, M extends IModel> extends Ba
                     @Override
                     public void onClick(View v) {
                         LoginActivity.launch(
-                                ((BaseApplication) PetalApplication.getContext())
+                                PetalApplication.getContext()
                                         .getAppManager().getCurrentActivity(), false);
                     }
                 });
