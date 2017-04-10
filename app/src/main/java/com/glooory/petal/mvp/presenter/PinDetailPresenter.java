@@ -208,7 +208,6 @@ public class PinDetailPresenter extends BasePetalPresenter<PinDetailContract.Vie
                         }
                         mPage++;
                         mAdapter.setNewData(pinBeen);
-                        mAdapter.loadMoreComplete();
                         mRootView.showNoMoreDataFooter(pinBeen.size() < 10);
                     }
 
