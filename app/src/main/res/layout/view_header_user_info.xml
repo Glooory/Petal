@@ -13,7 +13,7 @@
         android:id="@+id/simple_drawee_user_avatar"
         android:layout_width="@dimen/drawer_avatar_size"
         android:layout_height="@dimen/drawer_avatar_size"
-        android:transitionName="@string/image_transition_name"
+        android:transitionName="@string/avatar_transition_name"
         fresco:failureImage="@drawable/ic_broken_image_grey_700_48dp"
         fresco:failureImageScaleType="centerInside"/>
 

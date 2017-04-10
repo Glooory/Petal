@@ -110,11 +110,11 @@ public class PinDetailActivity extends BasePetalActivity<PinDetailPresenter>
 
         // 太长的图使用 Shared Element transition 动画时会 crash
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && aspectRatio > 0.2) {
-            image.setTransitionName(Constants.IMAGE_TRANSITION_NAME);
+            image.setTransitionName(Constants.PIN_TRANSITION_NAME);
             activity.startActivity(
                     intent,
                     ActivityOptionsCompat.makeSceneTransitionAnimation(
-                            activity, image, Constants.IMAGE_TRANSITION_NAME)
+                            activity, image, Constants.PIN_TRANSITION_NAME)
                             .toBundle()
             );
         } else {

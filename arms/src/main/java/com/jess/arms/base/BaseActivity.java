@@ -53,7 +53,6 @@ public abstract class BaseActivity<P extends Presenter> extends RxAppCompatActiv
 
     @Override
     protected void onDestroy() {
-        mApplication.getAppManager().removeActivity(this);
         this.mApplication = null;
         if (mPresenter != null) mPresenter.onDestroy();//释放资源
         if (mUnbinder != Unbinder.EMPTY) mUnbinder.unbind();

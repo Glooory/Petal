@@ -114,9 +114,9 @@ public class UserActivity extends BasePetalActivity<UserPresenter>
         intent.putExtra(Constants.EXTRA_USER_NAME, userName);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            avatar.setTransitionName(activity.getResources().getString(R.string.image_transition_name));
+            avatar.setTransitionName(activity.getResources().getString(R.string.avatar_transition_name));
             activity.startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(
-                    activity, avatar, activity.getResources().getString(R.string.image_transition_name)
+                    activity, avatar, activity.getResources().getString(R.string.avatar_transition_name)
             ).toBundle());
         } else {
             activity.startActivity(intent);

@@ -61,7 +61,8 @@ public class Constants {
     //防抖动时间间隔
     public static final int THROTTLE_DURATION = 300;
 
-    public static final String IMAGE_TRANSITION_NAME = "image_transition";
+    public static final String PIN_TRANSITION_NAME = "pin_transition";
+    public static final String AVATAR_TRANSITION_NAME = "avatar_transition";
 
     public static int[] CATEGORY_ICON_RES_IDS = new int[]{
             R.drawable.ic_ui_ux_24dp, R.drawable.ic_design_24dp, R.drawable.ic_illustration_24dp,

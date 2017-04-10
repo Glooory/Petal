@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:paddingEnd="-2dp"
                 android:fitsSystemWindows="true"
-                android:transitionName="@string/image_transition_name"
+                android:transitionName="@string/pin_transition_name"
                 fresco:failureImage="@drawable/ic_broken_image_grey_700_48dp"
                 fresco:failureImageScaleType="centerInside"/>
 
