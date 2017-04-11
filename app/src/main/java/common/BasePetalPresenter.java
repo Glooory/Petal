@@ -110,15 +110,6 @@ public class BasePetalPresenter<V extends BaseView, M extends IModel> extends Ba
                         .build());
     }
 
-    public void loadSmallImage(String imageUrlKey, SimpleDraweeView image) {
-        String imageUrl = String.format(mSmallPicUrlFormat, imageUrlKey);
-        mImageLoader.loadImage(PetalApplication.getContext(),
-                FrescoImageConfig.builder()
-                        .setUrl(imageUrl)
-                        .setSimpleDraweeView(image)
-                        .build());
-    }
-
     public void loadSmallCircleImage(String imageUrlKey, SimpleDraweeView image) {
         String imageUrl = String.format(mSmallPicUrlFormat, imageUrlKey);
         mImageLoader.loadImage(PetalApplication.getContext(),
@@ -149,7 +140,7 @@ public class BasePetalPresenter<V extends BaseView, M extends IModel> extends Ba
                         .build());
     }
 
-    public void loadSmallBoardCover(String imageUrlKey, SimpleDraweeView image, BaseBitmapDataSubscriber subscriber) {
+    public void loadBoardCover(String imageUrlKey, SimpleDraweeView image, BaseBitmapDataSubscriber subscriber) {
         String imageUrl = String.format(mSmallPicUrlFormat, imageUrlKey);
         mImageLoader.loadImage(PetalApplication.getContext(),
                 FrescoImageConfig.builder()

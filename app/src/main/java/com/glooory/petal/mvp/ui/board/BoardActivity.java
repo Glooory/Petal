@@ -127,6 +127,13 @@ public class BoardActivity extends BasePetalActivity<BoardPresenter>
 
     @Override
     protected void initView() {
+        mUserName = getIntent().getStringExtra(Constants.EXTRA_USER_NAME);
+        mBoardBean = getIntent().getParcelableExtra(ARGS_BOARD_BEAN);
+        if (mBoardBean != null) {
+            mBoardId = String.valueOf(mBoardBean.getBoardId());
+            mPresenter.loadBoardCover(mBoardBean);
+        }
+
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -169,10 +176,7 @@ public class BoardActivity extends BasePetalActivity<BoardPresenter>
 
     @Override
     protected void initData() {
-        mUserName = getIntent().getStringExtra(Constants.EXTRA_USER_NAME);
-        mBoardBean = getIntent().getParcelableExtra(ARGS_BOARD_BEAN);
         if (mBoardBean != null) {
-            mBoardId = String.valueOf(mBoardBean.getBoardId());
             mPresenter.updateBoardInfo(mBoardBean, mUserName);
         }
     }
@@ -271,7 +275,7 @@ public class BoardActivity extends BasePetalActivity<BoardPresenter>
 
     @Override
     public void showBoardThumbnailFirst(String imgUrlKey) {
-        mPresenter.loadSmallBoardCover(imgUrlKey, mImgBoardThumbnailFirst,
+        mPresenter.loadBoardCover(imgUrlKey, mImgBoardThumbnailFirst,
                 new BaseBitmapDataSubscriber() {
                     @Override
                     protected void onNewResultImpl(Bitmap bitmap) {

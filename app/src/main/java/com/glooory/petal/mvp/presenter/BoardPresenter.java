@@ -54,10 +54,22 @@ public class BoardPresenter extends BasePetalPresenter<BoardContract.View, Board
     private int mFollowerCount;
     private String mCategory;
     private boolean mIsOperatable;
+    private boolean mIsBoardCoverLoaded;
 
     @Inject
     public BoardPresenter(BoardContract.View rootView, BoardContract.Model model) {
         super(rootView, model);
+    }
+
+    public void loadBoardCover(BoardBean boardBean) {
+        if (boardBean == null) {
+            return;
+        }
+        if (boardBean.getPins() != null && boardBean.getPins().size() > 0) {
+            String boardCoverKey = boardBean.getPins().get(0).getFile().getKey();
+            mRootView.showBoardThumbnailFirst(boardCoverKey);
+            mIsBoardCoverLoaded = true;
+        }
     }
 
     public void getBoardInfo(final String boardId) {
@@ -155,7 +167,7 @@ public class BoardPresenter extends BasePetalPresenter<BoardContract.View, Board
         }
 
         List<PinBean> pinList = boardBean.getPins();
-        if (pinList.size() > 0) {
+        if (pinList.size() > 0 && !mIsBoardCoverLoaded) {
             mRootView.showBoardThumbnailFirst(pinList.get(0).getFile().getKey());
         }
 

@@ -107,10 +107,12 @@ public class UserBoardAdapter extends BasePetalAdapter<BoardBean, BaseViewHolder
                 (SimpleDraweeView) holder.getView(R.id.simple_drawee_view_user_board_third);
 
         if (pinList.size() > 0) {
+            String coverKey = pinList.get(0).getFile().getKey();
             mImageLoader.loadImage(PetalApplication.getContext(),
                     FrescoImageConfig.builder()
                             .setSimpleDraweeView(boardCover)
-                            .setUrl(String.format(mGeneralImageUrlFormat, pinList.get(0).getFile().getKey()))
+                            .setLowUrl(String.format(mSmallImageUrlFormat, coverKey))
+                            .setUrl(String.format(mGeneralImageUrlFormat, coverKey))
                             .setScaleType(ScalingUtils.ScaleType.CENTER_CROP)
                             .build());
         } else {
