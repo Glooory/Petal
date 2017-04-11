@@ -107,10 +107,6 @@ public class UserPresenter extends BasePetalPresenter<UserContract.View, UserCon
         } else {
             mRootView.showUserAbout(PetalApplication.getContext().getString(R.string.msg_empty_user_about));
         }
-
-        if (userBean.getAvatar() != null) {
-            mRootView.showUserAvatar(userBean.getAvatar().getKey());
-        }
     }
 
     private void setupTabTitles() {

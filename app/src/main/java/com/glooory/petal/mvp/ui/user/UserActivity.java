@@ -65,6 +65,8 @@ public class UserActivity extends BasePetalActivity<UserPresenter>
         implements SwipeRefreshLayout.OnRefreshListener, UserContract.View,
         AppBarLayout.OnOffsetChangedListener {
 
+    private static final String EXTRA_AVATAR_KEY = "avatar_key";
+
     @BindView(R.id.simple_drawee_user_avatar)
     SimpleDraweeView mImgUserAvatar;
     @BindView(R.id.text_view_user_name)
@@ -108,16 +110,17 @@ public class UserActivity extends BasePetalActivity<UserPresenter>
     private UserFollowingFragment mFollowingFragment;
     private UserFollowerFragment mFollowerFragment;
 
-    public static void launch(Activity activity, String userId, String userName, SimpleDraweeView avatar) {
+    public static void launch(Activity activity, String userId, String userName,
+            SimpleDraweeView avatar, String avatarKey) {
         Intent intent = new Intent(activity, UserActivity.class);
         intent.putExtra(Constants.EXTRA_USER_ID, userId);
         intent.putExtra(Constants.EXTRA_USER_NAME, userName);
+        intent.putExtra(EXTRA_AVATAR_KEY, avatarKey);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            avatar.setTransitionName(activity.getResources().getString(R.string.avatar_transition_name));
+            avatar.setTransitionName(userId);
             activity.startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(
-                    activity, avatar, activity.getResources().getString(R.string.avatar_transition_name)
-            ).toBundle());
+                    activity, avatar, userId).toBundle());
         } else {
             activity.startActivity(intent);
         }
@@ -139,6 +142,15 @@ public class UserActivity extends BasePetalActivity<UserPresenter>
 
     @Override
     protected void initView() {
+        mUserId = getIntent().getStringExtra(Constants.EXTRA_USER_ID);
+        mUserName = getIntent().getStringExtra(Constants.EXTRA_USER_NAME);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mImgUserAvatar.setTransitionName(mUserId);
+        }
+        mIsMe = mPresenter.isMe(mUserId);
+        String avatarKey = getIntent().getStringExtra(EXTRA_AVATAR_KEY);
+        showUserAvatar(avatarKey);
+
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -199,9 +211,6 @@ public class UserActivity extends BasePetalActivity<UserPresenter>
 
     @Override
     protected void initData() {
-        mUserId = getIntent().getStringExtra(Constants.EXTRA_USER_ID);
-        mUserName = getIntent().getStringExtra(Constants.EXTRA_USER_NAME);
-        mIsMe = mPresenter.isMe(mUserId);
         mPresenter.requestUserInfo(mUserId);
     }
 
@@ -386,9 +395,7 @@ public class UserActivity extends BasePetalActivity<UserPresenter>
         mTextViewUserDes.setText(userAbout);
     }
 
-    @Override
     public void showUserAvatar(String avatarKey) {
-        mImgUserAvatar.setVisibility(View.VISIBLE);
         mPresenter.loadUserAvatar(avatarKey, mImgUserAvatar, new BaseBitmapDataSubscriber() {
             @Override
             protected void onNewResultImpl(Bitmap bitmap) {

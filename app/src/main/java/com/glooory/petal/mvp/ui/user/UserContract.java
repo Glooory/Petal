@@ -42,8 +42,6 @@ public interface UserContract {
         void showUserLocation(String location);
 
         void showUserAbout(String userAbout);
-
-        void showUserAvatar(String avatarKey);
     }
 
     interface Model extends IModel {

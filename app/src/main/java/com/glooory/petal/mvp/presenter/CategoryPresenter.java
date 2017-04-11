@@ -138,7 +138,8 @@ public class CategoryPresenter extends BasePetalPresenter<CategoryContract.View,
         UserActivity.launch(activity,
                 userId,
                 pinBean.getUser().getUsername(),
-                (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_pin_avatar));
+                (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_pin_avatar),
+                pinBean.getUser().getAvatar().getKey());
     }
 
     public void getCategoryBoards(String category) {
@@ -195,7 +196,8 @@ public class CategoryPresenter extends BasePetalPresenter<CategoryContract.View,
         String userId = String.valueOf(boardBean.getUserId());
         String userName = boardBean.getUser().getUsername();
         UserActivity.launch(activity, userId, userName,
-                (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_category_board_user_avatar));
+                (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_category_board_user_avatar),
+                boardBean.getUser().getAvatar().getKey());
     }
 
     /**
@@ -293,7 +295,8 @@ public class CategoryPresenter extends BasePetalPresenter<CategoryContract.View,
         UserBean userBean = ((CategoryUserAdapter) mAdapter).getItem(position).getUser();
         String userId = String.valueOf(userBean.getUserId());
         UserActivity.launch(activity, userId, userBean.getUsername(),
-                (SimpleDraweeView) view.findViewById(R.id.simple_drawee_card_user_avatar));
+                (SimpleDraweeView) view.findViewById(R.id.simple_drawee_card_user_avatar),
+                userBean.getAvatar().getKey());
     }
 
     /**

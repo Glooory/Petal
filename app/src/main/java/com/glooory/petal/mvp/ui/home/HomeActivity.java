@@ -264,7 +264,8 @@ public class HomeActivity extends BasePetalActivity
                 if (isLogin()) {
                     String userId = String.valueOf(SPUtils.get(Constants.PREF_USER_ID, 0));
                     String userName = (String) SPUtils.get(Constants.PREF_USER_NAME, "");
-                    UserActivity.launch(HomeActivity.this, userId, userName, mAvatarImg);
+                    String avatarKey = (String) SPUtils.get(Constants.PREF_USER_AVATAR_KEY, "");
+                    UserActivity.launch(HomeActivity.this, userId, userName, mAvatarImg, avatarKey);
                 } else {
                     LoginActivity.launch(this, false);
                 }

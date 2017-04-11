@@ -349,7 +349,8 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
         UserActivity.launch(activity,
                 userId,
                 pinBean.getUser().getUsername(),
-                (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_pin_avatar));
+                (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_pin_avatar),
+                pinBean.getUser().getAvatar().getKey());
     }
 
     /**
@@ -500,7 +501,8 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
         UserBean userBean = ((UserAdapter) mAdapter).getItem(position);
         String userId = String.valueOf(userBean.getUserId());
         UserActivity.launch(activity, userId, userBean.getUsername(),
-                (SimpleDraweeView) view.findViewById(R.id.simple_drawee_card_user_avatar));
+                (SimpleDraweeView) view.findViewById(R.id.simple_drawee_card_user_avatar),
+                userBean.getAvatar().getKey());
     }
 
     /**

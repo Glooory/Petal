@@ -61,6 +61,7 @@ public class PinDetailPresenter extends BasePetalPresenter<PinDetailContract.Vie
     private String mBoardId;
     private String mUserId;
     private String mUserName;
+    private String mUserAvatarKey;
     private BoardBean mBoardBean;
     private String mPinKey;
     private String mPinType;
@@ -114,6 +115,7 @@ public class PinDetailPresenter extends BasePetalPresenter<PinDetailContract.Vie
         mBoardId = String.valueOf(pinDetailBean.getPin().getBoardId());
         mUserId = String.valueOf(pinDetailBean.getPin().getUserId());
         mUserName = pinDetailBean.getPin().getUser().getUsername();
+        mUserAvatarKey = pinDetailBean.getPin().getUser().getAvatar().getKey();
         mCollectDes = pinDetailBean.getPin().getRawText();
         mBoardBean = pinDetailBean.getPin().getBoard();
         mRootView.showCollectCount(
@@ -259,7 +261,8 @@ public class PinDetailPresenter extends BasePetalPresenter<PinDetailContract.Vie
         String userId = String.valueOf(pinBean.getUser().getUserId());
         String userName = pinBean.getUser().getUsername();
         UserActivity.launch(activity, userId, userName,
-                (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_pin_avatar));
+                (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_pin_avatar),
+                pinBean.getUser().getAvatar().getKey());
     }
 
     /**
@@ -403,7 +406,7 @@ public class PinDetailPresenter extends BasePetalPresenter<PinDetailContract.Vie
     }
 
     public void launchUserActivity(Activity activity, SimpleDraweeView avatar) {
-        UserActivity.launch(activity, mUserId, mUserName, avatar);
+        UserActivity.launch(activity, mUserId, mUserName, avatar, mUserAvatarKey);
     }
 
     public void launchBoardActivity(Activity activity) {

@@ -184,7 +184,8 @@ public class HomePresenter extends BasePetalPresenter<HomeContract.View, HomeCon
         String userId = String.valueOf(pinBean.getUserId());
         String userName = pinBean.getUser().getUsername();
         UserActivity.launch(activity, userId, userName,
-                (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_pin_avatar));
+                (SimpleDraweeView) view.findViewById(R.id.simple_drawee_view_pin_avatar),
+                pinBean.getUser().getAvatar().getKey());
     }
 
     @Override
