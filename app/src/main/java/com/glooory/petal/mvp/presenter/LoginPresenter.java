@@ -61,13 +61,13 @@ public class LoginPresenter extends BasePetalPresenter<LoginContract.View, Login
         }
 
         if (!isIllegalParams) {
-            startLogin(userAccount, password);
+            performLogin(userAccount, password);
         }
     }
 
-    private void startLogin(final String userAccount, final String password) {
+    private void performLogin(final String userAccount, final String password) {
         Subscription s = mModel.requestToken(userAccount, password)
-                .retryWhen(new RetryWithDelay(2, 2))
+                .retryWhen(new RetryWithDelay(1, 1))
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {

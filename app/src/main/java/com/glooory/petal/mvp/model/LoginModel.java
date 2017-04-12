@@ -51,7 +51,6 @@ public class LoginModel extends BasePetalModel<ServiceManager, CacheManager>
                         Constants.HTTP_ARGS_VALUE_PASSWORD,
                         userAccount,
                         password)
-                .retryWhen(new RetryWithDelay(2, 2))
                 .flatMap(new Func1<TokenBean, Observable<UserBean>>() {
                     @Override
                     public Observable<UserBean> call(TokenBean tokenBean) {
