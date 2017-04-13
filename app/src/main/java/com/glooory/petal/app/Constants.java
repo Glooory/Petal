@@ -14,8 +14,8 @@ public class Constants {
 
     public static final String PREF_AUTHORIZATION = "authorization";
 
-    public static final String PREF_TOKEN_ACCESS = "token_access";
-    public static final String PREF_TOKEN_REFRESH = "token_refresh";
+    public static final String PREF_ACCESS_TOKEN = "access_token";
+    public static final String PREF_REFRESH_TOKEN = "refresh_token";
     public static final String PREF_TOKEN_TYPE = "token_type";
     public static final String PREF_TOKEN_EXPIRES_IN = "token_expires_in";
 
@@ -38,7 +38,8 @@ public class Constants {
     public static final String HTTP_HEADER_AUTHORIZATION = "Authorization";
     public static final String HTTP_QUERY_LIMIT = "limit";
     public static final String HTTP_QUERY_MAX = "max";
-    public static final String HTTP_ARGS_VALUE_PASSWORD = "password";
+    public static final String GRANT_TYPE_PASSWORD = "password";
+    public static final String GRANT_TYPE_REFRESH_TOKEN = "refresh_token";
     public static final String HTTP_RECOMMEND_TAGS = "recommend_tags";
     public static final String HTTP_ARGS_LIKE = "like";
     public static final String HTTP_ARGS_UNLIKE = "unlike";

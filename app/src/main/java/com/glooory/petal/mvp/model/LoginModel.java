@@ -2,7 +2,6 @@ package com.glooory.petal.mvp.model;
 
 import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
-import com.glooory.petal.app.util.EncrypAES;
 import com.glooory.petal.app.util.SPUtils;
 import com.glooory.petal.mvp.model.api.cache.CacheManager;
 import com.glooory.petal.mvp.model.api.service.ServiceManager;
@@ -48,7 +47,7 @@ public class LoginModel extends BasePetalModel<ServiceManager, CacheManager>
     public Observable<LatestEditBoardsBean> requestToken(final String userAccount, final String password) {
         return mServiceManager.getUserService()
                 .getToken(PetalApplication.getContext().getString(R.string.url_request_token),
-                        Constants.HTTP_ARGS_VALUE_PASSWORD,
+                        Constants.GRANT_TYPE_PASSWORD,
                         userAccount,
                         password)
                 .flatMap(new Func1<TokenBean, Observable<UserBean>>() {
@@ -81,9 +80,9 @@ public class LoginModel extends BasePetalModel<ServiceManager, CacheManager>
         return SPUtils.builder()
                 .addData(Constants.PREF_IS_LOGIN, Boolean.TRUE)
                 .addData(Constants.PREF_LOGIN_TIME, System.currentTimeMillis())
-                .addData(Constants.PREF_TOKEN_ACCESS, tokenBean.getAccessToken())
+                .addData(Constants.PREF_ACCESS_TOKEN, tokenBean.getAccessToken())
                 .addData(Constants.PREF_TOKEN_TYPE, tokenBean.getTokenType())
-                .addData(Constants.PREF_TOKEN_REFRESH, tokenBean.getRefreshToken())
+                .addData(Constants.PREF_REFRESH_TOKEN, tokenBean.getRefreshToken())
                 .addData(Constants.PREF_TOKEN_EXPIRES_IN, tokenBean.getExpiresIn())
                 .build();
     }
@@ -94,11 +93,8 @@ public class LoginModel extends BasePetalModel<ServiceManager, CacheManager>
             return;
         }
 
-        EncrypAES mEncrypAES = new EncrypAES();
-
         SPUtils.builder()
                 .addData(Constants.PREF_USER_ACCOUNT, userAccount)
-                .addData(Constants.PREF_USER_PASSWORD, mEncrypAES.EncryptorString(password))
                 .addData(Constants.PREF_USER_NAME, userBean.getUsername())
                 .addData(Constants.PREF_USER_ID, userBean.getUserId())
                 .addData(Constants.PREF_USER_EMAIL, userBean.getEmail())

@@ -9,7 +9,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.rx.AnimOnSubscribe;
-import com.glooory.petal.app.util.EncrypAES;
 import com.glooory.petal.app.util.SPUtils;
 import com.glooory.petal.mvp.model.entity.login.TokenBean;
 import com.glooory.petal.mvp.ui.home.HomeActivity;
@@ -40,7 +39,6 @@ public class SplashActivity extends BasePetalActivity {
     ImageView mImgLogo;
 
     private boolean isSkipLogin;
-    private EncrypAES mEncrypAES;
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -59,7 +57,6 @@ public class SplashActivity extends BasePetalActivity {
 
     @Override
     protected void initData() {
-        mEncrypAES = new EncrypAES();
         PetalApplication.getContext().getAppComponent().imageLoader()
                 .loadImage(SplashActivity.this,
                         FrescoImageConfig.builder()
@@ -109,16 +106,14 @@ public class SplashActivity extends BasePetalActivity {
                 .flatMap(new Func1<Void, Observable<TokenBean>>() {
                     @Override
                     public Observable<TokenBean> call(Void aVoid) {
-                        String account = (String) SPUtils.get(Constants.PREF_USER_ACCOUNT, "");
-                        String pswdAESed = (String) SPUtils.get(Constants.PREF_USER_PASSWORD, "");
+                        String refresh_token = (String) SPUtils.get(Constants.PREF_REFRESH_TOKEN, "");
                         return ((PetalApplication) mApplication)
                                 .getAppComponent()
                                 .serviceManager()
                                 .getUserService()
-                                .getToken(getString(R.string.url_request_token),
-                                        Constants.HTTP_ARGS_VALUE_PASSWORD,
-                                        account,
-                                        mEncrypAES.DecryptorString(pswdAESed));
+                                .refreshToken(getString(R.string.url_request_token),
+                                        Constants.GRANT_TYPE_REFRESH_TOKEN,
+                                        refresh_token);
                     }
                 })
                 .observeOn(Schedulers.io())
@@ -154,10 +149,10 @@ public class SplashActivity extends BasePetalActivity {
         Logger.d(tokenBean);
         SPUtils.builder()
                 .addData(Constants.PREF_LOGIN_TIME, System.currentTimeMillis())
-                .addData(Constants.PREF_TOKEN_ACCESS, tokenBean.getAccessToken())
+                .addData(Constants.PREF_ACCESS_TOKEN, tokenBean.getAccessToken())
                 .addData(Constants.PREF_TOKEN_TYPE, tokenBean.getTokenType())
                 .addData(Constants.PREF_TOKEN_EXPIRES_IN, tokenBean.getExpiresIn())
-                .addData(Constants.PREF_TOKEN_REFRESH, tokenBean.getRefreshToken())
+                .addData(Constants.PREF_REFRESH_TOKEN, tokenBean.getRefreshToken())
                 .build();
     }
 

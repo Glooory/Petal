@@ -91,7 +91,7 @@ public class LoginPresenter extends BasePetalPresenter<LoginContract.View, Login
 
                     @Override
                     public void onError(Throwable e) {
-                        super.onError(e);
+                        e.printStackTrace();
                         mRootView.showLoginFailed();
                     }
                 });

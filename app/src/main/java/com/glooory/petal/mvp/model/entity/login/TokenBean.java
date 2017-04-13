@@ -12,6 +12,7 @@ public class TokenBean {
      * refresh_token : dbb-c9ec-4553-a3fb-ffae1
      */
 
+    private String error;
     private String access_token;
     private String token_type;
     private int expires_in;
@@ -49,10 +50,19 @@ public class TokenBean {
         this.refresh_token = refreshToken;
     }
 
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
     @Override
     public String toString() {
         return "TokenBean{" +
-                "access_token='" + access_token + '\'' +
+                "error='" + error + '\'' +
+                ", access_token='" + access_token + '\'' +
                 ", token_type='" + token_type + '\'' +
                 ", expires_in=" + expires_in +
                 ", refresh_token='" + refresh_token + '\'' +

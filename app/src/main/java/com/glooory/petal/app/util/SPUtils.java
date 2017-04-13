@@ -195,7 +195,7 @@ public class SPUtils {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(get(Constants.PREF_TOKEN_TYPE, " "))
                     .append(" ")
-                    .append(get(Constants.PREF_TOKEN_ACCESS, " "));
+                    .append(get(Constants.PREF_ACCESS_TOKEN, " "));
             return stringBuilder.toString();
         }
         return BaseClientInfo.CLIENT_INFO_DEFAULT;

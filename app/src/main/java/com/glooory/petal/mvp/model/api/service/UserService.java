@@ -29,9 +29,16 @@ public interface UserService {
     @POST
     Observable<TokenBean> getToken(
             @Url String url,
-            @Field("grant_type") String grant,
+            @Field("grant_type") String grantType,
             @Field("username") String username,
             @Field("password") String password);
+
+    // https://huaban.com/oauth/access_token/
+    @FormUrlEncoded
+    @POST
+    Observable<TokenBean> refreshToken(@Url String url,
+            @Field("grant_type") String grantType,
+            @Field("refresh_token") String refreshToken);
 
     // 获取当前登录用户的信息
     @GET("users/me")

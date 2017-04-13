@@ -38,7 +38,7 @@ public class BasePetalModel<S extends BaseServiceManager, C extends BaseCacheMan
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(SPUtils.get(Constants.PREF_TOKEN_TYPE, " "))
                     .append(" ")
-                    .append(SPUtils.get(Constants.PREF_TOKEN_ACCESS, " "));
+                    .append(SPUtils.get(Constants.PREF_ACCESS_TOKEN, " "));
             return stringBuilder.toString();
         }
         return BaseClientInfo.CLIENT_INFO_DEFAULT;
