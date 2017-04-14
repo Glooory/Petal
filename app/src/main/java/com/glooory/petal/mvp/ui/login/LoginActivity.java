@@ -3,6 +3,7 @@ package com.glooory.petal.mvp.ui.login;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.glooory.petal.R;
 import com.glooory.petal.app.adapter.NoFilterringAdapter;
@@ -19,12 +21,14 @@ import com.glooory.petal.di.component.DaggerLoginComponent;
 import com.glooory.petal.di.module.LoginModule;
 import com.glooory.petal.mvp.presenter.LoginPresenter;
 import com.glooory.petal.mvp.ui.home.HomeActivity;
+import com.glooory.petal.mvp.ui.register.RegisterActivity;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import common.AppComponent;
 import common.BasePetalActivity;
 import rx.Observable;
@@ -50,6 +54,8 @@ public class LoginActivity extends BasePetalActivity<LoginPresenter> implements 
     EditText mEdittextUserPassword;
     @BindView(R.id.button_login)
     Button mButtonLogin;
+    @BindView(R.id.text_view_register_by_phone)
+    TextView mTextviewRegister;
 
     private ProgressDialog mProgressDialog;
     private boolean mIsFromSplashActivity = false;
@@ -115,6 +121,15 @@ public class LoginActivity extends BasePetalActivity<LoginPresenter> implements 
                         hideSoftwareKeyboard();
                         mPresenter.login(mTextViewUserAccount.getText().toString(),
                                 mEdittextUserPassword.getText().toString());
+                    }
+                });
+
+        RxView.clicks(mTextviewRegister)
+                .throttleFirst(500, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        RegisterActivity.launch(LoginActivity.this);
                     }
                 });
     }
@@ -229,5 +244,12 @@ public class LoginActivity extends BasePetalActivity<LoginPresenter> implements 
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

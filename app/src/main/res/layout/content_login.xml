@@ -74,6 +74,17 @@
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_16sp"/>
 
+        <TextView
+            android:id="@+id/text_view_register_by_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/half_activity_default_margin"
+            android:layout_gravity="end|center_vertical"
+            android:textSize="@dimen/text_size_16sp"
+            android:textColor="@color/white"
+            android:text="@string/msg_register_by_phone"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"/>
+
     </LinearLayout>
 
 </ScrollView>

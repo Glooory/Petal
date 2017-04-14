@@ -44,6 +44,12 @@
             android:windowSoftInputMode="adjustResize"/>
 
         <activity
+            android:name=".mvp.ui.register.RegisterActivity"
+            android:label="@string/new_collect"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Petal.Search"/>
+
+        <activity
             android:name=".mvp.ui.pindetail.PinDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Petal.PinDetail"/>
