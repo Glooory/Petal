@@ -38,6 +38,8 @@
 
     <string name="register">注册</string>
     <string name="msg_register_by_phone">手机注册</string>
+    <string name="msg_hint_phone_register">请输入您的手机号码</string>
+    <string name="msg_invalid_phone_number">手机号码无效</string>
     <string name="msg_register_next">下一步</string>
 
     <string name="msg_network_unavailable">没有网络连接，请检查网络设置</string>

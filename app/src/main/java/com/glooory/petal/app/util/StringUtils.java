@@ -3,6 +3,8 @@ package com.glooory.petal.app.util;
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Glooory on 17/2/22.
@@ -58,4 +60,15 @@ public class StringUtils {
         return appenUnit(value);
     }
 
+    /**
+     * 判断是否为手机号码
+     * @param number
+     * @return
+     */
+    public static boolean isPhoneNumber(String number) {
+        String regExp = "^1(3|4|5|7|8)[0-9]\\d{8}$";
+        Pattern p = Pattern.compile(regExp);
+        Matcher m = p.matcher(number);
+        return m.matches();
+    }
 }

@@ -241,8 +241,6 @@ public class SearchActivity extends BasePetalActivity {
             }
         })
                 .throttleFirst(500, TimeUnit.MILLISECONDS)
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {

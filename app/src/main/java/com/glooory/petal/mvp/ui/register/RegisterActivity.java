@@ -3,7 +3,6 @@ package com.glooory.petal.mvp.ui.register;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.Toolbar;
-import android.widget.TextView;
 
 import com.glooory.petal.R;
 
@@ -17,8 +16,6 @@ import common.BasePetalActivity;
 
 public class RegisterActivity extends BasePetalActivity {
 
-    @BindView(R.id.text_view_register_next)
-    TextView mTextViewRegisterNext;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
@@ -43,11 +40,18 @@ public class RegisterActivity extends BasePetalActivity {
         getSupportActionBar().setTitle(R.string.register);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, RegisterFragment.newInstance())
+                .addToBackStack(RegisterFragment.class.getName())
+                .commit();
     }
 
     @Override
     protected void initData() {
 
+    }
+
+    public void showRegisterConfirmFragment(String phone) {
+        // TODO: 17/4/14 Show RegisterConfirmFragment
     }
 }

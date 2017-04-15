@@ -83,6 +83,7 @@
             android:name=".mvp.ui.collect.CollectActivity"
             android:label="@string/new_collect"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.Petal.Search"/>
 
         <activity

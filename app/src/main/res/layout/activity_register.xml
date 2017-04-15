@@ -20,20 +20,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
-
-            <TextView
-                android:id="@+id/text_view_register_next"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/activity_vertical_margin"
-                android:layout_gravity="end|center_vertical"
-                android:textSize="@dimen/text_size_18sp"
-                android:textColor="@color/white"
-                android:text="@string/msg_register_next"
-                style="@style/Base.Widget.AppCompat.Button.Borderless"/>
-
-        </android.support.v7.widget.Toolbar>
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
     </android.support.design.widget.AppBarLayout>
 

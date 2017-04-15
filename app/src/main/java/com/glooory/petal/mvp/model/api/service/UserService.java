@@ -123,4 +123,9 @@ public interface UserService {
     Observable<UserListBean> getUserFollowingMore(@Path("user_id") String userId,
             @Query("max") int maxId,
             @Query("limit") int limit);
+
+    // 给手机号码发送验证码
+    @FormUrlEncoded
+    @POST("captcha")
+    Observable<Void> sendIndentifyCode(@Field("tel") String tel);
 }
