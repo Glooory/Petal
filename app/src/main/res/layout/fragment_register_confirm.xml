@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_vertical_margin"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/half_activity_default_margin"
+            android:text="@string/msg_confirm_user_info"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/text_size_18sp"/>
+
+        <TextView
+            android:id="@+id/text_view_register_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_size_24sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edit_text_register_captcha"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:hint="@string/msg_message_captcha"
+                android:inputType="number"/>
+
+            <TextView
+                android:id="@+id/text_view_register_send_again"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_margin="4dp"
+                android:text="@string/msg_send_again"
+                android:background="@drawable/bg_register_send_again"/>
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/edit_text_register_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:hint="@string/msg_password_edit_hint"
+            android:inputType="textPassword"/>
+
+        <EditText
+            android:id="@+id/edit_text_register_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:hint="@string/msg_user_name_hint"/>
+
+        <Button
+            android:id="@+id/button_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:background="@color/colorPrimary"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:text="@string/msg_confirm"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16sp"/>
+
+    </LinearLayout>
+
+</ScrollView>

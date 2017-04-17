@@ -1,5 +1,6 @@
 package com.glooory.petal.mvp.ui.register;
 
+import com.glooory.petal.mvp.model.entity.register.CaptchaResult;
 import com.jess.arms.mvp.BaseView;
 import com.jess.arms.mvp.IModel;
 
@@ -14,12 +15,16 @@ public interface RegisterContract {
     interface View extends BaseView {
 
         void showConfirmRegisterView(String phone);
+
+        void showCountDownTick(String secondsLeft);
+
+        void showCountDownFinish();
     }
 
     interface Model extends IModel {
 
         boolean isPhoneNumber(String number);
 
-        Observable<Void> register(String phoneNumber);
+        Observable<CaptchaResult> register(String phoneNumber);
     }
 }

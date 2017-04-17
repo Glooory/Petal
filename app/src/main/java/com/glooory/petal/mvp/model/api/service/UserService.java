@@ -4,6 +4,7 @@ import com.glooory.petal.mvp.model.entity.LatestEditBoardsBean;
 import com.glooory.petal.mvp.model.entity.PinListBean;
 import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.model.entity.login.TokenBean;
+import com.glooory.petal.mvp.model.entity.register.CaptchaResult;
 import com.glooory.petal.mvp.model.entity.user.UserBoardListBean;
 import com.glooory.petal.mvp.model.entity.user.UserListBean;
 
@@ -128,6 +129,6 @@ public interface UserService {
     // 给手机号码发送验证码
     @FormUrlEncoded
     @POST("captcha")
-    Observable<Void> sendIndentifyCode(@Header("User-Agent") String userAgent,
+    Observable<CaptchaResult> sendIndentifyCode(@Header("User-Agent") String userAgent,
             @Field("tel") String tel);
 }

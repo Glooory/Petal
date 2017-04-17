@@ -41,6 +41,12 @@
     <string name="msg_hint_phone_register">请输入您的手机号码</string>
     <string name="msg_invalid_phone_number">手机号码无效</string>
     <string name="msg_register_next">下一步</string>
+    <string name="msg_confirm_user_info">验证你的手机号并完善账号</string>
+    <string name="msg_message_captcha">短信验证码</string>
+    <string name="format_send_again">再次发送(%d)</string>
+    <string name="msg_send_again">再次发送</string>
+    <string name="msg_password_edit_hint">密码（大于 6 位的字母和数字）</string>
+    <string name="msg_user_name_hint">昵称</string>
 
     <string name="msg_network_unavailable">没有网络连接，请检查网络设置</string>
     <string name="msg_check_and_retry">网络错误，请检查网络设置或稍后重试</string>

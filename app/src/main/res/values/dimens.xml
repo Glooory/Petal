@@ -16,6 +16,8 @@
     <dimen name="text_size_16sp">16sp</dimen>
     <dimen name="text_size_18sp">18sp</dimen>
     <dimen name="text_size_20sp">20sp</dimen>
+    <dimen name="text_size_22sp">22sp</dimen>
+    <dimen name="text_size_24sp">24sp</dimen>
 
     <dimen name="pin_user_avatar_size">40dp</dimen>
     <dimen name="splash_logo_margin_start">48dp</dimen>

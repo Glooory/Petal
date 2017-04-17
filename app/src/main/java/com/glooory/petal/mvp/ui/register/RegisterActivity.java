@@ -42,7 +42,7 @@ public class RegisterActivity extends BasePetalActivity {
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container, RegisterFragment.newInstance())
-                .addToBackStack(RegisterFragment.class.getName())
+                .addToBackStack(RegisterFragment.class.getSimpleName())
                 .commit();
     }
 
@@ -52,6 +52,8 @@ public class RegisterActivity extends BasePetalActivity {
     }
 
     public void showRegisterConfirmFragment(String phone) {
-        // TODO: 17/4/14 Show RegisterConfirmFragment
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, RegisterConfirmFragment.newInstance(phone))
+                .commit();
     }
 }

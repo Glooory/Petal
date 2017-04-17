@@ -110,4 +110,14 @@ public class RegisterFragment extends BasePetalFragment<RegisterPresenter>
     public void showConfirmRegisterView(String phone) {
         ((RegisterActivity) getActivity()).showRegisterConfirmFragment(phone);
     }
+
+    @Override
+    public void showCountDownTick(String secondsLeft) {
+
+    }
+
+    @Override
+    public void showCountDownFinish() {
+
+    }
 }

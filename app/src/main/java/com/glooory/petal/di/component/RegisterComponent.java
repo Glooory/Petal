@@ -1,6 +1,7 @@
 package com.glooory.petal.di.component;
 
 import com.glooory.petal.di.module.RegisterModule;
+import com.glooory.petal.mvp.ui.register.RegisterConfirmFragment;
 import com.glooory.petal.mvp.ui.register.RegisterFragment;
 import com.jess.arms.di.scope.FragmentScope;
 
@@ -16,4 +17,6 @@ import dagger.Component;
 public interface RegisterComponent {
 
     void inject(RegisterFragment registerFragment);
+
+    void inject(RegisterConfirmFragment registerConfirmFragment);
 }

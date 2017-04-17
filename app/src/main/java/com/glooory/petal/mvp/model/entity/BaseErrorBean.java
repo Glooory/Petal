@@ -3,7 +3,7 @@ package com.glooory.petal.mvp.model.entity;
 /**
  * Created by Glooory on 2016/9/14 0014 19:39.
  */
-public class ErrorBaseBean {
+public class BaseErrorBean {
 
     /**
      * err : 403

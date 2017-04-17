@@ -3,6 +3,7 @@ package com.glooory.petal.mvp.model;
 import com.glooory.petal.app.util.StringUtils;
 import com.glooory.petal.mvp.model.api.cache.CacheManager;
 import com.glooory.petal.mvp.model.api.service.ServiceManager;
+import com.glooory.petal.mvp.model.entity.register.CaptchaResult;
 import com.glooory.petal.mvp.ui.register.RegisterContract;
 
 import javax.inject.Inject;
@@ -30,7 +31,7 @@ public class RegisterModel extends BasePetalModel<ServiceManager, CacheManager>
     }
 
     @Override
-    public Observable<Void> register(String phoneNumber) {
+    public Observable<CaptchaResult> register(String phoneNumber) {
         return mServiceManager.getUserService()
                 .sendIndentifyCode("huaban_android_3.1.3", phoneNumber)
                 .subscribeOn(Schedulers.io())
