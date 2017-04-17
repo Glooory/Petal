@@ -32,7 +32,7 @@ public class RegisterModel extends BasePetalModel<ServiceManager, CacheManager>
     @Override
     public Observable<Void> register(String phoneNumber) {
         return mServiceManager.getUserService()
-                .sendIndentifyCode(phoneNumber)
+                .sendIndentifyCode("huaban_android_3.1.3", phoneNumber)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
