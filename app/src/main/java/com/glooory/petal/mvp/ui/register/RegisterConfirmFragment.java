@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.glooory.petal.R;
+import com.glooory.petal.app.util.SnackbarUtil;
 import com.glooory.petal.di.component.DaggerRegisterComponent;
 import com.glooory.petal.di.module.RegisterModule;
 import com.glooory.petal.mvp.presenter.RegisterPresenter;
@@ -29,6 +30,10 @@ public class RegisterConfirmFragment extends BasePetalFragment<RegisterPresenter
         implements RegisterContract.View{
 
     private static final String ARGS_PHONE_NUMBER = "phone";
+    public static final int PARAMETER_ERROR_CAPTCHA = 0;
+    public static final int PARAMETER_ERROR_USER_NAME = 1;
+    public static final int PARAMETER_ERROR_PASSWORD = 2;
+    public static final int PARAMETER_ERROR_DIFFERENT_PASSWORD = 3;
 
     @BindView(R.id.text_view_register_phone)
     TextView mTextViewPhone;
@@ -38,6 +43,8 @@ public class RegisterConfirmFragment extends BasePetalFragment<RegisterPresenter
     TextView mTextViewSendAgain;
     @BindView(R.id.edit_text_register_password)
     EditText mEditTextPassword;
+    @BindView(R.id.edit_text_register_password_confirm)
+    EditText mEditTextPasswordConfirm;
     @BindView(R.id.edit_text_register_user_name)
     EditText mEditTextUserName;
     @BindView(R.id.button_register)
@@ -90,6 +97,19 @@ public class RegisterConfirmFragment extends BasePetalFragment<RegisterPresenter
                     }
                 });
 
+        RxView.clicks(mButtonRegister)
+                .throttleFirst(500, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        mPresenter.onRegisterBtnClicked(mEditTextCaptcha.getText().toString(),
+                                mPhoneNumber,
+                                mEditTextUserName.getText().toString(),
+                                mEditTextPassword.getText().toString(),
+                                mEditTextPasswordConfirm.getText().toString());
+                    }
+                });
+
         mPresenter.startCountDown();
     }
 
@@ -110,7 +130,7 @@ public class RegisterConfirmFragment extends BasePetalFragment<RegisterPresenter
 
     @Override
     public void showMessage(String message) {
-
+        SnackbarUtil.showLong(getActivity(), message);
     }
 
     @Override
@@ -127,5 +147,24 @@ public class RegisterConfirmFragment extends BasePetalFragment<RegisterPresenter
     public void showCountDownFinish() {
         mTextViewSendAgain.setEnabled(true);
         mTextViewSendAgain.setText(R.string.msg_send_again);
+    }
+
+    @Override
+    public void showParameterError(int index, int errorMsgResId) {
+        showMessage(getString(errorMsgResId));
+        switch (index) {
+            case PARAMETER_ERROR_CAPTCHA:
+                mEditTextCaptcha.requestFocus();
+                break;
+            case PARAMETER_ERROR_USER_NAME:
+                mEditTextUserName.requestFocus();
+                break;
+            case PARAMETER_ERROR_PASSWORD:
+                mEditTextPassword.requestFocus();
+                break;
+            case PARAMETER_ERROR_DIFFERENT_PASSWORD:
+                mEditTextPasswordConfirm.requestFocus();
+                break;
+        }
     }
 }

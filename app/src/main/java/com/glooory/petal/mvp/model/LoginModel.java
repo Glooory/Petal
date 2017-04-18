@@ -60,7 +60,7 @@ public class LoginModel extends BasePetalModel<ServiceManager, CacheManager>
                 .flatMap(new Func1<UserBean, Observable<LatestEditBoardsBean>>() {
                     @Override
                     public Observable<LatestEditBoardsBean> call(UserBean userBean) {
-                        saveUserInfo(userBean, userAccount, password);
+                        saveUserInfo(userBean, userAccount);
                         return mServiceManager.getUserService().requestLatestBoardInfo(Constants.HTTP_RECOMMEND_TAGS);
                     }
                 });
@@ -88,7 +88,7 @@ public class LoginModel extends BasePetalModel<ServiceManager, CacheManager>
     }
 
     @Override
-    public void saveUserInfo(UserBean userBean, String userAccount, String password) {
+    public void saveUserInfo(UserBean userBean, String userAccount) {
         if (userBean == null) {
             return;
         }

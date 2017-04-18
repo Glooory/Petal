@@ -1,6 +1,8 @@
 package com.glooory.petal.mvp.ui.register;
 
+import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.model.entity.register.CaptchaResult;
+import com.glooory.petal.mvp.model.entity.register.RegisterResultBean;
 import com.jess.arms.mvp.BaseView;
 import com.jess.arms.mvp.IModel;
 
@@ -19,6 +21,8 @@ public interface RegisterContract {
         void showCountDownTick(String secondsLeft);
 
         void showCountDownFinish();
+
+        void showParameterError(int index, int errorMsgResId);
     }
 
     interface Model extends IModel {
@@ -26,5 +30,13 @@ public interface RegisterContract {
         boolean isPhoneNumber(String number);
 
         Observable<CaptchaResult> register(String phoneNumber);
+
+        Observable<RegisterResultBean> signup(String captcha, String tel, String userName, String password);
+
+        void saveToken(RegisterResultBean registerResultBean);
+
+        Observable<UserBean> requestUserMeInfo(String userAccount);
+
+        void saveUserInfo(UserBean userBean, String userAccount);
     }
 }

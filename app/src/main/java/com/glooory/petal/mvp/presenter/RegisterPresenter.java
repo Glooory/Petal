@@ -1,10 +1,14 @@
 package com.glooory.petal.mvp.presenter;
 
 import android.os.CountDownTimer;
+import android.text.TextUtils;
 
 import com.glooory.petal.R;
 import com.glooory.petal.app.rx.BaseSubscriber;
+import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.model.entity.register.CaptchaResult;
+import com.glooory.petal.mvp.model.entity.register.RegisterResultBean;
+import com.glooory.petal.mvp.ui.register.RegisterConfirmFragment;
 import com.glooory.petal.mvp.ui.register.RegisterContract;
 import com.jess.arms.utils.RxUtils;
 
@@ -81,5 +85,82 @@ public class RegisterPresenter extends BasePetalPresenter<RegisterContract.View,
         }
         mIdentityCodeCountDownTimer = null;
         super.onDestroy();
+    }
+
+    public void onRegisterBtnClicked(String captcha, final String tel, String userName, String password,
+            String confirmedPassword) {
+        if (TextUtils.isEmpty(captcha)) {
+            mRootView.showParameterError(RegisterConfirmFragment.PARAMETER_ERROR_CAPTCHA,
+                    R.string.msg_captcha_is_empty);
+            return;
+        }
+
+        if (TextUtils.isEmpty(userName)) {
+            mRootView.showParameterError(RegisterConfirmFragment.PARAMETER_ERROR_USER_NAME,
+                    R.string.msg_user_name_is_empty);
+            return;
+        }
+
+        if (!isUserNameValid(userName)) {
+            mRootView.showParameterError(RegisterConfirmFragment.PARAMETER_ERROR_USER_NAME,
+                    R.string.msg_user_name_invalid);
+            return;
+        }
+
+        if (TextUtils.isEmpty(password)) {
+            mRootView.showParameterError(RegisterConfirmFragment.PARAMETER_ERROR_PASSWORD,
+                    R.string.msg_password_is_empty);
+            return;
+        }
+
+        if (password.length() < 6 || password.length() > 32) {
+            mRootView.showParameterError(RegisterConfirmFragment.PARAMETER_ERROR_PASSWORD,
+                    R.string.msg_password_invalid);
+            return;
+        }
+
+        if (!password.equals(confirmedPassword)) {
+            mRootView.showParameterError(RegisterConfirmFragment.PARAMETER_ERROR_DIFFERENT_PASSWORD,
+                    R.string.msg_password_different);
+            return;
+        }
+
+        mModel.signup(captcha, tel, userName, password)
+                .compose(RxUtils.<RegisterResultBean>bindToLifecycle(mRootView))
+                .subscribe(new BaseSubscriber<RegisterResultBean>() {
+                    @Override
+                    public void onNext(RegisterResultBean registerResultBean) {
+                        if (registerResultBean.getErr() == 0) {
+                            // TODO: 17/4/18 Save UserInfo token and userId
+                            mModel.saveToken(registerResultBean);
+                            requestUserMeInfo(tel);
+                        } else {
+                            mRootView.showMessage(registerResultBean.getMsg());
+                        }
+                    }
+                });
+    }
+
+    /**
+     * 请求用户自己的用户信息
+     */
+    private void requestUserMeInfo(final String userAccount) {
+        mModel.requestUserMeInfo(userAccount)
+                .subscribe(new BaseSubscriber<UserBean>() {
+                    @Override
+                    public void onNext(UserBean userBean) {
+                        mModel.saveUserInfo(userBean, userAccount);
+                    }
+                });
+    }
+
+    public boolean isUserNameValid(String userName) {
+        if (userName.contains("@") ||
+                userName.contains("#") ||
+                userName.contains("$") ||
+                userName.contains(" ")) {
+            return false;
+        }
+        return true;
     }
 }

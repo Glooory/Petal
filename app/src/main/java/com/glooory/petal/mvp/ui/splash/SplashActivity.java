@@ -146,7 +146,6 @@ public class SplashActivity extends BasePetalActivity {
     }
 
     private void saveToken(TokenBean tokenBean) {
-        Logger.d(tokenBean);
         SPUtils.builder()
                 .addData(Constants.PREF_LOGIN_TIME, System.currentTimeMillis())
                 .addData(Constants.PREF_ACCESS_TOKEN, tokenBean.getAccessToken())

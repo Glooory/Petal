@@ -5,6 +5,7 @@ import com.glooory.petal.mvp.model.entity.PinListBean;
 import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.model.entity.login.TokenBean;
 import com.glooory.petal.mvp.model.entity.register.CaptchaResult;
+import com.glooory.petal.mvp.model.entity.register.RegisterResultBean;
 import com.glooory.petal.mvp.model.entity.user.UserBoardListBean;
 import com.glooory.petal.mvp.model.entity.user.UserListBean;
 
@@ -131,4 +132,15 @@ public interface UserService {
     @POST("captcha")
     Observable<CaptchaResult> sendIndentifyCode(@Header("User-Agent") String userAgent,
             @Field("tel") String tel);
+
+    // 电话号码注册
+    @FormUrlEncoded
+    @POST("signup")
+    Observable<RegisterResultBean> signup(@Field("captcha") String captcha,
+            @Field("grant_type") String grantType,
+            @Field("password") String password,
+            @Field("password_confirm") String confirmedPassword,
+            @Field("tel") String tel,
+            @Field("username") String userName);
+
 }

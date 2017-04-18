@@ -43,7 +43,7 @@ public interface LoginContract {
 
         Observable<LatestEditBoardsBean> requestBoardsInfo();
 
-        void saveUserInfo(UserBean userBean, String userAccount, String password);
+        void saveUserInfo(UserBean userBean, String userAccount);
 
         void saveUserBoardInfo(List<BoardBean> boardList);
     }

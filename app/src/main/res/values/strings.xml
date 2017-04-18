@@ -46,7 +46,14 @@
     <string name="format_send_again">再次发送(%d)</string>
     <string name="msg_send_again">再次发送</string>
     <string name="msg_password_edit_hint">密码（大于 6 位的字母和数字）</string>
+    <string name="msg_password_confirm_hint">确认密码</string>
     <string name="msg_user_name_hint">昵称</string>
+    <string name="msg_captcha_is_empty">验证码不能为空</string>
+    <string name="msg_user_name_is_empty">用户名不能为空</string>
+    <string name="msg_user_name_invalid">昵称不能包含@、#、$ 以及空格等特殊字符</string>
+    <string name="msg_password_is_empty">密码不能为空</string>
+    <string name="msg_password_invalid">密码长度必须为6-32个字符</string>
+    <string name="msg_password_different">两次输入的密码不一致</string>
 
     <string name="msg_network_unavailable">没有网络连接，请检查网络设置</string>
     <string name="msg_check_and_retry">网络错误，请检查网络设置或稍后重试</string>

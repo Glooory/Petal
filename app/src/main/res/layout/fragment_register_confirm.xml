@@ -54,6 +54,13 @@
         </LinearLayout>
 
         <EditText
+            android:id="@+id/edit_text_register_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:hint="@string/msg_user_name_hint"/>
+
+        <EditText
             android:id="@+id/edit_text_register_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -62,11 +69,12 @@
             android:inputType="textPassword"/>
 
         <EditText
-            android:id="@+id/edit_text_register_user_name"
+            android:id="@+id/edit_text_register_password_confirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:hint="@string/msg_user_name_hint"/>
+            android:hint="@string/msg_password_confirm_hint"
+            android:inputType="textPassword"/>
 
         <Button
             android:id="@+id/button_register"
