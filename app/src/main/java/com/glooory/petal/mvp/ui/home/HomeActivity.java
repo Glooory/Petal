@@ -1,6 +1,7 @@
 package com.glooory.petal.mvp.ui.home;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
@@ -23,6 +24,7 @@ import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.rx.BaseSubscriber;
 import com.glooory.petal.app.rx.RxBus;
+import com.glooory.petal.app.util.DialogUtils;
 import com.glooory.petal.app.util.SPUtils;
 import com.glooory.petal.app.util.SnackbarUtil;
 import com.glooory.petal.mvp.model.entity.BasicUserInfoBean;
@@ -61,6 +63,8 @@ public class HomeActivity extends BasePetalActivity
     DrawerLayout mDrawerLayout;
     @BindView(R.id.appbar_layout)
     AppBarLayout mAppBar;
+    @BindView(R.id.navigation)
+    NavigationView mNavigationView;
 
     //侧滑菜单栏头像
     private SimpleDraweeView mAvatarImg;
@@ -113,11 +117,8 @@ public class HomeActivity extends BasePetalActivity
                 mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        NavigationView navigationView = ButterKnife.findById(this, R.id.navigation);
-        navigationView.setNavigationItemSelectedListener(this);
-        initNavigationView(navigationView);
-        Menu menu = navigationView.getMenu();
-        menu.getItem(isLogin() ? 1 : 0).setChecked(true);
+        mNavigationView.setNavigationItemSelectedListener(this);
+        initNavigationView(mNavigationView);
     }
 
     private void initNavigationView(NavigationView navigationView) {
@@ -146,6 +147,12 @@ public class HomeActivity extends BasePetalActivity
     protected void onResume() {
         super.onResume();
         registerUserInfoEvent();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        initData();
     }
 
     private void registerUserInfoEvent() {
@@ -211,11 +218,9 @@ public class HomeActivity extends BasePetalActivity
         int itemId = item.getItemId();
         if (itemId == R.id.nav_latest) {
             createHomeFragment(HomeFragment.PIN_TYPE_LATEST);
-            getSupportActionBar().setTitle(R.string.nav_title_latest);
         } else if (itemId == R.id.nav_following) {
             if (isLogin()) {
                 createHomeFragment(HomeFragment.PIN_TYPE_FOLLOWING);
-                getSupportActionBar().setTitle(R.string.nav_title_following);
             } else {
                 SnackbarUtil.showLong(HomeActivity.this, R.string.msg_login_hint,
                         R.string.msg_go_login, new View.OnClickListener() {
@@ -229,7 +234,6 @@ public class HomeActivity extends BasePetalActivity
             }
         } else if (itemId == R.id.nav_popular) {
             createHomeFragment(HomeFragment.PIN_TYPE_POPULAR);
-            getSupportActionBar().setTitle(R.string.nav_title_popular);
         } else if (itemId == R.id.nav_discover) {
             SearchActivity.launch(HomeActivity.this);
         } else {
@@ -238,11 +242,38 @@ public class HomeActivity extends BasePetalActivity
             } else if (itemId == R.id.nav_settings) {
                 // TODO: 17/3/4 Launch SettingsActivity
             } else if (itemId == R.id.nav_logout) {
-                // TODO: 17/3/4 logout
+                handleLogout();
             }
         }
         closeDrawer();
         return true;
+    }
+
+    private void handleLogout() {
+        if (!isLogin()) {
+            return;
+        }
+        DialogUtils.show(this, R.string.msg_logout_warning, R.string.msg_cancel, R.string.msg_confirm,
+                null,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SPUtils.clear();
+                        createHomeFragment(HomeFragment.PIN_TYPE_LATEST);
+                        clearUserInfo();
+                        SnackbarUtil.showLong(HomeActivity.this, R.string.msg_logout_success);
+                    }
+                });
+    }
+
+    private void clearUserInfo() {
+        mAvatarImg.setController(null);
+        mAvatarImg.setImageResource(R.drawable.ic_avatar_24dp);
+        mTvUserName.setText(R.string.msg_nav_login_hint);
+        mTvCollectionCount.setText(R.string.msg_count_default);
+        mTvBoardCount.setText(R.string.msg_count_default);
+        mTvFollowingCount.setText(R.string.msg_count_default);
+        mTvFollowerCount.setText(R.string.msg_count_default);
     }
 
     /**
@@ -254,6 +285,28 @@ public class HomeActivity extends BasePetalActivity
                 .beginTransaction()
                 .replace(R.id.container, HomeFragment.newInstance(pinType))
                 .commit();
+        int toolbarTitleResId;
+        int menuCheckedIndex;
+        switch (pinType) {
+            case HomeFragment.PIN_TYPE_LATEST:
+                toolbarTitleResId = R.string.nav_title_latest;
+                menuCheckedIndex = 0;
+                break;
+            case HomeFragment.PIN_TYPE_FOLLOWING:
+                toolbarTitleResId = R.string.nav_title_following;
+                menuCheckedIndex = 1;
+                break;
+            case HomeFragment.PIN_TYPE_POPULAR:
+                toolbarTitleResId = R.string.nav_title_popular;
+                menuCheckedIndex = 2;
+                break;
+            default:
+                toolbarTitleResId = R.string.nav_title_latest;
+                menuCheckedIndex = 0;
+                break;
+        }
+        getSupportActionBar().setTitle(toolbarTitleResId);
+        mNavigationView.getMenu().getItem(menuCheckedIndex).setChecked(true);
     }
 
     @Override

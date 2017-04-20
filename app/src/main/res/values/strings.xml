@@ -14,6 +14,9 @@
 
     <string name="msg_loading">正在加载...</string>
     <string name="msg_load_failed_click_retry">加载失败!</string>
+    <string name="msg_logout_warning">退出登录?</string>
+    <string name="msg_logout_success">退出登录成功</string>
+    <string name="msg_count_default">0</string>
 
     <string name="msg_nav_login_hint">点我登录</string>
     <string name="collection">采集</string>
