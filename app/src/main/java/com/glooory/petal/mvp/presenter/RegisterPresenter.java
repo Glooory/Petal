@@ -87,7 +87,7 @@ public class RegisterPresenter extends BasePetalPresenter<RegisterContract.View,
         super.onDestroy();
     }
 
-    public void onRegisterBtnClicked(String captcha, final String tel, String userName, String password,
+    public void handleRegister(String captcha, final String tel, String userName, String password,
             String confirmedPassword) {
         if (TextUtils.isEmpty(captcha)) {
             mRootView.showParameterError(RegisterConfirmFragment.PARAMETER_ERROR_CAPTCHA,

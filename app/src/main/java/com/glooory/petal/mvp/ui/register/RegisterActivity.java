@@ -82,8 +82,7 @@ public class RegisterActivity extends BasePetalActivity {
         if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
             finishConfirmFragment();
         }
-        if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
-            finishRegisterFragment();
+        if (getSupportFragmentManager().getBackStackEntryCount() <= 1) {
             finishSelf();
         }
     }
@@ -92,12 +91,6 @@ public class RegisterActivity extends BasePetalActivity {
         getSupportFragmentManager().beginTransaction()
                 .remove(mRegisterConfirmFragment)
                 .show(mRegisterFragment)
-                .commit();
-    }
-
-    private void finishRegisterFragment() {
-        getSupportFragmentManager().beginTransaction()
-                .remove(mRegisterFragment)
                 .commit();
     }
 

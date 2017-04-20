@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import com.glooory.petal.di.component.DaggerRegisterComponent;
 import com.glooory.petal.di.module.RegisterModule;
 import com.glooory.petal.mvp.presenter.RegisterPresenter;
 import com.jakewharton.rxbinding.view.RxView;
+import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.util.concurrent.TimeUnit;
 
@@ -21,6 +23,7 @@ import butterknife.BindView;
 import common.AppComponent;
 import common.BasePetalFragment;
 import rx.functions.Action1;
+import rx.functions.Func1;
 
 /**
  * Created by Glooory on 17/4/17.
@@ -97,20 +100,37 @@ public class RegisterConfirmFragment extends BasePetalFragment<RegisterPresenter
                     }
                 });
 
+        RxTextView.editorActions(mEditTextPasswordConfirm, new Func1<Integer, Boolean>() {
+            @Override
+            public Boolean call(Integer integer) {
+                return integer == EditorInfo.IME_ACTION_DONE;
+            }
+        }).throttleFirst(500, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        handleRegister();
+                    }
+                });
+
         RxView.clicks(mButtonRegister)
                 .throttleFirst(500, TimeUnit.MILLISECONDS)
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        mPresenter.onRegisterBtnClicked(mEditTextCaptcha.getText().toString(),
-                                mPhoneNumber,
-                                mEditTextUserName.getText().toString(),
-                                mEditTextPassword.getText().toString(),
-                                mEditTextPasswordConfirm.getText().toString());
+                        handleRegister();
                     }
                 });
 
         mPresenter.startCountDown();
+    }
+
+    private void handleRegister() {
+        mPresenter.handleRegister(mEditTextCaptcha.getText().toString(),
+                mPhoneNumber,
+                mEditTextUserName.getText().toString(),
+                mEditTextPassword.getText().toString(),
+                mEditTextPasswordConfirm.getText().toString());
     }
 
     @Override
@@ -140,13 +160,17 @@ public class RegisterConfirmFragment extends BasePetalFragment<RegisterPresenter
 
     @Override
     public void showCountDownTick(String secondsLeft) {
-        mTextViewSendAgain.setText(secondsLeft);
+        if (mTextViewSendAgain != null) {
+            mTextViewSendAgain.setText(secondsLeft);
+        }
     }
 
     @Override
     public void showCountDownFinish() {
-        mTextViewSendAgain.setEnabled(true);
-        mTextViewSendAgain.setText(R.string.msg_send_again);
+        if (mTextViewSendAgain != null) {
+            mTextViewSendAgain.setEnabled(true);
+            mTextViewSendAgain.setText(R.string.msg_send_again);
+        }
     }
 
     @Override
