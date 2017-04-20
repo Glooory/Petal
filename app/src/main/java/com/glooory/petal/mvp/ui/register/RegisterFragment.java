@@ -120,4 +120,9 @@ public class RegisterFragment extends BasePetalFragment<RegisterPresenter>
     public void showCountDownFinish() {
 
     }
+
+    @Override
+    public void showParameterError(int index, int errorMsgResId) {
+
+    }
 }

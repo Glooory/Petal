@@ -6,6 +6,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.glooory.petal.R;
+import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.rx.BaseSubscriber;
 import com.glooory.petal.app.rx.RxBus;
 import com.glooory.petal.app.widget.WindmillLoadMoreFooter;
@@ -18,7 +19,6 @@ import com.glooory.petal.mvp.ui.pindetail.PinDetailActivity;
 import com.glooory.petal.mvp.ui.user.UserActivity;
 import com.jess.arms.di.scope.FragmentScope;
 import com.jess.arms.utils.RxUtils;
-import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ import rx.functions.Action0;
 public class HomePresenter extends BasePetalPresenter<HomeContract.View, HomeContract.Model> {
 
     private int mLastMaxId;
-    HomePinAdapter mAdapter;
+    private HomePinAdapter mAdapter;
 
     @Inject
     HomePresenter(HomeContract.View view, HomeContract.Model model, HomePinAdapter homePinAdapter) {
@@ -78,14 +78,18 @@ public class HomePresenter extends BasePetalPresenter<HomeContract.View, HomeCon
                 .subscribe(new BaseSubscriber<List<PinBean>>() {
                     @Override
                     public void onNext(List<PinBean> pinList) {
+                        if (pinList.size() == 0) {
+                            mRootView.showNoMoreDataFooter(true);
+                            return;
+                        }
                         mAdapter.setNewData(pinList);
                         saveLastPinMaxId(pinList);
+                        mRootView.showNoMoreDataFooter(pinList.size() < Constants.PER_PAGE_LIMIT);
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         super.onError(e);
-                        Logger.d("requestPinsFirstTime() -> onError()");
                     }
                 });
     }
@@ -99,9 +103,15 @@ public class HomePresenter extends BasePetalPresenter<HomeContract.View, HomeCon
                 .subscribe(new BaseSubscriber<List<PinBean>>() {
                     @Override
                     public void onNext(List<PinBean> pinList) {
+                        if (pinList.size() == 0) {
+                            mRootView.showNoMoreDataFooter(true);
+                            mAdapter.loadMoreComplete();
+                            return;
+                        }
                         mAdapter.addData(pinList);
                         saveLastPinMaxId(pinList);
                         mAdapter.loadMoreComplete();
+                        mRootView.showNoMoreDataFooter(pinList.size() < Constants.PER_PAGE_LIMIT);
                     }
 
                     @Override
@@ -190,7 +200,7 @@ public class HomePresenter extends BasePetalPresenter<HomeContract.View, HomeCon
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         mAdapter = null;
+        super.onDestroy();
     }
 }

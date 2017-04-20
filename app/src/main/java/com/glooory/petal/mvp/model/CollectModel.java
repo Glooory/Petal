@@ -35,7 +35,6 @@ public class CollectModel extends BasePetalModel<ServiceManager, CacheManager>
         super(serviceManager, cacheManager);
     }
 
-
     @Override
     public Observable<LatestEditBoardsBean> getUserLatestBoards() {
         return mServiceManager.getUserService()

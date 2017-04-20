@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import com.glooory.petal.R;
 import com.glooory.petal.app.adapter.NoFilterringAdapter;
 import com.glooory.petal.app.rx.BaseSubscriber;
-import com.glooory.petal.mvp.model.entity.LatestEditBoardsBean;
+import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.ui.login.LoginContract;
 import com.jess.arms.di.scope.ActivityScope;
 
@@ -17,7 +17,6 @@ import javax.inject.Inject;
 
 import common.BasePetalPresenter;
 import common.PetalApplication;
-import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
@@ -67,7 +66,6 @@ public class LoginPresenter extends BasePetalPresenter<LoginContract.View, Login
 
     private void performLogin(final String userAccount, final String password) {
         Subscription s = mModel.requestToken(userAccount, password)
-                .retryWhen(new RetryWithDelay(1, 1))
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
@@ -82,10 +80,9 @@ public class LoginPresenter extends BasePetalPresenter<LoginContract.View, Login
                         mRootView.hideLoading();
                     }
                 })
-                .subscribe(new BaseSubscriber<LatestEditBoardsBean>() {
+                .subscribe(new BaseSubscriber<UserBean>() {
                     @Override
-                    public void onNext(LatestEditBoardsBean latestEditBoardsBean) {
-                        mModel.saveUserBoardInfo(latestEditBoardsBean.getBoards());
+                    public void onNext(UserBean userBean) {
                         mRootView.showLoginSuccess();
                     }
 

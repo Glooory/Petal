@@ -11,6 +11,7 @@ import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.ui.home.HomeContract;
 import com.jess.arms.di.scope.FragmentScope;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -38,17 +39,14 @@ public class HomeModel extends BasePetalModel<ServiceManager, CacheManager>
     public Observable<List<PinBean>> getLatestAllPins() {
         return mServiceManager.getPinService()
                 .getLatestAllPins(Constants.PER_PAGE_LIMIT)
-                .retryWhen(new RetryWithDelay(2, 2))
+                .retryWhen(new RetryWithDelay(1, 1))
                 .map(new Func1<PinListBean, List<PinBean>>() {
                     @Override
                     public List<PinBean> call(PinListBean pinListBean) {
+                        if (pinListBean.getPins() == null) {
+                            pinListBean.setPins(new ArrayList<PinBean>(0));
+                        }
                         return pinListBean.getPins();
-                    }
-                })
-                .filter(new Func1<List<PinBean>, Boolean>() {
-                    @Override
-                    public Boolean call(List<PinBean> pinBeen) {
-                        return pinBeen != null && pinBeen.size() > 0;
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -59,17 +57,14 @@ public class HomeModel extends BasePetalModel<ServiceManager, CacheManager>
     public Observable<List<PinBean>> getLatestAllPinsNext(int maxPinId) {
         return mServiceManager.getPinService()
                 .getLatestAllPinsNext(maxPinId, Constants.PER_PAGE_LIMIT)
-                .retryWhen(new RetryWithDelay(2, 2))
+                .retryWhen(new RetryWithDelay(1, 1))
                 .map(new Func1<PinListBean, List<PinBean>>() {
                     @Override
                     public List<PinBean> call(PinListBean pinListBean) {
+                        if (pinListBean.getPins() == null) {
+                            pinListBean.setPins(new ArrayList<PinBean>(0));
+                        }
                         return pinListBean.getPins();
-                    }
-                })
-                .filter(new Func1<List<PinBean>, Boolean>() {
-                    @Override
-                    public Boolean call(List<PinBean> pinBeen) {
-                        return pinBeen != null && pinBeen.size() > 0;
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -80,17 +75,14 @@ public class HomeModel extends BasePetalModel<ServiceManager, CacheManager>
     public Observable<List<PinBean>> getLatestFollowingPins() {
         return mServiceManager.getPinService()
                 .getLatestFollowingPins(Constants.PER_PAGE_LIMIT)
-                .retryWhen(new RetryWithDelay(2, 2))
+                .retryWhen(new RetryWithDelay(1, 1))
                 .map(new Func1<PinListBean, List<PinBean>>() {
                     @Override
                     public List<PinBean> call(PinListBean pinListBean) {
+                        if (pinListBean.getPins() == null) {
+                            pinListBean.setPins(new ArrayList<PinBean>(0));
+                        }
                         return pinListBean.getPins();
-                    }
-                })
-                .filter(new Func1<List<PinBean>, Boolean>() {
-                    @Override
-                    public Boolean call(List<PinBean> pinBeen) {
-                        return pinBeen != null && pinBeen.size() > 0;
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -101,17 +93,14 @@ public class HomeModel extends BasePetalModel<ServiceManager, CacheManager>
     public Observable<List<PinBean>> getLatestFollowingPinsNext(int maxPinId) {
         return mServiceManager.getPinService()
                 .getLatestFollowingPinsNext(maxPinId, Constants.PER_PAGE_LIMIT)
-                .retryWhen(new RetryWithDelay(2, 2))
+                .retryWhen(new RetryWithDelay(1, 1))
                 .map(new Func1<PinListBean, List<PinBean>>() {
                     @Override
                     public List<PinBean> call(PinListBean pinListBean) {
+                        if (pinListBean.getPins() == null) {
+                            pinListBean.setPins(new ArrayList<PinBean>(0));
+                        }
                         return pinListBean.getPins();
-                    }
-                })
-                .filter(new Func1<List<PinBean>, Boolean>() {
-                    @Override
-                    public Boolean call(List<PinBean> pinBeen) {
-                        return pinBeen != null && pinBeen.size() > 0;
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -122,17 +111,14 @@ public class HomeModel extends BasePetalModel<ServiceManager, CacheManager>
     public Observable<List<PinBean>> getLatestPopularPins() {
         return mServiceManager.getPinService()
                 .getLatestPopularPins(Constants.PER_PAGE_LIMIT)
-                .retryWhen(new RetryWithDelay(2, 2))
+                .retryWhen(new RetryWithDelay(1, 1))
                 .map(new Func1<PinListBean, List<PinBean>>() {
                     @Override
                     public List<PinBean> call(PinListBean pinListBean) {
+                        if (pinListBean.getPins() == null) {
+                            pinListBean.setPins(new ArrayList<PinBean>(0));
+                        }
                         return pinListBean.getPins();
-                    }
-                })
-                .filter(new Func1<List<PinBean>, Boolean>() {
-                    @Override
-                    public Boolean call(List<PinBean> pinBeen) {
-                        return pinBeen != null && pinBeen.size() > 0;
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -143,17 +129,14 @@ public class HomeModel extends BasePetalModel<ServiceManager, CacheManager>
     public Observable<List<PinBean>> getLatestPopularPinsNext(int maxPinId) {
         return mServiceManager.getPinService()
                 .getLatestPopularPinsNext(maxPinId, Constants.PER_PAGE_LIMIT)
-                .retryWhen(new RetryWithDelay(2, 2))
+                .retryWhen(new RetryWithDelay(1, 1))
                 .map(new Func1<PinListBean, List<PinBean>>() {
                     @Override
                     public List<PinBean> call(PinListBean pinListBean) {
+                        if (pinListBean.getPins() == null) {
+                            pinListBean.setPins(new ArrayList<PinBean>(0));
+                        }
                         return pinListBean.getPins();
-                    }
-                })
-                .filter(new Func1<List<PinBean>, Boolean>() {
-                    @Override
-                    public Boolean call(List<PinBean> pinBeen) {
-                        return pinBeen != null && pinBeen.size() > 0;
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -171,7 +154,7 @@ public class HomeModel extends BasePetalModel<ServiceManager, CacheManager>
                     public BasicUserInfoBean call(UserBean userBean) {
                         BasicUserInfoBean userInfoBean = new BasicUserInfoBean();
                         userInfoBean.setUserName(userBean.getUsername());
-                        userInfoBean.setAvatarKey(userBean.getAvatar().getKey());
+                        userInfoBean.setAvatarKey(userBean.getAvatar() == null ? "" : userBean.getAvatar().getKey());
                         userInfoBean.setPinCount(String.valueOf(userBean.getPinCount()));
                         userInfoBean.setBoardCount(String.valueOf(userBean.getBoardCount()));
                         userInfoBean.setFollowingCount(String.valueOf(userBean.getFollowingCount()));

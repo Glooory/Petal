@@ -20,6 +20,8 @@ public interface HomeContract {
         void setAdapter(HomePinAdapter adapter);
 
         void showLoadingMore();
+
+        void showNoMoreDataFooter(boolean showAnyway);
     }
 
     interface Model extends IModel{

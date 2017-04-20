@@ -43,6 +43,7 @@ public class HomeFragment extends BasePetalFragment<HomePresenter> implements Ho
 
     private int mTypeIndex;
     HomePinAdapter mAdapter;
+    private View mNoMoreDataFooter;
 
     public static HomeFragment newInstance(int pinTypeIndex) {
         Bundle args = new Bundle();
@@ -62,6 +63,8 @@ public class HomeFragment extends BasePetalFragment<HomePresenter> implements Ho
     protected View initView(ViewGroup container) {
         mRootView = LayoutInflater.from(getActivity())
                 .inflate(R.layout.view_swiperefreshlayout_recyclerview, container, false);
+        mNoMoreDataFooter = LayoutInflater.from(getActivity())
+                .inflate(R.layout.view_footer_no_more_data, null);
         return mRootView;
     }
 
@@ -158,7 +161,30 @@ public class HomeFragment extends BasePetalFragment<HomePresenter> implements Ho
     }
 
     @Override
+    public void showNoMoreDataFooter(boolean showAnyway) {
+        if (showAnyway) {
+            if (mNoMoreDataFooter.getParent() != null) {
+                ((ViewGroup) mNoMoreDataFooter.getParent()).removeView(mNoMoreDataFooter);
+            }
+            mRecyclerView.post(new Runnable() {
+                @Override
+                public void run() {
+                    mAdapter.loadMoreEnd();
+                    mAdapter.addFooterView(mNoMoreDataFooter);
+                }
+            });
+        }
+    }
+
+    @Override
     public void onRefresh() {
         mPresenter.requestPinsFirstTime(mTypeIndex);
+    }
+
+    @Override
+    public void onDestroy() {
+        mAdapter = null;
+        mNoMoreDataFooter = null;
+        super.onDestroy();
     }
 }
