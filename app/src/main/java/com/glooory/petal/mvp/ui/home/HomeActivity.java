@@ -55,6 +55,8 @@ public class HomeActivity extends BasePetalActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         View.OnClickListener{
 
+    private static final String EXTRA_NOTICE = "notice";
+
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.fab)
@@ -82,6 +84,12 @@ public class HomeActivity extends BasePetalActivity
 
     public static void launch(Activity activity) {
         Intent intent = new Intent(activity, HomeActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public static void launch(Activity activity, String notice) {
+        Intent intent = new Intent(activity, HomeActivity.class);
+        intent.putExtra(EXTRA_NOTICE, notice);
         activity.startActivity(intent);
     }
 
@@ -136,6 +144,11 @@ public class HomeActivity extends BasePetalActivity
 
     @Override
     protected void initData() {
+        String noticeMsg = getIntent().getStringExtra(EXTRA_NOTICE);
+        if (!TextUtils.isEmpty(noticeMsg)) {
+            SnackbarUtil.showLong(HomeActivity.this, noticeMsg);
+        }
+
         if (isLogin()) {
             createHomeFragment(HomeFragment.PIN_TYPE_FOLLOWING);
         } else {
@@ -152,6 +165,7 @@ public class HomeActivity extends BasePetalActivity
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        setIntent(intent);
         initData();
     }
 

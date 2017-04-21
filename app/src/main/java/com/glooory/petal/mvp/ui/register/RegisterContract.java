@@ -23,6 +23,8 @@ public interface RegisterContract {
         void showCountDownFinish();
 
         void showParameterError(int index, int errorMsgResId);
+
+        void showRegisterSuccess();
     }
 
     interface Model extends IModel {

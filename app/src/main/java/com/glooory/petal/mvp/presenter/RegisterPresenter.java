@@ -49,7 +49,8 @@ public class RegisterPresenter extends BasePetalPresenter<RegisterContract.View,
         if (mModel.isPhoneNumber(phoneNumber)) {
             register(phoneNumber);
         } else {
-            mRootView.showMessage(PetalApplication.getContext().getString(R.string.msg_invalid_phone_number));
+            mRootView.showParameterError(RegisterConfirmFragment.PARAMETER_ERROR_PHONE_NUMBER,
+                    R.string.msg_invalid_phone_number);
         }
     }
 
@@ -150,6 +151,7 @@ public class RegisterPresenter extends BasePetalPresenter<RegisterContract.View,
                     @Override
                     public void onNext(UserBean userBean) {
                         mModel.saveUserInfo(userBean, userAccount);
+                        mRootView.showRegisterSuccess();
                     }
                 });
     }

@@ -24,6 +24,7 @@
         <activity
             android:name=".mvp.ui.splash.SplashActivity"
             android:screenOrientation="portrait"
+            android:noHistory="true"
             android:theme="@style/Theme.Petal.Light">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -40,12 +41,14 @@
         <activity
             android:name=".mvp.ui.login.LoginActivity"
             android:screenOrientation="portrait"
+            android:noHistory="true"
             android:theme="@style/Theme.Petal.Login"
             android:windowSoftInputMode="adjustResize"/>
 
         <activity
             android:name=".mvp.ui.register.RegisterActivity"
             android:label="@string/new_collect"
+            android:noHistory="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Petal.Search"/>
 

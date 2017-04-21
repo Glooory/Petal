@@ -85,7 +85,8 @@ public class RegisterModel extends BasePetalModel<ServiceManager, CacheManager>
                 .addData(Constants.PREF_USER_NAME, userBean.getUsername())
                 .addData(Constants.PREF_USER_ID, userBean.getUserId())
                 .addData(Constants.PREF_USER_EMAIL, userBean.getEmail())
-                .addData(Constants.PREF_USER_AVATAR_KEY, userBean.getAvatar().getKey())
+                .addData(Constants.PREF_USER_AVATAR_KEY,
+                        userBean.getAvatar() == null ? "" : userBean.getAvatar().getKey())
                 .build();
 
         Set<String> historyAccounts = SPUtils.getHistoryAccounts();

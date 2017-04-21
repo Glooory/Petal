@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 
 import com.glooory.petal.R;
+import com.glooory.petal.mvp.ui.login.LoginActivity;
 
 import butterknife.BindView;
 import common.AppComponent;
@@ -23,6 +24,7 @@ public class RegisterActivity extends BasePetalActivity {
 
     private RegisterFragment mRegisterFragment;
     private RegisterConfirmFragment mRegisterConfirmFragment;
+    private boolean mIsRegisterConfirmFragmentShowed;
 
     public static void launch(Activity activity) {
         Intent intent = new Intent(activity, RegisterActivity.class);
@@ -64,6 +66,7 @@ public class RegisterActivity extends BasePetalActivity {
                 .add(R.id.container, mRegisterConfirmFragment)
                 .addToBackStack(RegisterConfirmFragment.class.getSimpleName())
                 .commit();
+        mIsRegisterConfirmFragmentShowed = true;
     }
 
     @Override
@@ -79,10 +82,10 @@ public class RegisterActivity extends BasePetalActivity {
      * 处理 back 点击事件
      */
     private void handleBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+        if (mIsRegisterConfirmFragmentShowed) {
             finishConfirmFragment();
-        }
-        if (getSupportFragmentManager().getBackStackEntryCount() <= 1) {
+        } else {
+            LoginActivity.launch(RegisterActivity.this, true);
             finishSelf();
         }
     }
@@ -92,6 +95,7 @@ public class RegisterActivity extends BasePetalActivity {
                 .remove(mRegisterConfirmFragment)
                 .show(mRegisterFragment)
                 .commit();
+        mIsRegisterConfirmFragmentShowed = false;
     }
 
     @Override

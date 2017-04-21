@@ -14,6 +14,7 @@ import com.glooory.petal.app.util.SnackbarUtil;
 import com.glooory.petal.di.component.DaggerRegisterComponent;
 import com.glooory.petal.di.module.RegisterModule;
 import com.glooory.petal.mvp.presenter.RegisterPresenter;
+import com.glooory.petal.mvp.ui.home.HomeActivity;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
@@ -37,6 +38,7 @@ public class RegisterConfirmFragment extends BasePetalFragment<RegisterPresenter
     public static final int PARAMETER_ERROR_USER_NAME = 1;
     public static final int PARAMETER_ERROR_PASSWORD = 2;
     public static final int PARAMETER_ERROR_DIFFERENT_PASSWORD = 3;
+    public static final int PARAMETER_ERROR_PHONE_NUMBER = 4;
 
     @BindView(R.id.text_view_register_phone)
     TextView mTextViewPhone;
@@ -126,11 +128,19 @@ public class RegisterConfirmFragment extends BasePetalFragment<RegisterPresenter
     }
 
     private void handleRegister() {
+        clearErrorInfo();
         mPresenter.handleRegister(mEditTextCaptcha.getText().toString(),
                 mPhoneNumber,
                 mEditTextUserName.getText().toString(),
                 mEditTextPassword.getText().toString(),
                 mEditTextPasswordConfirm.getText().toString());
+    }
+
+    private void clearErrorInfo() {
+        mEditTextCaptcha.setError(null);
+        mEditTextUserName.setError(null);
+        mEditTextPassword.setError(null);
+        mEditTextPasswordConfirm.setError(null);
     }
 
     @Override
@@ -175,20 +185,29 @@ public class RegisterConfirmFragment extends BasePetalFragment<RegisterPresenter
 
     @Override
     public void showParameterError(int index, int errorMsgResId) {
-        showMessage(getString(errorMsgResId));
         switch (index) {
             case PARAMETER_ERROR_CAPTCHA:
                 mEditTextCaptcha.requestFocus();
+                mEditTextCaptcha.setError(getString(errorMsgResId));
                 break;
             case PARAMETER_ERROR_USER_NAME:
                 mEditTextUserName.requestFocus();
+                mEditTextUserName.setError(getString(errorMsgResId));
                 break;
             case PARAMETER_ERROR_PASSWORD:
                 mEditTextPassword.requestFocus();
+                mEditTextPassword.setError(getString(errorMsgResId));
                 break;
             case PARAMETER_ERROR_DIFFERENT_PASSWORD:
                 mEditTextPasswordConfirm.requestFocus();
+                mEditTextPasswordConfirm.setError(getString(errorMsgResId));
                 break;
         }
+    }
+
+    @Override
+    public void showRegisterSuccess() {
+        HomeActivity.launch(getActivity(), getString(R.string.msg_register_success));
+        ((RegisterActivity) getActivity()).finishSelf();
     }
 }

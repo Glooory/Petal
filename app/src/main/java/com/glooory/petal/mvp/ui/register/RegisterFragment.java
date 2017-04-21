@@ -87,6 +87,7 @@ public class RegisterFragment extends BasePetalFragment<RegisterPresenter>
     }
 
     private void handleRegister() {
+        mEditTextPhoneNumber.setError(null);
         String phoneNumber = mEditTextPhoneNumber.getText().toString().trim();
         mPresenter.performRegister(phoneNumber);
     }
@@ -113,16 +114,24 @@ public class RegisterFragment extends BasePetalFragment<RegisterPresenter>
 
     @Override
     public void showCountDownTick(String secondsLeft) {
-
+        // Do nothing here, implemented in RegisterConfirmFragment
     }
 
     @Override
     public void showCountDownFinish() {
-
+        // Do nothing here, implemented in RegisterConfirmFragment
     }
 
     @Override
     public void showParameterError(int index, int errorMsgResId) {
+        if (index == RegisterConfirmFragment.PARAMETER_ERROR_PHONE_NUMBER) {
+            mEditTextPhoneNumber.setError(getString(errorMsgResId));
+            mEditTextPhoneNumber.requestFocus();
+        }
+    }
 
+    @Override
+    public void showRegisterSuccess() {
+        // Do nothing here, implemented in RegisterConfirmFragment
     }
 }

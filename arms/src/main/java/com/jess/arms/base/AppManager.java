@@ -261,8 +261,10 @@ public class AppManager {
     public void AppExit() {
         try {
             killAll();
-            if (mActivityList != null)
+            if (mActivityList != null) {
+                mActivityList.clear();
                 mActivityList = null;
+            }
             ActivityManager activityMgr =
                     (ActivityManager) mApplication.getSystemService(Context.ACTIVITY_SERVICE);
             activityMgr.killBackgroundProcesses(mApplication.getPackageName());

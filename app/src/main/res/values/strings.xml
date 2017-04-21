@@ -57,6 +57,7 @@
     <string name="msg_password_is_empty">密码不能为空</string>
     <string name="msg_password_invalid">密码长度必须为6-32个字符</string>
     <string name="msg_password_different">两次输入的密码不一致</string>
+    <string name="msg_register_success">注册成功</string>
 
     <string name="msg_network_unavailable">没有网络连接，请检查网络设置</string>
     <string name="msg_check_and_retry">网络错误，请检查网络设置或稍后重试</string>
