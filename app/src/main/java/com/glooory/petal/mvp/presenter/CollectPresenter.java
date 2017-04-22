@@ -21,6 +21,7 @@ import com.glooory.petal.mvp.model.entity.collect.UploadResultBean;
 import com.glooory.petal.mvp.ui.collect.CollectActivity;
 import com.glooory.petal.mvp.ui.collect.CollectContract;
 import com.glooory.petal.mvp.ui.login.LoginActivity;
+import com.glooory.petal.mvp.ui.user.UserActivity;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.utils.RxUtils;
 import com.jess.arms.widget.imageloader.ImageLoader;
@@ -47,11 +48,30 @@ public class CollectPresenter extends BasePetalPresenter<CollectContract.View, C
     private String[] mBoardNames;
     private String[] mBoardIds;
     private ImageLoader mImageLoader;
+    private int mBoardCountBefore;
+    private int mBoardCountAfter;
 
     @Inject
     public CollectPresenter(CollectContract.View rootView, CollectContract.Model model) {
         super(rootView, model);
         mImageLoader = PetalApplication.getContext().getAppComponent().imageLoader();
+    }
+
+    public void onActivityOnCreate() {
+        if (!mModel.isLogin()) {
+            return;
+        }
+        mBoardCountBefore = mModel.getBoardCount();
+    }
+
+    public void onActivityResume() {
+        if (!mModel.isLogin()) {
+            return;
+        }
+        mBoardCountAfter = mModel.getBoardCount();
+        if (mBoardCountAfter > mBoardCountBefore) {
+            getUserBoardsInfo();
+        }
     }
 
     public void getUserBoardsInfo() {
@@ -115,6 +135,10 @@ public class CollectPresenter extends BasePetalPresenter<CollectContract.View, C
     public void choosePicture(Activity activity) {
         if (!mModel.isLogin()) {
             LoginActivity.launch(activity, false);
+            return;
+        }
+        if (mModel.getBoardCount() <= 0) {
+            mRootView.showNoneBoardPrompt();
             return;
         }
         Album.album(activity)
@@ -204,7 +228,7 @@ public class CollectPresenter extends BasePetalPresenter<CollectContract.View, C
     }
 
     public void collectImage(final int selection, String des) {
-        if (mPinId == 0) {
+        if (mPinId == 0 || mBoardNames.length <= 0) {
             return;
         }
         mModel.saveLatestEditedBoard(mBoardNames[selection]);
@@ -234,5 +258,26 @@ public class CollectPresenter extends BasePetalPresenter<CollectContract.View, C
     public void onDestroy() {
         super.onDestroy();
         mImageLoader = null;
+    }
+
+    public int getBoardCount() {
+        return mModel.getBoardCount();
+    }
+
+    public void onCollectBtnClicked(int selection, String pinDes) {
+        int boardCount = mModel.getBoardCount();
+        if (boardCount > 0) {
+            mRootView.showUploadingProgressbar();
+            collectImage(selection, pinDes);
+        } else {
+            mRootView.showNoneBoardPrompt();
+        }
+    }
+
+    public void launchUserMyselfActivity(Activity activity) {
+        String userId = String.valueOf((int) SPUtils.get(Constants.PREF_USER_ID, 0));
+        String userName = (String) SPUtils.get(Constants.PREF_USER_NAME, "");
+        String avatarKey = (String) SPUtils.get(Constants.PREF_USER_AVATAR_KEY, "");
+        UserActivity.launch(activity, userId, userName, null, avatarKey);
     }
 }

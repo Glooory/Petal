@@ -4,8 +4,10 @@ import android.content.res.Resources;
 import android.text.TextUtils;
 
 import com.glooory.petal.R;
+import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.rx.BaseSubscriber;
 import com.glooory.petal.app.rx.RxBus;
+import com.glooory.petal.app.util.SPUtils;
 import com.glooory.petal.mvp.model.entity.UserBean;
 import com.glooory.petal.mvp.model.entity.user.UserSectionCountBean;
 import com.glooory.petal.mvp.ui.user.UserContract;
@@ -107,6 +109,8 @@ public class UserPresenter extends BasePetalPresenter<UserContract.View, UserCon
         } else {
             mRootView.showUserAbout(PetalApplication.getContext().getString(R.string.msg_empty_user_about));
         }
+
+        SPUtils.putByCommit(Constants.PREF_BOARD_COUNT, mBoardCount);
     }
 
     private void setupTabTitles() {
@@ -134,7 +138,7 @@ public class UserPresenter extends BasePetalPresenter<UserContract.View, UserCon
     }
 
 
-    public void toolbarActinBtnClicked() {
+    public void onToolbarActinBtnClicked() {
         if (!mModel.isLogin()) {
             mRootView.showLoginHint();
             return;

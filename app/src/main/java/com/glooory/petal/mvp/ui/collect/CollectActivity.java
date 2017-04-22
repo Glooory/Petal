@@ -116,8 +116,8 @@ public class CollectActivity extends BasePetalActivity<CollectPresenter>
                 .subscribe(new Action1<Void>() {
                                @Override
                                public void call(Void aVoid) {
-                                   mProgressbarUploading.setVisibility(View.VISIBLE);
-                                   mPresenter.collectImage(mSelection, mEdittextCollectDes.getText().toString());
+                                   mPresenter.onCollectBtnClicked(mSelection,
+                                           mEdittextCollectDes.getText().toString());
                                }
                            },
                         new Action1<Throwable>() {
@@ -132,13 +132,20 @@ public class CollectActivity extends BasePetalActivity<CollectPresenter>
     protected void initData() {
         mPresenter.getUserBoardsInfo();
         mPresenter.loadAddPictureIcon(mImgPreview);
+        mPresenter.onActivityOnCreate();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.onActivityResume();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CHOOSE_PICTURE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                mProgressbarUploading.setVisibility(View.VISIBLE);
+                showUploadingProgressbar();
                 mPresenter.uploadPicture(mImgPreview, data);
             }
         }
@@ -157,6 +164,11 @@ public class CollectActivity extends BasePetalActivity<CollectPresenter>
     @Override
     public void showMessage(String message) {
         SnackbarUtil.showLong(CollectActivity.this, message);
+    }
+
+    @Override
+    public void showUploadingProgressbar() {
+        mProgressbarUploading.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -196,5 +208,17 @@ public class CollectActivity extends BasePetalActivity<CollectPresenter>
         mPresenter.loadAddPictureIcon(mImgPreview);
         mImgPreview.setBackgroundResource(R.drawable.bg_dash_line);
         mBtnCollect.setEnabled(false);
+    }
+
+    @Override
+    public void showNoneBoardPrompt() {
+        SnackbarUtil.showLong(CollectActivity.this, R.string.msg_none_board,
+                R.string.msg_create_board_tip,
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mPresenter.launchUserMyselfActivity(CollectActivity.this);
+                    }
+                });
     }
 }

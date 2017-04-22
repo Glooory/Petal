@@ -21,12 +21,13 @@ import com.glooory.petal.app.rx.BaseSubscriber;
 import com.glooory.petal.app.util.SPUtils;
 import com.glooory.petal.mvp.model.entity.BoardBean;
 import com.glooory.petal.mvp.model.entity.LatestEditBoardsBean;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
 import butterknife.ButterKnife;
-import common.PetalApplication;
 import common.BasePetalDialogFragment;
+import common.PetalApplication;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -93,9 +94,13 @@ public class CollectDialogFragment extends BasePetalDialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (mOnPinCollectListener != null) {
-                            SPUtils.putByApply(Constants.PREF_LAST_SAVE_BOARD, mBoardTitles[mSelection]);
-                            mOnPinCollectListener.onPinCollect(mEditTextDes.getText().toString(),
-                                    mBoardIds[mSelection]);
+                            if (mBoardTitles.length > 0) {
+                                SPUtils.putByApply(Constants.PREF_LAST_SAVE_BOARD, mBoardTitles[mSelection]);
+                                mOnPinCollectListener.onPinCollect(mEditTextDes.getText().toString(),
+                                        mBoardIds[mSelection]);
+                            } else {
+
+                            }
                         }
                     }
                 });
@@ -187,16 +192,32 @@ public class CollectDialogFragment extends BasePetalDialogFragment {
                 R.layout.support_simple_spinner_dropdown_item, mBoardTitles);
         mSpinnerBoards.setAdapter(mSpinnerAdapter);
         mSpinnerBoards.setSelection(mSelection);
+//        mSpinnerBoards.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (mSpinnerBoards.getAdapter().getCount() == 0) {
+//                    SnackbarUtil.showLong(getActivity(), R.string.msg_none_board,
+//                            R.string.msg_create_board_tip,
+//                            new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View v) {
+//                                    Toast.makeText(getContext(), "ONCLICK()", Toast.LENGTH_LONG).show();
+//                                }
+//                            });
+//                }
+//            }
+//        });
         mSpinnerBoards.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Logger.d(position);
                 mSpinnerAdapter.setSelection(position);
                 mSelection = position;
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                Logger.d("onNothingSelected()");
             }
         });
     }

@@ -24,6 +24,9 @@ import com.glooory.petal.mvp.ui.user.UserContract;
 
 import common.AppComponent;
 import common.BaseRecyclerFragment;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * Created by Glooory on 17/3/22.
@@ -214,7 +217,14 @@ public class UserBoardFragment extends BaseRecyclerFragment<UserSectionPresenter
     }
 
     public void onRefresh() {
-        mAdapter.removeAllFooterView();
+        Observable.just(1)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        mAdapter.removeAllFooterView();
+                    }
+                });
         mPresenter.getUserBoards(mUserId);
     }
 

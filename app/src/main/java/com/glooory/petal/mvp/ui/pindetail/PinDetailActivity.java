@@ -320,6 +320,18 @@ public class PinDetailActivity extends BasePetalActivity<PinDetailPresenter>
     }
 
     @Override
+    public void showCreateBoardPrompt() {
+        SnackbarUtil.showLong(PinDetailActivity.this, R.string.msg_none_board,
+                R.string.msg_create_board_tip,
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mPresenter.launchUserMyselfActivity(PinDetailActivity.this);
+                    }
+                });
+    }
+
+    @Override
     public void setAdapter(HomePinAdapter adapter) {
         mAdapter = adapter;
     }

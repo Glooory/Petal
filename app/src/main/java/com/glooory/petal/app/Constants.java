@@ -24,11 +24,11 @@ public class Constants {
     public static final String PREF_IS_SKIP_LOGIN = "is_skip_login";
 
     public static final String PREF_USER_ACCOUNT = "user_account";
-    public static final String PREF_USER_PASSWORD = "user_password";
     public static final String PREF_USER_NAME = "user_name";
     public static final String PREF_USER_ID = "user_id";
     public static final String PREF_USER_EMAIL = "user_email";
     public static final String PREF_USER_AVATAR_KEY = "user_avatar_key";
+    public static final String PREF_BOARD_COUNT = "board_count";
     public static final String PREF_BOARD_TITLES = "board_titles";
     public static final String PREF_BOARD_IDS = "board_ids";
     public static final String PREF_LAST_SAVE_BOARD = "last_save_board";

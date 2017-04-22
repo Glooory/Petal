@@ -265,12 +265,23 @@ public class PinDetailPresenter extends BasePetalPresenter<PinDetailContract.Vie
                 pinBean.getUser().getAvatar().getKey());
     }
 
+    public void launchUserMyselfActivity(Activity activity) {
+        String userId = String.valueOf((int) SPUtils.get(Constants.PREF_USER_ID, 0));
+        String userName = (String) SPUtils.get(Constants.PREF_USER_NAME, "");
+        String avatarKey = (String) SPUtils.get(Constants.PREF_USER_AVATAR_KEY, "");
+        UserActivity.launch(activity, userId, userName, null, avatarKey);
+    }
+
     /**
      * 采集操作
      */
     public void actionCollect() {
         if (!mModel.isLogin()) {
             showLoginHintMsg();
+            return;
+        }
+        if (mModel.getBoardCount() <= 0) {
+            mRootView.showCreateBoardPrompt();
             return;
         }
         if (mIsCollected) {

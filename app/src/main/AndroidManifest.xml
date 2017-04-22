@@ -43,14 +43,15 @@
             android:screenOrientation="portrait"
             android:noHistory="true"
             android:theme="@style/Theme.Petal.Login"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"/>
 
         <activity
             android:name=".mvp.ui.register.RegisterActivity"
             android:label="@string/new_collect"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Petal.Search"/>
+            android:theme="@style/Theme.Petal.Search"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"/>
 
         <activity
             android:name=".mvp.ui.pindetail.PinDetailActivity"
@@ -70,7 +71,8 @@
         <activity
             android:name=".mvp.ui.search.SearchActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Petal.Search"/>
+            android:theme="@style/Theme.Petal.Search"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"/>
 
         <activity
             android:name=".mvp.ui.searchresult.SearchResultActivity"
@@ -86,7 +88,7 @@
             android:name=".mvp.ui.collect.CollectActivity"
             android:label="@string/new_collect"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
             android:theme="@style/Theme.Petal.Search"/>
 
         <activity

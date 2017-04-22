@@ -16,6 +16,8 @@ public interface CollectContract {
 
     interface View extends BaseView {
 
+        void showUploadingProgressbar();
+
         void hideUploadingProgressbar();
 
         void showBoardSpinner(String[] boardNames, int lastEditedPosition);
@@ -23,6 +25,8 @@ public interface CollectContract {
         void showCollectButton(boolean enabled);
 
         void showEmptyPreview();
+
+        void showNoneBoardPrompt();
     }
 
     interface Model extends IModel {
@@ -34,5 +38,7 @@ public interface CollectContract {
         Observable<CollectResultBean> collect(String boardId, String des, String field);
 
         void saveLatestEditedBoard(String boardName);
+
+        int getBoardCount();
     }
 }

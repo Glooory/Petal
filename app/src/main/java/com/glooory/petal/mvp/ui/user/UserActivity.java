@@ -117,7 +117,8 @@ public class UserActivity extends BasePetalActivity<UserPresenter>
         intent.putExtra(Constants.EXTRA_USER_NAME, userName);
         intent.putExtra(EXTRA_AVATAR_KEY, avatarKey);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP &&
+                avatar != null) {
             avatar.setTransitionName(userId);
             activity.startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(
                     activity, avatar, userId).toBundle());
@@ -195,7 +196,7 @@ public class UserActivity extends BasePetalActivity<UserPresenter>
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        mPresenter.toolbarActinBtnClicked();
+                        mPresenter.onToolbarActinBtnClicked();
                     }
                 });
     }

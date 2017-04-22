@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.glooory.petal.app.Constants;
 import com.glooory.petal.app.service.DownloadPinService;
+import com.glooory.petal.app.util.SPUtils;
 import com.glooory.petal.mvp.model.api.cache.CacheManager;
 import com.glooory.petal.mvp.model.api.service.ServiceManager;
 import com.glooory.petal.mvp.model.entity.PinBean;
@@ -124,5 +125,10 @@ public class PinDetailModel extends BasePetalModel<ServiceManager, CacheManager>
     @Override
     public void downloadPin(Activity activity, String pinKey, String pinType) {
         DownloadPinService.launch(activity, pinKey, pinType);
+    }
+
+    @Override
+    public int getBoardCount() {
+        return (int) SPUtils.get(Constants.PREF_BOARD_COUNT, 0);
     }
 }

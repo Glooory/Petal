@@ -201,13 +201,13 @@ public class HomeActivity extends BasePetalActivity
         mTvBoardCount.setText(basicUserInfoBean.getBoardCount());
         mTvFollowingCount.setText(basicUserInfoBean.getFollowingCount());
         mTvFollowerCount.setText(basicUserInfoBean.getFollowerCount());
+
+        SPUtils.putByCommit(Constants.PREF_BOARD_COUNT, Integer.parseInt(basicUserInfoBean.getBoardCount()));
     }
 
     @Override
     protected void onDestroy() {
-        if (mCompositeSubscription != null && !mCompositeSubscription.isUnsubscribed()) {
-            mCompositeSubscription.unsubscribe();
-        }
+        unRegisterUserInfoEvent();
         super.onDestroy();
     }
 
@@ -362,5 +362,11 @@ public class HomeActivity extends BasePetalActivity
             mCompositeSubscription = new CompositeSubscription();
         }
         mCompositeSubscription.add(subscription);
+    }
+
+    private void unRegisterUserInfoEvent() {
+        if (mCompositeSubscription != null && !mCompositeSubscription.isUnsubscribed()) {
+            mCompositeSubscription.unsubscribe();
+        }
     }
 }

@@ -66,6 +66,8 @@ public interface PinDetailContract {
         void showDeleteConfirmDialog();
 
         void killMyself();
+
+        void showCreateBoardPrompt();
     }
 
     interface Model extends IModel {
@@ -85,6 +87,8 @@ public interface PinDetailContract {
         Observable<LikeResultBean> likePin(boolean isLiked);
 
         void downloadPin(Activity activity, String pinKey, String pinType);
+
+        int getBoardCount();
     }
 }
 

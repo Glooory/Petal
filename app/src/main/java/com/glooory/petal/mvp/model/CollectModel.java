@@ -70,4 +70,9 @@ public class CollectModel extends BasePetalModel<ServiceManager, CacheManager>
     public void saveLatestEditedBoard(String boardName) {
         SPUtils.putByApply(Constants.PREF_LAST_SAVE_BOARD, boardName);
     }
+
+    @Override
+    public int getBoardCount() {
+        return (int) SPUtils.get(Constants.PREF_BOARD_COUNT, 0);
+    }
 }
