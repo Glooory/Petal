@@ -223,6 +223,7 @@ public class UserBoardFragment extends BaseRecyclerFragment<UserSectionPresenter
                     @Override
                     public void call(Integer integer) {
                         mAdapter.removeAllFooterView();
+                        mAdapter.setNewData(null);
                     }
                 });
         mPresenter.getUserBoards(mUserId);
