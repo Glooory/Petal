@@ -55,7 +55,6 @@ public class CategoryPinFragment extends BaseRecyclerFragment<CategoryPresenter>
         super.onCreate(savedInstanceState);
         mCategoryValue = getArguments().getString(Constants.BUNDLE_CATEGORY_VALUE);
         mPresenter.setAdapter(mAdapter);
-        mPresenter.getCategoryPins(mCategoryValue);
     }
 
     @Override
@@ -80,6 +79,12 @@ public class CategoryPinFragment extends BaseRecyclerFragment<CategoryPresenter>
     @Override
     protected void initData() {
 
+    }
+
+    @Override
+    protected void lazyFetchData() {
+        super.lazyFetchData();
+        mPresenter.getCategoryPins(mCategoryValue);
     }
 
     @Override

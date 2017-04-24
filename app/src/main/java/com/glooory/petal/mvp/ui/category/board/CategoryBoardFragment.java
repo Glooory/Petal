@@ -56,7 +56,6 @@ public class CategoryBoardFragment extends BaseRecyclerFragment<CategoryPresente
         super.onCreate(savedInstanceState);
         mCategoryValue = getArguments().getString(Constants.BUNDLE_CATEGORY_VALUE);
         mPresenter.setAdapter(mAdapter);
-        mPresenter.getCategoryBoards(mCategoryValue);
     }
 
     @Override
@@ -84,6 +83,12 @@ public class CategoryBoardFragment extends BaseRecyclerFragment<CategoryPresente
     @Override
     protected void initData() {
 
+    }
+
+    @Override
+    protected void lazyFetchData() {
+        super.lazyFetchData();
+        mPresenter.getCategoryBoards(mCategoryValue);
     }
 
     @Override

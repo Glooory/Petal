@@ -14,7 +14,7 @@ import butterknife.BindView;
  * Created by Glooory on 17/4/7.
  */
 
-public abstract class BaseRecyclerFragment<P extends Presenter> extends BasePetalFragment<P> {
+public abstract class BaseRecyclerFragment<P extends Presenter> extends LazyLoadFragment<P> {
 
     @BindView(R.id.recycler_view)
     protected RecyclerView mRecyclerView;

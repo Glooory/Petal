@@ -145,6 +145,12 @@ public class CategoryPresenter extends BasePetalPresenter<CategoryContract.View,
     public void getCategoryBoards(String category) {
         mCategory = category;
         mModel.getCategoryBoards(mCategory)
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mRootView.showLoading();
+                    }
+                })
                 .doOnTerminate(new Action0() {
                     @Override
                     public void call() {

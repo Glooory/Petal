@@ -55,7 +55,6 @@ public class SearchPinFragment extends BaseRecyclerFragment<SearchResultPresente
         super.onCreate(savedInstanceState);
         mSearchKeyword = getArguments().getString(Constants.EXTRA_SEARCH_KEYWORD);
         mPresenter.setAdapter(mAdapter);
-        mPresenter.getSearchedPins(mSearchKeyword);
     }
 
     @Override
@@ -80,6 +79,12 @@ public class SearchPinFragment extends BaseRecyclerFragment<SearchResultPresente
     @Override
     protected void initData() {
 
+    }
+
+    @Override
+    protected void lazyFetchData() {
+        super.lazyFetchData();
+        mPresenter.getSearchedPins(mSearchKeyword);
     }
 
     @Override

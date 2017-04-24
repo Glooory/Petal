@@ -84,6 +84,11 @@ public class UserFollowerFragment extends BaseRecyclerFragment<UserSectionPresen
                 }
             }
         });
+    }
+
+    @Override
+    protected void lazyFetchData() {
+        super.lazyFetchData();
         if (mFollowerCount <= 0) {
             mAdapter.addFooterView(mNoMoreDataFooter);
         } else {
@@ -99,8 +104,15 @@ public class UserFollowerFragment extends BaseRecyclerFragment<UserSectionPresen
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mAdapter.removeAllFooterView();
+        if (mAdapter != null) {
+            mAdapter.removeAllFooterView();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
         mAdapter = null;
+        super.onDestroy();
     }
 
     @Override

@@ -285,6 +285,18 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
         mUserId = userId;
         mModel.getUserPins(mUserId)
                 .compose(RxUtils.<List<PinBean>>bindToLifecycle(mRootView))
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mRootView.showLoading();
+                    }
+                })
+                .doOnTerminate(new Action0() {
+                    @Override
+                    public void call() {
+                        mRootView.hideLoading();
+                    }
+                })
                 .subscribe(new BaseSubscriber<List<PinBean>>() {
                     @Override
                     public void onNext(List<PinBean> pinBeen) {
@@ -413,6 +425,18 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
         mUserId = userId;
         mModel.getUserLikedPins(userId)
                 .compose(RxUtils.<List<PinBean>>bindToLifecycle(mRootView))
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mRootView.showLoading();
+                    }
+                })
+                .doOnTerminate(new Action0() {
+                    @Override
+                    public void call() {
+                        mRootView.hideLoading();
+                    }
+                })
                 .subscribe(new BaseSubscriber<List<PinBean>>() {
                     @Override
                     public void onNext(List<PinBean> pinBeen) {
@@ -454,6 +478,18 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
         mUserId = userId;
         mModel.getUserFollowing(userId)
                 .compose(RxUtils.<List<UserBean>>bindToLifecycle(mRootView))
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mRootView.showLoading();
+                    }
+                })
+                .doOnTerminate(new Action0() {
+                    @Override
+                    public void call() {
+                        mRootView.hideLoading();
+                    }
+                })
                 .subscribe(new BaseSubscriber<List<UserBean>>() {
                     @Override
                     public void onNext(List<UserBean> userBeen) {
@@ -542,6 +578,18 @@ public class UserSectionPresenter extends BasePetalPresenter<UserContract.Sectio
         mUserId = userId;
         mModel.getUserFollowers(userId)
                 .compose(RxUtils.<List<UserBean>>bindToLifecycle(mRootView))
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mRootView.showLoading();
+                    }
+                })
+                .doOnTerminate(new Action0() {
+                    @Override
+                    public void call() {
+                        mRootView.hideLoading();
+                    }
+                })
                 .subscribe(new BaseSubscriber<List<UserBean>>() {
                     @Override
                     public void onNext(List<UserBean> userBeen) {

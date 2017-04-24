@@ -56,7 +56,6 @@ public class CategoryUserFragment extends BaseRecyclerFragment<CategoryPresenter
         super.onCreate(savedInstanceState);
         mCategoryValue = getArguments().getString(Constants.BUNDLE_CATEGORY_VALUE);
         mPresenter.setAdapter(mAdapter);
-        mPresenter.getCategoryUsers(mCategoryValue);
     }
 
     @Override
@@ -81,6 +80,12 @@ public class CategoryUserFragment extends BaseRecyclerFragment<CategoryPresenter
     @Override
     protected void initData() {
 
+    }
+
+    @Override
+    protected void lazyFetchData() {
+        super.lazyFetchData();
+        mPresenter.getCategoryUsers(mCategoryValue);
     }
 
     @Override

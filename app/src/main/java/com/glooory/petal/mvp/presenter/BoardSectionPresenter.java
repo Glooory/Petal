@@ -206,6 +206,12 @@ public class BoardSectionPresenter extends BasePetalPresenter<BoardContract.Sect
         mBoardId = boardId;
         mModel.getBoardFollowers(boardId)
                 .compose(RxUtils.<List<UserBean>>bindToLifecycle(mRootView))
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mRootView.showLoading();
+                    }
+                })
                 .doOnTerminate(new Action0() {
                     @Override
                     public void call() {

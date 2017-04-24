@@ -90,11 +90,6 @@ public class UserBoardFragment extends BaseRecyclerFragment<UserSectionPresenter
                 }
             }
         });
-        if (mBoardCount <= 0) {
-            mAdapter.addFooterView(mNoMoreDataFooter);
-        } else {
-            mPresenter.getUserBoards(mUserId);
-        }
         FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         if (mIsMe) {
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +98,16 @@ public class UserBoardFragment extends BaseRecyclerFragment<UserSectionPresenter
                     mPresenter.onFABClicked();
                 }
             });
+        }
+    }
+
+    @Override
+    protected void lazyFetchData() {
+        super.lazyFetchData();
+        if (mBoardCount <= 0) {
+            mAdapter.addFooterView(mNoMoreDataFooter);
+        } else {
+            mPresenter.getUserBoards(mUserId);
         }
     }
 
@@ -120,8 +125,15 @@ public class UserBoardFragment extends BaseRecyclerFragment<UserSectionPresenter
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mAdapter.removeAllFooterView();
+        if (mAdapter != null) {
+            mAdapter.removeAllFooterView();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
         mAdapter = null;
+        super.onDestroy();
     }
 
     @Override

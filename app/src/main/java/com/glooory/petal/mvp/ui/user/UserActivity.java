@@ -205,6 +205,7 @@ public class UserActivity extends BasePetalActivity<UserPresenter>
         if (mPagerAdapter == null) {
             mPagerAdapter = new UserSectionPagerAdapter(getSupportFragmentManager());
             mViewPager.setAdapter(mPagerAdapter);
+            mViewPager.setOffscreenPageLimit(2);
             mViewPager.setCurrentItem(0, true);
             mTablayout.setupWithViewPager(mViewPager);
         }

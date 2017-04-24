@@ -190,6 +190,12 @@ public class SearchResultPresenter extends BasePetalPresenter<SearchResultContra
                         return searchBoardListBean.getBoards();
                     }
                 })
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mRootView.showLoading();
+                    }
+                })
                 .doOnTerminate(new Action0() {
                     @Override
                     public void call() {

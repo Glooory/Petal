@@ -57,7 +57,6 @@ public class SearchBoardFragment extends BaseRecyclerFragment<SearchResultPresen
         super.onCreate(savedInstanceState);
         mSearchKeyword = getArguments().getString(Constants.EXTRA_SEARCH_KEYWORD);
         mPresenter.setAdapter(mAdapter);
-        mPresenter.getSearchedBoards(mSearchKeyword);
     }
 
     @Override
@@ -85,6 +84,12 @@ public class SearchBoardFragment extends BaseRecyclerFragment<SearchResultPresen
     @Override
     protected void initData() {
 
+    }
+
+    @Override
+    protected void lazyFetchData() {
+        super.lazyFetchData();
+        mPresenter.getSearchedBoards(mSearchKeyword);
     }
 
     @Override
