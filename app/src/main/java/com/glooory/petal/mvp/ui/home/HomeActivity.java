@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.glooory.petal.R;
 import com.glooory.petal.app.Constants;
@@ -208,6 +209,7 @@ public class HomeActivity extends BasePetalActivity
     @Override
     protected void onDestroy() {
         unRegisterUserInfoEvent();
+        Fresco.getImagePipeline().clearMemoryCaches();
         super.onDestroy();
     }
 

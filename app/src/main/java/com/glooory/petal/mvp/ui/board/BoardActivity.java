@@ -184,6 +184,7 @@ public class BoardActivity extends BasePetalActivity<BoardPresenter>
     @Override
     protected void onDestroy() {
         mAppbarLayout.setBackground(null);
+        mAppbarLayout.addOnOffsetChangedListener(null);
         mViewPagerAdapter = null;
         mPinFragment = null;
         mFollowerFragment = null;

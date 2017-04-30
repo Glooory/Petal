@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.MenuItem;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.view.DraweeTransition;
 import com.glooory.petal.app.Constants;
@@ -55,6 +56,12 @@ public abstract class BasePetalActivity<P extends BasePetalPresenter> extends Ba
         } else {
             this.finish();
         }
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        Fresco.getImagePipeline().clearMemoryCaches();
     }
 
     @Override
