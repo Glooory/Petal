@@ -97,13 +97,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btn_cancel"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/triple_activity_default_margin"
-                    android:layout_margin="@dimen/half_activity_default_margin"
+                    android:layout_marginRight="@dimen/half_activity_default_margin"
+
                     android:layout_weight="1"
                     android:background="@drawable/bg_collect_cancel_button"
                     android:foreground="?attr/selectableItemBackgroundBorderless"
@@ -116,7 +118,7 @@
                     android:id="@+id/btn_collect"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/triple_activity_default_margin"
-                    android:layout_margin="@dimen/half_activity_default_margin"
+                    android:layout_marginLeft="@dimen/half_activity_default_margin"
                     android:layout_weight="1"
                     android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:background="@drawable/bg_collect_button"
