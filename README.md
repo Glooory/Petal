@@ -6,6 +6,8 @@ Petal 是花瓣网 [huaban.com](http://huaban.com) 的第三方客户端，其�
 
 如果涉及侵权请联系我 glooorypu@gmail.com 及时删除。
 
+项目基于 MVP + RxJava + Dagger2 + Retrofit + Fresco
+
 
 #### 基本功能
 
@@ -41,9 +43,19 @@ Petal 是花瓣网 [huaban.com](http://huaban.com) 的第三方客户端，其�
 ​    <img src="/screenshots/user_info_540_960.gif" width = "240" hspace="16" vspace="16">
 </figure>
 
+<figure class="third">
+​    <img src="/screenshots/user_540_960.png" width = "240" hspace="16" vspace="16">
+​    <img src="/screenshots/search_result_540_960.gif" width = "240" hspace="16" vspace="16">
+​    <img src="/screenshots/search_540_960.png" width = "240" hspace="16" vspace="16">
+</figure>
+
+#### 感谢
+
+
+
 #### 体验
 
-<img src="/screenshots/qr_petal.png" width = "150" height = "150" align=center hspace="16" vspace="16"/> or  [戳我下载 APK ](http://github.com/Glooory/Petal/raw/master/screenshots/petal_release_1.0.0.apk)
+<img src="/screenshots/qr_petal.png" width = "150" height = "150" align=center hspace="16" vspace="16"/> or  [戳我下载 APK ](http://github.com/Glooory/Petal/raw/master/screenshots/petal_release_1_0_0.apk)
 
 #### License
 
